@@ -8,6 +8,7 @@ namespace TBZdatabaseConnectionTest
     public class ConnectionTest
     {
         [TestMethod]
+        //test for wrong input
         public void Connect_failed()
         {
             var result = false;
@@ -28,6 +29,7 @@ namespace TBZdatabaseConnectionTest
         }
 
         [TestMethod]
+        //test for correct input
         public void Connect_pass()
         {
             var result = false;
@@ -49,6 +51,7 @@ namespace TBZdatabaseConnectionTest
         }
 
         [TestMethod]
+        //test for a wrong server
         public void Connect_offline()
         {
             var result = false;
