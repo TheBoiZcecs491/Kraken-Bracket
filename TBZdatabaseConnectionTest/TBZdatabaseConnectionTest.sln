@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZdatabaseConnectionTest", "TBZdatabaseConnectionTest\TBZdatabaseConnectionTest.csproj", "{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZdatabaseConnection", "TBZdatabaseConnection\TBZdatabaseConnection.csproj", "{C05B5A43-10EC-41FA-B222-18E1ED230D70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C05B5A43-10EC-41FA-B222-18E1ED230D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C05B5A43-10EC-41FA-B222-18E1ED230D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C05B5A43-10EC-41FA-B222-18E1ED230D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C05B5A43-10EC-41FA-B222-18E1ED230D70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1951FA6-8A80-47C2-AB41-6E5C19A9011E}
+	EndGlobalSection
+EndGlobal
