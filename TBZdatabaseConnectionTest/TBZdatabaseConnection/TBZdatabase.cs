@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+
+using MySql.Data.MySqlClient;
 using System;
 
 namespace TBZdatabaseConnection
@@ -21,5 +22,27 @@ namespace TBZdatabaseConnection
 
         }
 
+        public void Connects(string connectString)
+        {
+            MySqlConnection conn = new MySqlConnection(connectString);
+            try
+            {
+                conn.Open();
+                Console.WriteLine("Connection Open");
+                //Console.ReadKey();
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Server offline");
+            }
+            finally
+            {
+                conn.Close();
+                Console.WriteLine("Connection Closed");
+                //Console.ReadKey();
+            }
+
+
+        }
     }
 }
