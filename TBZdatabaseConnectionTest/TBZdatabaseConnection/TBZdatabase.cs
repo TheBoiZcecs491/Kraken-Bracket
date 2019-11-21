@@ -41,8 +41,6 @@ namespace TBZdatabaseConnection
                 Console.WriteLine("Connection Closed");
                 //Console.ReadKey();
             }
-
-
         }
     }
 }
