@@ -47,6 +47,27 @@ namespace TBZdatabaseConnectionTest
             { }
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void Connect_offline()
+        {
+            var result = false;
+            string connectString = @"server=localhost; userid=root; password=password; database=cecs491testdb";
+            var Database = new TBZdatabase();
+
+            try
+            {
+                Database.Connects(connectString);
+                result = true;
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            catch (Exception)
+            { }
+            Assert.IsTrue(result);
+        }
     }
 
 }
