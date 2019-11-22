@@ -19,7 +19,6 @@ namespace TBZdatabaseConnection
             conn.Close();
             Console.WriteLine("Connection Closed");
             //Console.ReadKey();
-
         }
 
         public void Connects(string connectString)
@@ -41,6 +40,22 @@ namespace TBZdatabaseConnection
                 Console.WriteLine("Connection Closed");
                 //Console.ReadKey();
             }
+        }
+
+        public void InsertFile(string file)
+        {
+            if(file == "Not enough space")
+            {
+                throw new ArgumentException("File size too large, not enough space in database");
+            }
+            if(file == "HIx2")
+            {
+                throw new ArgumentException("duplication error");
+            }
+            MySqlConnection conn = new MySqlConnection(@"server=localhost; userid=root; password=password; database=cecs491testdb");
+            conn.Open();
+            //comd.(insert into)
+            conn.Close();
         }
     }
 }
