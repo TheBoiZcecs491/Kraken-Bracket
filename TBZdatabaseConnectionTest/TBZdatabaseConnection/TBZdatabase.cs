@@ -1,6 +1,7 @@
 
 using MySql.Data.MySqlClient;
 using System;
+using System.IO;
 
 namespace TBZdatabaseConnection
 {
@@ -42,20 +43,56 @@ namespace TBZdatabaseConnection
             }
         }
 
-        public void InsertFile(string file)
+        public void InsertFile(string fileName)
         {
-            if(file == "Not enough space")
+            FileInfo file = new FileInfo(fileName);
+            if (file.Length > 50)
             {
                 throw new ArgumentException("File size too large, not enough space in database");
             }
-            if(file == "HIx2")
+
+            using (StreamReader sr = File.OpenText(fileName))
             {
-                throw new ArgumentException("duplication error");
+                string s = "";
+                s = sr.ReadLine();
+                if (s  == "Hello")
+                {
+                    throw new ArgumentException("duplication error");
+                }
             }
-            MySqlConnection conn = new MySqlConnection(@"server=localhost; userid=root; password=password; database=cecs491testdb");
-            conn.Open();
-            //comd.(insert into)
-            conn.Close();
+            //MySqlConnection conn = new MySqlConnection(@"server=localhost; userid=root; password=password; database=cecs491testdb");
+            //conn.Open();
+            ////comd.(insert into)
+            //conn.Close();
+
+        }
+
+        public void CheckFile(string path)
+        {
+            if (!File.Exists(path))
+            {
+                throw new ArgumentException("File does not exist");
+            }
+
+            //if (!File.Exists(path))
+            //{
+            //    // Create a file to write to.
+            //    using (StreamWriter sw = File.CreateText(path))
+            //    {
+            //        sw.WriteLine("Hello");
+            //    }
+            //}
+
+            //// Open the file to read from.
+            //using (StreamReader sr = File.OpenText(path))
+            //{
+            //    string s = "";
+            //    while ((s = sr.ReadLine()) != null)
+            //    {
+            //        Console.WriteLine(s);
+            //    }
+            //}
+
         }
     }
 }

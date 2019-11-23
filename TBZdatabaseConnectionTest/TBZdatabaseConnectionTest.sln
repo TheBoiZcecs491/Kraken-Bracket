@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZdatabaseConnectionTest", "TBZdatabaseConnectionTest\TBZdatabaseConnectionTest.csproj", "{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZdatabaseConnection", "TBZdatabaseConnection\TBZdatabaseConnection.csproj", "{C05B5A43-10EC-41FA-B222-18E1ED230D70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZdatabaseConnection", "TBZdatabaseConnection\TBZdatabaseConnection.csproj", "{C05B5A43-10EC-41FA-B222-18E1ED230D70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

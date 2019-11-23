@@ -75,13 +75,13 @@ namespace TBZdatabaseConnectionTest
         //test for database duplication error
         public void Storage_Full_failed()
         {
-            var file = "1000";
+            var fileName = "MyTestFull.txt";
             var result = false;
             var Database = new TBZdatabase();
 
             try
             {
-                Database.InsertFile(file);
+                Database.InsertFile(fileName);
             }
             catch (ArgumentException)
             {
@@ -96,13 +96,13 @@ namespace TBZdatabaseConnectionTest
         //test for database duplication error
         public void Storage_Duplication_Failed()
         {
-            var file = "HIx2";
+            var fileName = "MyTestDup.txt";
             var result = false;
             var Database = new TBZdatabase();
 
             try
             {
-                Database.InsertFile(file);
+                Database.InsertFile(fileName);
             }
             catch (ArgumentException)
             {
@@ -110,6 +110,23 @@ namespace TBZdatabaseConnectionTest
             }
             catch (Exception)
             { }
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        //test for database duplication error
+        public void Check_If_File_Exist()
+        {
+            var result = false;
+            var Database = new TBZdatabase();
+            try
+            {
+                Database.CheckFile("MyTest.txt");
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
             Assert.IsTrue(result);
         }
     }
