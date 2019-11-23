@@ -52,7 +52,7 @@ namespace TBZdatabaseConnectionTest
 
         [TestMethod]
         //test for a wrong server
-        public void Connect_offline()
+        public void Connect_offline_failed()
         {
             var result = false;
             string connectString = @"server=local; userid=root; password=password; database=cecs491testdb";
@@ -94,7 +94,7 @@ namespace TBZdatabaseConnectionTest
 
         [TestMethod]
         //test for database duplication error
-        public void Storage_Duplication_Failed()
+        public void Storage_Duplication_failed()
         {
             var fileName = "MyTestDup.txt";
             var result = false;
@@ -115,13 +115,33 @@ namespace TBZdatabaseConnectionTest
 
         [TestMethod]
         //test for database duplication error
-        public void Check_If_File_Exist()
+        public void Check_If_File_Exist_failed()
         {
             var result = false;
+            var fileName = "DontExist.txt";
             var Database = new TBZdatabase();
             try
             {
-                Database.CheckFile("MyTest.txt");
+                Database.InsertFile(fileName);
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        //test for database insert
+        public void Check_insertFile_pass()
+        {
+            var result = false;
+            var fileName = "MyTest.txt";
+            var Database = new TBZdatabase();
+            try
+            {
+                Database.InsertFile(fileName);
+                result = true;
             }
             catch (ArgumentException)
             {

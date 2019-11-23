@@ -45,34 +45,65 @@ namespace TBZdatabaseConnection
 
         public void InsertFile(string fileName)
         {
+            CheckFileExist(fileName);
+            if (CheckFileSize(fileName) && CheckFileDup(fileName))
+            {
+                //MySqlConnection conn = new MySqlConnection(@"server=localhost; userid=root; password=password; database=cecs491testdb");
+                //conn.Open();
+                ////comd.(insert into)
+                //conn.Close();
+            }
+            else throw new ArgumentException("Insert Error");
+
+            //FileInfo file = new FileInfo(fileName);
+            //if (file.Length > 50)
+            //{
+            //    throw new ArgumentException("File size too large, not enough space in database");
+            //}
+
+            //using (StreamReader sr = File.OpenText(fileName))
+            //{
+            //    string s = "";
+            //    s = sr.ReadLine();
+            //    if (s  == "Hello")
+            //    {
+            //        throw new ArgumentException("duplication error");
+            //    }
+            //}
+        }
+
+        public bool CheckFileSize(string fileName)
+        {
             FileInfo file = new FileInfo(fileName);
-            if (file.Length > 50)
+            if (file.Length > 50)//replace 50 with data.avalibleSpace()
             {
                 throw new ArgumentException("File size too large, not enough space in database");
             }
+            else return true;
+        }
 
+        public bool CheckFileDup(string fileName)
+        {
             using (StreamReader sr = File.OpenText(fileName))
             {
                 string s = "";
                 s = sr.ReadLine();
-                if (s  == "Hello")
+                if (s == "Hello")
                 {
-                    throw new ArgumentException("duplication error");
+                    throw new ArgumentException("Duplication error");
                 }
+                else return true;
             }
-            //MySqlConnection conn = new MySqlConnection(@"server=localhost; userid=root; password=password; database=cecs491testdb");
-            //conn.Open();
-            ////comd.(insert into)
-            //conn.Close();
-
         }
 
-        public void CheckFile(string path)
+
+        public bool CheckFileExist(string fileName)
         {
-            if (!File.Exists(path))
+            if (!File.Exists(fileName))
             {
                 throw new ArgumentException("File does not exist");
             }
+            else return true;
 
             //if (!File.Exists(path))
             //{
