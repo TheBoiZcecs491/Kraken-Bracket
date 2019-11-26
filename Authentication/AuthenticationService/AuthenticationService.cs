@@ -1,8 +1,14 @@
-﻿using System;
+﻿using Data.AccessLayer;
+using System;
 
-namespace AuthenticationService
+namespace Authentication.Services
 {
-    public class Class1
+    public class AuthenticationService
     {
+        public void AuthenticateUser(string email, string password)
+        {
+            var dataAccess = new DataAccess();
+            dataAccess.GetEmailAndPassword(email, password);
+        }
     }
 }
