@@ -1,13 +1,16 @@
+using Authentication.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Authentication.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class AuthenticateTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void AuthenticateUser_Pass()
         {
+            var authenticationService = new AuthenticationService();
+            authenticationService.AuthenticateUser("brian@fmail.com", "password");
         }
     }
 }
