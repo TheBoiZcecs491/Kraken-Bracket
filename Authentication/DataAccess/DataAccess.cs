@@ -22,28 +22,26 @@ namespace Data.AccessLayer
                 {"brian@foomail.com", "123"},
                 {"test@fmail.com", "legoMyEggo123" }
             };
-
-            if (userDict.TryGetValue(email, out password))
+            string value;
+            if (userDict.TryGetValue(email, out value))
             {
-                return true;
-            } 
-            else
-            {
-                throw new ArgumentException("Username or password is incorrect");
+                // Passed-in value matches password associated with email
+                if (value == password)
+                {
+                    return true;
+                }
+                else if (password == null)
+                {
+                    // Passed-in password is null
+                    throw new ArgumentException("Password cannot be null");
+                }
+                else
+                {
+                    // One or both parameters do not match fields in dictionary
+                    throw new ArgumentException("Username or password is incorrect");
+                }
             }
-
-            //for (int i = 0; i < userDict.Count; i++)
-            //{
-            //    // Checks to see if the email exists in the database
-            //    if (userDict.Keys.Contains(email))
-            //    {
-            //        if (email == userDict[i])
-            //        {
-
-            //        }
-            //    }
-            //}
-         
+            return false;
         }
 
         public string GetClaim(string email)
