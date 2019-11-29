@@ -21,10 +21,31 @@ namespace Authentication.Tests
         }
 
         [TestMethod]
-        public void AuthenticateUser_Fail_PasswordDoesNotMatch()
+        public void AuthenticateUser_Fail_PasswordDoesNotMatchWithEmail()
         {
             var authenticationService = new AuthenticationService();
             authenticationService.AuthenticateUser("brian@foomail.com", "uihfruiwe");
+        }
+
+        [TestMethod]
+        public void AuthenticateUser_Fail_NullPassword()
+        {
+            var authenticationService = new AuthenticationService();
+            authenticationService.AuthenticateUser("brian@foomail.com", null);
+        }
+
+        [TestMethod]
+        public void AuthenticateUser_Fail_NullEmail()
+        {
+            var authenticationService = new AuthenticationService();
+            authenticationService.AuthenticateUser(null, "123");
+        }
+
+        [TestMethod]
+        public void AuthenticateUser_Fail_NullParameters()
+        {
+            var authenticationService = new AuthenticationService();
+            authenticationService.AuthenticateUser(null, null);
         }
     }
 }
