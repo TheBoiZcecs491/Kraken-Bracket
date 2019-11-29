@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Data.AccessLayer
 {
@@ -43,6 +44,29 @@ namespace Data.AccessLayer
             //    }
             //}
          
+        }
+
+        public string GetClaim(string email)
+        {
+            Dictionary<string, string> claims = new Dictionary<string, string>()
+            {
+                {"brian@foomail.com", new Claim("http://kraken-bracket.gg", "Host").ToString()},
+                {"test@fmail.com", new Claim("http://kraken-bracket.gg", "Co-Host").ToString()}
+            };
+            string value = "";
+            if (claims.ContainsKey(email))
+            {
+                claims.TryGetValue(email, out value).ToString();
+                return value;
+            }
+            else
+            {
+                throw new Exception();
+            }
+            //List<Claim> claims = new List<Claim>();
+            //claims.Add(new Claim("http://kraken-bracket.gg", "Host"));
+            //claims.Add(new Claim("http://kraken-bracket.gg", "Co-Host"));
+            //claims.Add(new Claim("http://kraken-bracket.gg", "SystemAdmin"));
         }
 
     }
