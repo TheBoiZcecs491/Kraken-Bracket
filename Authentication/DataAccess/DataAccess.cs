@@ -1,12 +1,10 @@
 ﻿using System;
-using MySql.Data.MySqlClient;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Data.AccessLayer
 {
     public class DataAccess
     {
-        const string CONNECTION_STRING = @"Data source=localhost; Database=kraken_bracket; User ID=root; Password=Gray$cale917!!";
 
         /// <summary>
         /// Method used to check if email and password used.
@@ -18,44 +16,34 @@ namespace Data.AccessLayer
         /// </returns>
         public bool GetEmailAndPassword(string email, string password)
         {
-            string queryString = "SELECT * FROM User WHERE Email='" + email + "' AND Password='" + password + "'";
-            MySqlConnection conn = new MySqlConnection(CONNECTION_STRING);
-            MySqlCommand searchCmd = new MySqlCommand(queryString, conn);
-            MySqlDataReader reader;
-            int count = 0;
+            IDictionary<string, string> userDict = new Dictionary<string, string>()
+            {
+                {"brian@foomail.com", "123"},
+                {"test@fmail.com", "legoMyEggo123" }
+            };
 
-            conn.Open();
-            reader = searchCmd.ExecuteReader();
-            while (reader.Read()) { count++; }
-            conn.Close();
-            if (count == 1)
+            if (userDict.TryGetValue(email, out password))
             {
                 return true;
-            }
+            } 
             else
             {
-                throw new ArgumentException("Email or password does not exist");
-            }
-        }
-
-        /// <summary>
-        /// Method used to test the MySQL connection of the database.
-        /// </summary>
-        [TestMethod]
-        public void TestConnection()
-        {
-            try
-            {
-                MySqlConnection conn = new MySqlConnection(CONNECTION_STRING);
-                conn.Open();
-                Console.WriteLine("Connection successful!!!");
-                conn.Close();
-            }
-            catch (Exception)
-            {
-                Assert.Fail();
+                throw new ArgumentException("Username or password is incorrect");
             }
 
+            //for (int i = 0; i < userDict.Count; i++)
+            //{
+            //    // Checks to see if the email exists in the database
+            //    if (userDict.Keys.Contains(email))
+            //    {
+            //        if (email == userDict[i])
+            //        {
+
+            //        }
+            //    }
+            //}
+         
         }
+
     }
 }
