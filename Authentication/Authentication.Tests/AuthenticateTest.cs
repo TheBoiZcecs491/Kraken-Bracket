@@ -14,10 +14,17 @@ namespace Authentication.Tests
         }
 
         [TestMethod]
-        public void AuthenticateUser_failed()
+        public void AuthenticateUser_Fail_EmailDoesNotExist()
         {
             var authenticationService = new AuthenticationService();
             authenticationService.AuthenticateUser("brian@goomail.com", "111");
+        }
+
+        [TestMethod]
+        public void AuthenticateUser_Fail_PasswordDoesNotMatch()
+        {
+            var authenticationService = new AuthenticationService();
+            authenticationService.AuthenticateUser("brian@foomail.com", "uihfruiwe");
         }
     }
 }
