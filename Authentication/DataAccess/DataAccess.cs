@@ -20,9 +20,11 @@ namespace Data.AccessLayer
             IDictionary<string, string> userDict = new Dictionary<string, string>()
             {
                 {"brian@foomail.com", "123"},
-                {"test@fmail.com", "legoMyEggo123" }
+                {"test@fmail.com", "legoMyEggo123"}
             };
             string value;
+
+            // Checks if email exists in dictionary
             if (userDict.TryGetValue(email, out value))
             {
                 // Passed-in value matches password associated with email
@@ -30,18 +32,26 @@ namespace Data.AccessLayer
                 {
                     return true;
                 }
-                else if (password == null)
+                else if (value != password)
                 {
-                    // Passed-in password is null
-                    throw new ArgumentException("Password cannot be null");
-                }
-                else
-                {
-                    // One or both parameters do not match fields in dictionary
-                    throw new ArgumentException("Username or password is incorrect");
+                    if (password == null)
+                    {
+                        // Passed-in password is null
+                        throw new ArgumentException("Password cannot be null");
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Passed-in password does not match with password associated with email");
+                    }
                 }
             }
+            else
+            {
+                // One or both parameters do not match fields in dictionary
+                throw new ArgumentException("Passed-in email does not exist");
+            }
             return false;
+            
         }
 
         public string GetClaim(string email)
@@ -51,7 +61,7 @@ namespace Data.AccessLayer
                 {"brian@foomail.com", new Claim("http://kraken-bracket.gg", "Host").ToString()},
                 {"test@fmail.com", new Claim("http://kraken-bracket.gg", "Co-Host").ToString()}
             };
-            string value = "";
+            string value;
             if (claims.ContainsKey(email))
             {
                 claims.TryGetValue(email, out value).ToString();
