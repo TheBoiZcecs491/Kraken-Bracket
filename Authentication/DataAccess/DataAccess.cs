@@ -54,7 +54,7 @@ namespace Data.AccessLayer
             
         }
 
-        public string GetClaim(string email)
+        public string DSGetClaim(string email)
         {
             Dictionary<string, string> claims = new Dictionary<string, string>()
             {
@@ -71,10 +71,6 @@ namespace Data.AccessLayer
             {
                 throw new Exception();
             }
-            //List<Claim> claims = new List<Claim>();
-            //claims.Add(new Claim("http://kraken-bracket.gg", "Host"));
-            //claims.Add(new Claim("http://kraken-bracket.gg", "Co-Host"));
-            //claims.Add(new Claim("http://kraken-bracket.gg", "SystemAdmin"));
         }
 
     }
