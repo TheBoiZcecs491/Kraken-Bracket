@@ -10,27 +10,22 @@ namespace Authentication.Services
         private const string _algorithm = "HmacSHA256";
         private const string _salt = "rz8LuOtFBXphj9WQfvFh";
 
-        public void AuthenticateUser(string email, string password)
+        public string AuthenticateUser(string email, string password)
         {
-            try
+            var dataAccess = new DataAccess();
+            bool found = dataAccess.GetEmailAndPassword(email, password);
+            string claim;
+            string token;
+            if (found == true)
             {
-                var dataAccess = new DataAccess();
-                bool found = dataAccess.GetEmailAndPassword(email, password);
-                if (found == true)
-                {
-                    string claim = GetClaim(email);
-                    string token = GenerateToken(email, password, claim);
-                }
-                else
-                {
-
-                }
+                claim = GetClaim(email);
+                token = GenerateToken(email, password, claim);
+                return token;
             }
-            catch (ArgumentException ae)
+            else
             {
-                Console.WriteLine(ae);
+                throw new ArgumentException("No results returned");
             }
-            catch (Exception) { }
         }
 
         public string GetClaim(string email)
