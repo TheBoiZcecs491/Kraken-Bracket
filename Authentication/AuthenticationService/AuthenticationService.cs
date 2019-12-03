@@ -36,7 +36,7 @@ namespace Authentication.Services
         public string GetClaim(string email)
         {
             var dataAccess = new DataAccess();
-            string claim = dataAccess.GetClaim(email);
+            string claim = dataAccess.DSGetClaim(email);
             return claim;
 
         }
