@@ -46,12 +46,9 @@ namespace Authentication.Tests
                 // Act
                 authenticationService.AuthenticateUser(email, password);
             }
-            catch (ArgumentException ae)
+            catch (ArgumentException)
             {
-                if (ae.Message == "No results returned")
-                {
-                    result = true;
-                }
+                result = true;
             }
             // Assert 
             Assert.IsTrue(result);
@@ -70,16 +67,15 @@ namespace Authentication.Tests
                 // Act
                 authenticationService.AuthenticateUser(email, password);
             }
-            catch (ArgumentException ae)
+            catch (ArgumentException)
             {
-                if (ae.Message == "No results returned")
-                {
-                    result = true;
-                }
+                result = true;
             }
             // Assert 
             Assert.IsTrue(result);
         }
+        
+    
 
         [TestMethod]
         public void AuthenticateUser_Fail_NullPassword()
@@ -94,13 +90,11 @@ namespace Authentication.Tests
                 // Act
                 authenticationService.AuthenticateUser(email, password);
             }
-            catch (ArgumentException ae)
+            catch (ArgumentException)
             {
-                if (ae.Message == "No results returned")
-                {
-                    result = true;
-                }
+                result = true;
             }
+       
             // Assert 
             Assert.IsTrue(result);
         }
@@ -118,12 +112,9 @@ namespace Authentication.Tests
                 // Act
                 authenticationService.AuthenticateUser(email, password);
             }
-            catch (ArgumentException ae)
+            catch (ArgumentException)
             {
-                if (ae.Message == "No results returned")
-                {
-                    result = true;
-                }
+                result = true;
             }
             // Assert 
             Assert.IsTrue(result);
@@ -142,12 +133,9 @@ namespace Authentication.Tests
                 // Act
                 authenticationService.AuthenticateUser(email, password);
             }
-            catch (ArgumentException ae)
+            catch (ArgumentException)
             {
-                if (ae.Message == "No results returned")
-                {
-                    result = true;
-                }
+                result = true;
             }
             // Assert 
             Assert.IsTrue(result);
