@@ -18,7 +18,7 @@ namespace TBZ_RegistrationService
 
         public bool isValidEmail()
         {
-            //TODO: check if the email is legit.
+            //check if the email is legit.
             // so the valid pattern is something@website.com
             // case sensitivity shouldnt matter
             // A-Z and a-z
@@ -29,8 +29,8 @@ namespace TBZ_RegistrationService
             // 64 octects in length (characters)
             //HACK: this is not the officual way to do it but it works well enough
 
-            string compRes = this.email;
-            compRes.ToLower();
+            string compRes = this.email.ToLower();
+            //compRes.ToLower();
             bool result = true;
             char look;
             char lookPrior = '\0';
@@ -52,9 +52,36 @@ namespace TBZ_RegistrationService
 
         public bool isSecurePassword()
         {
-            //TODO: same deal, this is where i'd check if the password is secure enough.
-            //this.passwd;
-            return false;//never work
+            //same deal, this is where i'd check if the password is secure enough.
+            //HACK: im just going to check if the password can meet the 4 criteria.
+            string compRes = this.passwd;
+            string lowercaseChars = "qwertyuiopasdfghjklzxcvbnm";
+            string uppercaseChars = "QWERTYUIOPASDFGHJKLZXCVBNM";
+            string numberChars = "1234567890";
+            string specialChars = " -=[];\',./\\`~!@#$%^&*()_+{}|:\"<>?";
+            bool hasLower = false;
+            bool hasUpper = false;
+            bool hasNumber = false;
+            bool hasSpecial = false;
+
+            foreach(char i in lowercaseChars)
+            {
+                if (compRes.Contains(i)) { hasLower = true; break; }
+            }
+            foreach (char i in uppercaseChars)
+            {
+                if (compRes.Contains(i)) { hasUpper = true; break; }
+            }
+            foreach (char i in numberChars)
+            {
+                if (compRes.Contains(i)) { hasNumber = true; break; }
+            }
+            foreach (char i in specialChars)
+            {
+                if (compRes.Contains(i)) { hasSpecial = true; break; }
+            }
+            
+            return (hasLower&hasUpper&hasNumber&hasSpecial&(compRes.Length>=8));
         }
         public bool matchesPasswd(string x)
         {
@@ -75,14 +102,13 @@ namespace TBZ_RegistrationService
 
         public bool storeUser(string x, string[] y)
         {
-            //TODO: this would be called to store the user in the DB.
+            //this would be called to store the user in the DB.
             //and it returns a boolean to indicate if it worked or not.
-            bool verify =
-                this.isValidEmail() &
-                this.isSecurePassword() &
-                this.matchesPasswd(x) &
-                this.emailExistsIn(y)
-                ;
+            bool cond1 = this.isValidEmail();
+            bool cond2 = this.isSecurePassword();
+            bool cond3 = this.matchesPasswd(x);
+            bool cond4 = this.emailExistsIn(y);
+            bool verify = cond1&cond2&cond3&!cond4;
             if (verify)
             { 
                 //store the user idk.
