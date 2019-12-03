@@ -14,7 +14,7 @@ namespace TBZ_registration.Tests
             //sus
             var email = "cutieBoi@fuckahobo.gay";
             var passwd = "wid#$%766";
-            var rePassword = passwd;
+            var rePassword = passwd.Clone();
             var fName = "Ronald";
             var lName = "Cornwall";
             var Account = new RegistrationService(email, passwd, fName, lName);

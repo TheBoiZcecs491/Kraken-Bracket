@@ -19,8 +19,35 @@ namespace TBZ_RegistrationService
         public bool isValidEmail()
         {
             //TODO: check if the email is legit.
-            //this.email;
-            return false;//never work
+            // so the valid pattern is something@website.com
+            // case sensitivity shouldnt matter
+            // A-Z and a-z
+            // 0-9
+            // !#$%&'*+-/=?^_`{|}~
+            // . but not at the ends
+            // only use the @ character once.
+            // 64 octects in length (characters)
+            //HACK: this is not the officual way to do it but it works well enough
+
+            string compRes = this.email;
+            compRes.ToLower();
+            bool result = true;
+            char look;
+            char lookPrior = '\0';
+            bool foundAtSign = false;
+            string validChars = "!#$%&\\*+-/=?^_`{|}qwertyuiopasdfghjklzxcvbnm.1234567890@";
+            string validChars2 = "qwertyuiopasdfghjklzxcvbnm.1234567890@";
+
+            for (int i = 0; i<compRes.Length;i++){
+                look = compRes[i];
+                if ((i == 0 | i==(compRes.Length-1) | lookPrior=='.') & look == '.') { result = false; break; }
+                else if (foundAtSign & look == '@') { result = false; break; }
+                else if (!foundAtSign & !validChars.Contains(look)) { result = false; break; }
+                else if (!validChars2.Contains(look)) { result = false; break; }
+                if (look == '@') { foundAtSign = true; }
+                lookPrior = look;
+            }
+            return result;
         }
 
         public bool isSecurePassword()
@@ -41,7 +68,6 @@ namespace TBZ_RegistrationService
             {
                 if (this.email.Equals(i)) {
                     result = true;
-                    break;
                 }
             }
             return result;
