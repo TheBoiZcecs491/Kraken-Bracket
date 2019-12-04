@@ -1,8 +1,0 @@
-C:\Users\BRIAN\Documents\CSULB\2019\Fall 2019\CECS 491A\Kraken-Bracket\Authentication\AuthenticationService\bin\Debug\netcoreapp3.0\AuthenticationService.deps.json
-C:\Users\BRIAN\Documents\CSULB\2019\Fall 2019\CECS 491A\Kraken-Bracket\Authentication\AuthenticationService\bin\Debug\netcoreapp3.0\AuthenticationService.dll
-C:\Users\BRIAN\Documents\CSULB\2019\Fall 2019\CECS 491A\Kraken-Bracket\Authentication\AuthenticationService\bin\Debug\netcoreapp3.0\AuthenticationService.pdb
-C:\Users\BRIAN\Documents\CSULB\2019\Fall 2019\CECS 491A\Kraken-Bracket\Authentication\AuthenticationService\obj\Debug\netcoreapp3.0\AuthenticationService.csprojAssemblyReference.cache
-C:\Users\BRIAN\Documents\CSULB\2019\Fall 2019\CECS 491A\Kraken-Bracket\Authentication\AuthenticationService\obj\Debug\netcoreapp3.0\AuthenticationService.AssemblyInfoInputs.cache
-C:\Users\BRIAN\Documents\CSULB\2019\Fall 2019\CECS 491A\Kraken-Bracket\Authentication\AuthenticationService\obj\Debug\netcoreapp3.0\AuthenticationService.AssemblyInfo.cs
-C:\Users\BRIAN\Documents\CSULB\2019\Fall 2019\CECS 491A\Kraken-Bracket\Authentication\AuthenticationService\obj\Debug\netcoreapp3.0\AuthenticationService.dll
-C:\Users\BRIAN\Documents\CSULB\2019\Fall 2019\CECS 491A\Kraken-Bracket\Authentication\AuthenticationService\obj\Debug\netcoreapp3.0\AuthenticationService.pdb
