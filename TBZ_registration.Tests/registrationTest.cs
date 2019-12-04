@@ -10,24 +10,41 @@ namespace TBZ_registration.Tests
         [TestMethod]
         public void Registration_validEmailAndPass_Pass()
         {
-            //sus
-            //sus
-            var email = "cutieBoi@fuckahobo.gay";
-            var passwd = "Wid#$%766";
-            var rePassword = passwd.Clone();
-            var fName = "Ronald";
-            var lName = "Cornwall";
-            var Account = new RegistrationService(email, passwd, fName, lName);
-            var result = false;
+            //this is a rudementary test to see if the system can detect failed account creations.
+            string[] rePassword =
+            {
+                "Wid#$%766",
+                "fortyK4K5!($^",
+                "j33$M4n"
+            };
+            RegistrationService[] Account =
+                {
+                    new RegistrationService("cutieBoi@phuckahobo.gov", "Wid#$%766", "Ronald", "Cornwall"),
+                    new RegistrationService("kernal.enderman.mason@masonsguild.uk", "fortyK3K5!($^", "Cernal", "Elderman"),
+                    new RegistrationService("waglfragl@gmail.com", "j33$M4n", "Jonny", "Uno")
+                } ;
+            var result = true;
             string[] emailsInTheDB =
             {
                 "personman1000@online.net",
                 "sassykitty9998@hotmail.com"
             };
+            bool[] corrects =
+            {
+                true,
+                false,
+                false
+            };
 
             try
             {
-                result = Account.storeUser(passwd, emailsInTheDB);
+                for(int i=0;i<corrects.Length;i++)
+                {
+                    if((Account[i].storeUser(rePassword[i], emailsInTheDB))!=corrects[i])
+                    {
+                        result = false;
+                    }
+                }
                 //so this would effectivly just make the account exist.
             }
             catch(ArgumentException)
@@ -55,10 +72,16 @@ namespace TBZ_registration.Tests
             {
                 "georgelopez@fuckahobo.gay",
                 "sassykitty9998@hotmail.com",
-                "1234 Temple.Ave 69420"
+                "1234 Temple.Ave 69420",
+                "kevinpootis923@yahoo.com",
+                "darren.wallace.staff@gmail.com",
+                "E><3nc1b73M45t3r@hackersunited.net"
             };
             bool[,] corrects =
             {//  isValid,isInDB
+                { true, false },
+                { true, true },
+                { false, false },
                 { true, false },
                 { true, true},
                 { false, false}
@@ -66,7 +89,8 @@ namespace TBZ_registration.Tests
             string[] emailsInTheDB =
             {
                 "personman1000@online.net",
-                "sassykitty9998@hotmail.com"
+                "sassykitty9998@hotmail.com",
+                "darren.wallace.staff@gmail.com"
             };
             try
             {
@@ -95,12 +119,18 @@ namespace TBZ_registration.Tests
             string[] passwds =
             {
                 "123Love",
-                "@F@F#*FMWE*Rf8wf734jf"
+                "@F@F#*FMWE*Rf8wf734jf",
+                "ghg931)(%JDN",
+                "gonot2TEHDWARVES3console",
+                "d3G^"
             };
             bool[] corrects =
             {
                 false,
-                true
+                true,
+                true,
+                false,
+                false
             };
             try
             {
