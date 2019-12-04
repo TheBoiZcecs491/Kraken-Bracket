@@ -1,8 +1,0 @@
-C:\Users\Brian Nguyen\Documents\CSULB\2019\Fall 2019\CECS-491A\Kraken-Bracket\TBZ_Authentication\TBZ_DataAccess\bin\Debug\netstandard2.0\TBZ_DataAccess.deps.json
-C:\Users\Brian Nguyen\Documents\CSULB\2019\Fall 2019\CECS-491A\Kraken-Bracket\TBZ_Authentication\TBZ_DataAccess\bin\Debug\netstandard2.0\TBZ_DataAccess.dll
-C:\Users\Brian Nguyen\Documents\CSULB\2019\Fall 2019\CECS-491A\Kraken-Bracket\TBZ_Authentication\TBZ_DataAccess\bin\Debug\netstandard2.0\TBZ_DataAccess.pdb
-C:\Users\Brian Nguyen\Documents\CSULB\2019\Fall 2019\CECS-491A\Kraken-Bracket\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.csprojAssemblyReference.cache
-C:\Users\Brian Nguyen\Documents\CSULB\2019\Fall 2019\CECS-491A\Kraken-Bracket\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.AssemblyInfoInputs.cache
-C:\Users\Brian Nguyen\Documents\CSULB\2019\Fall 2019\CECS-491A\Kraken-Bracket\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.AssemblyInfo.cs
-C:\Users\Brian Nguyen\Documents\CSULB\2019\Fall 2019\CECS-491A\Kraken-Bracket\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.dll
-C:\Users\Brian Nguyen\Documents\CSULB\2019\Fall 2019\CECS-491A\Kraken-Bracket\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.pdb
