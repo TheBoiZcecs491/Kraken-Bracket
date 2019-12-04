@@ -47,7 +47,7 @@ namespace TBZ_RegistrationService
                 if (look == '@') { foundAtSign = true; }
                 lookPrior = look;
             }
-            return result;
+            return (result&compRes.Length<=200);
         }
 
         public bool isSecurePassword()
@@ -81,7 +81,7 @@ namespace TBZ_RegistrationService
                 if (compRes.Contains(i)) { hasSpecial = true; break; }
             }
             
-            return (hasLower&hasUpper&hasNumber&hasSpecial&(compRes.Length>=8));
+            return (hasLower&hasUpper&hasNumber&hasSpecial&(compRes.Length>=8 & compRes.Length<=2000));
         }
         public bool matchesPasswd(string x)
         {
