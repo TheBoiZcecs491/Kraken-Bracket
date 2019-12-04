@@ -9,7 +9,7 @@ namespace TBZdatabaseConnection
     {
         public void Connect(string connectString)
         {
-            if (connectString != @"server=localhost; userid=root;    password=password; database=cecs491testdb")
+            if (connectString != @"server=localhost; userid=root; password=password; database=cecs491testdb")
             {
                 throw new ArgumentException("Wrong info");
             }

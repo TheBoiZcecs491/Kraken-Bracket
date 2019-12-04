@@ -13,7 +13,7 @@ namespace TBZdatabaseConnectionTest
         {
             var result = false;
             string connectString = "Wrong info";
-            var Database = new TBZdatabase();
+            var Database = new TBZ_database();
 
             try
             {
@@ -34,7 +34,7 @@ namespace TBZdatabaseConnectionTest
         {
             var result = false;
             string connectString = @"server=localhost; userid=root; password=password; database=cecs491testdb";
-            var Database = new TBZdatabase();
+            var Database = new TBZ_database();
 
             try
             {
@@ -56,7 +56,7 @@ namespace TBZdatabaseConnectionTest
         {
             var result = false;
             string connectString = @"server=local; userid=root; password=password; database=cecs491testdb";
-            var Database = new TBZdatabase();
+            var Database = new TBZ_database();
 
             try
             {
@@ -77,7 +77,7 @@ namespace TBZdatabaseConnectionTest
         {
             var fileName = "MyTestFull.txt";
             var result = false;
-            var Database = new TBZdatabase();
+            var Database = new TBZ_database();
 
             try
             {
@@ -98,7 +98,7 @@ namespace TBZdatabaseConnectionTest
         {
             var fileName = "MyTestDup.txt";
             var result = false;
-            var Database = new TBZdatabase();
+            var Database = new TBZ_database();
 
             try
             {
@@ -119,7 +119,7 @@ namespace TBZdatabaseConnectionTest
         {
             var result = false;
             var fileName = "DontExist.txt";
-            var Database = new TBZdatabase();
+            var Database = new TBZ_database();
 
             try
             {
@@ -138,7 +138,7 @@ namespace TBZdatabaseConnectionTest
         {
             var result = false;
             var fileName = "MyTest.txt";
-            var Database = new TBZdatabase();
+            var Database = new TBZ_database();
 
             try
             {
