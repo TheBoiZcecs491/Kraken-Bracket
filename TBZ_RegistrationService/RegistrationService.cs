@@ -28,6 +28,7 @@ namespace TBZ_RegistrationService
             // only use the @ character once.
             // 64 octects in length (characters)
             //HACK: this is not the officual way to do it but it works well enough
+            //TODO: implement a much better way to check secure passwords.
 
             string compRes = this.email.ToLower();
             //compRes.ToLower();

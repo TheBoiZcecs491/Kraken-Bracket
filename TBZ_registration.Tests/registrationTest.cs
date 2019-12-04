@@ -11,6 +11,7 @@ namespace TBZ_registration.Tests
         public void Registration_validEmailAndPass_Pass()
         {
             //this is a rudementary test to see if the system can detect failed account creations.
+            //TODO, come up with more test variables that take weird cases into account.
             string[] rePassword =
             {
                 "Wid#$%766",
@@ -64,7 +65,7 @@ namespace TBZ_registration.Tests
         [TestMethod]
         public void Registration_validEmailGauntlet_Pass()
         {
-            //TODO: so to test the email validiy checker ima make a list of strings
+            //so to test the email validiy checker ima make a list of strings
             //and a list of booleans indicating if that is supposed to be a valid
             //email or not. I got the idea for this from my game theory professor.
             bool result = true;
@@ -112,7 +113,7 @@ namespace TBZ_registration.Tests
         [TestMethod]
         public void Registration_validPasswordGauntlet_Pass()
         {
-            //TODO: so to test the email validiy checker ima make a list of strings
+            //so to test the email validiy checker ima make a list of strings
             //and a list of booleans indicating if that is supposed to be a valid
             //email or not. I got the idea for this from my game theory professor.
             bool result = true;
