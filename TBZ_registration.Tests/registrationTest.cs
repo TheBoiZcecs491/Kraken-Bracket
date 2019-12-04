@@ -46,17 +46,9 @@ namespace TBZ_registration.Tests
                         result = false;
                     }
                 }
-                //so this would effectivly just make the account exist.
             }
-            catch(ArgumentException)
-            {
-                //my teammates didnt do their job so im punishing them here.
-                //most of the time this will get thrown.
-            }
-            catch(Exception)
-            {
-                //something BAD happend, ya goof.
-            }
+            catch(ArgumentException) { result = false; }
+            catch (Exception) { result = false; }
 
             Assert.IsTrue(result);
 
