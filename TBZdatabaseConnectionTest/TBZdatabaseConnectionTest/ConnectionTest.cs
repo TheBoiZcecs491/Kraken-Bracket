@@ -114,12 +114,13 @@ namespace TBZdatabaseConnectionTest
         }
 
         [TestMethod]
-        //test for database duplication error
+        //test for server if file exist
         public void Check_If_File_Exist_failed()
         {
             var result = false;
             var fileName = "DontExist.txt";
             var Database = new TBZdatabase();
+
             try
             {
                 Database.InsertFile(fileName);
@@ -138,6 +139,7 @@ namespace TBZdatabaseConnectionTest
             var result = false;
             var fileName = "MyTest.txt";
             var Database = new TBZdatabase();
+
             try
             {
                 Database.InsertFile(fileName);
