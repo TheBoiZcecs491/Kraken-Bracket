@@ -7,6 +7,9 @@ namespace Authentication.Tests
     [TestClass]
     public class AuthenticateTest
     {
+        /// <summary>
+        /// Test case where credentials are valid
+        /// </summary>
         [TestMethod]
         public void AuthenticateUser_Pass()
         {
@@ -14,15 +17,16 @@ namespace Authentication.Tests
             var authenticationService = new AuthenticationService();
             string email = "brian@foomail.com";
             string password = "123";
-            bool result = true;
+            bool result;
 
             try
             {
                 // Act
                 authenticationService.AuthenticateUser(email, password);
+                result = true;
             }
-            catch (ArgumentException )
-            {   
+            catch (ArgumentException)
+            {
                 result = false;
             }
             
@@ -30,6 +34,9 @@ namespace Authentication.Tests
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Test case where the email passed in does not exist
+        /// </summary>
         [TestMethod]
         public void AuthenticateUser_Fail_EmailDoesNotExist()
         {
@@ -52,6 +59,10 @@ namespace Authentication.Tests
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Test case where email passed in exists in the database, but the password passed-in does not
+        /// match the password associated with the email in the database
+        /// </summary>
         [TestMethod]
         public void AuthenticateUser_Fail_PasswordDoesNotMatchWithEmail()
         {
@@ -74,7 +85,9 @@ namespace Authentication.Tests
         }
 
 
-
+        /// <summary>
+        /// Test case where no password is passed in
+        /// </summary>
         [TestMethod]
         public void AuthenticateUser_Fail_NullPassword()
         {
@@ -97,6 +110,9 @@ namespace Authentication.Tests
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Test case where no email is passed in
+        /// </summary>
         [TestMethod]
         public void AuthenticateUser_Fail_NullEmail()
         {
@@ -118,6 +134,9 @@ namespace Authentication.Tests
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Test case where neither email nor password is passed in
+        /// </summary>
         [TestMethod]
         public void AuthenticateUser_Fail_NullParameters()
         {

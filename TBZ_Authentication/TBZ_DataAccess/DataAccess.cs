@@ -10,8 +10,10 @@ namespace Data.AccessLayer
         /// <summary>
         /// Method used to check if email and password used.
         /// </summary>
+        /// 
         /// <param name="email"></param>
         /// <param name="password"></param>
+        /// 
         /// <returns>
         /// True if both email and password exist. False if at least 1 does not.
         /// </returns>
@@ -54,6 +56,11 @@ namespace Data.AccessLayer
 
         }
 
+        /// <summary>
+        /// Method used to get claim associated with user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public string DSGetClaim(string email)
         {
             Dictionary<string, string> claims = new Dictionary<string, string>()
