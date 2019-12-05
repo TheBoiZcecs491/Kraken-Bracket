@@ -6,6 +6,17 @@ namespace Data.AccessLayer
 {
     public class DataAccess
     {
+        Dictionary<string, string> userDict = new Dictionary<string, string>()
+        {
+            {"brian@foomail.com", "123"},
+            {"test@fmail.com", "legoMyEggo123"}
+        };
+        Dictionary<string, string> claims = new Dictionary<string, string>()
+        {
+            {"brian@foomail.com", new Claim("http://kraken-bracket.gg", "Host").ToString()},
+            {"test@fmail.com", new Claim("http://kraken-bracket.gg", "Co-Host").ToString()}
+        };
+
 
         /// <summary>
         /// Method used to check if email and password used.
@@ -19,20 +30,10 @@ namespace Data.AccessLayer
         /// </returns>
         public bool GetEmailAndPassword(string email, string password)
         {
-            IDictionary<string, string> userDict = new Dictionary<string, string>()
-            {
-                {"brian@foomail.com", "123"},
-                {"test@fmail.com", "legoMyEggo123"}
-            };
-            string value;
-
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-            {
-                throw new ArgumentException("Email or password cannot be null / empty");
-            }
+            
 
             // Checks if email exists in dictionary
-            if (userDict.TryGetValue(email, out value))
+            if (userDict.TryGetValue(email, out string value))
             {
                 // Passed-in value matches password associated with email
                 if (value == password)
@@ -53,11 +54,6 @@ namespace Data.AccessLayer
         // FIXME: Research if this is how to assign claims
         public string DSGetClaim(string email)
         {
-            Dictionary<string, string> claims = new Dictionary<string, string>()
-            {
-                {"brian@foomail.com", new Claim("http://kraken-bracket.gg", "Host").ToString()},
-                {"test@fmail.com", new Claim("http://kraken-bracket.gg", "Co-Host").ToString()}
-            };
             if (claims.ContainsKey(email))
             {
                 // TryGetValue(string key, out string value) - gets value associated with key.
