@@ -28,7 +28,7 @@ namespace Authentication.Services
             string token;
             if (found == true)
             {
-                claim = GetClaim(email);
+                claim = dataAccess.DSGetClaim(email);
                 token = GenerateToken(email, password, claim);
                 return token;
             }
@@ -39,24 +39,12 @@ namespace Authentication.Services
         }
 
         /// <summary>
-        /// Method used to call
-        /// </summary>
+        /// Method used to generate token. The token is generated based on the user's email, 
+        /// password and claim
         /// 
-        /// <param name="email"></param>
+        /// Algorithm found on the following website:
+        /// http://www.primaryobjects.com/2015/05/08/token-based-authentication-for-web-service-apis-in-c-mvc-net/
         /// 
-        /// <returns>
-        /// Claim associated with user
-        /// </returns>
-        public string GetClaim(string email)
-        {
-            var dataAccess = new DataAccess();
-            string claim = dataAccess.DSGetClaim(email);
-            return claim;
-
-        }
-
-        /// <summary>
-        /// Method used to generate token
         /// </summary>
         /// 
         /// <param name="email"></param>
@@ -64,10 +52,11 @@ namespace Authentication.Services
         /// <param name="claim"></param>
         /// 
         /// <returns>
-        /// Token associated with user
+        /// Token that will be assigned to the user
         /// </returns>
         public string GenerateToken(string email, string password, string claim)
         {
+            // NOTE: string.Join() concatenates all elements in a string array.
             string hash = string.Join(":", new string[] { email, password, claim });
             string hashLeft = "";
             string hashRight = "";
