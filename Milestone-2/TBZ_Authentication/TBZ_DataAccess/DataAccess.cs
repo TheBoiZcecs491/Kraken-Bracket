@@ -48,6 +48,9 @@ namespace Data.AccessLayer
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
+        /// 
+
+        // FIXME: Research if this is how to assign claims
         public string DSGetClaim(string email)
         {
             Dictionary<string, string> claims = new Dictionary<string, string>()
@@ -55,10 +58,11 @@ namespace Data.AccessLayer
                 {"brian@foomail.com", new Claim("http://kraken-bracket.gg", "Host").ToString()},
                 {"test@fmail.com", new Claim("http://kraken-bracket.gg", "Co-Host").ToString()}
             };
-            string value;
             if (claims.ContainsKey(email))
             {
-                claims.TryGetValue(email, out value).ToString();
+                // TryGetValue(string key, out string value) - gets value associated with key.
+                // The statement below will return the claim associated to the email address.
+                claims.TryGetValue(email, out string value).ToString();
                 return value;
             }
             else
