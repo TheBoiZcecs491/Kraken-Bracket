@@ -26,6 +26,11 @@ namespace Data.AccessLayer
             };
             string value;
 
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentException("Email or password cannot be null / empty");
+            }
+
             // Checks if email exists in dictionary
             if (userDict.TryGetValue(email, out value))
             {
@@ -34,26 +39,8 @@ namespace Data.AccessLayer
                 {
                     return true;
                 }
-                else if (value != password)
-                {
-                    if (password == null)
-                    {
-                        // Passed-in password is null
-                        throw new ArgumentException("Password cannot be null");
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Passed-in password does not match with password associated with email");
-                    }
-                }
-            }
-            else
-            {
-                // One or both parameters do not match fields in dictionary
-                throw new ArgumentException("Passed-in email does not exist");
             }
             return false;
-
         }
 
         /// <summary>
