@@ -22,6 +22,10 @@ namespace Authentication.Services
         /// </returns>
         public string AuthenticateUser(string email, string password)
         {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentException("Email or password cannot be null / empty");
+            }
             var dataAccess = new DataAccess();
             bool found = dataAccess.GetEmailAndPassword(email, password);
             string claim;
