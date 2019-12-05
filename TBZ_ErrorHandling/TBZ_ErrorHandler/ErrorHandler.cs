@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TBZ_ErrorHandler
 {
-    public class Class1
+    public class ErrorHandler
     {
     }
 

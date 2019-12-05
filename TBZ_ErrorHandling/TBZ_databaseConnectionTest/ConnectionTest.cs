@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using TBZdatabaseConnection;
+using TBZ_databaseConnection;
 
-namespace TBZdatabaseConnectionTest
+namespace TBZ_databaseConnectionTest
 {
     [TestClass]
     public class ConnectionTest

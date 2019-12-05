@@ -3,7 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.IO;
 
-namespace TBZdatabaseConnection
+namespace TBZ_databaseConnection
 {
     public class TBZ_database
     {
@@ -69,7 +69,8 @@ namespace TBZdatabaseConnection
         public bool CheckFileSize(string fileName)
         {
             FileInfo file = new FileInfo(fileName);
-            if (file.Length > 50)//replace 50 with data.avalibleSpace()
+            sampleDatabase db = new sampleDatabase();
+            if (file.Length > db.getDataStoreSize())//replace db.getDataStoreSize()
             {
                 throw new ArgumentException("Not enough space in database");
             }
@@ -83,11 +84,11 @@ namespace TBZdatabaseConnection
         /// <returns></returns>
         public bool CheckFileDup(string fileName)
         {
+            sampleDatabase db = new sampleDatabase();
             using (StreamReader sr = File.OpenText(fileName))
             {
-                string s = "";
-                s = sr.ReadLine();
-                if (s == "Hello")
+                string s = sr.ReadLine();
+                if (Array.Exists(db.getSampleData(), element => element == s))
                 {
                     throw new ArgumentException("Duplication error");
                 }
@@ -128,12 +129,21 @@ namespace TBZdatabaseConnection
             //}
         }
 
-        public class FileErrorException: Exception
+        public class sampleDatabase
         {
-            public FileErrorException(string message): base(message)
-            {
+            int storageSize = 50;
+            string[] sampleData = { "Hello", "Hi" };
 
+            public int getDataStoreSize()
+            {
+                return this.storageSize;
             }
+
+            public string[] getSampleData()
+            {
+                return this.sampleData;
+            }
+
         }
     }
 }

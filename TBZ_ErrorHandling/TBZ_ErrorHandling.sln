@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ_databaseConnectionTest", "TBZdatabaseConnectionTest\TBZ_databaseConnectionTest.csproj", "{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ_ErrorHandler", "TBZ_ErrorHandler\TBZ_ErrorHandler.csproj", "{CD25A635-FA2D-4ADA-BE84-9C69DC714D4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ_databaseConnection", "TBZdatabaseConnection\TBZ_databaseConnection.csproj", "{C05B5A43-10EC-41FA-B222-18E1ED230D70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ_ErrorHandler_Test", "TBZ_ErrorHandler_Test\TBZ_ErrorHandler_Test.csproj", "{16D171B3-6F1C-407A-9883-97E133D2DBF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ_ErrorHandler", "TBZ_ErrorHandler\TBZ_ErrorHandler.csproj", "{CD25A635-FA2D-4ADA-BE84-9C69DC714D4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ_databaseConnectionTest", "TBZ_databaseConnectionTest\TBZ_databaseConnectionTest.csproj", "{5744200A-687A-44D2-9742-2EEBA2C67840}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ_ErrorHandler_Test", "TBZ_ErrorHandler_Test\TBZ_ErrorHandler_Test.csproj", "{16D171B3-6F1C-407A-9883-97E133D2DBF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ_databaseConnection", "TBZ_databaseConnection\TBZ_databaseConnection.csproj", "{E0A9EB66-B9D7-47C3-AE38-980B9C81AE57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD3AA4C3-65DA-44B8-8814-C9C315436B8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C05B5A43-10EC-41FA-B222-18E1ED230D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C05B5A43-10EC-41FA-B222-18E1ED230D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C05B5A43-10EC-41FA-B222-18E1ED230D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C05B5A43-10EC-41FA-B222-18E1ED230D70}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD25A635-FA2D-4ADA-BE84-9C69DC714D4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD25A635-FA2D-4ADA-BE84-9C69DC714D4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD25A635-FA2D-4ADA-BE84-9C69DC714D4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +25,14 @@ Global
 		{16D171B3-6F1C-407A-9883-97E133D2DBF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16D171B3-6F1C-407A-9883-97E133D2DBF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16D171B3-6F1C-407A-9883-97E133D2DBF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5744200A-687A-44D2-9742-2EEBA2C67840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5744200A-687A-44D2-9742-2EEBA2C67840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5744200A-687A-44D2-9742-2EEBA2C67840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5744200A-687A-44D2-9742-2EEBA2C67840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A9EB66-B9D7-47C3-AE38-980B9C81AE57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A9EB66-B9D7-47C3-AE38-980B9C81AE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A9EB66-B9D7-47C3-AE38-980B9C81AE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A9EB66-B9D7-47C3-AE38-980B9C81AE57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
