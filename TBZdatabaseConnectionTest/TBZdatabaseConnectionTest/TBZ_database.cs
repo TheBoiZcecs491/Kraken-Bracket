@@ -1,6 +1,6 @@
 ﻿namespace TBZdatabaseConnectionTest
 {
-    internal class TBZdatabase
+    internal class TBZ_database
     {
         public TBZdatabase()
         {
