@@ -13,4 +13,9 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AuthorizationService\TBZ_AuthorizationService.csproj" />
+    <ProjectReference Include="..\TBZ_Authentication\TBZ_DataAccess\TBZ_DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

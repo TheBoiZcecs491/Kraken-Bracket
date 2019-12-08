@@ -1,31 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj": {}
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\AuthorizationService.csproj": {}
   },
   "projects": {
-    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj": {
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\AuthorizationService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj",
-        "projectName": "TBZ_DataAccess",
-        "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj",
+        "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\AuthorizationService.csproj",
+        "projectName": "AuthorizationService",
+        "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\AuthorizationService.csproj",
         "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
-        "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\obj\\",
+        "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netstandard2.0"
+          "netcoreapp3.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netstandard2.0": {
+          "netcoreapp3.0": {
             "projectReferences": {}
           }
         },
@@ -36,15 +36,7 @@
         }
       },
       "frameworks": {
-        "netstandard2.0": {
-          "dependencies": {
-            "NETStandard.Library": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.0.3, )",
-              "autoReferenced": true
-            }
-          },
+        "netcoreapp3.0": {
           "imports": [
             "net461",
             "net462",
@@ -55,6 +47,11 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }

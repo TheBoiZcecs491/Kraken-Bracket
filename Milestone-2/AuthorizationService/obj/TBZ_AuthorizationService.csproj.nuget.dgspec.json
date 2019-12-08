@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj": {}
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\TBZ_AuthorizationService.csproj": {}
   },
   "projects": {
-    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj": {
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\TBZ_AuthorizationService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj",
-        "projectName": "TBZ_AuthenticationService",
-        "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj",
+        "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\TBZ_AuthorizationService.csproj",
+        "projectName": "TBZ_AuthorizationService",
+        "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\TBZ_AuthorizationService.csproj",
         "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
-        "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\obj\\",
+        "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\AuthorizationService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
