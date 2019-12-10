@@ -1,0 +1,8 @@
+/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/bin/Debug/netcoreapp3.0/TBZ_Logging.deps.json
+/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/bin/Debug/netcoreapp3.0/TBZ_Logging.dll
+/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/bin/Debug/netcoreapp3.0/TBZ_Logging.pdb
+/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/Debug/netcoreapp3.0/TBZ_Logging.AssemblyInfoInputs.cache
+/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/Debug/netcoreapp3.0/TBZ_Logging.AssemblyInfo.cs
+/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/Debug/netcoreapp3.0/TBZ_Logging.dll
+/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/Debug/netcoreapp3.0/TBZ_Logging.pdb
+/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/Debug/netcoreapp3.0/TBZ_Logging.csprojAssemblyReference.cache
