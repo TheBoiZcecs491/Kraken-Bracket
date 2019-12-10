@@ -57,10 +57,8 @@ namespace Data.AccessLayer
             {
                 // TryGetValue(string key, out string value) - gets value associated with key.
                 // The statement below will return the claims associated to the email address.
-                claims.TryGetValue(email, out List<string> value).ToString();
-                // Convert the list of claims into an array
-                string claimCollection = string.Join(",", value.ToArray());
-                return claimCollection;
+                claims.TryGetValue(email, out string value).ToString();
+                return value;
             }
             else
             {
