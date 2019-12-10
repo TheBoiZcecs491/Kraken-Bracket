@@ -10,6 +10,15 @@ namespace AuthorizationService
             var dataAccess = new DataAccess();
             bool permission = false;
             string claim = dataAccess.DSGetClaim(email);
+            if((!isLoggedIn) || (claim == "Registered User"))
+            {
+                if ((action == "Search For Tournament Brackets") ||
+                    (action == "Search For Event") ||
+                    (action == "Search For Registered User"))
+                {
+                    permission = true;
+                }
+            }
             if(isLoggedIn)
             {
                 if((action == "Update Event Information") ||
@@ -20,16 +29,17 @@ namespace AuthorizationService
                 {
                     if (claim == "Host" || claim == "Co-Host")
                         permission = true;
-                    return permission;
                 }
-
+                else if ((action == "Check Into A Match") ||
+                         (action == "Have A Substitute"))
+                {
+                    if (claim == "Competitor")
+                        permission = true;
+                }
             }
             else
-            {
                 Console.WriteLine("User is not authorized to perform: " + action);
-                return permission;
-            }
-
+            return permission;
         }
     }
 }
