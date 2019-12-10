@@ -12,12 +12,17 @@ namespace TBZ_registration.Tests
         {
             //this is a rudementary test to see if the system can detect failed account creations.
             //TODO, come up with more test variables that take weird cases into account.
+
+            //arrange
+
+            //each user's attempt at retyping the password
             string[] rePassword =
             {
                 "Wid#$%766",
                 "fortyK4K5!($^",
                 "j33$M4n"
             };
+            //each user's account creation info
             RegistrationService[] Account =
                 {
                     new RegistrationService("cutieBoi@phuckahobo.gov", "Wid#$%766", "Ronald", "Cornwall"),
@@ -25,11 +30,15 @@ namespace TBZ_registration.Tests
                     new RegistrationService("waglfragl@gmail.com", "j33$M4n", "Jonny", "Uno")
                 } ;
             var result = true;
+
+            //emails in our test DB
             string[] emailsInTheDB =
             {
                 "personman1000@online.net",
                 "sassykitty9998@hotmail.com"
             };
+
+            //the expected results of each test.
             bool[] corrects =
             {
                 true,
@@ -37,6 +46,9 @@ namespace TBZ_registration.Tests
                 false
             };
 
+            //act
+
+            //run each test
             try
             {
                 for(int i=0;i<corrects.Length;i++)
@@ -50,8 +62,8 @@ namespace TBZ_registration.Tests
             catch(ArgumentException) { result = false; }
             catch (Exception) { result = false; }
 
+            //assert
             Assert.IsTrue(result);
-
         }
 
         [TestMethod]
@@ -60,7 +72,12 @@ namespace TBZ_registration.Tests
             //so to test the email validiy checker ima make a list of strings
             //and a list of booleans indicating if that is supposed to be a valid
             //email or not. I got the idea for this from my game theory professor.
+
+            //arrange
+
             bool result = true;
+
+            // a list of emails people might type in.
             string[] emails =
             {
                 "georgelopez@fuckahobo.gay",
@@ -70,6 +87,8 @@ namespace TBZ_registration.Tests
                 "darren.wallace.staff@gmail.com",
                 "E><3nc1b73M45t3r@hackersunited.net"
             };
+
+            //expected test results
             bool[,] corrects =
             {//  isValid,isInDB
                 { true, false },
@@ -79,12 +98,18 @@ namespace TBZ_registration.Tests
                 { true, true},
                 { false, false}
             };
+
+            //emails in our test DB
             string[] emailsInTheDB =
             {
                 "personman1000@online.net",
                 "sassykitty9998@hotmail.com",
                 "darren.wallace.staff@gmail.com"
             };
+
+            //act
+
+            //run each test
             try
             {
                 for (int i = 0; i < emails.Length; i++)
@@ -99,6 +124,8 @@ namespace TBZ_registration.Tests
             }
             catch (ArgumentException) { result = false; }
             catch (Exception) { result = false; }
+
+            //assert
             Assert.IsTrue(result);
         }
 
@@ -108,7 +135,12 @@ namespace TBZ_registration.Tests
             //so to test the email validiy checker ima make a list of strings
             //and a list of booleans indicating if that is supposed to be a valid
             //email or not. I got the idea for this from my game theory professor.
+
+            //arrange
+
             bool result = true;
+
+            //list of passwords users might type in
             string[] passwds =
             {
                 "123Love",
@@ -117,6 +149,8 @@ namespace TBZ_registration.Tests
                 "gonot2TEHDWARVES3console",
                 "d3G^"
             };
+
+            //expected results.
             bool[] corrects =
             {
                 false,
@@ -125,6 +159,10 @@ namespace TBZ_registration.Tests
                 false,
                 false
             };
+
+            //act
+
+            //run the tests
             try
             {
                 for (int i = 0; i < passwds.Length; i++)
@@ -138,6 +176,41 @@ namespace TBZ_registration.Tests
             }
             catch (ArgumentException) { result = false; }
             catch (Exception) { result = false; }
+
+            //assert
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+
+        public void getMethods_Pass()
+        {
+            //this was a aftertought, its an implementation of all the get() methods.
+
+            bool result = false;
+
+            //arrange
+
+            //someones registration info
+            string usrEmail = "personman1000@online.net";
+            string usrPasswd = "123love";
+            string usrFName = "Bob";
+            string usrLName = "Stupit";
+            var tempAccount = new RegistrationService(usrEmail, usrPasswd, usrFName, usrLName);
+            
+            //act
+
+            //check if each get returns back the same value
+            try
+            {
+                result = (usrFName == tempAccount.Extras.FirstName);
+                result = (usrLName == tempAccount.Extras.LastName);
+                result = (usrEmail == tempAccount.Email);
+                result = (usrPasswd == tempAccount.Password);
+            }
+            catch (ArgumentException) { result = false; }
+            catch (Exception) { result = false; }
+            
+            //assert
             Assert.IsTrue(result);
         }
     }
