@@ -24,8 +24,8 @@ namespace Data.AccessLayer
         /// Method used to check if email and password used.
         /// </summary>
         /// 
-        /// <param name="email"></param>
-        /// <param name="password"></param>
+        /// <param name="email">Email to search in the datastore</param>
+        /// <param name="password">Password to search for in the datastore</param>
         /// 
         /// <returns>
         /// True if both email and password exist. False if at least 1 does not.
@@ -52,7 +52,7 @@ namespace Data.AccessLayer
         /// 
         public string DSGetClaim(string email)
         {
-            // var userPrincipal = new ClaimsPrincipal(new[] { brianIdentity }).ToString();
+            // Checks to see if the passed-in email exists in the claims datastore
             if (claims.ContainsKey(email))
             {
                 // TryGetValue(string key, out string value) - gets value associated with key.
