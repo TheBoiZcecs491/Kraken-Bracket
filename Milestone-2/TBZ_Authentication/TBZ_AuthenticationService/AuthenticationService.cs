@@ -28,12 +28,14 @@ namespace Authentication.Services
             }
             var dataAccess = new DataAccess();
             bool found = dataAccess.GetEmailAndPassword(email, password);
-            string claim;
-            string token;
+            string hashedPassword = GetHashedPassword(password);
+            string claim, token;
+            // string key;
             if (found == true)
             {
                 claim = dataAccess.DSGetClaim(email);
-                token = GenerateToken(email, password, claim);
+                token = GenerateToken(email, hashedPassword, claim);
+                // key = DecodeToken(token);
                 return token;
             }
             else
@@ -73,6 +75,24 @@ namespace Authentication.Services
             }
             string token = Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Join(":", hashLeft, hashRight)));
             return token;
+        }
+
+        public string DecodeToken(string token)
+        {
+            string key = Encoding.UTF8.GetString(Convert.FromBase64String(token));
+            return key;
+        }
+
+        public static string GetHashedPassword(string password)
+        {
+            string key = string.Join(":", new string[] { password, _salt });
+            using (HMAC hmac = HMACSHA256.Create(_algorithm))
+            {
+                // Hash the key.
+                hmac.Key = Encoding.UTF8.GetBytes(_salt);
+                hmac.ComputeHash(Encoding.UTF8.GetBytes(key));
+                return Convert.ToBase64String(hmac.Hash);
+            }
         }
     }
 }
