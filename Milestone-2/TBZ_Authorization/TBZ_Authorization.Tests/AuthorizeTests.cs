@@ -6,7 +6,7 @@ using TBZ_Authorization.Services;
 namespace TBZ_Authorization.Test
 {
     [TestClass]
-    public class AuthorizationConfirmTest_Pass
+    public class AuthorizationTests
     {
         [TestMethod]
         public void AuthorizeUser_LoggedIn_Pass()
