@@ -12,9 +12,9 @@ namespace TBZ_Authorization.Test
         {
             // Arrange
             var authorizationService = new AuthorizationService();
-            string email = "brian@foomail.com";
-            string action = "Search For Tournament Brackets";
-            bool isLoggedIn = true;
+            string email = "test@fmail.com";
+            string action = "Update Event Information";
+            bool isLoggedIn = false;
             bool result = true;
 
             try

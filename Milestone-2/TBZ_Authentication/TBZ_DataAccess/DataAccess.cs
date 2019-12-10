@@ -14,7 +14,7 @@ namespace Data.AccessLayer
         Dictionary<string, string> claims = new Dictionary<string, string>()
         {
             {"brian@foomail.com", new Claim("http://kraken-bracket.gg", "Host").ToString()},
-            {"test@fmail.com", new Claim("http://kraken-bracket.gg", "Co-Host").ToString()}
+            {"test@fmail.com", new Claim("http://kraken-bracket.gg", "Registered User").ToString()},
         };
 
 
