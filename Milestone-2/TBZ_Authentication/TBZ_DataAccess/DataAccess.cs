@@ -11,10 +11,10 @@ namespace Data.AccessLayer
             {"brian@foomail.com", "123"},
             {"test@fmail.com", "legoMyEggo123"}
         };
-        Dictionary<string, string> claims = new Dictionary<string, string>()
+        Dictionary<string, List<string>> claims = new Dictionary<string, List<string>>()
         {
-            {"brian@foomail.com", new Claim("http://kraken-bracket.gg", "Host").ToString()},
-            {"test@fmail.com", new Claim("http://kraken-bracket.gg", "Registered User").ToString()},
+            {"brian@foomail.com", new List<string>(){ "brian@foomail.com", "Host"} },
+            {"test@fmail.com", new List<string>(){ "test@fmail.com", "Co-Host"} },
         };
 
 
@@ -54,12 +54,15 @@ namespace Data.AccessLayer
         // FIXME: Research if this is how to assign claims
         public string DSGetClaim(string email)
         {
+            // var userPrincipal = new ClaimsPrincipal(new[] { brianIdentity }).ToString();
             if (claims.ContainsKey(email))
             {
                 // TryGetValue(string key, out string value) - gets value associated with key.
-                // The statement below will return the claim associated to the email address.
-                claims.TryGetValue(email, out string value).ToString();
-                return value;
+                // The statement below will return the claims associated to the email address.
+                claims.TryGetValue(email, out List<string> value).ToString();
+                // Convert the list of claims into an array
+                string claimCollection = string.Join(",", value.ToArray());
+                return claimCollection;
             }
             else
             {
