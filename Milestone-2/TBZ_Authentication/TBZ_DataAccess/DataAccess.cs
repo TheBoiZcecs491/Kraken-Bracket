@@ -13,11 +13,11 @@ namespace Data.AccessLayer
             {"test@fmail.com", "legoMyEggo123"}
         };
 
-        // Initialize dictionary with email (string) as keys and list of claims (List<string> as the values
-        Dictionary<string, List<string>> claims = new Dictionary<string, List<string>>()
+        // Initialize dictionary with email (string) as keys and claims (key) as the values
+        Dictionary<string, string> claims = new Dictionary<string, string>()
         {
-            {"brian@foomail.com", new List<string>(){ "brian@foomail.com", "Host"} },
-            {"test@fmail.com", new List<string>(){ "test@fmail.com", "Co-Host"} },
+            {"brian@foomail.com", "Host" },
+            {"test@fmail.com", "Co-host" },
         };
 
         /// <summary>
