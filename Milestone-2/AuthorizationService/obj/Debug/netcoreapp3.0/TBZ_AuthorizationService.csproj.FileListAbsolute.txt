@@ -1,0 +1,11 @@
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\bin\Debug\netcoreapp3.0\TBZ_AuthorizationService.deps.json
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\bin\Debug\netcoreapp3.0\TBZ_AuthorizationService.dll
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\bin\Debug\netcoreapp3.0\TBZ_AuthorizationService.pdb
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\bin\Debug\netcoreapp3.0\TBZ_DataAccess.dll
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\bin\Debug\netcoreapp3.0\TBZ_DataAccess.pdb
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\obj\Debug\netcoreapp3.0\TBZ_AuthorizationService.csprojAssemblyReference.cache
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\obj\Debug\netcoreapp3.0\TBZ_AuthorizationService.AssemblyInfoInputs.cache
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\obj\Debug\netcoreapp3.0\TBZ_AuthorizationService.AssemblyInfo.cs
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\obj\Debug\netcoreapp3.0\TBZ_AuthorizationService.csproj.CopyComplete
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\obj\Debug\netcoreapp3.0\TBZ_AuthorizationService.dll
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\AuthorizationService\obj\Debug\netcoreapp3.0\TBZ_AuthorizationService.pdb

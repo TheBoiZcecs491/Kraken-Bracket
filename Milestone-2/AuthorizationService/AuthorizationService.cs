@@ -1,7 +1,7 @@
 ﻿using System;
 using Data.AccessLayer;
 
-namespace AuthorizationService
+namespace Authorization.Services
 {
     public class AuthorizationService
     {
@@ -10,6 +10,7 @@ namespace AuthorizationService
             var dataAccess = new DataAccess();
             bool permission = false;
             string claim = dataAccess.DSGetClaim(email);
+            // Access to users who are registered and non-registered (not logged in)
             if((!isLoggedIn) || (claim == "Registered User"))
             {
                 if ((action == "Search For Tournament Brackets") ||
@@ -19,7 +20,8 @@ namespace AuthorizationService
                     permission = true;
                 }
             }
-            if(isLoggedIn)
+            // Access to Hosts, Co-hosts, and competitors
+            else if(isLoggedIn)
             {
                 if((action == "Update Event Information") ||
                    (action == "Update Tournament Bracket Information") ||
@@ -37,6 +39,7 @@ namespace AuthorizationService
                         permission = true;
                 }
             }
+            // If action is not found or claim does not match, display restriction message
             else
                 Console.WriteLine("User is not authorized to perform: " + action);
             return permission;

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthorizationService\TBZ_AuthorizationService.csproj" />
+    <ProjectReference Include="..\TBZ_Authentication\TBZ_AuthenticationService\TBZ_AuthenticationService.csproj" />
     <ProjectReference Include="..\TBZ_Authentication\TBZ_DataAccess\TBZ_DataAccess.csproj" />
   </ItemGroup>
 
