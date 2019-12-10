@@ -1,0 +1,8 @@
+/Users/dylan/Projects/TBZ_ArchivingTest/TBZ_Archiving/bin/Debug/netcoreapp3.0/TBZ_Archiving.deps.json
+/Users/dylan/Projects/TBZ_ArchivingTest/TBZ_Archiving/bin/Debug/netcoreapp3.0/TBZ_Archiving.dll
+/Users/dylan/Projects/TBZ_ArchivingTest/TBZ_Archiving/bin/Debug/netcoreapp3.0/TBZ_Archiving.pdb
+/Users/dylan/Projects/TBZ_ArchivingTest/TBZ_Archiving/obj/Debug/netcoreapp3.0/TBZ_Archiving.csprojAssemblyReference.cache
+/Users/dylan/Projects/TBZ_ArchivingTest/TBZ_Archiving/obj/Debug/netcoreapp3.0/TBZ_Archiving.AssemblyInfoInputs.cache
+/Users/dylan/Projects/TBZ_ArchivingTest/TBZ_Archiving/obj/Debug/netcoreapp3.0/TBZ_Archiving.AssemblyInfo.cs
+/Users/dylan/Projects/TBZ_ArchivingTest/TBZ_Archiving/obj/Debug/netcoreapp3.0/TBZ_Archiving.dll
+/Users/dylan/Projects/TBZ_ArchivingTest/TBZ_Archiving/obj/Debug/netcoreapp3.0/TBZ_Archiving.pdb
