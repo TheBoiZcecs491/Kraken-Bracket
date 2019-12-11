@@ -14,8 +14,8 @@ namespace TBZ_Authorization.Test
             // Arrange
             var authorizationService = new AuthorizationService();
             string email = "test@fmail.com";
-            string action = "Update Event Information";
-            bool isLoggedIn = false;
+            string action = "Check Into A Match";
+            bool isLoggedIn = true;
             bool result = true;
 
             try
@@ -26,6 +26,31 @@ namespace TBZ_Authorization.Test
             catch (ArgumentException)
             {
                 result = false;
+            }
+            catch (Exception) { }
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void AuthorizeUser_NotLoggedIn_Fail()
+        {
+            // Arrange
+            var authorizationService = new AuthorizationService();
+            string email = "test@fmail.com";
+            string action = "Check Into A Match";
+            bool isLoggedIn = false;
+            bool result = false;
+
+            try
+            {
+                //Act
+                authorizationService.UserPermission(email, action, isLoggedIn);
+            }
+            catch (ArgumentException)
+            {
+                result = true;
             }
             catch (Exception) { }
 

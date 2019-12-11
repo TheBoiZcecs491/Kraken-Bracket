@@ -12,3 +12,4 @@ D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.AssemblyInfo.cs
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.dll
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.pdb
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.csprojAssemblyReference.cache
