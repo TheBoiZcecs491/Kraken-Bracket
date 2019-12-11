@@ -3,26 +3,21 @@ using MySql.Data.MySqlClient;
 using System;
 using System.IO;
 
-namespace TBZ_databaseConnection
+namespace TBZ_databaseConnect
 {
     public class TBZ_database
     {
-        public void Connect(string connectString)
+        public string GetConnString()
         {
-            if (connectString != @"server=localhost; userid=root; password=password; database=cecs491testdb")
-            {
-                throw new ArgumentException("Wrong info");
-            }
-            MySqlConnection conn = new MySqlConnection(connectString);
-            conn.Open();
-            Console.WriteLine("Connection Open");
-            //Console.ReadKey();
-            conn.Close();
-            Console.WriteLine("Connection Closed");
-            //Console.ReadKey();
+            return @"server=localhost; userid=root; password=password; database=cecs491testdb";
         }
 
-        public void Connects(string connectString)
+        public string GetConnStringWrong()
+        {
+            return @"wrongInfo";
+        }
+
+        public void Connect(string connectString)
         {
             MySqlConnection conn = new MySqlConnection(connectString);
             try
@@ -131,7 +126,7 @@ namespace TBZ_databaseConnection
 
         public class sampleDatabase
         {
-            int storageSize = 50;
+            int storageSize = 25;
             string[] sampleData = { "Hello", "Hi" };
 
             public int getDataStoreSize()

@@ -1,40 +1,43 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using TBZ_databaseConnection;
+using System.IO;
+using TBZ_databaseConnect;
 
 namespace TBZ_databaseConnectionTest
 {
     [TestClass]
     public class ConnectionTest
     {
-        [TestMethod]
-        //test for wrong input
-        public void Connect_failed()
-        {
-            var result = false;
-            string connectString = "Wrong info";
-            var Database = new TBZ_database();
+        TBZ_database Database = new TBZ_database();
 
-            try
+        [TestMethod]
+        public void createFile()
+        {
+            //pass file
+            using (StreamWriter sw = File.CreateText("MyTest.txt"))
             {
-                Database.Connect(connectString);
+                sw.WriteLine("Pass");
             }
-            catch (ArgumentException)
+
+            //failed file dup
+            using (StreamWriter sw = File.CreateText("MyTestDup.txt"))
             {
-                result = true;
+                sw.WriteLine("Hello");
             }
-            catch (Exception)
-            { }
-            Assert.IsTrue(result);
+
+            //failed file full 
+            using (StreamWriter sw = File.CreateText("MyTestFull.txt"))
+            {
+                sw.WriteLine("123456789012345678901234567890");
+            }
         }
 
         [TestMethod]
-        //test for correct input
-        public void Connect_pass()
+        //test for a wrong server
+        public void Connect_offline_passed()
         {
             var result = false;
-            string connectString = @"server=localhost; userid=root; password=password; database=cecs491testdb";
-            var Database = new TBZ_database();
+            string connectString = Database.GetConnString();
 
             try
             {
@@ -55,12 +58,11 @@ namespace TBZ_databaseConnectionTest
         public void Connect_offline_failed()
         {
             var result = false;
-            string connectString = @"server=local; userid=root; password=password; database=cecs491testdb";
-            var Database = new TBZ_database();
+            string connectString = Database.GetConnStringWrong();
 
             try
             {
-                Database.Connects(connectString);
+                Database.Connect(connectString);
             }
             catch (ArgumentException)
             {
@@ -77,7 +79,6 @@ namespace TBZ_databaseConnectionTest
         {
             var fileName = "MyTestFull.txt";
             var result = false;
-            var Database = new TBZ_database();
 
             try
             {
@@ -98,7 +99,6 @@ namespace TBZ_databaseConnectionTest
         {
             var fileName = "MyTestDup.txt";
             var result = false;
-            var Database = new TBZ_database();
 
             try
             {
@@ -138,7 +138,6 @@ namespace TBZ_databaseConnectionTest
         {
             var result = false;
             var fileName = "MyTest.txt";
-            var Database = new TBZ_database();
 
             try
             {
