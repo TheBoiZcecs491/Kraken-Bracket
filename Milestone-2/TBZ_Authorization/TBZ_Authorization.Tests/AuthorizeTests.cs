@@ -107,5 +107,55 @@ namespace TBZ_Authorization.Test
             // Assert
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void AuthorizeUser_NonRegistered_Action_Pass()
+        {
+            // Arrange
+            var authorizationService = new AuthorizationService();
+            string email = "";
+            string action = "Search For Tournament Brackets";
+            bool isLoggedIn = false;
+            bool result = true;
+
+            try
+            {
+                //Act
+                authorizationService.UserPermission(email, action, isLoggedIn);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void AuthorizeUser__NonRegistered_Action_Fail()
+        {
+            // Arrange
+            var authorizationService = new AuthorizationService();
+            string email = "";
+            string action = "Update Tournament Bracket";
+            bool isLoggedIn = false;
+            bool result = false;
+
+            try
+            {
+                //Act
+                authorizationService.UserPermission(email, action, isLoggedIn);
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            catch (Exception) { }
+
+            // Assert
+            Assert.IsTrue(result);
+        }
     }
 }

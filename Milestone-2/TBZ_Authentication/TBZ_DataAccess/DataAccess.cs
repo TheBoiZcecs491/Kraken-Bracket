@@ -41,6 +41,8 @@ namespace Data.AccessLayer
             {"test@fmail.com", new List<string>(){ "Check Into A Match", "Have A Substitute",
                                                     "Search For Tournament Brackets",
                                                     "Search For Event", "Search For Registered User"} },
+            {"", new List<string>(){ "Search For Tournament Brackets","Search For Event",
+                                        "Search For Registered User"} }
         };
 
         Dictionary<string, List<string>> claims = new Dictionary<string, List<string>>()

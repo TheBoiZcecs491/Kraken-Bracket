@@ -10,8 +10,13 @@ namespace TBZ_Authorization.Services
             var dataAccess = new DataAccess();
             bool permission = false;
             string claim = dataAccess.DSGetClaim(email);
+            // If user is non-registered
+            if((string.IsNullOrEmpty(email)) && (isLoggedIn == false) && claim.Contains(action))
+            {
+                permission = true;
+            }
             // Access to users who are registered and non-registered (not logged in)
-            if ((isLoggedIn) && (claim.Contains(action)))
+            else if ((isLoggedIn) && (claim.Contains(action)))
             {
                 permission = true;
             }
