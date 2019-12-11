@@ -12,13 +12,25 @@ namespace TBZ_Logging
         /// </summary>
         /// <param name="doc"> String of document path </param>
         /// <param name="runs"> Integer of the number of attempts to try to log </param>
-        public Logging(string doc, int runs) { path = doc; tries = runs; }
+        public Logging(string doc, int runs)
+        {
+            if (string.IsNullOrWhiteSpace(doc) || !doc.Contains(".csv"))
+            {
+                throw new ArgumentException("Invalid document type.");
+            }
+            if (runs < 1)
+            {
+                throw new ArgumentException("Invalid amount of tries.");
+            }
+            path = doc;
+            tries = runs;
+        }
 
-        /// <summary>
-        /// A helper method to date and time stamp the current log using DateTime struct.
-        /// </summary>
-        /// <returns> String of the current date and time </returns>
-        protected string TimeStamp()
+	    /// <summary>
+	    /// A helper method to date and time stamp the current log using DateTime struct.
+	    /// </summary>
+	    /// <returns> String of the current date and time </returns>
+	    protected string TimeStamp()
         {
             DateTime timestamp = DateTime.UtcNow;                           // Current Date & Time (UTC)
             string time = timestamp.ToString("yyyy-MM-dd, HH:mm:ss:ff");    // Format: Year-Month-Day, Hour:Minute:Second:Milisecond
@@ -60,6 +72,10 @@ namespace TBZ_Logging
                 catch
                 {
                     Console.Write("Path Failed " + (i + 1) + " Time(s).\n");
+                    if (i == 2)
+                    {
+                        throw new FileNotFoundException();
+                    }
                     success = false;
                 }
             }
@@ -74,18 +90,12 @@ namespace TBZ_Logging
         /// <param name="msg"> String of error message (if an error occurred), "" otherwise </param>
         /// <param name="id"> String of User/System Unique Identification </param>
         /// <returns> Boolean of success or failure to log </returns>
-        // TODO: consider async Task<bool[]> Log()
-
         public bool Log(string operation, string msg, string id) {
             bool success;
             //test operation and id for validity
             if (string.IsNullOrWhiteSpace(operation) || string.IsNullOrWhiteSpace(id))
             {
                 throw new ArgumentNullException();
-            }
-            if (tries < 1)
-            {
-                throw new ArgumentException();
             }
             string time = TimeStamp();
             string log = FormatLog(operation, msg, id, time);
