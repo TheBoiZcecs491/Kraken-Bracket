@@ -8,24 +8,30 @@
     ".NETCoreApp,Version=v3.0": []
   },
   "packageFolders": {
-    "/Users/dylan/.nuget/packages/": {}
+    "C:\\Users\\whoisfa\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/TBZ_Logging.csproj",
+      "projectUniqueName": "C:\\Users\\whoisfa\\Source\\Repos\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\TBZ_Logging.csproj",
       "projectName": "TBZ_Logging",
-      "projectPath": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/TBZ_Logging.csproj",
-      "packagesPath": "/Users/dylan/.nuget/packages/",
-      "outputPath": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/",
+      "projectPath": "C:\\Users\\whoisfa\\Source\\Repos\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\TBZ_Logging.csproj",
+      "packagesPath": "C:\\Users\\whoisfa\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\whoisfa\\Source\\Repos\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "/Users/dylan/.config/NuGet/NuGet.Config"
+        "C:\\Users\\whoisfa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -42,21 +48,10 @@
     "frameworks": {
       "netcoreapp3.0": {
         "imports": [
-          "net461",
-          "net462",
-          "net47",
-          "net471",
-          "net472",
-          "net48"
+          "net461"
         ],
         "assetTargetFallback": true,
-        "warn": true,
-        "frameworkReferences": {
-          "Microsoft.NETCore.App": {
-            "privateAssets": "all"
-          }
-        },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
+        "warn": true
       }
     }
   }
