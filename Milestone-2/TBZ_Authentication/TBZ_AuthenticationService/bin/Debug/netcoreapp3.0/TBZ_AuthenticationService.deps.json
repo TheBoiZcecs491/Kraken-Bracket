@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "TBZ_AuthenticationService/1.0.0": {
+        "dependencies": {
+          "TBZ_DataAccess": "1.0.0"
+        },
+        "runtime": {
+          "TBZ_AuthenticationService.dll": {}
+        }
+      },
+      "TBZ_DataAccess/1.0.0": {
+        "runtime": {
+          "TBZ_DataAccess.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TBZ_AuthenticationService/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TBZ_DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
