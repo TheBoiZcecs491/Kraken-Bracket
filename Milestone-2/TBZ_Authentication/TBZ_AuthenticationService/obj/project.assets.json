@@ -1,0 +1,92 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "TBZ_DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/TBZ_DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TBZ_DataAccess.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TBZ_DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../TBZ_DataAccess/TBZ_DataAccess.csproj",
+      "msbuildProject": "../TBZ_DataAccess/TBZ_DataAccess.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.0": [
+      "TBZ_DataAccess >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Brian Nguyen\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj",
+      "projectName": "TBZ_AuthenticationService",
+      "projectPath": "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj",
+      "packagesPath": "C:\\Users\\Brian Nguyen\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_AuthenticationService\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\Brian Nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "projectReferences": {
+            "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.0": {
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
