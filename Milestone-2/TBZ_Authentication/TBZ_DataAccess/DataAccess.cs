@@ -13,11 +13,19 @@ namespace Data.AccessLayer
             {"test@fmail.com", "legoMyEggo123"}
         };
 
-        // Initialize dictionary with email (string) as keys and claims (key) as the values
-        Dictionary<string, string> claims = new Dictionary<string, string>()
+        // Have these test users with actions assigned
+        Dictionary<string, List<string>> userActions = new Dictionary<string, List<string>>()
         {
-            {"brian@foomail.com", "Host" },
-            {"test@fmail.com", "Co-host" },
+            {"brian@foomail.com", new List<string>(){"Update Event Information",
+                                        "Update Tournament Bracket Information",
+                                        "Manage Tournament Bracket",
+                                        "Delete Tournament Bracket and Event",
+                                        "Assign Other Registered Users To Be A Co-Host",
+                                        "Search For Tournament Brackets",
+                                        "Search For Event", "Search For Registered User"} },
+            {"test@fmail.com", new List<string>(){ "Check Into A Match", "Have A Substitute",
+                                                    "Search For Tournament Brackets",
+                                                    "Search For Event", "Search For Registered User"} },
         };
 
         /// <summary>
@@ -53,12 +61,13 @@ namespace Data.AccessLayer
         public string DSGetClaim(string email)
         {
             // Checks to see if the passed-in email exists in the claims datastore
-            if (claims.ContainsKey(email))
+            if (userActions.ContainsKey(email))
             {
                 // TryGetValue(string key, out string value) - gets value associated with key.
                 // The statement below will return the claims associated to the email address.
-                claims.TryGetValue(email, out string value).ToString();
-                return value;
+                userActions.TryGetValue(email, out List<string> value).ToString();
+                string claimCollection = string.Join(",", value.ToArray());
+                return claimCollection;
             }
             else
             {
