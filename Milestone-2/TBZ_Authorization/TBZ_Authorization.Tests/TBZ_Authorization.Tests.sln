@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ_Authorization.Tests", "TBZ_Authorization.Tests.csproj", "{355715A8-CC62-493D-9393-E1E0B6D1C4F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ_AuthorizationService", "..\TBZ_AuthorizationService\TBZ_AuthorizationService.csproj", "{ABE07D6B-8FD4-438E-A253-B8A4206D4CED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ_DataAccess", "..\..\TBZ_Authentication\TBZ_DataAccess\TBZ_DataAccess.csproj", "{5985982E-9BA6-4359-AE33-74BF034A651E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{355715A8-CC62-493D-9393-E1E0B6D1C4F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{355715A8-CC62-493D-9393-E1E0B6D1C4F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{355715A8-CC62-493D-9393-E1E0B6D1C4F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{355715A8-CC62-493D-9393-E1E0B6D1C4F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABE07D6B-8FD4-438E-A253-B8A4206D4CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABE07D6B-8FD4-438E-A253-B8A4206D4CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABE07D6B-8FD4-438E-A253-B8A4206D4CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABE07D6B-8FD4-438E-A253-B8A4206D4CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5985982E-9BA6-4359-AE33-74BF034A651E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5985982E-9BA6-4359-AE33-74BF034A651E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5985982E-9BA6-4359-AE33-74BF034A651E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5985982E-9BA6-4359-AE33-74BF034A651E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

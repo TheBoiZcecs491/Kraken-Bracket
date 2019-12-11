@@ -1,0 +1,46 @@
+﻿<Properties StartupConfiguration="{355715A8-CC62-493D-9393-E1E0B6D1C4F5}|Default">
+  <MonoDevelop.Ide.ItemProperties.TBZ__Authorization.Tests PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AuthorizeTests.cs">
+    <Files>
+      <File FileName="../../TBZ_Authentication/TBZ_DataAccess/DataAccess.cs" Line="1" Column="1" />
+      <File FileName="AuthorizeTests.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TBZ_Authorization.Tests" expanded="True">
+            <Node name="TBZ_Authorization.Tests" expanded="True">
+              <Node name="AuthorizeTests.cs" selected="True" />
+            </Node>
+            <Node name="TBZ_AuthorizationService" expanded="True" />
+            <Node name="TBZ_DataAccess" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="TBZ_Authorization.Tests" expanded="True" selected="True">
+            <Node name="TBZ_Authorization.Tests" expanded="True">
+              <Node name="TBZ_Authorization" expanded="True">
+                <Node name="Test" expanded="True">
+                  <Node name="AuthorizationTests" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/kevinphan/Documents/GitHub/Kraken-Bracket/Milestone-2/TBZ_Authorization/TBZ_AuthorizationService/AuthorizationService.cs" line="10" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\TBZdatabaseConnectionTest"
+    "\\Milestone-2",
+    "\\Milestone-2\\TBZ_Authorization"
   ],
-  "SelectedNode": "\\TBZdatabaseConnectionTest\\TBZdatabaseConnectionTest.sln",
+  "SelectedNode": "\\Milestone-2\\TBZ_Authorization\\TBZ_AuthorizationService",
   "PreviewInSolutionExplorer": false
 }

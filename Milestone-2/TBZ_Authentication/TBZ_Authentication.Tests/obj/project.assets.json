@@ -5748,23 +5748,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Brian Nguyen\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Kevin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_Authentication.Tests\\TBZ_Authentication.Tests.csproj",
+      "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_Authentication.Tests\\TBZ_Authentication.Tests.csproj",
       "projectName": "TBZ_Authentication.Tests",
-      "projectPath": "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_Authentication.Tests\\TBZ_Authentication.Tests.csproj",
-      "packagesPath": "C:\\Users\\Brian Nguyen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_Authentication.Tests\\obj\\",
+      "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_Authentication.Tests\\TBZ_Authentication.Tests.csproj",
+      "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
+      "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_Authentication.Tests\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Brian Nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5777,8 +5773,8 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj": {
-              "projectPath": "C:\\Users\\Brian Nguyen\\Documents\\CSULB\\2019\\Fall 2019\\CECS-491A\\Kraken-Bracket\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj"
+            "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj": {
+              "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj"
             }
           }
         }
