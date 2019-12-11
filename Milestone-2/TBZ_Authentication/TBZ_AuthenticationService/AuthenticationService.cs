@@ -28,9 +28,6 @@ namespace Authentication.Services
                 throw new ArgumentException("Email or password cannot be null / empty");
             }
 
-            // Declare claim and token string variables
-            string claim, token;
-
             // Initialize DataAccess object
             var dataAccess = new DataAccess();
 
@@ -39,15 +36,15 @@ namespace Authentication.Services
             
             // If the email and password combination exists in the database
             if (found == true)
-            {
+            { 
                 // Retrieve hashed password
                 string hashedPassword = GetHashedPassword(password);
 
                 // Retrieve claim associated with user
-                claim = dataAccess.DSGetClaim(email);
+                string claim = dataAccess.DSGetClaim(email);
 
                 // Generate token to assign to user
-                token = GenerateToken(email, hashedPassword, claim);
+                string token = GenerateToken(email, hashedPassword, claim);
                 return token;
             }
 
