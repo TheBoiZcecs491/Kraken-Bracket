@@ -16,6 +16,10 @@ namespace TBZ_Authorization.Services
                 permission = true;
             }
             // If action is not found or claim does not match, display restriction message
+            else if((!isLoggedIn))
+            {
+                throw new ArgumentException("User is not logged in\n");
+            }
             else
             {
                 throw new ArgumentException("User is not authorized to perform: " + action);
