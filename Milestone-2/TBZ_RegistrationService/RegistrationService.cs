@@ -54,11 +54,11 @@ namespace TBZ_RegistrationService
             this.extras = new RegistrationInfo(z, w);
             if (!this.isValidEmail())
             {
-                throw new ArgumentException();
+                throw new ArgumentException("invalid email syntax");
             }
             if (!this.isSecurePassword())
             {
-                throw new ArgumentException();
+                throw new ArgumentException("password lacks needed criteria");
             }
 
 
