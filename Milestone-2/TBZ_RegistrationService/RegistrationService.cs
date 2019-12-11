@@ -52,6 +52,16 @@ namespace TBZ_RegistrationService
             this.email = x;
             this.passwd = y;
             this.extras = new RegistrationInfo(z, w);
+            if (!this.isValidEmail())
+            {
+                throw new ArgumentException();
+            }
+            if (!this.isSecurePassword())
+            {
+                throw new ArgumentException();
+            }
+
+
         }
 
         public bool isValidEmail()
@@ -156,16 +166,21 @@ namespace TBZ_RegistrationService
         {
             //this would be called to store the user in the DB.
             //and it returns a boolean to indicate if it worked or not.
-            bool cond1 = this.isValidEmail();
-            bool cond2 = this.isSecurePassword();
-            bool cond3 = this.matchesPasswd(x);
-            bool cond4 = this.emailExistsIn(y);
-            bool verify = cond1&cond2&cond3&!cond4;
-            if (verify)
-            { 
-                // store the user idk. this is where an server query would go.
-                // it should pass along the needed info found in this class.
+            //bool cond1 = this.isValidEmail();
+            //bool cond2 = this.isSecurePassword();
+            if (!this.matchesPasswd(x))
+            {
+                throw new ArgumentException("passwords do not match");
             }
+            if (this.emailExistsIn(y))
+            {
+                throw new ArgumentException("email exists in the list");
+            }
+
+            bool verify;
+            // store the user idk. this is where an server query would go.
+            // it should pass along the needed info found in this class.
+            verify = true;
 
             return verify;
             // if this object's parameters are correct, it returns true.

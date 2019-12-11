@@ -23,12 +23,35 @@ namespace TBZ_registration.Tests
                 "j33$M4n"
             };
             //each user's account creation info
-            RegistrationService[] Account =
-                {
-                    new RegistrationService("cutieBoi@phuckahobo.gov", "Wid#$%766", "Ronald", "Cornwall"),
-                    new RegistrationService("kernal.enderman.mason@masonsguild.uk", "fortyK3K5!($^", "Cernal", "Elderman"),
-                    new RegistrationService("waglfragl@gmail.com", "j33$M4n", "Jonny", "Uno")
-                } ;
+
+            string[] userNames =
+            {
+                "cutieBoi@phuckahobo.gov",
+                "kernal.enderman.mason@masonsguild.uk",
+                "waglfragl@gmail.com"
+            };
+
+            string[] userPasswds =
+            {
+                "Wid#$%766",
+                "fortyK3K5!($^",
+                "j33$M4n"
+            };
+
+            string[] userFNames =
+            {
+                "Ronald",
+                "Cernal",
+                "Jonny",
+            };
+
+            string[] userLNames =
+            {
+                "Cornwall",
+                "Elderman",
+                "Uno"
+            };
+
             var result = true;
 
             //emails in our test DB
@@ -51,15 +74,22 @@ namespace TBZ_registration.Tests
             //run each test
             try
             {
+                RegistrationService Account;
                 for(int i=0;i<corrects.Length;i++)
                 {
-                    if((Account[i].storeUser(rePassword[i], emailsInTheDB))!=corrects[i])
+                    try
                     {
-                        result = false;
+                        Account = new RegistrationService(userNames[i], userPasswds[i], userFNames[i], userLNames[i]);
+                        Account.storeUser(rePassword[i], emailsInTheDB);
+                        if (corrects[i] != true) result = false;
                     }
+                    catch (ArgumentException)
+                    {
+                        if (corrects[i] != false) result = false; 
+                    }
+                    
                 }
             }
-            catch(ArgumentException) { result = false; }
             catch (Exception) { result = false; }
 
             //assert
@@ -80,7 +110,7 @@ namespace TBZ_registration.Tests
             // a list of emails people might type in.
             string[] emails =
             {
-                "georgelopez@fuckahobo.gay",
+                "georgelopez@phuckahobo.gay",
                 "sassykitty9998@hotmail.com",
                 "1234 Temple.Ave 69420",
                 "kevinpootis923@yahoo.com",
@@ -89,14 +119,14 @@ namespace TBZ_registration.Tests
             };
 
             //expected test results
-            bool[,] corrects =
-            {//  isValid,isInDB
-                { true, false },
-                { true, true },
-                { false, false },
-                { true, false },
-                { true, true},
-                { false, false}
+            bool[] corrects =
+            {//should this email work?
+                true,
+                false,
+                false,
+                true,
+                false,
+                false
             };
 
             //emails in our test DB
@@ -112,17 +142,21 @@ namespace TBZ_registration.Tests
             //run each test
             try
             {
-                for (int i = 0; i < emails.Length; i++)
+                for (int i = 0; i < corrects.Length; i++)
                 {
-                    var tempAccount = new RegistrationService(emails[i], "123love", "Bob", "Stupit");
-                    bool[] tempState = { tempAccount.isValidEmail(), tempAccount.emailExistsIn(emailsInTheDB) };
-                    if ((tempState[0] != corrects[i,0]) | (tempState[1] != corrects[i, 1]))
+                    try
                     {
-                        result = false;
+                        var Account = new RegistrationService(emails[i], "Wid#$%766", "Bob", "Stupit");
+                        Account.storeUser("Wid#$%766", emailsInTheDB);
+                        if (corrects[i] != true) result = false;
                     }
+                    catch (ArgumentException)
+                    {
+                        if (corrects[i] != false) result = false;
+                    }
+
                 }
             }
-            catch (ArgumentException) { result = false; }
             catch (Exception) { result = false; }
 
             //assert
@@ -167,14 +201,17 @@ namespace TBZ_registration.Tests
             {
                 for (int i = 0; i < passwds.Length; i++)
                 {
-                    var tempAccount = new RegistrationService("personman1000@online.net", passwds[i], "Bob", "Stupit");
-                    if (tempAccount.isSecurePassword() != corrects[i])
+                    try
                     {
-                        result = false;
+                        var tempAccount = new RegistrationService("personman1000@online.net", passwds[i], "Bob", "Stupit");
+                        if (corrects[i] != true) result = false;
+                    }
+                    catch (ArgumentException)
+                    {
+                        if (corrects[i] != false) result = false;
                     }
                 }
             }
-            catch (ArgumentException) { result = false; }
             catch (Exception) { result = false; }
 
             //assert
@@ -192,16 +229,16 @@ namespace TBZ_registration.Tests
 
             //someones registration info
             string usrEmail = "personman1000@online.net";
-            string usrPasswd = "123love";
+            string usrPasswd = "Wid#$%766";
             string usrFName = "Bob";
             string usrLName = "Stupit";
-            var tempAccount = new RegistrationService(usrEmail, usrPasswd, usrFName, usrLName);
-            
+
             //act
 
             //check if each get returns back the same value
             try
             {
+                var tempAccount = new RegistrationService(usrEmail, usrPasswd, usrFName, usrLName);
                 result = (usrFName == tempAccount.Extras.FirstName);
                 result = (usrLName == tempAccount.Extras.LastName);
                 result = (usrEmail == tempAccount.Email);
