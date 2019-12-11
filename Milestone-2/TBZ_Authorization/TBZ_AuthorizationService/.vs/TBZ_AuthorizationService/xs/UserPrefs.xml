@@ -1,4 +1,5 @@
-﻿<Properties>
+﻿<Properties StartupConfiguration="{45115EC4-9A3C-45BB-80B5-9FEAE1747E6A}|Default">
+  <MonoDevelop.Ide.ItemProperties.TBZ__Authorization.Tests PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="../../TBZ_Authentication/TBZ_DataAccess/DataAccess.cs">
     <Files>
       <File FileName="../TBZ_Authorization.Tests/AuthorizeTests.cs" Line="116" Column="30" />
@@ -8,17 +9,13 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TBZ_AuthorizationService" expanded="True">
+            <Node name="TBZ_AuthorizationService" selected="True" />
             <Node name="TBZ_DataAccess" expanded="True" />
           </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node />
-        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

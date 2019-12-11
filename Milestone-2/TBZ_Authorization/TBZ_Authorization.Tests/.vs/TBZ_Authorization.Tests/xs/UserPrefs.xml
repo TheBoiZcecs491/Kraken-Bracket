@@ -7,17 +7,13 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TBZ_Authorization.Tests" expanded="True">
+            <Node name="TBZ_AuthorizationService" selected="True" />
             <Node name="TBZ_DataAccess" expanded="True" />
           </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="TBZ_Authorization.Tests" selected="True" />
-        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
