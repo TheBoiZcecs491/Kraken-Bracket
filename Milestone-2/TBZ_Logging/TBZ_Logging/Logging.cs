@@ -74,9 +74,8 @@ namespace TBZ_Logging
                     Console.Write("Path Failed " + (i + 1) + " Time(s).\n");
                     if (i == 2)
                     {
-                        throw new FileNotFoundException();
+                        throw new FileNotFoundException("Unable to write to file.");
                     }
-                    success = false;
                 }
             }
             return success;
@@ -99,7 +98,15 @@ namespace TBZ_Logging
             }
             string time = TimeStamp();
             string log = FormatLog(operation, msg, id, time);
-            success = AppendLog(log);
+            try
+            {
+                success = AppendLog(log);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                success = false;
+            }
             return success;
         }
     }

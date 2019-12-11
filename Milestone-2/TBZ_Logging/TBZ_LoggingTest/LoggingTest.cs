@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
+using System.Threading;
 using TBZ_Logging;
 
 namespace TBZ_LoggingTest
@@ -12,7 +14,7 @@ namespace TBZ_LoggingTest
         {
             //Arrange
             bool result = true;
-            string path = "";
+            string path = "output.csv";
             int tries = 3;
             //Act
             try
@@ -32,7 +34,7 @@ namespace TBZ_LoggingTest
         {
             //Arrange
             bool result;
-            string path = "output.txt";
+            string path = "output.csv";
             string op = "op";
             string msg = "";
             string id = "id";
@@ -51,24 +53,50 @@ namespace TBZ_LoggingTest
             Assert.IsTrue(result);
         }
 
+		[TestMethod]
+		public void LogInvalidPathType_Fail()
+		{
+			//Arrange
+			bool result;
+			string path = "output.txt";
+			string op = "op";
+			string msg = "";
+			string id = "id";
+			int tries = 3;
+			//Act
+			try
+			{
+				var l = new Logging(path, tries);
+				result = l.Log(op, msg, id);
+			}
+			catch (Exception e)
+			{
+                Console.WriteLine(e);
+				result = false;
+			}
+			//Assert
+			Assert.IsTrue(result);
+		}
+
         [TestMethod]
-        public void LogInvalidPath_Fail()
+        public void LogInvalidTries_Fail()
         {
             //Arrange
             bool result;
-            string path = "";
+            string path = "output.csv";
             string op = "op";
             string msg = "";
             string id = "id";
-            int tries = 3;
+            int tries = 0;
             //Act
             try
             {
                 var l = new Logging(path, tries);
                 result = l.Log(op, msg, id);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 result = false;
             }
             //Assert
@@ -80,7 +108,7 @@ namespace TBZ_LoggingTest
         {
             //Arrange
             bool result;
-            string path = "output.txt";
+            string path = "output.csv";
             string op = "";
             string msg = "";
             string id = "id";
@@ -104,7 +132,7 @@ namespace TBZ_LoggingTest
         {
             //Arrange
             bool result;
-            string path = "output.txt";
+            string path = "output.csv";
             string op = "op";
             string msg = "";
             string id = "";
@@ -124,13 +152,12 @@ namespace TBZ_LoggingTest
         }
 
         [TestMethod]
-        public void LogToOutputTxt_Pass()
+        public void LogToCSV_Pass()
         {
             //Arrange
             bool result;
-            //string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //string path = Path.Combine(docPath, "output.csv");
-            string path = "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/output.csv";
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = Path.Combine(docPath, "logs.csv");
             string op = "Registration";
             string msg = "Data Store Error";
             string id = "0001";
@@ -150,11 +177,12 @@ namespace TBZ_LoggingTest
         }
 
         [TestMethod]
-        public void Log100Times_Pass()
+        public void Log50Times_Pass()
         {
             //Arrange
             bool result = false;
-            string path = "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/output.csv";
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = Path.Combine(docPath, "logs.csv");
             string op = "Authorization";
             string msg = "Invalid Access Error";
             string id = "0321";
@@ -169,11 +197,12 @@ namespace TBZ_LoggingTest
             {
                 result = false;
             }
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
                 try
                 {
                     result = l.Log(op, msg, id);
+                    Thread.Sleep(60);
                 }
                 catch (Exception)
                 {
