@@ -26,7 +26,7 @@ namespace TBZ_registration.Tests
 
             string[] userNames =
             {
-                "cutieBoi@phuckahobo.gov",
+                "cutieBoi@aol.com",
                 "kernal.enderman.mason@masonsguild.uk",
                 "waglfragl@gmail.com"
             };
@@ -110,7 +110,7 @@ namespace TBZ_registration.Tests
             // a list of emails people might type in.
             string[] emails =
             {
-                "georgelopez@phuckahobo.gay",
+                "georgelopez@aol.com",
                 "sassykitty9998@hotmail.com",
                 "1234 Temple.Ave 69420",
                 "kevinpootis923@yahoo.com",
@@ -146,7 +146,7 @@ namespace TBZ_registration.Tests
                 {
                     try
                     {
-                        var Account = new RegistrationService(emails[i], "Wid#$%766", "Bob", "Stupit");
+                        var Account = new RegistrationService(emails[i], "Wid#$%766", "Bob", "Simon");
                         Account.storeUser("Wid#$%766", emailsInTheDB);
                         if (corrects[i] != true) result = false;
                     }
@@ -203,7 +203,7 @@ namespace TBZ_registration.Tests
                 {
                     try
                     {
-                        var tempAccount = new RegistrationService("personman1000@online.net", passwds[i], "Bob", "Stupit");
+                        var tempAccount = new RegistrationService("personman1000@online.net", passwds[i], "Bob", "Simon");
                         if (corrects[i] != true) result = false;
                     }
                     catch (ArgumentException)
