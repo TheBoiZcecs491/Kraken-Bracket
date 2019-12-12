@@ -3,6 +3,14 @@ using Data.AccessLayer;
 
 namespace TBZ_Authorization.Services
 {
+    /// <summary>
+    /// The main method to check if the user is authorized to perform the action
+    /// based on who they claim to be
+    /// </summary>
+    /// <param user = "email"> The email provided to receive the claim </param>
+    /// <param action> The string of the action attempted to perform </param>
+    /// <param logged in = "isLoggedIn"> The boolean variable to confirm if user is logged in</param>
+    /// <returns> A boolean of whether or not the user is authorized to perform the action</returns>
     public class AuthorizationService
     {
         public bool UserPermission(string email, string action, bool isLoggedIn)
