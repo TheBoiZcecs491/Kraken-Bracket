@@ -46,12 +46,6 @@ namespace TBZ.DatabaseAccess
                                         "Search For Registered User"} }
         };
 
-        Dictionary<string, List<string>> claims = new Dictionary<string, List<string>>()
-        {
-            {"brian@foomail.com", new List<string>(){ "brian@foomail.com", "Host"} },
-            {"test@fmail.com", new List<string>(){ "test@fmail.com", "Co-Host"} },
-        };
-
         /// <summary>
         /// Method used to check if email and password used.
         /// </summary>
