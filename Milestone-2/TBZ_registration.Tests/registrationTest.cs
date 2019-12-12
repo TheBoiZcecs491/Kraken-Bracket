@@ -231,7 +231,7 @@ namespace TBZ_registration.Tests
             string usrEmail = "personman1000@online.net";
             string usrPasswd = "Wid#$%766";
             string usrFName = "Bob";
-            string usrLName = "Stupit";
+            string usrLName = "Simon";
 
             //act
 
