@@ -8,7 +8,7 @@ namespace TBZ.AuthenticationService
     public class Authentication
     {
         private const string _algorithm = "HmacSHA256";
-        private const string _salt = "rz8LuOtFBXphj9WQfvFh";
+        private const string _salt = "rz8LuOtFBXphj9WQfvFh"; //TODO: generate salt values.
 
         /// <summary>
         /// Method used to authenticate user
@@ -23,12 +23,14 @@ namespace TBZ.AuthenticationService
         public string AuthenticateUser(string email, string password)
         {
             // Check to see if passed-in email or password is null / empty
+            //TODO: check for white space
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 throw new ArgumentException("Email or password cannot be null / empty");
             }
 
             // Initialize DataAccess object
+            //not nessary. just return the token.
             var dataAccess = new DataAccess();
 
             // Check to see if email / password combination exists in the datastore
@@ -110,14 +112,15 @@ namespace TBZ.AuthenticationService
         /// </summary>
         /// <param name="password">(Unhashed) Password to be hashed</param>
         /// <returns>Hashed password</returns>
-        public static string GetHashedPassword(string password)
+        public static string GetHashedPassword(string password)//needs to know what the string was encoded in.
         {
             // Concatenate password and salt
+            //dont use the ':' also maybe dont hard code that in.
             string key = string.Join(":", new string[] { password, _salt });
-            using (HMAC hmac = HMACSHA256.Create(_algorithm))
+            using (HMAC hmac = HMACSHA256.Create(_algorithm))// new HMACSHA256() 
             {
                 // Hash the key.
-                hmac.Key = Encoding.UTF8.GetBytes(_salt);
+                hmac.Key = Encoding.UTF8.GetBytes(_salt);//TODO, the salt needs to be different each time.
                 hmac.ComputeHash(Encoding.UTF8.GetBytes(key));
                 return Convert.ToBase64String(hmac.Hash);
             }
