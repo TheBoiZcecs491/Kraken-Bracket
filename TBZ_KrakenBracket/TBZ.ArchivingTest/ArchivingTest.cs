@@ -18,7 +18,7 @@ namespace TBZ.ArchivingTest
             log += "2019-11-06, 23:13:21:50, Registration, \"Data Store Error\", ID_0001,\n";
             log += "2019-12-11, 20:53:20:07, Authorization, \"Invalid Access Error\", ID_0321,\n";
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string path = Path.Combine(docPath, "logs.csv");
+            string path = Path.Combine(docPath, "_logs.csv");
             //Act
             try
             {
@@ -37,7 +37,7 @@ namespace TBZ.ArchivingTest
             //Arrange
             bool result = true;
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string path = Path.Combine(docPath, "logs.csv");
+            string path = Path.Combine(docPath, "_logs.csv");
             int time = 1;
             //Act
             try
@@ -78,7 +78,7 @@ namespace TBZ.ArchivingTest
             //Arrange
             bool result = true;
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string path = Path.Combine(docPath, "logs.csv");
+            string path = Path.Combine(docPath, "_logs.csv");
             int time = 0;
             //Act
             try
@@ -99,7 +99,7 @@ namespace TBZ.ArchivingTest
             //Arrange
             bool result;
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string path = Path.Combine(docPath, "logs.csv");
+            string path = Path.Combine(docPath, "_logs.csv");
             string dest = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             dest += "/";
             int time = 30;
@@ -124,7 +124,7 @@ namespace TBZ.ArchivingTest
             //Arrange
             bool result = true;
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string path = Path.Combine(docPath, "logs.csv");
+            string path = Path.Combine(docPath, "_logs.csv");
             //Act
             try
             {
