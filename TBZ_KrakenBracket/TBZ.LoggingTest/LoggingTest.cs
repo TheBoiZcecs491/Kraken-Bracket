@@ -75,7 +75,7 @@ namespace TBZ.LoggingTest
                 result = false;
             }
             //Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(!result);
         }
 
         [TestMethod]
@@ -100,7 +100,7 @@ namespace TBZ.LoggingTest
                 result = false;
             }
             //Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(!result);
         }
 
         [TestMethod]
@@ -124,7 +124,7 @@ namespace TBZ.LoggingTest
                 result = false;
             }
             //Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(!result);
         }
 
         [TestMethod]
@@ -148,7 +148,7 @@ namespace TBZ.LoggingTest
                 result = false;
             }
             //Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(!result);
         }
 
         [TestMethod]
@@ -185,7 +185,6 @@ namespace TBZ.LoggingTest
             string path = Path.Combine(docPath, "logs.csv");
             string op = "Authorization";
             string msg = "Invalid Access Error";
-            string id = "0321";
             int tries = 3;
             //Act
             Logging l = null;
@@ -199,6 +198,17 @@ namespace TBZ.LoggingTest
             }
             for (int i = 0; i < 50; i++)
             {
+                if (i == 17)
+                {
+                    op = "Authentication";
+                    msg = "Invalid Claim Error";
+                }
+                if (i == 32)
+                {
+                    op = "Registration";
+                    msg = "Data Store Error";
+                }
+                string id = i.ToString();
                 try
                 {
                     result = l.Log(op, msg, id);
