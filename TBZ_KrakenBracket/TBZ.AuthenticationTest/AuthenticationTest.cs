@@ -15,7 +15,7 @@ namespace TBZ.AuthenticationTest
         {
             // Arrange
             var authenticationService = new Authentication();
-            string email = "brian@foomail.com";
+            string email = "kevin@foomail.com";
             string password = "123";
             bool result = true;
 
@@ -23,6 +23,8 @@ namespace TBZ.AuthenticationTest
             {
                 // Act
                 authenticationService.AuthenticateUser(email, password);
+                //um... what is this set to?
+                //also this isnt reproducable.
             }
             catch (ArgumentException)
             {
