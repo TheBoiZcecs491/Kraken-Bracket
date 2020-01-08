@@ -2,9 +2,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Threading;
-using TBZ_Logging;
+using TBZ.LoggingService;
 
-namespace TBZ_LoggingTest
+namespace TBZ.LoggingTest
 {
     [TestClass]
     public class LoggingTest
@@ -53,30 +53,30 @@ namespace TBZ_LoggingTest
             Assert.IsTrue(result);
         }
 
-		[TestMethod]
-		public void LogInvalidPathType_Fail()
-		{
-			//Arrange
-			bool result;
-			string path = "output.txt";
-			string op = "op";
-			string msg = "";
-			string id = "id";
-			int tries = 3;
-			//Act
-			try
-			{
-				var l = new Logging(path, tries);
-				result = l.Log(op, msg, id);
-			}
-			catch (Exception e)
-			{
+        [TestMethod]
+        public void LogInvalidPathType_Fail()
+        {
+            //Arrange
+            bool result;
+            string path = "output.txt";
+            string op = "op";
+            string msg = "";
+            string id = "id";
+            int tries = 3;
+            //Act
+            try
+            {
+                var l = new Logging(path, tries);
+                result = l.Log(op, msg, id);
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
-				result = false;
-			}
-			//Assert
-			Assert.IsTrue(result);
-		}
+                result = false;
+            }
+            //Assert
+            Assert.IsTrue(!result);
+        }
 
         [TestMethod]
         public void LogInvalidTries_Fail()
@@ -100,7 +100,7 @@ namespace TBZ_LoggingTest
                 result = false;
             }
             //Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(!result);
         }
 
         [TestMethod]
@@ -124,7 +124,7 @@ namespace TBZ_LoggingTest
                 result = false;
             }
             //Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(!result);
         }
 
         [TestMethod]
@@ -148,7 +148,7 @@ namespace TBZ_LoggingTest
                 result = false;
             }
             //Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(!result);
         }
 
         [TestMethod]
