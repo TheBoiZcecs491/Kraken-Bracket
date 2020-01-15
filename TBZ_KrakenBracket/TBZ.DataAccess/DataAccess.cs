@@ -13,6 +13,12 @@ namespace TBZ.DatabaseAccess
             {"test@fmail.com", "legoMyEggo123"}
         };
 
+        Dictionary<int, string> userDict2 = new Dictionary<int, string>()
+        {
+            {1, "123"},
+            {2, "legoMyEggo123"}
+        };
+
         // Check the user's action that was added according to the role(s) they claim to be,
         // then check the if that action is in the list of actions they can perform
         Dictionary<string, List<string>> permissions = new Dictionary<string, List<string>>()
@@ -94,9 +100,9 @@ namespace TBZ.DatabaseAccess
             }
         }
 
-        public void StoreUser(string user, string password)
+        public void StoreUser(int systemID, string password)
         {
-            userDict.Add(user, password);
+            userDict2.Add(systemID, password);
         }
     }
 }
