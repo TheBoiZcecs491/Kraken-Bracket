@@ -13,6 +13,7 @@ namespace TBZ.DatabaseAccess
             {"test@fmail.com", "legoMyEggo123"}
         };
 
+        // List user ID's and their passwords
         Dictionary<int, string> userDict2 = new Dictionary<int, string>()
         {
             {1, "123"},
@@ -102,6 +103,18 @@ namespace TBZ.DatabaseAccess
 
         public void StoreUser(int systemID, string password)
         {
+            bool flag = true;
+            while(flag)
+            {
+                if (userDict2.ContainsKey(systemID))
+                {
+                    systemID++;
+                }
+                else
+                {
+                    flag = false;
+                }
+            }
             userDict2.Add(systemID, password);
         }
     }
