@@ -117,5 +117,10 @@ namespace TBZ.DatabaseAccess
             }
             userDict2.Add(systemID, password);
         }
+
+        public bool DeleteUser(int systemID)
+        {
+            return userDict2.Remove(systemID);
+        }
     }
 }
