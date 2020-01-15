@@ -22,5 +22,21 @@ namespace TBZ.UserManagementTest
             }
             Assert.IsTrue(result);
         }
+        
+        [TestMethod]
+        public void CreateUsers_Fail_AmountLessThanOne()
+        {
+            var userManagement = new UserManagement();
+            bool result = false;
+            try
+            {
+                userManagement.CreateUsers(5);
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            Assert.IsTrue(result);
+        }
     }
 }
