@@ -93,5 +93,10 @@ namespace TBZ.DatabaseAccess
                 throw new Exception();
             }
         }
+
+        public void StoreUser(string user, string password)
+        {
+            userDict.Add(user, password);
+        }
     }
 }
