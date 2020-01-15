@@ -42,5 +42,23 @@ namespace TBZ.UserManagementTest
 
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void DeleteUsers_Pass()
+        {
+            var userManagement = new UserManagement();
+            bool result = true;
+            try
+            {
+                userManagement.DeleteUsers(1);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
     }
 }
