@@ -24,6 +24,20 @@ namespace TBZ.UserManagementService
             }
         }
 
+        public void DeleteUsers(int systemID)
+        {
+            var dataAccess = new DataAccess();
+            bool temp = dataAccess.DeleteUser(systemID);
+            if(temp == true)
+            {
+                Console.WriteLine("Successfully deleted");
+            }
+            else
+            {
+                throw new ArgumentException("System ID not found");
+            }
+        }
+
         public string RandomPassword(int len)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
