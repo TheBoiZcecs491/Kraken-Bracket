@@ -6,7 +6,7 @@ namespace TBZ.UserManagementService
 {
     public class UserManagement
     {
-        private int systemID = 0;
+        private int systemID = 2;
         private Random random = new Random();
         public void CreateUsers(int amount)
         {
@@ -14,10 +14,11 @@ namespace TBZ.UserManagementService
             {
                 throw new ArgumentException("Amount must be greater than zero");
             }
+            var dataAccess = new DataAccess();
             for (int i = 0; i < amount; i ++)
             {
                 systemID++;
-                // TODO: store user and their password
+                dataAccess.StoreUser(systemID, RandomString(14));
             }
         }
 
