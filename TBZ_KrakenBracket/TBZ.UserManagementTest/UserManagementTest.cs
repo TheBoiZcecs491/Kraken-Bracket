@@ -30,7 +30,7 @@ namespace TBZ.UserManagementTest
             bool result = false;
             try
             {
-                userManagement.CreateUsers(5);
+                userManagement.CreateUsers(0);
             }
             catch (ArgumentException)
             {
