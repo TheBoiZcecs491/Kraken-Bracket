@@ -18,13 +18,13 @@ namespace TBZ.UserManagementService
             for (int i = 0; i < amount; i ++)
             {
                 systemID++;
-                dataAccess.StoreUser(systemID, RandomString(14));
+                dataAccess.StoreUser(systemID, RandomPassword(14));
             }
         }
 
-        public string RandomString(int len)
+        public string RandomPassword(int len)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, len)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
