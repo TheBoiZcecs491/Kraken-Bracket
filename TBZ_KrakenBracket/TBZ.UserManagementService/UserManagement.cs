@@ -6,7 +6,8 @@ namespace TBZ.UserManagementService
 {
     public class UserManagement
     {
-        private int systemID = 2;
+        private int systemID = 0;
+        string randomPassword;
         private Random random = new Random();
         public void CreateUsers(int amount)
         {
@@ -18,7 +19,8 @@ namespace TBZ.UserManagementService
             for (int i = 0; i < amount; i ++)
             {
                 systemID++;
-                dataAccess.StoreUser(systemID, RandomPassword(14));
+                randomPassword = RandomPassword(14);
+                dataAccess.StoreUser(systemID, randomPassword);
             }
         }
 
