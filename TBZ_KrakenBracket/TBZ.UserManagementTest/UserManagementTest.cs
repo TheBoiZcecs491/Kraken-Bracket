@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using TBZ.UserManagementService;
 
 namespace TBZ.UserManagementTest
 {
@@ -9,14 +10,17 @@ namespace TBZ.UserManagementTest
         [TestMethod]
         public void CreateUsers_Pass()
         {
+            var userManagement = new UserManagement();
+            bool result = true;
             try
             {
-
+                userManagement.CreateUsers(5);
             }
             catch(ArgumentException)
             {
-
+                result = false;
             }
+            Assert.IsTrue(result);
         }
     }
 }
