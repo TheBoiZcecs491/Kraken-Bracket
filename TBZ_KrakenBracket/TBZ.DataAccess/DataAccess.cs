@@ -100,11 +100,11 @@ namespace TBZ.DatabaseAccess
                 throw new Exception();
             }
         }
-
-        public void StoreUser(int systemID, string password)
+        private int systemID = 0;
+        public void StoreUser(string email, string password, string accountType)
         {
             bool flag = true;
-            while(flag)
+            while (flag)
             {
                 if (userDict2.ContainsKey(systemID))
                 {
@@ -115,7 +115,8 @@ namespace TBZ.DatabaseAccess
                     flag = false;
                 }
             }
-            userDict2.Add(systemID, password);
+            string temp = email + password + accountType;
+            userDict2.Add(systemID, temp);
         }
 
         public bool DeleteUser(int systemID)
