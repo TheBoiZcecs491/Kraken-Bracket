@@ -27,7 +27,7 @@ namespace TBZ.UserManagementService
             {
                 throw new ArgumentException("Amount must be greater than zero");
             }
-            if (permissions.Contains(permission) && permission == "Admin")
+            if (permission == "Admin")
             {
                 var dataAccess = new DataAccess();
                 for (int i = 0; i < amount; i++)
@@ -47,6 +47,7 @@ namespace TBZ.UserManagementService
                 // Store regular users
                 for (int i = 0; i < amount - numberOfAdmins; i++)
                 {
+                    randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
                     dataAccess.StoreUser(null, randomPassword, "User");
                 }
@@ -54,6 +55,7 @@ namespace TBZ.UserManagementService
                 // Store admins
                 for (int i = 0; i < numberOfAdmins; i++)
                 {
+                    randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
                     dataAccess.StoreUser(null, randomPassword, "Admin");
                 }
