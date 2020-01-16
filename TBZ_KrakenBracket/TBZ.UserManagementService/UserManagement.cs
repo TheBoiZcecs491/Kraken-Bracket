@@ -23,7 +23,25 @@ namespace TBZ.UserManagementService
                 for (int i = 0; i < amount; i++)
                 {
                     string randomPassword = RandomPassword(14);
-                    dataAccess.StoreUser("foo@gmail.com", randomPassword, "User");
+
+                    // The emails will be retrieved from a list later on
+                    dataAccess.StoreUser(null, randomPassword, "User");
+                }
+            }
+
+            else if (permissions.Contains(permission) && permission == "System Admin")
+            {
+                var dataAccess = new DataAccess();
+                int numberOfAdmins = Console.Read();
+                for (int i = 0; i < amount - numberOfAdmins; i++)
+                {
+                    // The emails will be retrieved from a list later on
+                    dataAccess.StoreUser(null, randomPassword, "User");
+                }
+                for (int i = 0; i < numberOfAdmins; i++)
+                {
+                    // The emails will be retrieved from a list later on
+                    dataAccess.StoreUser(null, randomPassword, "Admin");
                 }
             }
             else
