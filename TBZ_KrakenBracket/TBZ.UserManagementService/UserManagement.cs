@@ -1,27 +1,36 @@
 ﻿using System;
 using System.Linq;
 using TBZ.DatabaseAccess;
+using System.Collections.Generic;
 
 namespace TBZ.UserManagementService
 {
     public class UserManagement
     {
-        private int systemID = 0;
         string randomPassword;
         private Random random = new Random();
-        public void CreateUsers(int amount)
+
+        List<string> permissions = new List<string>(new string[] { "Admin", "System Admin" });
+        public void CreateUsers(int amount, string permission)
         {
             if (amount <= 0)
             {
                 throw new ArgumentException("Amount must be greater than zero");
             }
-            var dataAccess = new DataAccess();
-            for (int i = 0; i < amount; i ++)
+            if (permissions.Contains(permission) && permission == "Admin")
             {
-                systemID++;
-                randomPassword = RandomPassword(14);
-                dataAccess.StoreUser(systemID, randomPassword);
+                var dataAccess = new DataAccess();
+                for (int i = 0; i < amount; i++)
+                {
+                    string randomPassword = RandomPassword(14);
+                    dataAccess.StoreUser("foo@gmail.com", randomPassword, "User");
+                }
             }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
+            
         }
 
         public void DeleteUsers(int systemID)
