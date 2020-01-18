@@ -14,11 +14,13 @@ namespace TBZ.DatabaseAccess
         };
 
         // List user ID's and their passwords
-        Dictionary<int, string> userDict2 = new Dictionary<int, string>()
+        // FIXME: Need to find another way to implement this
+        Dictionary<int, User> userDict2 = new Dictionary<int, User>()
         {
-            {1, "123"},
-            {2, "legoMyEggo123"}
+            
         };
+
+        List<User> users = new List<User>();
 
         // Check the user's action that was added according to the role(s) they claim to be,
         // then check the if that action is in the list of actions they can perform
@@ -106,7 +108,7 @@ namespace TBZ.DatabaseAccess
             bool flag = true;
             while (flag)
             {
-                if (userDict2.ContainsKey(systemID))
+                if (users.Exists(x => x.SystemID == systemID))
                 {
                     systemID++;
                 }
@@ -115,13 +117,38 @@ namespace TBZ.DatabaseAccess
                     flag = false;
                 }
             }
-            string temp = email + password + accountType;
-            userDict2.Add(systemID, temp);
+            users.Add(new User
+            {
+                SystemID = systemID,
+                FirstName = null,
+                LastName = null,
+                Email = email,
+                Password = password,
+                AccountType = accountType
+            });
         }
 
-        public bool DeleteUser(int systemID)
+        public bool DeleteUser(int systemID, string permission)
         {
-            return userDict2.Remove(systemID);
+            if (permission == "System Admin")
+            {
+                // TODO: Implement safe so that sysadmin doesn't delete themself
+                if(users.Exists(x => x.SystemID == systemID))
+                {
+                    var itemToRemove = users.Single(r => r.SystemID == systemID);
+                    return users.Remove(itemToRemove);
+                }
+            }
+
+            else if (permission == "Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID) && users.Exists(x => x.AccountType == "User"))
+                {
+                    var itemToRemove = users.Single(r => r.SystemID == systemID);
+                    return users.Remove(itemToRemove);
+                }
+            }
+            return false;
         }
     }
 }
