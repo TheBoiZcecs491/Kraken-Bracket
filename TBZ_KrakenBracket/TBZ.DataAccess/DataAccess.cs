@@ -13,13 +13,6 @@ namespace TBZ.DatabaseAccess
             {"test@fmail.com", "legoMyEggo123"}
         };
 
-        // List user ID's and their passwords
-        // FIXME: Need to find another way to implement this
-        Dictionary<int, User> userDict2 = new Dictionary<int, User>()
-        {
-            
-        };
-
         // TODO: remove hardcoded values later
         List<User> users = new List<User>()
         {
@@ -44,6 +37,24 @@ namespace TBZ.DatabaseAccess
             new User
             {
                 SystemID = 3,
+                FirstName = null,
+                LastName = null,
+                Email = "goo@gmail.com",
+                Password = "[r4pl323][",
+                AccountType = "User"
+            },
+            new User
+            {
+                SystemID = 4,
+                FirstName = null,
+                LastName = null,
+                Email = "goo@gmail.com",
+                Password = "[r4pl323][",
+                AccountType = "User"
+            },
+            new User
+            {
+                SystemID = 5,
                 FirstName = null,
                 LastName = null,
                 Email = "goo@gmail.com",
@@ -163,7 +174,7 @@ namespace TBZ.DatabaseAccess
             if (permission == "System Admin")
             {
                 // TODO: Implement safe so that sysadmin doesn't delete themself
-                if(users.Exists(x => x.SystemID == systemID))
+                if(users.Exists(x => x.SystemID == systemID) )
                 {
                     var itemToRemove = users.Single(r => r.SystemID == systemID);
                     return users.Remove(itemToRemove);
@@ -172,10 +183,17 @@ namespace TBZ.DatabaseAccess
 
             else if (permission == "Admin")
             {
-                if (users.Exists(x => x.SystemID == systemID) && users.Exists(x => x.AccountType == "User"))
+                if (users.Exists(x => x.SystemID == systemID))
                 {
-                    var itemToRemove = users.Single(r => r.SystemID == systemID);
-                    return users.Remove(itemToRemove);
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType == "User")
+                    {
+                        var itemToRemove = users.Single(r => r.SystemID == systemID);
+
+                        // Expected to return true
+                        return users.Remove(itemToRemove);
+                    }
                 }
             }
             return false;
