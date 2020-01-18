@@ -39,9 +39,11 @@ namespace TBZ.UserManagementService
                 }
             }
 
-            else if (permissions.Contains(permission) && permission == "System Admin")
+            else if (permission == "System Admin")
             {
                 var dataAccess = new DataAccess();
+
+                // FIXME: Need to find another way to specify the number of admins
                 int numberOfAdmins = 1;
 
                 // Store regular users
@@ -67,17 +69,13 @@ namespace TBZ.UserManagementService
             
         }
 
-        public void DeleteUsers(int systemID)
+        public void DeleteUsers(List<int> listOfIDs, string permission)
         {
+            CheckPermission(permission);
             var dataAccess = new DataAccess();
-            bool temp = dataAccess.DeleteUser(systemID);
-            if(temp == true)
+            foreach (int id in listOfIDs)
             {
-                Console.WriteLine("Successfully deleted");
-            }
-            else
-            {
-                throw new ArgumentException("System ID not found");
+                bool temp = dataAccess.DeleteUser(id, permission);
             }
         }
 
