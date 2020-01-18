@@ -20,7 +20,37 @@ namespace TBZ.DatabaseAccess
             
         };
 
-        List<User> users = new List<User>();
+        // TODO: remove hardcoded values later
+        List<User> users = new List<User>()
+        {
+            new User
+            {
+                SystemID = 1,
+                FirstName = null,
+                LastName = null,
+                Email = "foomail@gmail.com",
+                Password = "4fweu2fwr",
+                AccountType = "System Admin"
+            },
+            new User
+            {
+                SystemID = 2,
+                FirstName = null,
+                LastName = null,
+                Email = "f@gmail.com",
+                Password = "904g2niovrw23",
+                AccountType = "Admin"
+            },
+            new User
+            {
+                SystemID = 3,
+                FirstName = null,
+                LastName = null,
+                Email = "goo@gmail.com",
+                Password = "[r4pl323][",
+                AccountType = "User"
+            }
+        };
 
         // Check the user's action that was added according to the role(s) they claim to be,
         // then check the if that action is in the list of actions they can perform
