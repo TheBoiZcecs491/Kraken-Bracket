@@ -8,13 +8,13 @@ namespace TBZ.UserManagementTest
     public class UserManagementTest
     {
         [TestMethod]
-        public void CreateUsers_Pass()
+        public void CreateUsers_Admin_Pass()
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.CreateUsers(3);
+                userManagement.CreateUsers(3, "Admin");
             }
             catch(ArgumentException)
             {
@@ -24,7 +24,25 @@ namespace TBZ.UserManagementTest
 
             Assert.IsTrue(result);
         }
-        
+
+        [TestMethod]
+        public void CreateUsers_SystemAdmin_Pass()
+        {
+            var userManagement = new UserManagement();
+            bool result = true;
+            try
+            {
+                userManagement.CreateUsers(10, "System Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
         [TestMethod]
         public void CreateUsers_Fail_AmountLessThanOne()
         {
@@ -32,7 +50,7 @@ namespace TBZ.UserManagementTest
             bool result = false;
             try
             {
-                userManagement.CreateUsers(0);
+                userManagement.CreateUsers(0, "System Admin");
             }
             catch (ArgumentException)
             {
