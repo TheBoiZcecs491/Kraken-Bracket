@@ -6,3 +6,11 @@
 /Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/Debug/netcoreapp3.0/TBZ_Logging.dll
 /Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/Debug/netcoreapp3.0/TBZ_Logging.pdb
 /Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/Debug/netcoreapp3.0/TBZ_Logging.csprojAssemblyReference.cache
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Logging\TBZ_Logging\bin\Debug\netcoreapp3.0\TBZ_Logging.deps.json
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Logging\TBZ_Logging\bin\Debug\netcoreapp3.0\TBZ_Logging.dll
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Logging\TBZ_Logging\bin\Debug\netcoreapp3.0\TBZ_Logging.pdb
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Logging\TBZ_Logging\obj\Debug\netcoreapp3.0\TBZ_Logging.csprojAssemblyReference.cache
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Logging\TBZ_Logging\obj\Debug\netcoreapp3.0\TBZ_Logging.AssemblyInfoInputs.cache
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Logging\TBZ_Logging\obj\Debug\netcoreapp3.0\TBZ_Logging.AssemblyInfo.cs
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Logging\TBZ_Logging\obj\Debug\netcoreapp3.0\TBZ_Logging.dll
+D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Logging\TBZ_Logging\obj\Debug\netcoreapp3.0\TBZ_Logging.pdb
