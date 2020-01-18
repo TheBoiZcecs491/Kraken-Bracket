@@ -81,6 +81,26 @@ namespace TBZ.UserManagementTest
         }
 
         [TestMethod]
+        public void DeleteUsers_Fail_InvalidPermission()
+        {
+            var userManagement = new UserManagement();
+            bool result = false;
+            // System ID #2 is an admin. Rest are Users
+            List<int> listOfIDs = new List<int>() { 2, 3, 4, 5 };
+            try
+            {
+                userManagement.DeleteUsers(listOfIDs, "User");
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
         public void DeleteUsers_SystemAdmin_Pass()
         {
             var userManagement = new UserManagement();
@@ -153,7 +173,7 @@ namespace TBZ.UserManagementTest
             List<int> listOfIDs = new List<int>() { 1 };
             try
             {
-                userManagement.DeleteUsers(listOfIDs, "Admin");
+                userManagement.DeleteUsers(listOfIDs, "System Admin");
             }
             catch (ArgumentException)
             {
