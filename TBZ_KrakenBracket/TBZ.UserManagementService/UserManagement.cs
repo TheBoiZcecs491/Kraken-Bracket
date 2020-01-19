@@ -69,33 +69,48 @@ namespace TBZ.UserManagementService
             
         }
 
-        public void DeleteUsers(int[] listOfIDs, string permission)
+        public bool[] DeleteUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
+            bool[] b = new bool[listOfIDs.Length];
             var dataAccess = new DataAccess();
+            int count = 0;
             foreach (int id in listOfIDs)
             {
                 bool temp = dataAccess.DeleteUser(id, permission);
+                b[count] = temp;
+                count++;
             }
+            return b;
         }
 
-        public void EnableUsers(int[] listOfIDs, string permission)
+        public bool[] EnableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
+            bool[] b = new bool[listOfIDs.Length];
             var dataAccess = new DataAccess();
+            int count = 0;
             foreach (int id in listOfIDs)
             {
                 bool temp = dataAccess.EnableUser(id, permission);
+                b[count] = temp;
+                count++;
             }
+            return b;
         }
-        public void DisableUsers(int[] listOfIDs, string permission)
+        public bool[] DisableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
+            bool[] b = new bool[listOfIDs.Length];
             var dataAccess = new DataAccess();
+            int count = 0;
             foreach (int id in listOfIDs)
             {
-                bool temp = dataAccess.DisableUser(id, permission);
+                bool temp = dataAccess.EnableUser(id, permission);
+                b[count] = temp;
+                count++;
             }
+            return b;
         }
         public string RandomPassword(int len)
         {
