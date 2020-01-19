@@ -69,7 +69,7 @@ namespace TBZ.UserManagementService
             
         }
 
-        public void DeleteUsers(List<int> listOfIDs, string permission)
+        public void DeleteUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             var dataAccess = new DataAccess();
@@ -79,7 +79,7 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public void EnableUsers(List<int> listOfIDs, string permission)
+        public void EnableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             var dataAccess = new DataAccess();
@@ -88,7 +88,7 @@ namespace TBZ.UserManagementService
                 bool temp = dataAccess.EnableUser(id, permission);
             }
         }
-        public void DisableUsers(List<int> listOfIDs, string permission)
+        public void DisableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             var dataAccess = new DataAccess();
