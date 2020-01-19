@@ -79,6 +79,24 @@ namespace TBZ.UserManagementService
             }
         }
 
+        public void EnableUsers(List<int> listOfIDs, string permission)
+        {
+            CheckPermission(permission);
+            var dataAccess = new DataAccess();
+            foreach (int id in listOfIDs)
+            {
+                bool temp = dataAccess.EnableUser(id, permission);
+            }
+        }
+        public void DisableUsers(List<int> listOfIDs, string permission)
+        {
+            CheckPermission(permission);
+            var dataAccess = new DataAccess();
+            foreach (int id in listOfIDs)
+            {
+                bool temp = dataAccess.DisableUser(id, permission);
+            }
+        }
         public string RandomPassword(int len)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

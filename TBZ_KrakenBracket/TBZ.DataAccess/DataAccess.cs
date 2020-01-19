@@ -23,7 +23,8 @@ namespace TBZ.DatabaseAccess
                 LastName = null,
                 Email = "foomail@gmail.com",
                 Password = "4fweu2fwr",
-                AccountType = "System Admin"
+                AccountType = "System Admin",
+                AccountStatus = true
             },
             new User
             {
@@ -32,7 +33,8 @@ namespace TBZ.DatabaseAccess
                 LastName = null,
                 Email = "f@gmail.com",
                 Password = "904g2niovrw23",
-                AccountType = "Admin"
+                AccountType = "Admin",
+                AccountStatus = true
             },
             new User
             {
@@ -41,7 +43,8 @@ namespace TBZ.DatabaseAccess
                 LastName = null,
                 Email = "goo@gmail.com",
                 Password = "[r4pl323][",
-                AccountType = "User"
+                AccountType = "User",
+                AccountStatus = true
             },
             new User
             {
@@ -50,7 +53,8 @@ namespace TBZ.DatabaseAccess
                 LastName = null,
                 Email = "goo@gmail.com",
                 Password = "[r4pl323][",
-                AccountType = "User"
+                AccountType = "User",
+                AccountStatus = false
             },
             new User
             {
@@ -59,7 +63,8 @@ namespace TBZ.DatabaseAccess
                 LastName = null,
                 Email = "goo@gmail.com",
                 Password = "[r4pl323][",
-                AccountType = "User"
+                AccountType = "User",
+                AccountStatus = true
             }
         };
 
@@ -173,11 +178,17 @@ namespace TBZ.DatabaseAccess
         {
             if (permission == "System Admin")
             {
-                // TODO: Implement safe so that sysadmin doesn't delete themself
                 if(users.Exists(x => x.SystemID == systemID) )
                 {
-                    var itemToRemove = users.Single(r => r.SystemID == systemID);
-                    return users.Remove(itemToRemove);
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType != "System Admin")
+                    {
+                        var itemToRemove = users.Single(r => r.SystemID == systemID);
+
+                        // Expected to return true
+                        return users.Remove(itemToRemove);
+                    }
                 }
             }
 
@@ -193,6 +204,70 @@ namespace TBZ.DatabaseAccess
 
                         // Expected to return true
                         return users.Remove(itemToRemove);
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool EnableUser(int systemID, string permission)
+        {
+            if (permission == "System Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType != "System Admin" && user.AccountStatus == false)
+                    {
+                        user.AccountStatus = true;
+                        return true;
+                    }
+                }
+            }
+
+            else if (permission == "Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType == "User" && user.AccountStatus == false)
+                    {
+                        user.AccountStatus = true;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool DisableUser(int systemID, string permission)
+        {
+            if (permission == "System Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType != "System Admin" && user.AccountStatus == true)
+                    {
+                        user.AccountStatus = false;
+                        return true;
+                    }
+                }
+            }
+
+            else if (permission == "Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType == "User" && user.AccountStatus == true)
+                    {
+                        user.AccountStatus = false;
+                        return true;
                     }
                 }
             }
