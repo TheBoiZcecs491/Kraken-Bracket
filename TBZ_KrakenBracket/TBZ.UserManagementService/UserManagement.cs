@@ -90,7 +90,12 @@ namespace TBZ.UserManagementService
             
         }
 
-
+        public bool SingleDeleteUser(int ID, string permission) 
+        {
+            CheckPermission(permission);
+            var dataAccess = new DataAccess();
+            return dataAccess.DeleteUser(ID, permission);
+        }
 
         public bool[] BulkDeleteUsers(int[] listOfIDs, string permission)
         {
@@ -108,6 +113,12 @@ namespace TBZ.UserManagementService
             return b;
         }
 
+        public bool SingleEnableUser(int ID, string permission)
+        {
+            CheckPermission(permission);
+            var dataAccess = new DataAccess();
+            return dataAccess.EnableUser(ID, permission);
+        }
         public bool[] BulkEnableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
@@ -123,7 +134,38 @@ namespace TBZ.UserManagementService
             }
             return b;
         }
+
+        public bool SingleDisableUser(int ID, string permission)
+        {
+            CheckPermission(permission);
+            var dataAccess = new DataAccess();
+            return dataAccess.DisableUser(ID, permission);
+        }
         public bool[] BulkDisableUsers(int[] listOfIDs, string permission)
+        {
+            CheckPermission(permission);
+            CheckListLength(listOfIDs);
+            bool[] b = new bool[listOfIDs.Length];
+            var dataAccess = new DataAccess();
+            int count = 0;
+            foreach (int id in listOfIDs)
+            {
+                bool temp = dataAccess.DisableUser(id, permission);
+                b[count] = temp;
+                count++;
+            }
+            return b;
+        }
+
+        public bool SingleUpdateUser(int sysID, string firstName, string lastName,
+            string email, string password, string accountType, string component, string permission)
+        {
+            CheckPermission(permission);
+            var dataAccess = new DataAccess();
+            return dataAccess.UpdateUser(sysID, firstName, lastName, email, password, accountType, component, permission);
+        }
+
+        public bool[] BulkUpdateUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             CheckListLength(listOfIDs);
