@@ -20,21 +20,26 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public void CreateUsers(int amount, string permission)
+        public void CreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
         {
             CheckPermission(permission);
-            if (amount <= 0)
+            if (amountOfUsers <= 0 && amountOfAdmins <= 0)
             {
                 throw new ArgumentException("Amount must be greater than zero");
+            }
+            if (amountOfAdmins > 0 && permission == "Admin")
+            {
+                throw new ArgumentException("Admins cannot create other admins");
             }
             if (permission == "Admin")
             {
                 var dataAccess = new DataAccess();
-                for (int i = 0; i < amount; i++)
+                for (int i = 0; i < amountOfUsers; i++)
                 {
                     randomPassword = RandomPassword(14);
 
                     // The emails will be retrieved from a list later on
+                    // For now, they will be stored as null
                     dataAccess.StoreUser(null, randomPassword, "User");
                 }
             }
@@ -43,19 +48,17 @@ namespace TBZ.UserManagementService
             {
                 var dataAccess = new DataAccess();
 
-                // FIXME: Need to find another way to specify the number of admins
-                int numberOfAdmins = 1;
-
                 // Store regular users
-                for (int i = 0; i < amount - numberOfAdmins; i++)
+                for (int i = 0; i < amountOfUsers; i++)
                 {
                     randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
+                    // For now, they will be stored as null
                     dataAccess.StoreUser(null, randomPassword, "User");
                 }
 
                 // Store admins
-                for (int i = 0; i < numberOfAdmins; i++)
+                for (int i = 0; i < amountOfAdmins; i++)
                 {
                     randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
@@ -106,7 +109,7 @@ namespace TBZ.UserManagementService
             int count = 0;
             foreach (int id in listOfIDs)
             {
-                bool temp = dataAccess.EnableUser(id, permission);
+                bool temp = dataAccess.DisableUser(id, permission);
                 b[count] = temp;
                 count++;
             }
