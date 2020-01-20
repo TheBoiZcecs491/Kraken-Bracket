@@ -249,7 +249,7 @@ namespace TBZ.UserManagementTest
             // System ID's #1 and #2 is are system admin and admin respectively. Rest are users.
             // System #4 is the only account disabled
             int[] listOfIDs = { 1, 2, 3, 4, 5 };
-            bool[] expected = { false, true, true, false, true };
+            bool[] expected = { false, false, true, false, true };
             bool[] actual = userManagement.BulkDisableUsers(listOfIDs, "Admin");
             CollectionAssert.AreEqual(expected, actual);
         }
