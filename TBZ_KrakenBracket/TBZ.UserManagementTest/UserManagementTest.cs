@@ -20,7 +20,7 @@ namespace TBZ.UserManagementTest
             bool result = true;
             try
             {
-                userManagement.CreateUsers(3, 0, "Admin");
+                userManagement.BulkCreateUsers(3, 0, "Admin");
             }
             catch(ArgumentException)
             {
@@ -44,7 +44,7 @@ namespace TBZ.UserManagementTest
             bool result = true;
             try
             {
-                userManagement.CreateUsers(5, 2, "System Admin");
+                userManagement.BulkCreateUsers(5, 2, "System Admin");
             }
             catch (ArgumentException)
             {
@@ -66,7 +66,7 @@ namespace TBZ.UserManagementTest
             bool result = false;
             try
             {
-                userManagement.CreateUsers(0, 0, "System Admin");
+                userManagement.BulkCreateUsers(0, 0, "System Admin");
             }
             catch (ArgumentException)
             {
@@ -88,7 +88,7 @@ namespace TBZ.UserManagementTest
             bool result = false;
             try
             {
-                userManagement.CreateUsers(3, 0, "User");
+                userManagement.BulkCreateUsers(3, 0, "User");
             }
             catch (ArgumentException)
             {
@@ -113,7 +113,7 @@ namespace TBZ.UserManagementTest
             int[] listOfIDs = { 1, 2, 3, 4, 5 };
             try
             {
-                bool[] actual = userManagement.DeleteUsers(listOfIDs, "User");
+                bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, "User");
             }
             catch (ArgumentException)
             {
@@ -137,7 +137,7 @@ namespace TBZ.UserManagementTest
             // System ID's #1 and #2 is are system admin and admin. Rest are Users
             int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, true, true, true, true };
-            bool[] actual = userManagement.DeleteUsers(listOfIDs, "System Admin");
+            bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, "System Admin");
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -154,7 +154,7 @@ namespace TBZ.UserManagementTest
             // System ID's #1 and #2 is are system admin and admin. Rest are Users
             int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, true, true, true, true };
-            bool[] actual = userManagement.DeleteUsers(listOfIDs, "System Admin");
+            bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, "System Admin");
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -169,7 +169,7 @@ namespace TBZ.UserManagementTest
             bool result = false;
             try
             {
-                userManagement.DeleteUsers(listOfIDs, "System Admin");
+                userManagement.BulkDeleteUsers(listOfIDs, "System Admin");
             }
             catch (ArgumentException)
             {
@@ -193,7 +193,7 @@ namespace TBZ.UserManagementTest
             // System #4 is the only account disabled
             int[] listOfIDs =  {1, 2, 3, 4, 5};
             bool[] expected = { false, false, false, true, false };
-            bool[] actual = userManagement.EnableUsers(listOfIDs, "System Admin");
+            bool[] actual = userManagement.BulkEnableUsers(listOfIDs, "System Admin");
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -212,7 +212,7 @@ namespace TBZ.UserManagementTest
             // System #4 is the only account disabled
             int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, false, false, true, false };
-            bool[] actual = userManagement.EnableUsers(listOfIDs, "Admin");
+            bool[] actual = userManagement.BulkEnableUsers(listOfIDs, "Admin");
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -231,7 +231,7 @@ namespace TBZ.UserManagementTest
             // System #4 is the only account disabled
             int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, true, true, false, true };
-            bool[] actual = userManagement.DisableUsers(listOfIDs, "System Admin");
+            bool[] actual = userManagement.BulkDisableUsers(listOfIDs, "System Admin");
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -250,7 +250,7 @@ namespace TBZ.UserManagementTest
             // System #4 is the only account disabled
             int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, true, true, false, true };
-            bool[] actual = userManagement.DisableUsers(listOfIDs, "Admin");
+            bool[] actual = userManagement.BulkDisableUsers(listOfIDs, "Admin");
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -265,13 +265,98 @@ namespace TBZ.UserManagementTest
             bool result = false;
             try
             {
-                userManagement.EnableUsers(listOfIDs, "System Admin");
+                userManagement.BulkEnableUsers(listOfIDs, "System Admin");
             }
             catch (ArgumentException)
             {
                 result = true;
             }
             Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Test method for updating a single user as a System Admin
+        /// 
+        /// In this case, the system admin is updating another admin's email
+        /// </summary>
+        [TestMethod]
+        public void UpdateUser_SystemAdmin_Pass()
+        {
+            var userManagement = new UserManagement();
+            // (int sysID, string firstName, string lastName,
+            // string email, string password, string accountType, string component, string permission)
+            bool result = userManagement.SingleUpdateUser(2, null, null, "brian12345@gmail.com", "Brian3809{340@@", null, "Email", "System Admin");
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Test method for updating a single user as an Admin
+        /// 
+        /// In this case, the system admin is updating another user's password
+        /// </summary>
+        [TestMethod]
+        public void UpdateUser_Admin_Pass()
+        {
+            var userManagement = new UserManagement();
+            // (int sysID, string firstName, string lastName,
+            // string email, string password, string accountType, string component, string permission)
+            bool result = userManagement.SingleUpdateUser(3, null, null, "brian12345@gmail.com", "Brian3809{340@@", null, "Password", "System Admin");
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Fail test method when updating a User with an insufficient password
+        /// </summary>
+        [TestMethod]
+        public void UpdateUser_SystemAdmin_Fail_InsufficientPassword()
+        {
+            var userManagement = new UserManagement();
+            // (int sysID, string firstName, string lastName,
+            // string email, string password, string accountType, string component, string permission)
+            bool result;
+            try
+            {
+                result = userManagement.SingleUpdateUser(3, null, null, "brian12345@gmail.com", "123", null, "Password", "System Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Fail test method when updating a User with an insufficient email
+        /// </summary>
+        [TestMethod]
+        public void UpdateUser_SystemAdmin_Fail_InsufficientEmail()
+        {
+            var userManagement = new UserManagement();
+            // (int sysID, string firstName, string lastName,
+            // string email, string password, string accountType, string component, string permission)
+            bool result;
+            try
+            {
+                result = userManagement.SingleUpdateUser(3, null, null, "br@gmail.com", "123", null, "Password", "System Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Fail test method when updating a System Admin as an Admin
+        /// </summary>
+        [TestMethod]
+        public void UpdateUser_SystemAdmin_Fail_AdminUpdatesSystemAdmin()
+        {
+            var userManagement = new UserManagement();
+            // (int sysID, string firstName, string lastName,
+            // string email, string password, string accountType, string component, string permission)
+            bool result = userManagement.SingleUpdateUser(1, null, null, "brian12345@gmail.com", "Brian3809{340@@", null, "Password", "Admin");
+            Assert.IsFalse(result);
         }
     }
 }
