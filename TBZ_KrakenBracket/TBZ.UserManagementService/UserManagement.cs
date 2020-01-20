@@ -20,9 +20,8 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public void CreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
+        public void CheckAmount(int amountOfUsers, int amountOfAdmins, string permission)
         {
-            CheckPermission(permission);
             if (amountOfUsers <= 0 && amountOfAdmins <= 0)
             {
                 throw new ArgumentException("Amount must be greater than zero");
@@ -31,6 +30,20 @@ namespace TBZ.UserManagementService
             {
                 throw new ArgumentException("Admins cannot create other admins");
             }
+        }
+
+        public void CheckListLength(int[] list)
+        {
+            if (list.Length < 1)
+            {
+                throw new ArgumentException("Length of list cannot be less than 1");
+            }
+        }
+
+        public void CreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
+        {
+            CheckPermission(permission);
+            CheckAmount(amountOfUsers, amountOfAdmins, permission);
             if (permission == "Admin")
             {
                 var dataAccess = new DataAccess();
@@ -65,16 +78,13 @@ namespace TBZ.UserManagementService
                     dataAccess.StoreUser(null, randomPassword, "Admin");
                 }
             }
-            else
-            {
-                throw new ArgumentException("Invalid permissions");
-            }
             
         }
 
         public bool[] DeleteUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
+            CheckListLength(listOfIDs);
             bool[] b = new bool[listOfIDs.Length];
             var dataAccess = new DataAccess();
             int count = 0;
@@ -90,6 +100,7 @@ namespace TBZ.UserManagementService
         public bool[] EnableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
+            CheckListLength(listOfIDs);
             bool[] b = new bool[listOfIDs.Length];
             var dataAccess = new DataAccess();
             int count = 0;
@@ -104,6 +115,7 @@ namespace TBZ.UserManagementService
         public bool[] DisableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
+            CheckListLength(listOfIDs);
             bool[] b = new bool[listOfIDs.Length];
             var dataAccess = new DataAccess();
             int count = 0;
