@@ -1,6 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using TBZ.UserManagementService;
 
 namespace TBZ.UserManagementTest
@@ -100,7 +99,6 @@ namespace TBZ.UserManagementTest
             Assert.IsTrue(result);
         }
 
-
         /// <summary>
         /// Fail test method where the user attempts to delete accounts but does not have
         /// the necessary permissions
@@ -143,7 +141,6 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected, actual);
         }
 
-
         /// <summary>
         /// Test method where the admin passes in an array of users to delete.
         /// 
@@ -162,7 +159,27 @@ namespace TBZ.UserManagementTest
         }
 
         /// <summary>
-        /// Test method where the admin passes in an array of users to enable.
+        /// Fail test method where an empty list of ID's to delete is passed in
+        /// </summary>
+        [TestMethod]
+        public void DeleteUsers_Fail_ListIsEmpty()
+        {
+            var userManagement = new UserManagement();
+            int[] listOfIDs = new int[0];
+            bool result = false;
+            try
+            {
+                userManagement.DeleteUsers(listOfIDs, "System Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Test method where the system admin passes in an array of users to enable.
         /// 
         /// Note: for any ID that is not able to be enabled, the program will not throw an
         /// argument exception, but rather return false.
@@ -181,7 +198,26 @@ namespace TBZ.UserManagementTest
         }
 
         /// <summary>
-        /// Test method where the admin passes in an array of users to disable.
+        /// Test method where the admin passes in an array of users to enable.
+        /// 
+        /// Note: for any ID that is not able to be enabled, the program will not throw an
+        /// argument exception, but rather return false.
+        /// </summary>
+        [TestMethod]
+        public void EnableUsers_Admin_Pass()
+        {
+            var userManagement = new UserManagement();
+
+            // System ID's #1 and #2 is are system admin and admin respectively. Rest are users.
+            // System #4 is the only account disabled
+            int[] listOfIDs = { 1, 2, 3, 4, 5 };
+            bool[] expected = { false, false, false, true, false };
+            bool[] actual = userManagement.EnableUsers(listOfIDs, "Admin");
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Test method where the system admin passes in an array of users to disable.
         /// 
         /// Note: for any ID that is not able to be disabled, the program will not throw an
         /// argument exception, but rather return false.
@@ -197,6 +233,45 @@ namespace TBZ.UserManagementTest
             bool[] expected = { false, true, true, false, true };
             bool[] actual = userManagement.DisableUsers(listOfIDs, "System Admin");
             CollectionAssert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Test method where the admin passes in an array of users to disable.
+        /// 
+        /// Note: for any ID that is not able to be disabled, the program will not throw an
+        /// argument exception, but rather return false.
+        /// </summary>
+        [TestMethod]
+        public void DisableUsers_Admin_Pass()
+        {
+            var userManagement = new UserManagement();
+
+            // System ID's #1 and #2 is are system admin and admin respectively. Rest are users.
+            // System #4 is the only account disabled
+            int[] listOfIDs = { 1, 2, 3, 4, 5 };
+            bool[] expected = { false, true, true, false, true };
+            bool[] actual = userManagement.DisableUsers(listOfIDs, "Admin");
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Fail test method where an empty list of ID's to enable is passed in
+        /// </summary>
+        [TestMethod]
+        public void EnableUsers_Fail_ListIsEmpty()
+        {
+            var userManagement = new UserManagement();
+            int[] listOfIDs = new int[0];
+            bool result = false;
+            try
+            {
+                userManagement.EnableUsers(listOfIDs, "System Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            Assert.IsTrue(result);
         }
     }
 }
