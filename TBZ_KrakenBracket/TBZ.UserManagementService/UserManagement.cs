@@ -40,7 +40,13 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public void CreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
+        public void SingleCreateUsers(int sysID, string firstName, string lastName, 
+            string email, string password, string accountType, bool accountStatus, string permission)
+        {
+            
+        }
+
+        public void BulkCreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
         {
             CheckPermission(permission);
             CheckAmount(amountOfUsers, amountOfAdmins, permission);
