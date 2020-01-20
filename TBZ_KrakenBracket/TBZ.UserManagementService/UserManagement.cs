@@ -43,7 +43,10 @@ namespace TBZ.UserManagementService
         public void SingleCreateUsers(int sysID, string firstName, string lastName, 
             string email, string password, string accountType, bool accountStatus, string permission)
         {
-            
+            // TODO: have a check for password. Use Kevin's registration checker
+            CheckPermission(permission);
+            var dataAccess = new DataAccess();
+            dataAccess.StoreUser(sysID, firstName, lastName, email, password, accountType, accountStatus);
         }
 
         public void BulkCreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
@@ -59,7 +62,7 @@ namespace TBZ.UserManagementService
 
                     // The emails will be retrieved from a list later on
                     // For now, they will be stored as null
-                    dataAccess.StoreUser(null, randomPassword, "User");
+                    dataAccess.StoreUser(0, null, null, null, randomPassword, "User", true);
                 }
             }
 
@@ -73,7 +76,7 @@ namespace TBZ.UserManagementService
                     randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
                     // For now, they will be stored as null
-                    dataAccess.StoreUser(null, randomPassword, "User");
+                    dataAccess.StoreUser(0, null, null, null, randomPassword, "User", true);
                 }
 
                 // Store admins
@@ -81,13 +84,15 @@ namespace TBZ.UserManagementService
                 {
                     randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
-                    dataAccess.StoreUser(null, randomPassword, "Admin");
+                    dataAccess.StoreUser(0, null, null, null, randomPassword, "Admin", true);
                 }
             }
             
         }
 
-        public bool[] DeleteUsers(int[] listOfIDs, string permission)
+
+
+        public bool[] BulkDeleteUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             CheckListLength(listOfIDs);
@@ -103,7 +108,7 @@ namespace TBZ.UserManagementService
             return b;
         }
 
-        public bool[] EnableUsers(int[] listOfIDs, string permission)
+        public bool[] BulkEnableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             CheckListLength(listOfIDs);
@@ -118,7 +123,7 @@ namespace TBZ.UserManagementService
             }
             return b;
         }
-        public bool[] DisableUsers(int[] listOfIDs, string permission)
+        public bool[] BulkDisableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             CheckListLength(listOfIDs);
