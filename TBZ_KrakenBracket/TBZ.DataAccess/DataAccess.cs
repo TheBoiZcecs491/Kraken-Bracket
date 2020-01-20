@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TBZ.RegistrationService;
 
 namespace TBZ.DatabaseAccess
 {
@@ -149,7 +150,19 @@ namespace TBZ.DatabaseAccess
             }
         }
         private int systemID = 0;
-        public void StoreUser(string email, string password, string accountType)
+
+        public User UserExists(int systemID)
+        {
+            if (users.Exists(x => x.SystemID == systemID))
+            {
+                int index = users.FindIndex(x => x.SystemID == systemID);
+                User u = users[index];
+                return u;
+            }
+            return null;
+        }
+        public void StoreUser(int sysID, string firstName, string lastName,
+            string email, string password, string accountType, bool accountStatus)
         {
             bool flag = true;
             while (flag)
@@ -166,8 +179,8 @@ namespace TBZ.DatabaseAccess
             users.Add(new User
             {
                 SystemID = systemID,
-                FirstName = null,
-                LastName = null,
+                FirstName = firstName,
+                LastName = lastName,
                 Email = email,
                 Password = password,
                 AccountType = accountType
@@ -272,6 +285,48 @@ namespace TBZ.DatabaseAccess
                 }
             }
             return false;
+        }
+
+        public bool UpdateUser(int sysID,string firstName, string lastName,
+            string email, string password, string accountType, string component, string permission)
+        {
+            // TODO: need to find a way to check only email or password without having to check the other component
+            Registration r = new Registration(email, password, firstName, lastName);
+            
+            User user = UserExists(sysID);
+            if (user == null)
+            {
+                return false;
+            }
+            else if ((permission == "Admin" && user.AccountType == "User") || (permission == "System Admin" && user.AccountType != "System Admin"))
+            {
+                if (component == "First Name")
+                {
+                    user.FirstName = firstName;
+                }
+                else if (component == "Last Name")
+                {
+                    user.LastName = lastName;
+                }
+                else if (component == "Email" && r.isValidEmail())
+                {
+                    user.Email = email;
+                }
+                else if (component == "Password" && r.isSecurePassword())
+                {
+                    user.Password = password;   
+                }
+                else if (component == "Account Type")
+                {
+                    user.AccountType = accountType;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
     }
 }
