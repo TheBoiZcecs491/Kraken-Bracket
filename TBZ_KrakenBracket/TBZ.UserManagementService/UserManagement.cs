@@ -46,7 +46,14 @@ namespace TBZ.UserManagementService
             // TODO: have a check for password. Use Kevin's registration checker
             CheckPermission(permission);
             var dataAccess = new DataAccess();
-            dataAccess.StoreUser(sysID, firstName, lastName, email, password, accountType, accountStatus);
+            if (permission == "Admin" && accountType == "User" || ((permission == "System Admin" && accountType != "System Admin")))
+            {
+                dataAccess.StoreUser(sysID, firstName, lastName, email, password, accountType, accountStatus);
+            }
+            else
+            {
+                throw new ArgumentException("Invaid permissions");
+            }
         }
 
         public void BulkCreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
@@ -165,21 +172,6 @@ namespace TBZ.UserManagementService
             return dataAccess.UpdateUser(sysID, firstName, lastName, email, password, accountType, component, permission);
         }
 
-        public bool[] BulkUpdateUsers(int[] listOfIDs, string permission)
-        {
-            CheckPermission(permission);
-            CheckListLength(listOfIDs);
-            bool[] b = new bool[listOfIDs.Length];
-            var dataAccess = new DataAccess();
-            int count = 0;
-            foreach (int id in listOfIDs)
-            {
-                bool temp = dataAccess.DisableUser(id, permission);
-                b[count] = temp;
-                count++;
-            }
-            return b;
-        }
         public string RandomPassword(int len)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
