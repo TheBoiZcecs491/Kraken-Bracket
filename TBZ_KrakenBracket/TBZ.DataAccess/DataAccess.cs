@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TBZ.RegistrationService;
 
 namespace TBZ.DatabaseAccess
 {
@@ -11,6 +12,61 @@ namespace TBZ.DatabaseAccess
         {
             {"brian@foomail.com", "123"},
             {"test@fmail.com", "legoMyEggo123"}
+        };
+
+        // TODO: remove hardcoded values later
+        List<User> users = new List<User>()
+        {
+            new User
+            {
+                SystemID = 1,
+                FirstName = null,
+                LastName = null,
+                Email = "foomail@gmail.com",
+                Password = "4fweu2fwr",
+                AccountType = "System Admin",
+                AccountStatus = true
+            },
+            new User
+            {
+                SystemID = 2,
+                FirstName = null,
+                LastName = null,
+                Email = "test139@gmail.com",
+                Password = "A3[favrw23",
+                AccountType = "Admin",
+                AccountStatus = true
+            },
+            new User
+            {
+                SystemID = 3,
+                FirstName = null,
+                LastName = null,
+                Email = "test901@gmail.com",
+                Password = "[r4pl323][",
+                AccountType = "User",
+                AccountStatus = true
+            },
+            new User
+            {
+                SystemID = 4,
+                FirstName = null,
+                LastName = null,
+                Email = "test12241@gmail.com",
+                Password = "[r4pl323][",
+                AccountType = "User",
+                AccountStatus = false
+            },
+            new User
+            {
+                SystemID = 5,
+                FirstName = null,
+                LastName = null,
+                Email = "test391@gmail.com",
+                Password = "[r4pl323][",
+                AccountType = "User",
+                AccountStatus = true
+            }
         };
 
         // Check the user's action that was added according to the role(s) they claim to be,
@@ -92,6 +148,186 @@ namespace TBZ.DatabaseAccess
             {
                 throw new Exception();
             }
+        }
+        private int systemID = 0;
+
+        public User UserExists(int systemID)
+        {
+            if (users.Exists(x => x.SystemID == systemID))
+            {
+                int index = users.FindIndex(x => x.SystemID == systemID);
+                User u = users[index];
+                return u;
+            }
+            return null;
+        }
+        public void StoreUser(int sysID, string firstName, string lastName,
+            string email, string password, string accountType, bool accountStatus)
+        {
+            bool flag = true;
+            while (flag)
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    systemID++;
+                }
+                else
+                {
+                    flag = false;
+                }
+            }
+            users.Add(new User
+            {
+                SystemID = systemID,
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                Password = password,
+                AccountType = accountType,
+                AccountStatus = accountStatus
+            });
+        }
+
+        public bool DeleteUser(int systemID, string permission)
+        {
+            if (permission == "System Admin")
+            {
+                if(users.Exists(x => x.SystemID == systemID) )
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType != "System Admin")
+                    {
+                        var itemToRemove = users.Single(r => r.SystemID == systemID);
+
+                        // Expected to return true
+                        return users.Remove(itemToRemove);
+                    }
+                }
+            }
+
+            else if (permission == "Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType == "User")
+                    {
+                        var itemToRemove = users.Single(r => r.SystemID == systemID);
+
+                        // Expected to return true
+                        return users.Remove(itemToRemove);
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool EnableUser(int systemID, string permission)
+        {
+            if (permission == "System Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType != "System Admin" && user.AccountStatus == false)
+                    {
+                        user.AccountStatus = true;
+                        return true;
+                    }
+                }
+            }
+
+            else if (permission == "Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType == "User" && user.AccountStatus == false)
+                    {
+                        user.AccountStatus = true;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool DisableUser(int systemID, string permission)
+        {
+            if (permission == "System Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType != "System Admin" && user.AccountStatus == true)
+                    {
+                        user.AccountStatus = false;
+                        return true;
+                    }
+                }
+            }
+
+            else if (permission == "Admin")
+            {
+                if (users.Exists(x => x.SystemID == systemID))
+                {
+                    int index = users.FindIndex(x => x.SystemID == systemID);
+                    User user = users[index];
+                    if (user.AccountType == "User" && user.AccountStatus == true)
+                    {
+                        user.AccountStatus = false;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool UpdateUser(int sysID,string firstName, string lastName,
+            string email, string password, string accountType, string component, string permission)
+        {
+            // TODO: need to find a way to check only email or password without having to check the other component
+            Registration r = new Registration(email, password, firstName, lastName);
+            
+            User user = UserExists(sysID);
+            if (user == null)
+            {
+                return false;
+            }
+            else if ((permission == "Admin" && user.AccountType == "User") || (permission == "System Admin" && user.AccountType != "System Admin"))
+            {
+                if (component == "First Name")
+                {
+                    user.FirstName = firstName;
+                }
+                else if (component == "Last Name")
+                {
+                    user.LastName = lastName;
+                }
+                else if (component == "Email" && r.isValidEmail())
+                {
+                    user.Email = email;
+                }
+                else if (component == "Password" && r.isSecurePassword())
+                {
+                    user.Password = password;   
+                }
+                else if (component == "Account Type")
+                {
+                    user.AccountType = accountType;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
     }
 }

@@ -1,28 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/kevinphan/Documents/GitHub/Kraken-Bracket/Milestone-2/TBZ_Authentication/TBZ_DataAccess/TBZ_DataAccess.csproj": {}
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj": {}
   },
   "projects": {
-    "/Users/kevinphan/Documents/GitHub/Kraken-Bracket/Milestone-2/TBZ_Authentication/TBZ_DataAccess/TBZ_DataAccess.csproj": {
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/kevinphan/Documents/GitHub/Kraken-Bracket/Milestone-2/TBZ_Authentication/TBZ_DataAccess/TBZ_DataAccess.csproj",
+        "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj",
         "projectName": "TBZ_DataAccess",
-        "projectPath": "/Users/kevinphan/Documents/GitHub/Kraken-Bracket/Milestone-2/TBZ_Authentication/TBZ_DataAccess/TBZ_DataAccess.csproj",
-        "packagesPath": "/Users/kevinphan/.nuget/packages/",
-        "outputPath": "/Users/kevinphan/Documents/GitHub/Kraken-Bracket/Milestone-2/TBZ_Authentication/TBZ_DataAccess/obj/",
+        "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj",
+        "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/Users/kevinphan/.config/NuGet/NuGet.Config"
+          "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -56,7 +55,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

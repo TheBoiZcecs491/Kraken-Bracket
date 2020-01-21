@@ -1,25 +1,117 @@
 {
   "format": 1,
   "restore": {
-    "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_LoggingTest/TBZ_LoggingTest.csproj": {}
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_LoggingTest\\TBZ_LoggingTest.csproj": {}
   },
   "projects": {
-    "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/TBZ_Logging.csproj": {
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_LoggingTest\\TBZ_LoggingTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/TBZ_Logging.csproj",
-        "projectName": "TBZ_Logging",
-        "projectPath": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/TBZ_Logging.csproj",
-        "packagesPath": "/Users/dylan/.nuget/packages/",
-        "outputPath": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/obj/",
+        "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_LoggingTest\\TBZ_LoggingTest.csproj",
+        "projectName": "TBZ_LoggingTest",
+        "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_LoggingTest\\TBZ_LoggingTest.csproj",
+        "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_LoggingTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/dylan/.config/NuGet/NuGet.Config"
+          "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\TBZ_Logging.csproj": {
+                "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\TBZ_Logging.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.4.0, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\TBZ_Logging.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\TBZ_Logging.csproj",
+        "projectName": "TBZ_Logging",
+        "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\TBZ_Logging.csproj",
+        "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Logging\\TBZ_Logging\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,84 +137,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_LoggingTest/TBZ_LoggingTest.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_LoggingTest/TBZ_LoggingTest.csproj",
-        "projectName": "TBZ_LoggingTest",
-        "projectPath": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_LoggingTest/TBZ_LoggingTest.csproj",
-        "packagesPath": "/Users/dylan/.nuget/packages/",
-        "outputPath": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_LoggingTest/obj/",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "/Users/dylan/.config/NuGet/NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.0": {
-            "projectReferences": {
-              "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/TBZ_Logging.csproj": {
-                "projectPath": "/Users/dylan/Projects/TBZ_LoggingTest/TBZ_Logging/TBZ_Logging.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.0": {
-          "dependencies": {
-            "MSTest.TestAdapter": {
-              "target": "Package",
-              "version": "[1.4.0, )"
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
             },
-            "MSTest.TestFramework": {
-              "target": "Package",
-              "version": "[1.4.0, )"
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
             },
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[16.2.0, )"
-            },
-            "coverlet.collector": {
-              "target": "Package",
-              "version": "[1.0.1, )"
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
             }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
           ],
-          "assetTargetFallback": true,
-          "warn": true,
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
