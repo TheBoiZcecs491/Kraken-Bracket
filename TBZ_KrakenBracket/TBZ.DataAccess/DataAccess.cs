@@ -161,7 +161,7 @@ namespace TBZ.DatabaseAccess
             }
             return null;
         }
-        public void StoreUser(int sysID, string firstName, string lastName,
+        public void StoreUser(string firstName, string lastName,
             string email, string password, string accountType, bool accountStatus)
         {
             bool flag = true;
