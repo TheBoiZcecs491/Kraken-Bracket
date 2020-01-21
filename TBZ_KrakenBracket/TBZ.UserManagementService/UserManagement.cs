@@ -40,7 +40,7 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public void SingleCreateUsers(int sysID, string firstName, string lastName, 
+        public void SingleCreateUsers(int sysID, string firstName, string lastName,
             string email, string password, string accountType, bool accountStatus, string permission)
         {
             // TODO: have a check for password. Use Kevin's registration checker
@@ -94,10 +94,10 @@ namespace TBZ.UserManagementService
                     dataAccess.StoreUser(0, null, null, null, randomPassword, "Admin", true);
                 }
             }
-            
+
         }
 
-        public bool SingleDeleteUser(int ID, string permission) 
+        public bool SingleDeleteUser(int ID, string permission)
         {
             CheckPermission(permission);
             var dataAccess = new DataAccess();

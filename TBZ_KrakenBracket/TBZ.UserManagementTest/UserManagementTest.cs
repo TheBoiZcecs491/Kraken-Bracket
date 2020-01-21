@@ -137,11 +137,11 @@ namespace TBZ.UserManagementTest
             {
                 userManagement.BulkCreateUsers(3, 0, "Admin");
             }
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
                 result = false;
             }
-            catch(Exception) { }
+            catch (Exception) { }
 
             Assert.IsTrue(result);
         }
@@ -359,7 +359,7 @@ namespace TBZ.UserManagementTest
 
             // System ID's #1 and #2 is are system admin and admin respectively. Rest are users.
             // System #4 is the only account disabled
-            int[] listOfIDs =  {1, 2, 3, 4, 5};
+            int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, false, false, true, false };
             bool[] actual = userManagement.BulkEnableUsers(listOfIDs, "System Admin");
             CollectionAssert.AreEqual(expected, actual);
