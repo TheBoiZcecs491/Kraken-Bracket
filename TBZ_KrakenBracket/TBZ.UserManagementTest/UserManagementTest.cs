@@ -17,7 +17,7 @@ namespace TBZ.UserManagementTest
             bool result = true;
             try
             {
-                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "User", true, "Admin");
+                userManagement.SingleCreateUsers("Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "User", true, "Admin");
             }
             catch (ArgumentException)
             {
@@ -38,7 +38,7 @@ namespace TBZ.UserManagementTest
             bool result = true;
             try
             {
-                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "Admin", true, "System Admin");
+                userManagement.SingleCreateUsers("Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "Admin", true, "System Admin");
             }
             catch (ArgumentException)
             {
@@ -59,7 +59,7 @@ namespace TBZ.UserManagementTest
             bool result = false;
             try
             {
-                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "System Admin", true, "Admin");
+                userManagement.SingleCreateUsers("Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "System Admin", true, "Admin");
             }
             catch (ArgumentException)
             {
