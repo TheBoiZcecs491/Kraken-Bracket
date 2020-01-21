@@ -32,8 +32,8 @@ namespace TBZ.DatabaseAccess
                 SystemID = 2,
                 FirstName = null,
                 LastName = null,
-                Email = "f@gmail.com",
-                Password = "904g2niovrw23",
+                Email = "test139@gmail.com",
+                Password = "A3[favrw23",
                 AccountType = "Admin",
                 AccountStatus = true
             },
@@ -42,7 +42,7 @@ namespace TBZ.DatabaseAccess
                 SystemID = 3,
                 FirstName = null,
                 LastName = null,
-                Email = "goo@gmail.com",
+                Email = "test901@gmail.com",
                 Password = "[r4pl323][",
                 AccountType = "User",
                 AccountStatus = true
@@ -52,7 +52,7 @@ namespace TBZ.DatabaseAccess
                 SystemID = 4,
                 FirstName = null,
                 LastName = null,
-                Email = "goo@gmail.com",
+                Email = "test12241@gmail.com",
                 Password = "[r4pl323][",
                 AccountType = "User",
                 AccountStatus = false
@@ -62,7 +62,7 @@ namespace TBZ.DatabaseAccess
                 SystemID = 5,
                 FirstName = null,
                 LastName = null,
-                Email = "goo@gmail.com",
+                Email = "test391@gmail.com",
                 Password = "[r4pl323][",
                 AccountType = "User",
                 AccountStatus = true
@@ -183,7 +183,8 @@ namespace TBZ.DatabaseAccess
                 LastName = lastName,
                 Email = email,
                 Password = password,
-                AccountType = accountType
+                AccountType = accountType,
+                AccountStatus = accountStatus
             });
         }
 
