@@ -8,13 +8,128 @@ namespace TBZ.UserManagementTest
     public class UserManagementTest
     {
         /// <summary>
+        /// Test method for creating a user as an Admin
+        /// </summary>
+        [TestMethod]
+        public void SingleCreateUsers_Admin_Pass()
+        {
+            var userManagement = new UserManagement();
+            bool result = true;
+            try
+            {
+                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "User", true, "Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Test method for creating an Admin as a System Admin
+        /// </summary>
+        [TestMethod]
+        public void SingleCreateUsers_SystemAdmin_Pass()
+        {
+            var userManagement = new UserManagement();
+            bool result = true;
+            try
+            {
+                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "Admin", true, "System Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Fail test method where Admin attempts to create System Admin
+        /// </summary>
+        [TestMethod]
+        public void SingleCreateUsers_Admin_Fail_AdminCreatesSystemAdmin()
+        {
+            var userManagement = new UserManagement();
+            bool result = false;
+            try
+            {
+                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "System Admin", true, "Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Test method for deleting a user as a SystemAdmin
+        /// </summary>
+        [TestMethod]
+        public void SingleDeleteUsers_SystemAdmin_Pass()
+        {
+            var userManagement = new UserManagement();
+            bool result = true;
+            try
+            {
+                userManagement.SingleDeleteUser(2, "System Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Test method for deleting a user as a SystemAdmin
+        /// </summary>
+        [TestMethod]
+        public void SingleDeleteUsers_Admin_Pass()
+        {
+            var userManagement = new UserManagement();
+            bool result = true;
+            try
+            {
+                userManagement.SingleDeleteUser(3, "Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Fail test method where Admin attempts to delete System Admin
+        /// </summary>
+        [TestMethod]
+        public void SingleDeleteUsers_Admin_Fail_AdminDeletesSystemAdmin()
+        {
+            var userManagement = new UserManagement();
+            bool result = userManagement.SingleDeleteUser(1, "System Admin");
+            Assert.IsFalse(result);
+        }
+        /// <summary>
         /// Test method for creating users as an admin
         /// 
         /// The admin is creating 3 users and 0 admins. The admin does not have the 
         /// ability to create other admins.
         /// </summary>
         [TestMethod]
-        public void CreateUsers_Admin_Pass()
+        public void BulkCreateUsers_Admin_Pass()
         {
             var userManagement = new UserManagement();
             bool result = true;
@@ -38,7 +153,7 @@ namespace TBZ.UserManagementTest
         /// The system admin is creating 5 users and 2 admins
         /// </summary>
         [TestMethod]
-        public void CreateUsers_SystemAdmin_Pass()
+        public void BulkCreateUsers_SystemAdmin_Pass()
         {
             var userManagement = new UserManagement();
             bool result = true;
@@ -60,7 +175,7 @@ namespace TBZ.UserManagementTest
         /// is specified.
         /// </summary>
         [TestMethod]
-        public void CreateUsers_Fail_AmountLessThanOne()
+        public void BulkCreateUsers_Fail_AmountLessThanOne()
         {
             var userManagement = new UserManagement();
             bool result = false;
@@ -82,7 +197,7 @@ namespace TBZ.UserManagementTest
         /// the necessary permissions
         /// </summary>
         [TestMethod]
-        public void CreateUsers_Fail_InvalidPermission()
+        public void BulkCreateUsers_Fail_InvalidPermission()
         {
             var userManagement = new UserManagement();
             bool result = false;
@@ -179,13 +294,66 @@ namespace TBZ.UserManagementTest
         }
 
         /// <summary>
+        /// Test method for single enable a user as a SystemAdmin
+        /// </summary>
+        [TestMethod]
+        public void SingleEnableUsers_SystemAdmin_Pass()
+        {
+            var userManagement = new UserManagement();
+            bool result = true;
+            try
+            {
+                userManagement.SingleEnableUser(4, "System Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Test method for single enable a user as an Admin
+        /// </summary>
+        [TestMethod]
+        public void SingleEnableUsers_Admin_Pass()
+        {
+            var userManagement = new UserManagement();
+            bool result = true;
+            try
+            {
+                userManagement.SingleEnableUser(4, "Admin");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Fail test method where attempting to enable a user that is already enabled
+        /// </summary>
+        [TestMethod]
+        public void SingleEnableUsers_SystemAdmin_Fail_UserIsAlreadyEnabled()
+        {
+            var userManagement = new UserManagement();
+            bool result = userManagement.SingleEnableUser(3, "System Admin");
+            Assert.IsFalse(result);
+        }
+
+        /// <summary>
         /// Test method where the system admin passes in an array of users to enable.
         /// 
         /// Note: for any ID that is not able to be enabled, the program will not throw an
         /// argument exception, but rather return false.
         /// </summary>
         [TestMethod]
-        public void EnableUsers_SystemAdmin_Pass()
+        public void BulkEnableUsers_SystemAdmin_Pass()
         {
             var userManagement = new UserManagement();
 
@@ -204,7 +372,7 @@ namespace TBZ.UserManagementTest
         /// argument exception, but rather return false.
         /// </summary>
         [TestMethod]
-        public void EnableUsers_Admin_Pass()
+        public void BulkEnableUsers_Admin_Pass()
         {
             var userManagement = new UserManagement();
 
@@ -223,7 +391,7 @@ namespace TBZ.UserManagementTest
         /// argument exception, but rather return false.
         /// </summary>
         [TestMethod]
-        public void DisableUsers_SystemAdmin_Pass()
+        public void BulkDisableUsers_SystemAdmin_Pass()
         {
             var userManagement = new UserManagement();
 
@@ -242,7 +410,7 @@ namespace TBZ.UserManagementTest
         /// argument exception, but rather return false.
         /// </summary>
         [TestMethod]
-        public void DisableUsers_Admin_Pass()
+        public void BulkDisableUsers_Admin_Pass()
         {
             var userManagement = new UserManagement();
 
@@ -258,7 +426,7 @@ namespace TBZ.UserManagementTest
         /// Fail test method where an empty list of ID's to enable is passed in
         /// </summary>
         [TestMethod]
-        public void EnableUsers_Fail_ListIsEmpty()
+        public void BulkEnableUsers_Fail_ListIsEmpty()
         {
             var userManagement = new UserManagement();
             int[] listOfIDs = new int[0];
@@ -280,7 +448,7 @@ namespace TBZ.UserManagementTest
         /// In this case, the system admin is updating another admin's email
         /// </summary>
         [TestMethod]
-        public void UpdateUser_SystemAdmin_Pass()
+        public void SingleUpdateUser_SystemAdmin_Pass()
         {
             var userManagement = new UserManagement();
             // (int sysID, string firstName, string lastName,
@@ -295,7 +463,7 @@ namespace TBZ.UserManagementTest
         /// In this case, the system admin is updating another user's password
         /// </summary>
         [TestMethod]
-        public void UpdateUser_Admin_Pass()
+        public void SingleUpdateUser_Admin_Pass()
         {
             var userManagement = new UserManagement();
             // (int sysID, string firstName, string lastName,
@@ -308,7 +476,7 @@ namespace TBZ.UserManagementTest
         /// Fail test method when updating a User with an insufficient password
         /// </summary>
         [TestMethod]
-        public void UpdateUser_SystemAdmin_Fail_InsufficientPassword()
+        public void SingleUpdateUser_SystemAdmin_Fail_InsufficientPassword()
         {
             var userManagement = new UserManagement();
             // (int sysID, string firstName, string lastName,
@@ -329,7 +497,7 @@ namespace TBZ.UserManagementTest
         /// Fail test method when updating a User with an insufficient email
         /// </summary>
         [TestMethod]
-        public void UpdateUser_SystemAdmin_Fail_InsufficientEmail()
+        public void SingleUpdateUser_SystemAdmin_Fail_InsufficientEmail()
         {
             var userManagement = new UserManagement();
             // (int sysID, string firstName, string lastName,
@@ -350,7 +518,7 @@ namespace TBZ.UserManagementTest
         /// Fail test method when updating a System Admin as an Admin
         /// </summary>
         [TestMethod]
-        public void UpdateUser_SystemAdmin_Fail_AdminUpdatesSystemAdmin()
+        public void SingleUpdateUser_SystemAdmin_Fail_AdminUpdatesSystemAdmin()
         {
             var userManagement = new UserManagement();
             // (int sysID, string firstName, string lastName,
