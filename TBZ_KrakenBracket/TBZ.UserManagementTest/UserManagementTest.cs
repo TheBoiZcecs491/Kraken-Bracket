@@ -387,16 +387,16 @@ namespace TBZ.UserManagementTest
         /// Note: for any ID that is not able to be enabled, the program will not throw an
         /// argument exception, but rather return false.
         /// </summary>
-        [TestMethod]
-        public void BulkEnableUsers_Admin_Pass()
+        [DataTestMethod]
+        [DataRow(new int[] { 1, 2, 3, 4, 5 }, "Admin")]
+        public void BulkEnableUsers_Admin_Pass(int[] listOfIDs, string permission)
         {
             var userManagement = new UserManagement();
 
             // System ID's #1 and #2 is are system admin and admin respectively. Rest are users.
             // System #4 is the only account disabled
-            int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, false, false, true, false };
-            bool[] actual = userManagement.BulkEnableUsers(listOfIDs, "Admin");
+            bool[] actual = userManagement.BulkEnableUsers(listOfIDs, permission);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -406,16 +406,16 @@ namespace TBZ.UserManagementTest
         /// Note: for any ID that is not able to be disabled, the program will not throw an
         /// argument exception, but rather return false.
         /// </summary>
-        [TestMethod]
-        public void BulkDisableUsers_SystemAdmin_Pass()
+        [DataTestMethod]
+        [DataRow(new int[] { 1, 2, 3, 4, 5 }, "System Admin")]
+        public void BulkDisableUsers_SystemAdmin_Pass(int[] listOfIDs, string permission)
         {
             var userManagement = new UserManagement();
 
             // System ID's #1 and #2 is are system admin and admin respectively. Rest are users.
             // System #4 is the only account disabled
-            int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, true, true, false, true };
-            bool[] actual = userManagement.BulkDisableUsers(listOfIDs, "System Admin");
+            bool[] actual = userManagement.BulkDisableUsers(listOfIDs, permission);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -425,14 +425,14 @@ namespace TBZ.UserManagementTest
         /// Note: for any ID that is not able to be disabled, the program will not throw an
         /// argument exception, but rather return false.
         /// </summary>
-        [TestMethod]
-        public void BulkDisableUsers_Admin_Pass()
+        [DataTestMethod]
+        [DataRow(new int[] { 1, 2, 3, 4, 5 }, "Admin")]
+        public void BulkDisableUsers_Admin_Pass(int[] listOfIDs, string permission)
         {
             var userManagement = new UserManagement();
 
             // System ID's #1 and #2 is are system admin and admin respectively. Rest are users.
             // System #4 is the only account disabled
-            int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, false, true, false, true };
             bool[] actual = userManagement.BulkDisableUsers(listOfIDs, "Admin");
             CollectionAssert.AreEqual(expected, actual);
@@ -441,15 +441,15 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Fail test method where an empty list of ID's to enable is passed in
         /// </summary>
-        [TestMethod]
-        public void BulkEnableUsers_Fail_ListIsEmpty()
+        [DataTestMethod]
+        [DataRow(new int[0], "Admin")]
+        public void BulkEnableUsers_Fail_ListIsEmpty(int[] listOfIDs, string permission)
         {
             var userManagement = new UserManagement();
-            int[] listOfIDs = new int[0];
             bool result = false;
             try
             {
-                userManagement.BulkEnableUsers(listOfIDs, "System Admin");
+                userManagement.BulkEnableUsers(listOfIDs, permission);
             }
             catch (ArgumentException)
             {
