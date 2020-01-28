@@ -7,6 +7,7 @@ namespace TBZ.UserManagementService
 {
     public class UserManagement
     {
+        private static readonly DataAccess _DataAccessService;
         private string randomPassword;
         private Random random = new Random();
 
@@ -45,10 +46,9 @@ namespace TBZ.UserManagementService
         {
             // TODO: have a check for password. Use Kevin's registration checker
             CheckPermission(permission);
-            var dataAccess = new DataAccess();
             if (permission == "Admin" && accountType == "User" || ((permission == "System Admin" && accountType != "System Admin")))
             {
-                dataAccess.StoreUser(sysID, firstName, lastName, email, password, accountType, accountStatus);
+                _DataAccessService.StoreUser(sysID, firstName, lastName, email, password, accountType, accountStatus);
             }
             else
             {
@@ -62,28 +62,25 @@ namespace TBZ.UserManagementService
             CheckAmount(amountOfUsers, amountOfAdmins, permission);
             if (permission == "Admin")
             {
-                var dataAccess = new DataAccess();
                 for (int i = 0; i < amountOfUsers; i++)
                 {
                     randomPassword = RandomPassword(14);
 
                     // The emails will be retrieved from a list later on
                     // For now, they will be stored as null
-                    dataAccess.StoreUser(0, null, null, null, randomPassword, "User", true);
+                    _DataAccessService.StoreUser(0, null, null, null, randomPassword, "User", true);
                 }
             }
 
             else if (permission == "System Admin")
             {
-                var dataAccess = new DataAccess();
-
                 // Store regular users
                 for (int i = 0; i < amountOfUsers; i++)
                 {
                     randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
                     // For now, they will be stored as null
-                    dataAccess.StoreUser(0, null, null, null, randomPassword, "User", true);
+                    _DataAccessService.StoreUser(0, null, null, null, randomPassword, "User", true);
                 }
 
                 // Store admins
@@ -91,7 +88,7 @@ namespace TBZ.UserManagementService
                 {
                     randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
-                    dataAccess.StoreUser(0, null, null, null, randomPassword, "Admin", true);
+                    _DataAccessService.StoreUser(0, null, null, null, randomPassword, "Admin", true);
                 }
             }
             
@@ -100,8 +97,7 @@ namespace TBZ.UserManagementService
         public bool SingleDeleteUser(int ID, string permission) 
         {
             CheckPermission(permission);
-            var dataAccess = new DataAccess();
-            return dataAccess.DeleteUser(ID, permission);
+            return _DataAccessService.DeleteUser(ID, permission);
         }
 
         public bool[] BulkDeleteUsers(int[] listOfIDs, string permission)
@@ -109,11 +105,10 @@ namespace TBZ.UserManagementService
             CheckPermission(permission);
             CheckListLength(listOfIDs);
             bool[] b = new bool[listOfIDs.Length];
-            var dataAccess = new DataAccess();
             int count = 0;
             foreach (int id in listOfIDs)
             {
-                bool temp = dataAccess.DeleteUser(id, permission);
+                bool temp = _DataAccessService.DeleteUser(id, permission);
                 b[count] = temp;
                 count++;
             }
@@ -123,19 +118,17 @@ namespace TBZ.UserManagementService
         public bool SingleEnableUser(int ID, string permission)
         {
             CheckPermission(permission);
-            var dataAccess = new DataAccess();
-            return dataAccess.EnableUser(ID, permission);
+            return _DataAccessService.EnableUser(ID, permission);
         }
         public bool[] BulkEnableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             CheckListLength(listOfIDs);
             bool[] b = new bool[listOfIDs.Length];
-            var dataAccess = new DataAccess();
             int count = 0;
             foreach (int id in listOfIDs)
             {
-                bool temp = dataAccess.EnableUser(id, permission);
+                bool temp = _DataAccessService.EnableUser(id, permission);
                 b[count] = temp;
                 count++;
             }
@@ -145,19 +138,17 @@ namespace TBZ.UserManagementService
         public bool SingleDisableUser(int ID, string permission)
         {
             CheckPermission(permission);
-            var dataAccess = new DataAccess();
-            return dataAccess.DisableUser(ID, permission);
+            return _DataAccessService.DisableUser(ID, permission);
         }
         public bool[] BulkDisableUsers(int[] listOfIDs, string permission)
         {
             CheckPermission(permission);
             CheckListLength(listOfIDs);
             bool[] b = new bool[listOfIDs.Length];
-            var dataAccess = new DataAccess();
             int count = 0;
             foreach (int id in listOfIDs)
             {
-                bool temp = dataAccess.DisableUser(id, permission);
+                bool temp = _DataAccessService.DisableUser(id, permission);
                 b[count] = temp;
                 count++;
             }
@@ -168,8 +159,7 @@ namespace TBZ.UserManagementService
             string email, string password, string accountType, string component, string permission)
         {
             CheckPermission(permission);
-            var dataAccess = new DataAccess();
-            return dataAccess.UpdateUser(sysID, firstName, lastName, email, password, accountType, component, permission);
+            return _DataAccessService.UpdateUser(sysID, firstName, lastName, email, password, accountType, component, permission);
         }
 
         public string RandomPassword(int len)
