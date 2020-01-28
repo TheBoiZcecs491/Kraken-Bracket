@@ -8,47 +8,30 @@ namespace TBZ.UserManagementService
     public class UserManagement
     {
         private static readonly DataAccess _DataAccessService;
+        private static readonly UserManagementManager _userManagementManager;
         private string randomPassword;
         private Random random = new Random();
 
-        List<string> permissions = new List<string>(new string[] { "Admin", "System Admin" });
-
-        public void CheckPermission(string permission)
+        static UserManagement()
         {
-            if (!permissions.Contains(permission))
-            {
-                throw new ArgumentException("Invalid permissions");
-            }
-        }
-
-        public void CheckAmount(int amountOfUsers, int amountOfAdmins, string permission)
-        {
-            if (amountOfUsers <= 0 && amountOfAdmins <= 0)
-            {
-                throw new ArgumentException("Amount must be greater than zero");
-            }
-            if (amountOfAdmins > 0 && permission == "Admin")
-            {
-                throw new ArgumentException("Admins cannot create other admins");
-            }
-        }
-
-        public void CheckListLength(int[] list)
-        {
-            if (list.Length < 1)
-            {
-                throw new ArgumentException("Length of list cannot be less than 1");
-            }
+            _DataAccessService = new DataAccess();
+            _userManagementManager = new UserManagementManager();
         }
 
         public void SingleCreateUsers(int sysID, string firstName, string lastName, 
             string email, string password, string accountType, bool accountStatus, string permission)
         {
             // TODO: have a check for password. Use Kevin's registration checker
-            CheckPermission(permission);
-            if (permission == "Admin" && accountType == "User" || ((permission == "System Admin" && accountType != "System Admin")))
+            if (_userManagementManager.CheckPermission(permission))
             {
-                _DataAccessService.StoreUser(sysID, firstName, lastName, email, password, accountType, accountStatus);
+                if (_userManagementManager.SingleCreateCheck(permission, accountType))
+                {
+                    _DataAccessService.StoreUser(sysID, firstName, lastName, email, password, accountType, accountStatus);
+                }
+                else
+                {
+                    throw new ArgumentException("Invaid permissions");
+                }
             }
             else
             {
@@ -58,108 +41,153 @@ namespace TBZ.UserManagementService
 
         public void BulkCreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
         {
-            CheckPermission(permission);
-            CheckAmount(amountOfUsers, amountOfAdmins, permission);
-            if (permission == "Admin")
+            if (_userManagementManager.CheckPermission(permission) && 
+                _userManagementManager.CheckAmount(amountOfUsers, amountOfAdmins, permission))
             {
-                for (int i = 0; i < amountOfUsers; i++)
+                if (permission == "Admin")
                 {
-                    randomPassword = RandomPassword(14);
+                    for (int i = 0; i < amountOfUsers; i++)
+                    {
+                        randomPassword = RandomPassword(14);
 
-                    // The emails will be retrieved from a list later on
-                    // For now, they will be stored as null
-                    _DataAccessService.StoreUser(0, null, null, null, randomPassword, "User", true);
+                        // The emails will be retrieved from a list later on
+                        // For now, they will be stored as null
+                        _DataAccessService.StoreUser(0, null, null, null, randomPassword, "User", true);
+                    }
+                }
+
+                else if (permission == "System Admin")
+                {
+                    // Store regular users
+                    for (int i = 0; i < amountOfUsers; i++)
+                    {
+                        randomPassword = RandomPassword(14);
+                        // The emails will be retrieved from a list later on
+                        // For now, they will be stored as null
+                        _DataAccessService.StoreUser(0, null, null, null, randomPassword, "User", true);
+                    }
+
+                    // Store admins
+                    for (int i = 0; i < amountOfAdmins; i++)
+                    {
+                        randomPassword = RandomPassword(14);
+                        // The emails will be retrieved from a list later on
+                        _DataAccessService.StoreUser(0, null, null, null, randomPassword, "Admin", true);
+                    }
                 }
             }
-
-            else if (permission == "System Admin")
+            else
             {
-                // Store regular users
-                for (int i = 0; i < amountOfUsers; i++)
-                {
-                    randomPassword = RandomPassword(14);
-                    // The emails will be retrieved from a list later on
-                    // For now, they will be stored as null
-                    _DataAccessService.StoreUser(0, null, null, null, randomPassword, "User", true);
-                }
-
-                // Store admins
-                for (int i = 0; i < amountOfAdmins; i++)
-                {
-                    randomPassword = RandomPassword(14);
-                    // The emails will be retrieved from a list later on
-                    _DataAccessService.StoreUser(0, null, null, null, randomPassword, "Admin", true);
-                }
+                throw new ArgumentException("Invaid permissions");
             }
-            
         }
 
         public bool SingleDeleteUser(int ID, string permission) 
         {
-            CheckPermission(permission);
-            return _DataAccessService.DeleteUser(ID, permission);
+            if (_userManagementManager.CheckPermission(permission))
+            {
+                return _DataAccessService.DeleteUser(ID, permission);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
         }
 
         public bool[] BulkDeleteUsers(int[] listOfIDs, string permission)
         {
-            CheckPermission(permission);
-            CheckListLength(listOfIDs);
-            bool[] b = new bool[listOfIDs.Length];
-            int count = 0;
-            foreach (int id in listOfIDs)
+            if (_userManagementManager.CheckPermission(permission) && _userManagementManager.CheckListLength(listOfIDs))
             {
-                bool temp = _DataAccessService.DeleteUser(id, permission);
-                b[count] = temp;
-                count++;
+                bool[] b = new bool[listOfIDs.Length];
+                int count = 0;
+                foreach (int id in listOfIDs)
+                {
+                    bool temp = _DataAccessService.DeleteUser(id, permission);
+                    b[count] = temp;
+                    count++;
+                }
+                return b;
             }
-            return b;
+            else
+            {
+                throw new ArgumentException("Invaid permissions");
+            }
+            
         }
 
         public bool SingleEnableUser(int ID, string permission)
         {
-            CheckPermission(permission);
-            return _DataAccessService.EnableUser(ID, permission);
+            if (_userManagementManager.CheckPermission(permission))
+            {
+                return _DataAccessService.EnableUser(ID, permission);
+            }
+            else
+            {
+                throw new ArgumentException("Invaid permissions");
+            }
         }
         public bool[] BulkEnableUsers(int[] listOfIDs, string permission)
         {
-            CheckPermission(permission);
-            CheckListLength(listOfIDs);
-            bool[] b = new bool[listOfIDs.Length];
-            int count = 0;
-            foreach (int id in listOfIDs)
+            if (_userManagementManager.CheckPermission(permission) && _userManagementManager.CheckListLength(listOfIDs))
             {
-                bool temp = _DataAccessService.EnableUser(id, permission);
-                b[count] = temp;
-                count++;
+                bool[] b = new bool[listOfIDs.Length];
+                int count = 0;
+                foreach (int id in listOfIDs)
+                {
+                    bool temp = _DataAccessService.EnableUser(id, permission);
+                    b[count] = temp;
+                    count++;
+                }
+                return b;
             }
-            return b;
+            else
+            {
+                throw new ArgumentException("Invaid permissions");
+            }
         }
 
         public bool SingleDisableUser(int ID, string permission)
         {
-            CheckPermission(permission);
-            return _DataAccessService.DisableUser(ID, permission);
+            if (_userManagementManager.CheckPermission(permission))
+            {
+                return _DataAccessService.DisableUser(ID, permission);
+            }
+            else
+            {
+                throw new ArgumentException("Invaid permissions");
+            }
         }
         public bool[] BulkDisableUsers(int[] listOfIDs, string permission)
         {
-            CheckPermission(permission);
-            CheckListLength(listOfIDs);
-            bool[] b = new bool[listOfIDs.Length];
-            int count = 0;
-            foreach (int id in listOfIDs)
+            if (_userManagementManager.CheckPermission(permission) && _userManagementManager.CheckListLength(listOfIDs))
             {
-                bool temp = _DataAccessService.DisableUser(id, permission);
-                b[count] = temp;
-                count++;
+                bool[] b = new bool[listOfIDs.Length];
+                int count = 0;
+                foreach (int id in listOfIDs)
+                {
+                    bool temp = _DataAccessService.DisableUser(id, permission);
+                    b[count] = temp;
+                    count++;
+                }
+                return b;
             }
-            return b;
+            else
+            {
+                throw new ArgumentException("Invaid permissions");
+            }
         }
 
         public bool SingleUpdateUser(int sysID, string firstName, string lastName,
             string email, string password, string accountType, string component, string permission)
         {
-            CheckPermission(permission);
-            return _DataAccessService.UpdateUser(sysID, firstName, lastName, email, password, accountType, component, permission);
+            if (_userManagementManager.CheckPermission(permission))
+            {
+                return _DataAccessService.UpdateUser(sysID, firstName, lastName, email, password, accountType, component, permission);
+            }
+            else
+            {
+                throw new ArgumentException("Invaid permissions");
+            }
         }
 
         public string RandomPassword(int len)
