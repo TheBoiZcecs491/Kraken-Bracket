@@ -10,14 +10,16 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Test method for creating a user as an Admin
         /// </summary>
-        [TestMethod]
-        public void SingleCreateUsers_Admin_Pass()
+        [DataTestMethod]
+        [DataRow(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "User", true, "Admin")]
+        public void SingleCreateUsers_Admin_Pass(int sysID, string firstName, string lastName, string email, string password,
+            string accountType, bool accountStatus, string permission)
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "User", true, "Admin");
+                userManagement.SingleCreateUsers(sysID, firstName, lastName, email, password, accountType, accountStatus, permission);
             }
             catch (ArgumentException)
             {
@@ -31,14 +33,16 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Test method for creating an Admin as a System Admin
         /// </summary>
-        [TestMethod]
-        public void SingleCreateUsers_SystemAdmin_Pass()
+        [DataTestMethod]
+        [DataRow(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "Admin", true, "System Admin")]
+        public void SingleCreateUsers_SystemAdmin_Pass(int sysID, string firstName, string lastName, string email, string password,
+            string accountType, bool accountStatus, string permission)
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "Admin", true, "System Admin");
+                userManagement.SingleCreateUsers(sysID, firstName, lastName, email, password, accountType, accountStatus, permission);
             }
             catch (ArgumentException)
             {
@@ -52,14 +56,16 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Fail test method where Admin attempts to create System Admin
         /// </summary>
-        [TestMethod]
-        public void SingleCreateUsers_Admin_Fail_AdminCreatesSystemAdmin()
+        [DataTestMethod]
+        [DataRow(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "System Admin", true, "Admin")]
+        public void SingleCreateUsers_Admin_Fail_AdminCreatesSystemAdmin(int sysID, string firstName, string lastName, string email, string password,
+            string accountType, bool accountStatus, string permission)
         {
             var userManagement = new UserManagement();
             bool result = false;
             try
             {
-                userManagement.SingleCreateUsers(100, "Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "System Admin", true, "Admin");
+                userManagement.SingleCreateUsers(sysID, firstName, lastName, email, password, accountType, accountStatus, permission);
             }
             catch (ArgumentException)
             {
