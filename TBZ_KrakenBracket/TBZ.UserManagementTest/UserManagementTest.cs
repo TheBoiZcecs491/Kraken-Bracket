@@ -231,17 +231,17 @@ namespace TBZ.UserManagementTest
         /// Fail test method where the user attempts to delete accounts but does not have
         /// the necessary permissions
         /// </summary>
-        [TestMethod]
-        public void DeleteUsers_Fail_InvalidPermission()
+        [DataTestMethod]
+        [DataRow(new int[] { 1, 2, 3, 4, 5 },"User")]
+        public void BulkDeleteUsers_Fail_InvalidPermission(int[] listOfIDs, string permission)
         {
             var userManagement = new UserManagement();
             bool result = false;
             // Attempting to delete any account should fail since the current account
             // is a User
-            int[] listOfIDs = { 1, 2, 3, 4, 5 };
             try
             {
-                bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, "User");
+                bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, permission);
             }
             catch (ArgumentException)
             {
@@ -258,14 +258,14 @@ namespace TBZ.UserManagementTest
         /// Note: for any ID that is not able to be deleted, the program will not throw an
         /// argument exception, but rather return false.
         /// </summary>
-        [TestMethod]
-        public void DeleteUsers_SystemAdmin_Pass()
+        [DataTestMethod]
+        [DataRow(new int[] { 1, 2, 3, 4, 5 }, "System Admin")]
+        public void BulkDeleteUsers_SystemAdmin_Pass(int[] listOfIDs, string permission)
         {
             var userManagement = new UserManagement();
             // System ID's #1 and #2 is are system admin and admin. Rest are Users
-            int[] listOfIDs = { 1, 2, 3, 4, 5 };
             bool[] expected = { false, true, true, true, true };
-            bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, "System Admin");
+            bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, permission);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -275,29 +275,29 @@ namespace TBZ.UserManagementTest
         /// Note: for any ID that is not able to be deleted, the program will not throw an
         /// argument exception, but rather return false.
         /// </summary>
-        [TestMethod]
-        public void DeleteUsers_Admin_Pass()
+        [DataTestMethod]
+        [DataRow(new int[] { 1, 2, 3, 4, 5 }, "Admin")]
+        public void BulkDeleteUsers_Admin_Pass(int[] listOfIDs, string permission)
         {
             var userManagement = new UserManagement();
             // System ID's #1 and #2 is are system admin and admin. Rest are Users
-            int[] listOfIDs = { 1, 2, 3, 4, 5 };
-            bool[] expected = { false, true, true, true, true };
-            bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, "System Admin");
+            bool[] expected = { false, false, true, true, true };
+            bool[] actual = userManagement.BulkDeleteUsers(listOfIDs, permission);
             CollectionAssert.AreEqual(expected, actual);
         }
 
         /// <summary>
         /// Fail test method where an empty list of ID's to delete is passed in
         /// </summary>
-        [TestMethod]
-        public void DeleteUsers_Fail_ListIsEmpty()
+        [DataTestMethod]
+        [DataRow(new int[0], "Admin")]
+        public void BulkDeleteUsers_Fail_ListIsEmpty(int[] listOfIDs, string permission)
         {
             var userManagement = new UserManagement();
-            int[] listOfIDs = new int[0];
             bool result = false;
             try
             {
-                userManagement.BulkDeleteUsers(listOfIDs, "System Admin");
+                userManagement.BulkDeleteUsers(listOfIDs, permission);
             }
             catch (ArgumentException)
             {
