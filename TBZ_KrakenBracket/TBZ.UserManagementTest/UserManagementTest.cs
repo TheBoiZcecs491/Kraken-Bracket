@@ -124,7 +124,7 @@ namespace TBZ.UserManagementTest
         /// Fail test method where Admin attempts to delete System Admin
         /// </summary>
         [DataTestMethod]
-        [DataRow(3, "Admin")]
+        [DataRow(1, "Admin")]
         public void SingleDeleteUsers_Admin_Fail_AdminDeletesSystemAdmin(int sysID, string permission)
         {
             var userManagement = new UserManagement();
@@ -137,14 +137,15 @@ namespace TBZ.UserManagementTest
         /// The admin is creating 3 users and 0 admins. The admin does not have the 
         /// ability to create other admins.
         /// </summary>
-        [TestMethod]
-        public void BulkCreateUsers_Admin_Pass()
+        [DataTestMethod]
+        [DataRow(3, 0, "Admin")]
+        public void BulkCreateUsers_Admin_Pass(int amountOfUsers, int amountOfAdmins, string permission)
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.BulkCreateUsers(3, 0, "Admin");
+                userManagement.BulkCreateUsers(amountOfUsers, amountOfAdmins, permission);
             }
             catch(ArgumentException)
             {
@@ -161,14 +162,15 @@ namespace TBZ.UserManagementTest
         /// 
         /// The system admin is creating 5 users and 2 admins
         /// </summary>
-        [TestMethod]
-        public void BulkCreateUsers_SystemAdmin_Pass()
+        [DataTestMethod]
+        [DataRow(5, 2, "System Admin")]
+        public void BulkCreateUsers_SystemAdmin_Pass(int amountOfUsers, int amountOfAdmins, string permission)
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.BulkCreateUsers(5, 2, "System Admin");
+                userManagement.BulkCreateUsers(amountOfUsers, amountOfAdmins, permission);
             }
             catch (ArgumentException)
             {
@@ -183,14 +185,15 @@ namespace TBZ.UserManagementTest
         /// Fail test method where the CreateUsers method is invoked but no amount of accounts
         /// is specified.
         /// </summary>
-        [TestMethod]
-        public void BulkCreateUsers_Fail_AmountLessThanOne()
+        [DataTestMethod]
+        [DataRow(0, 0, "System Admin")]
+        public void BulkCreateUsers_Fail_AmountLessThanOne(int amountOfUsers, int amountOfAdmins, string permission)
         {
             var userManagement = new UserManagement();
             bool result = false;
             try
             {
-                userManagement.BulkCreateUsers(0, 0, "System Admin");
+                userManagement.BulkCreateUsers(amountOfUsers, amountOfAdmins, permission);
             }
             catch (ArgumentException)
             {
@@ -205,14 +208,15 @@ namespace TBZ.UserManagementTest
         /// Fail test method where the user attempts to create accounts but does not have
         /// the necessary permissions
         /// </summary>
-        [TestMethod]
-        public void BulkCreateUsers_Fail_InvalidPermission()
+        [DataTestMethod]
+        [DataRow(3, 0, "User")]
+        public void BulkCreateUsers_Fail_InvalidPermission(int amountOfUsers, int amountOfAdmins, string permission)
         {
             var userManagement = new UserManagement();
             bool result = false;
             try
             {
-                userManagement.BulkCreateUsers(3, 0, "User");
+                userManagement.BulkCreateUsers(amountOfUsers, amountOfAdmins, permission);
             }
             catch (ArgumentException)
             {
