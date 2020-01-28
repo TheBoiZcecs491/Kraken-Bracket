@@ -8,31 +8,42 @@ namespace TBZ.UserManagementService
     {
         List<string> permissions = new List<string>(new string[] { "Admin", "System Admin" });
 
-        public void CheckPermission(string permission)
+        public bool CheckPermission(string permission)
         {
-            if (!permissions.Contains(permission))
+            if (permissions.Contains(permission))
             {
-                throw new ArgumentException("Invalid permissions");
+                return true;
             }
+            return false;
         }
-        public void CheckAmount(int amountOfUsers, int amountOfAdmins, string permission)
+        public bool CheckAmount(int amountOfUsers, int amountOfAdmins, string permission)
         {
             if (amountOfUsers <= 0 && amountOfAdmins <= 0)
             {
-                throw new ArgumentException("Amount must be greater than zero");
+                return false;
             }
             if (amountOfAdmins > 0 && permission == "Admin")
             {
-                throw new ArgumentException("Admins cannot create other admins");
+                return false;
             }
+            return true;
         }
 
-        public void CheckListLength(int[] list)
+        public bool CheckListLength(int[] list)
         {
             if (list.Length < 1)
             {
-                throw new ArgumentException("Length of list cannot be less than 1");
+                return false;
             }
+            return true;
+        }
+        public bool SingleCreateCheck(string permission, string accountType)
+        {
+            if (permission == "Admin" && accountType == "User" || ((permission == "System Admin" && accountType != "System Admin")))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
