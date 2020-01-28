@@ -79,14 +79,15 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Test method for deleting a user as a SystemAdmin
         /// </summary>
-        [TestMethod]
-        public void SingleDeleteUsers_SystemAdmin_Pass()
+        [DataTestMethod]
+        [DataRow(2, "System Admin")]
+        public void SingleDeleteUsers_SystemAdmin_Pass(int sysID, string permission)
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.SingleDeleteUser(2, "System Admin");
+                userManagement.SingleDeleteUser(sysID, permission);
             }
             catch (ArgumentException)
             {
@@ -100,14 +101,15 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Test method for deleting a user as a SystemAdmin
         /// </summary>
-        [TestMethod]
-        public void SingleDeleteUsers_Admin_Pass()
+        [DataTestMethod]
+        [DataRow(3, "Admin")]
+        public void SingleDeleteUsers_Admin_Pass(int sysID, string permission)
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.SingleDeleteUser(3, "Admin");
+                userManagement.SingleDeleteUser(sysID, permission);
             }
             catch (ArgumentException)
             {
@@ -121,11 +123,12 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Fail test method where Admin attempts to delete System Admin
         /// </summary>
-        [TestMethod]
-        public void SingleDeleteUsers_Admin_Fail_AdminDeletesSystemAdmin()
+        [DataTestMethod]
+        [DataRow(3, "Admin")]
+        public void SingleDeleteUsers_Admin_Fail_AdminDeletesSystemAdmin(int sysID, string permission)
         {
             var userManagement = new UserManagement();
-            bool result = userManagement.SingleDeleteUser(1, "System Admin");
+            bool result = userManagement.SingleDeleteUser(sysID, permission);
             Assert.IsFalse(result);
         }
         /// <summary>
