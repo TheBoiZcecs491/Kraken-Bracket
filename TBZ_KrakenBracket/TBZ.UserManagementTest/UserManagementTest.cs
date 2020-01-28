@@ -309,14 +309,15 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Test method for single enable a user as a SystemAdmin
         /// </summary>
-        [TestMethod]
-        public void SingleEnableUsers_SystemAdmin_Pass()
+        [DataTestMethod]
+        [DataRow(4, "System Admin")]
+        public void SingleEnableUsers_SystemAdmin_Pass(int sysID, string permission)
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.SingleEnableUser(4, "System Admin");
+                userManagement.SingleEnableUser(sysID, permission);
             }
             catch (ArgumentException)
             {
@@ -330,14 +331,15 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Test method for single enable a user as an Admin
         /// </summary>
-        [TestMethod]
-        public void SingleEnableUsers_Admin_Pass()
+        [DataTestMethod]
+        [DataRow(4, "Admin")]
+        public void SingleEnableUsers_Admin_Pass(int sysID, string permission)
         {
             var userManagement = new UserManagement();
             bool result = true;
             try
             {
-                userManagement.SingleEnableUser(4, "Admin");
+                userManagement.SingleEnableUser(sysID, permission);
             }
             catch (ArgumentException)
             {
@@ -351,11 +353,12 @@ namespace TBZ.UserManagementTest
         /// <summary>
         /// Fail test method where attempting to enable a user that is already enabled
         /// </summary>
-        [TestMethod]
-        public void SingleEnableUsers_SystemAdmin_Fail_UserIsAlreadyEnabled()
+        [DataTestMethod]
+        [DataRow(3, "System Admin")]
+        public void SingleEnableUsers_SystemAdmin_Fail_UserIsAlreadyEnabled(int sysID, string permission)
         {
             var userManagement = new UserManagement();
-            bool result = userManagement.SingleEnableUser(3, "System Admin");
+            bool result = userManagement.SingleEnableUser(sysID, permission);
             Assert.IsFalse(result);
         }
 
