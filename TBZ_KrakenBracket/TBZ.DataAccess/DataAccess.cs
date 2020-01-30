@@ -288,46 +288,81 @@ namespace TBZ.DatabaseAccess
             return false;
         }
 
-        public bool UpdateUser(int sysID,string firstName, string lastName,
-            string email, string password, string accountType, string component, string permission)
+        public bool UpdateFirstName(int sysID, string firstName)
         {
-            // TODO: need to find a way to check only email or password without having to check the other component
-            Registration r = new Registration(email, password, firstName, lastName);
-            
             User user = UserExists(sysID);
             if (user == null)
             {
                 return false;
             }
-            else if ((permission == "Admin" && user.AccountType == "User") || (permission == "System Admin" && user.AccountType != "System Admin"))
+            else
             {
-                if (component == "First Name")
-                {
-                    user.FirstName = firstName;
-                }
-                else if (component == "Last Name")
-                {
-                    user.LastName = lastName;
-                }
-                else if (component == "Email" && r.isValidEmail())
-                {
-                    user.Email = email;
-                }
-                else if (component == "Password" && r.isSecurePassword())
-                {
-                    user.Password = password;   
-                }
-                else if (component == "Account Type")
-                {
-                    user.AccountType = accountType;
-                }
+                // TODO: have a first name checker
+                user.FirstName = firstName;
                 return true;
             }
-            else
+
+        }
+
+        public bool UpdateLastName(int sysID, string lastName)
+        {
+            User user = UserExists(sysID);
+            if (user == null)
             {
                 return false;
             }
-            
+            else
+            {
+                // TODO: have a last name checker
+                user.LastName = lastName;
+                return true;
+            }
+
+        }
+
+        public bool UpdateEmail(int sysID, string email)
+        {
+            User user = UserExists(sysID);
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                // TODO: have an email checker
+                user.Email = email;
+                return true;
+            }
+        }
+
+        public bool UpdatePassword(int sysID, string password)
+        {
+            User user = UserExists(sysID);
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                // TODO: have a password checker
+                user.Password = password;
+                return true;
+            }
+        }
+
+        public bool UpdateAccountType(int sysID, string accountType, string permission)
+        {
+            User user = UserExists(sysID);
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                // TODO: have an account type checker
+                user.AccountType = accountType;
+                return true;
+            }
         }
     }
 }
