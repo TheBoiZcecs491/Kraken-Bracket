@@ -288,7 +288,7 @@ namespace TBZ.DatabaseAccess
             return false;
         }
 
-        public bool UpdateFirstName(int sysID, string firstName)
+        public bool UpdateFirstName(int sysID, string firstName, string permission)
         {
             User user = UserExists(sysID);
             if (user == null)
@@ -297,9 +297,14 @@ namespace TBZ.DatabaseAccess
             }
             else
             {
-                // TODO: have a first name checker
-                user.FirstName = firstName;
-                return true;
+                // TODO: have a first name checker and make sure the current account doesn't edit themselves
+                if ((user.AccountType == "User" && permission == "Admin") 
+                    || (user.AccountType != "System Admin" && permission == "System Admin"))
+                {
+                    user.FirstName = firstName;
+                    return true;
+                }
+                return false;
             }
 
         }
@@ -350,6 +355,8 @@ namespace TBZ.DatabaseAccess
             }
         }
 
+
+        // Is Account Type part of user account or user profile ?
         public bool UpdateAccountType(int sysID, string accountType, string permission)
         {
             User user = UserExists(sysID);

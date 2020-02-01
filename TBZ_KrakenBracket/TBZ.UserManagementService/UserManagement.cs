@@ -181,7 +181,7 @@ namespace TBZ.UserManagementService
         {
             if (_userManagementManager.CheckPermission(permission))
             {
-                return _DataAccessService.UpdateFirstName(sysID, firstName);
+                return _DataAccessService.UpdateFirstName(sysID, firstName, permission);
             }
             else
             {
