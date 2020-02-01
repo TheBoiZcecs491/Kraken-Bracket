@@ -30,12 +30,12 @@ namespace TBZ.UserManagementService
                 }
                 else
                 {
-                    throw new ArgumentException("Invaid permissions");
+                    throw new ArgumentException("Invalid permissions");
                 }
             }
             else
             {
-                throw new ArgumentException("Invaid permissions");
+                throw new ArgumentException("Invalid permissions");
             }
         }
 
@@ -78,7 +78,7 @@ namespace TBZ.UserManagementService
             }
             else
             {
-                throw new ArgumentException("Invaid permissions");
+                throw new ArgumentException("Invalid permissions");
             }
         }
 
@@ -110,7 +110,7 @@ namespace TBZ.UserManagementService
             }
             else
             {
-                throw new ArgumentException("Invaid permissions");
+                throw new ArgumentException("Invalid permissions");
             }
             
         }
@@ -123,7 +123,7 @@ namespace TBZ.UserManagementService
             }
             else
             {
-                throw new ArgumentException("Invaid permissions");
+                throw new ArgumentException("Invalid permissions");
             }
         }
         public bool[] BulkEnableUsers(int[] listOfIDs, string permission)
@@ -142,7 +142,7 @@ namespace TBZ.UserManagementService
             }
             else
             {
-                throw new ArgumentException("Invaid permissions");
+                throw new ArgumentException("Invalid permissions");
             }
         }
 
@@ -154,7 +154,7 @@ namespace TBZ.UserManagementService
             }
             else
             {
-                throw new ArgumentException("Invaid permissions");
+                throw new ArgumentException("Invalid permissions");
             }
         }
         public bool[] BulkDisableUsers(int[] listOfIDs, string permission)
@@ -173,20 +173,66 @@ namespace TBZ.UserManagementService
             }
             else
             {
-                throw new ArgumentException("Invaid permissions");
+                throw new ArgumentException("Invalid permissions");
             }
         }
 
-        public bool SingleUpdateUser(int sysID, string firstName, string lastName,
-            string email, string password, string accountType, string component, string permission)
+        public bool SingleUpdateUserFirstName(int sysID, string firstName, string permission)
         {
             if (_userManagementManager.CheckPermission(permission))
             {
-                return _DataAccessService.UpdateUser(sysID, firstName, lastName, email, password, accountType, component, permission);
+                return _DataAccessService.UpdateFirstName(sysID, firstName);
             }
             else
             {
-                throw new ArgumentException("Invaid permissions");
+                throw new ArgumentException("Invalid permissions");
+            }
+        }
+
+        public bool SingleUpdateUserLastName(int sysID, string lastName, string permission)
+        {
+            if (_userManagementManager.CheckPermission(permission))
+            {
+                return _DataAccessService.UpdateLastName(sysID, lastName);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
+        }
+
+        public bool SingleUpdateUserEmail(int sysID, string email, string permission)
+        {
+            if (_userManagementManager.CheckPermission(permission))
+            {
+                return _DataAccessService.UpdateEmail(sysID, email);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
+        }
+
+        public bool SingleUpdateUserPassword(int sysID, string password, string permission)
+        {
+            if (_userManagementManager.CheckPermission(permission))
+            {
+                return _DataAccessService.UpdatePassword(sysID, password);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
+        }
+        public bool SingleUpdateUserAccountType(int sysID, string accountType, string permission)
+        {
+            if (_userManagementManager.CheckPermission(permission))
+            {
+                return _DataAccessService.UpdateAccountType(sysID, accountType, permission);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
             }
         }
 
