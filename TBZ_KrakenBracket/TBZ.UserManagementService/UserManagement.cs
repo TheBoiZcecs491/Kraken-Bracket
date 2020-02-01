@@ -205,7 +205,14 @@ namespace TBZ.UserManagementService
         {
             if (_userManagementManager.CheckPermission(permission))
             {
-                return _DataAccessService.UpdateEmail(sysID, email);
+                if (_userManagementManager.isValidEmail(email))
+                {
+                    return _DataAccessService.UpdateEmail(sysID, email);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid email");
+                }
             }
             else
             {
