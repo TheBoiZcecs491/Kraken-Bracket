@@ -496,12 +496,42 @@ namespace TBZ.UserManagementTest
         /// <param name="permission"></param>
         [DataTestMethod]
         [DataRow(1, "Kevin", "Admin")] // system admin
-        [DataRow(2, "Kevin", "Admin")] // system admin
+        [DataRow(2, "Kevin", "Admin")] // admin
         public void SingleUpdateUser_FirstName_Admin_Fail_InvalidPermissions(int sysID, string firstName, string permission)
         {
             var userManagement = new UserManagement();
             bool result = userManagement.SingleUpdateUserFirstName(sysID, firstName, permission);
             Assert.IsFalse(result);
+        }
+
+        /*
+         
+        NOTE: not testing to update last name because that's essentially the same thing as first name
+         
+         */
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="email"></param>
+        /// <param name="permission"></param>
+        [DataTestMethod]
+        [DataRow(2, "brian.da.man@gmail.com", "System Admin")]
+        public void SingleUpdateUser_Email_SystemAdmin_Pass(int sysID, string email, string permission)
+        {
+            var userManagement = new UserManagement();
+            bool result = false;
+            try
+            {
+                result = userManagement.SingleUpdateUserEmail(sysID, email, permission);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+            Assert.IsTrue(result);
         }
     }
 }
