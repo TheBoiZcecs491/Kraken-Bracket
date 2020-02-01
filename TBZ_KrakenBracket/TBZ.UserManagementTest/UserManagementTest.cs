@@ -463,13 +463,13 @@ namespace TBZ.UserManagementTest
         /// 
         /// In this case, the system admin is updating another admin's email
         /// </summary>
-        [TestMethod]
-        public void SingleUpdateUser_SystemAdmin_Pass()
+        [DataTestMethod]
+        [DataRow(2, "Kevin", "System Admin")] // sysID #2 is an admin
+        [DataRow(3, "Kevin", "System Admin")] // active user account
+        public void SingleUpdateUser_FirstName_SystemAdmin_Pass(int sysID, string firstName, string permission)
         {
             var userManagement = new UserManagement();
-            // (int sysID, string firstName, string lastName,
-            // string email, string password, string accountType, string component, string permission)
-            bool result = userManagement.SingleUpdateUser(2, null, null, "brian12345@gmail.com", "Brian3809{340@@", null, "Email", "System Admin");
+            bool result = userManagement.SingleUpdateUserFirstName(sysID, firstName, permission);
             Assert.IsTrue(result);
         }
 
@@ -478,68 +478,29 @@ namespace TBZ.UserManagementTest
         /// 
         /// In this case, the system admin is updating another user's password
         /// </summary>
-        [TestMethod]
-        public void SingleUpdateUser_Admin_Pass()
+        [DataTestMethod]
+        [DataRow(3, "Kevin", "Admin")] // active user account
+        [DataRow(4, "Brian", "Admin")] // disabled user account
+        public void SingleUpdateUser_FirstName_Admin_Pass(int sysID, string firstName, string permission)
         {
             var userManagement = new UserManagement();
-            // (int sysID, string firstName, string lastName,
-            // string email, string password, string accountType, string component, string permission)
-            bool result = userManagement.SingleUpdateUser(3, null, null, "brian12345@gmail.com", "Brian3809{340@@", null, "Password", "System Admin");
+            bool result = userManagement.SingleUpdateUserFirstName(sysID, firstName, permission);
             Assert.IsTrue(result);
         }
 
         /// <summary>
-        /// Fail test method when updating a User with an insufficient password
+        /// Fail test method where admin attempts to update system admin or another admin
         /// </summary>
-        [TestMethod]
-        public void SingleUpdateUser_SystemAdmin_Fail_InsufficientPassword()
+        /// <param name="sysID"></param>
+        /// <param name="firstName"></param>
+        /// <param name="permission"></param>
+        [DataTestMethod]
+        [DataRow(1, "Kevin", "Admin")] // system admin
+        [DataRow(2, "Kevin", "Admin")] // system admin
+        public void SingleUpdateUser_FirstName_Admin_Fail_InvalidPermissions(int sysID, string firstName, string permission)
         {
             var userManagement = new UserManagement();
-            // (int sysID, string firstName, string lastName,
-            // string email, string password, string accountType, string component, string permission)
-            bool result;
-            try
-            {
-                result = userManagement.SingleUpdateUser(3, null, null, "brian12345@gmail.com", "123", null, "Password", "System Admin");
-            }
-            catch (ArgumentException)
-            {
-                result = true;
-            }
-            Assert.IsTrue(result);
-        }
-
-        /// <summary>
-        /// Fail test method when updating a User with an insufficient email
-        /// </summary>
-        [TestMethod]
-        public void SingleUpdateUser_SystemAdmin_Fail_InsufficientEmail()
-        {
-            var userManagement = new UserManagement();
-            // (int sysID, string firstName, string lastName,
-            // string email, string password, string accountType, string component, string permission)
-            bool result;
-            try
-            {
-                result = userManagement.SingleUpdateUser(3, null, null, "br@gmail.com", "123", null, "Password", "System Admin");
-            }
-            catch (ArgumentException)
-            {
-                result = true;
-            }
-            Assert.IsTrue(result);
-        }
-
-        /// <summary>
-        /// Fail test method when updating a System Admin as an Admin
-        /// </summary>
-        [TestMethod]
-        public void SingleUpdateUser_SystemAdmin_Fail_AdminUpdatesSystemAdmin()
-        {
-            var userManagement = new UserManagement();
-            // (int sysID, string firstName, string lastName,
-            // string email, string password, string accountType, string component, string permission)
-            bool result = userManagement.SingleUpdateUser(1, null, null, "brian12345@gmail.com", "Brian3809{340@@", null, "Password", "Admin");
+            bool result = userManagement.SingleUpdateUserFirstName(sysID, firstName, permission);
             Assert.IsFalse(result);
         }
     }
