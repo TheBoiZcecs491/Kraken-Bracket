@@ -25,6 +25,8 @@ namespace TBZ.UserManagementService
     {
         List<string> permissions = new List<string>(new string[] { "Admin", "System Admin" });
 
+        // FIXME: this email checker doesn't seem to be working correctly.
+        // Accepts "bla" as a valid email
         public bool isValidEmail(string email)
         {
             // checks if the email is legit.
@@ -66,6 +68,44 @@ namespace TBZ.UserManagementService
             }
             // check if the email is too long, and THEN return the status.
             return (result & compRes.Length <= Constants.emailMaxLength);
+        }
+
+        public bool isSecurePassword(string password)
+        {
+            // okay here is the thing
+            // trying to create an algorithm that checks for a secure password a bit too complex.
+            // it can be cone but for now im using a simple character requierment.
+            //HACK: im just going to check if the password can meet the 4 criteria.
+            string compRes = password;
+
+            //status bools
+            bool hasLower = false;
+            bool hasUpper = false;
+            bool hasNumber = false;
+            bool hasSpecial = false;
+
+            // do we have a lowerCase character?
+            foreach (char i in Constants.lowercaseChars)
+            {
+                if (compRes.Contains(i)) { hasLower = true; break; }
+            }
+            // do we have an UPPERCASE character?
+            foreach (char i in Constants.uppercaseChars)
+            {
+                if (compRes.Contains(i)) { hasUpper = true; break; }
+            }
+            // do we have a number?
+            foreach (char i in Constants.numberChars)
+            {
+                if (compRes.Contains(i)) { hasNumber = true; break; }
+            }
+            // do we have a special printable character?
+            foreach (char i in Constants.specialChars)
+            {
+                if (compRes.Contains(i)) { hasSpecial = true; break; }
+            }
+            // check if the password is too long, and return the status
+            return (hasLower & hasUpper & hasNumber & hasSpecial & (compRes.Length >= 8 & compRes.Length <= Constants.passwdMaxLength));
         }
         public bool CheckPermission(string permission)
         {
