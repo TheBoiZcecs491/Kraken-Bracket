@@ -505,19 +505,25 @@ namespace TBZ.UserManagementTest
         }
 
         /*
-         
+        ------------------------------------------------------------------------------- 
+
+
         NOTE: not testing to update last name because that's essentially the same thing as first name
-         
+
+
+        ------------------------------------------------------------------------------- 
          */
 
+
         /// <summary>
-        /// 
+        /// Test method to update user's email as System Admin
         /// </summary>
         /// <param name="sysID"></param>
         /// <param name="email"></param>
         /// <param name="permission"></param>
         [DataTestMethod]
-        [DataRow(2, "brian.da.man@gmail.com", "System Admin")]
+        [DataRow(2, "brian.da.man@gmail.com", "System Admin")] // Admin
+        [DataRow(3, "qwerty.34@gmail.com", "System Admin")] // User
         public void SingleUpdateUser_Email_SystemAdmin_Pass(int sysID, string email, string permission)
         {
             var userManagement = new UserManagement();
@@ -525,6 +531,79 @@ namespace TBZ.UserManagementTest
             try
             {
                 result = userManagement.SingleUpdateUserEmail(sysID, email, permission);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Test method for updating emails as admin
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="email"></param>
+        /// <param name="permission"></param>
+        [DataTestMethod]
+        [DataRow(3, "qwerty.34@gmail.com", "Admin")] // User
+        public void SingleUpdateUser_Email_Admin_Pass(int sysID, string email, string permission)
+        {
+            var userManagement = new UserManagement();
+            bool result = false;
+            try
+            {
+                result = userManagement.SingleUpdateUserEmail(sysID, email, permission);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Fail test method where email is invalid
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="email"></param>
+        /// <param name="permission"></param>
+        [DataTestMethod]
+        [DataRow(3, "bla", "System Admin")] // User
+        public void SingleUpdateUser_Email_SystemAdmin_Fail_InvalidEmail(int sysID, string email, string permission)
+        {
+            var userManagement = new UserManagement();
+            bool result = false;
+            try
+            {
+                result = userManagement.SingleUpdateUserEmail(sysID, email, permission);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+            Assert.IsFalse(result);
+        }
+
+        /// <summary>
+        /// Test method for updating password as a System Admin
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="password"></param>
+        /// <param name="permission"></param>
+        [DataTestMethod]
+        [DataRow(2, "480w9>3[war]REE", "System Admin")] // Admin
+        [DataRow(1, "InTheEndItDoesn'tMatter1000", "System Admin")] // User
+        public void SingleUpdateUser_Password_SystemAdmin_Pass(int sysID, string password, string permission)
+        {
+            var userManagement = new UserManagement();
+            bool result = false;
+            try
+            {
+                result = userManagement.SingleUpdateUserPassword(sysID, password, permission);
             }
             catch (ArgumentException)
             {
