@@ -161,6 +161,15 @@ namespace TBZ.DatabaseAccess
             }
             return null;
         }
+
+        public bool EmailExists(string email)
+        {
+            if (users.Exists(x => x.Email == email))
+            {
+                return true;
+            }
+            return false;
+        }
         public void StoreUser(int sysID, string firstName, string lastName,
             string email, string password, string accountType, bool accountStatus)
         {
@@ -192,7 +201,7 @@ namespace TBZ.DatabaseAccess
         {
             if (permission == "System Admin")
             {
-                if(users.Exists(x => x.SystemID == systemID) )
+                if (users.Exists(x => x.SystemID == systemID))
                 {
                     int index = users.FindIndex(x => x.SystemID == systemID);
                     User user = users[index];
@@ -298,7 +307,7 @@ namespace TBZ.DatabaseAccess
             else
             {
                 // TODO: have a first name checker and make sure the current account doesn't edit themselves
-                if ((user.AccountType == "User" && permission == "Admin") 
+                if ((user.AccountType == "User" && permission == "Admin")
                     || (user.AccountType != "System Admin" && permission == "System Admin"))
                 {
                     user.FirstName = firstName;
@@ -328,7 +337,7 @@ namespace TBZ.DatabaseAccess
         public bool UpdateEmail(int sysID, string email)
         {
             User user = UserExists(sysID);
-            if (user == null)
+            if ((user == null) || EmailExists(email))
             {
                 return false;
             }
@@ -340,21 +349,23 @@ namespace TBZ.DatabaseAccess
             }
         }
 
-        public bool UpdatePassword(int sysID, string password)
+        public bool UpdatePassword(int sysID, string password, string permission)
         {
             User user = UserExists(sysID);
             if (user == null)
             {
                 return false;
             }
-            else
+            // TODO: have a first name checker and make sure the current account doesn't edit themselves
+            if ((user.AccountType == "User" && permission == "Admin")
+                || (user.AccountType != "System Admin" && permission == "System Admin"))
             {
-                // TODO: have a password checker
                 user.Password = password;
                 return true;
             }
+            return false;
         }
-
+    
 
         // Is Account Type part of user account or user profile ?
         public bool UpdateAccountType(int sysID, string accountType, string permission)
