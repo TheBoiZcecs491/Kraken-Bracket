@@ -224,7 +224,14 @@ namespace TBZ.UserManagementService
         {
             if (_userManagementManager.CheckPermission(permission))
             {
-                return _DataAccessService.UpdatePassword(sysID, password);
+                if (_userManagementManager.isSecurePassword(password))
+                {
+                    return _DataAccessService.UpdatePassword(sysID, password);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid password");
+                }
             }
             else
             {
