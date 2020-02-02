@@ -243,6 +243,26 @@ namespace TBZ.UserManagementService
             }
         }
 
+        public bool[] BulkUpdateUserFirstName(int[] listOfIDs, string[] listFNames, string permission)
+        {
+            if(_userManagementManager.CheckListLength(listOfIDs))
+            {
+                bool[] b = new bool[listOfIDs.Length];
+                int count = 0;
+                foreach(int ID in listOfIDs)
+                {
+                    bool temp = _DataAccessService.UpdateFirstName(ID, listFNames[count], permission);
+                    b[count] = temp;
+                    count++;
+                }
+                return b;
+            }
+            else
+            {
+                throw new ArgumentException("Error");
+            }
+        }
+
         public string RandomPassword(int len)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
