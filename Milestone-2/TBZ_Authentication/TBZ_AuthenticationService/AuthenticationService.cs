@@ -8,7 +8,9 @@ namespace Authentication.Services
     public class AuthenticationService
     {
         private const string _algorithm = "HmacSHA256";
-        private const string _salt = "rz8LuOtFBXphj9WQfvFh";
+        //private const string _salt = "rz8LuOtFBXphj9WQfvFh";
+        //that is brian's stupid idea of a salt generator. just fart on the keyboard and see what we get.
+        
 
         /// <summary>
         /// Method used to authenticate user
@@ -113,14 +115,31 @@ namespace Authentication.Services
         public static string GetHashedPassword(string password)
         {
             // Concatenate password and salt
-            string key = string.Join(":", new string[] { password, _salt });
+            //TODO: actually properly salt it with the stuff I found out about above
+            //because Brian has this setup to use strings I have to do a convert here, I might change this tho.
+            string saltASCII = Encoding.ASCII.GetString(makeRando(3)); //no idea if this even works lul
+            string key = string.Join(":", new string[] { password, saltASCII });
             using (HMAC hmac = HMACSHA256.Create(_algorithm))
             {
                 // Hash the key.
-                hmac.Key = Encoding.UTF8.GetBytes(_salt);
+                hmac.Key = Encoding.UTF8.GetBytes(saltASCII);
                 hmac.ComputeHash(Encoding.UTF8.GetBytes(key));
                 return Convert.ToBase64String(hmac.Hash);
+                //so waiet, the result contains both the salt value and the key rite? as a b64 string?
             }
         }
+
+        public static byte[] makeRando(int x)
+        {
+            /*
+            Okay because Brian doesnt know how to generate real kosher salt.
+            I guess I'll have to do it. though to be fair I didn't know until just now.
+            basically this generates an array of random bytes of a choice amount.
+             */
+            byte[] saltTemp = new byte[x];
+            RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
+            rngCsp.GetBytes(saltTemp);
+            return saltTemp;
+    }
     }
 }

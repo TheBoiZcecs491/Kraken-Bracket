@@ -21,3 +21,11 @@ D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.AssemblyInfo.cs
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.dll
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.pdb
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_DataAccess\bin\Debug\netstandard2.0\TBZ_DataAccess.deps.json
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_DataAccess\bin\Debug\netstandard2.0\TBZ_DataAccess.dll
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_DataAccess\bin\Debug\netstandard2.0\TBZ_DataAccess.pdb
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.csprojAssemblyReference.cache
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.AssemblyInfoInputs.cache
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.AssemblyInfo.cs
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.dll
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_DataAccess\obj\Debug\netstandard2.0\TBZ_DataAccess.pdb

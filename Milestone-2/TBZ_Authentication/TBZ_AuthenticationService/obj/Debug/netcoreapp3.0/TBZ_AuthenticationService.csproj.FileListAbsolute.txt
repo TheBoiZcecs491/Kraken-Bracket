@@ -20,3 +20,14 @@ D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_Authentica
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.csproj.CopyComplete
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.dll
 D:\Documents\GitHub\Kraken-Bracket\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.pdb
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\bin\Debug\netcoreapp3.0\TBZ_AuthenticationService.deps.json
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\bin\Debug\netcoreapp3.0\TBZ_AuthenticationService.dll
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\bin\Debug\netcoreapp3.0\TBZ_AuthenticationService.pdb
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\bin\Debug\netcoreapp3.0\TBZ_DataAccess.dll
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\bin\Debug\netcoreapp3.0\TBZ_DataAccess.pdb
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.csprojAssemblyReference.cache
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.AssemblyInfoInputs.cache
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.AssemblyInfo.cs
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.csproj.CopyComplete
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.dll
+C:\Users\Snerp\source\repos\Kraken-Bracket2\Milestone-2\TBZ_Authentication\TBZ_AuthenticationService\obj\Debug\netcoreapp3.0\TBZ_AuthenticationService.pdb

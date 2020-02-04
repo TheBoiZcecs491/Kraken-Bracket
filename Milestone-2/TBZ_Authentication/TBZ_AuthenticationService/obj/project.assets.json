@@ -27,19 +27,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Kevin\\.nuget\\packages\\": {}
+    "C:\\Users\\Snerp\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj",
+      "projectUniqueName": "C:\\Users\\Snerp\\source\\repos\\Kraken-Bracket2\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj",
       "projectName": "TBZ_AuthenticationService",
-      "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj",
-      "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
-      "outputPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\obj\\",
+      "projectPath": "C:\\Users\\Snerp\\source\\repos\\Kraken-Bracket2\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\TBZ_AuthenticationService.csproj",
+      "packagesPath": "C:\\Users\\Snerp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Snerp\\source\\repos\\Kraken-Bracket2\\Milestone-2\\TBZ_Authentication\\TBZ_AuthenticationService\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Snerp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -52,8 +56,8 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj": {
-              "projectPath": "D:\\Documents\\GitHub\\Kraken-Bracket\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj"
+            "C:\\Users\\Snerp\\source\\repos\\Kraken-Bracket2\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Snerp\\source\\repos\\Kraken-Bracket2\\Milestone-2\\TBZ_Authentication\\TBZ_DataAccess\\TBZ_DataAccess.csproj"
             }
           }
         }
@@ -76,26 +80,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[3.0.1, 3.0.1]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[3.0.0, 3.0.0]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[3.0.0, 3.0.0]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
