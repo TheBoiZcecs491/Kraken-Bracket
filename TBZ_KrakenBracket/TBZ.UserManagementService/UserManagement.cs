@@ -226,7 +226,7 @@ namespace TBZ.UserManagementService
             {
                 if (_userManagementManager.isSecurePassword(password))
                 {
-                    return _DataAccessService.UpdatePassword(sysID, password);
+                    return _DataAccessService.UpdatePassword(sysID, password, permission);
                 }
                 else
                 {
