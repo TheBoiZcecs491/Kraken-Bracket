@@ -132,7 +132,7 @@ namespace TBZ.DatabaseAccess
         /// <param name="email"></param>
         /// <returns></returns>
         ///
-        public string DSGetClaim(string email)
+        public object DSGetClaim(string email)
         {
             // Checks to see if the passed-in email exists in the claims datastore
             if (userActions.ContainsKey(email))
@@ -142,7 +142,7 @@ namespace TBZ.DatabaseAccess
                 userActions.TryGetValue(email, out List<string> value).ToString();
                 // Convert the list of claims into an array
                 string claimCollection = string.Join(",", value.ToArray());
-                return claimCollection;
+                return (object)claimCollection;
             }
             else
             {
