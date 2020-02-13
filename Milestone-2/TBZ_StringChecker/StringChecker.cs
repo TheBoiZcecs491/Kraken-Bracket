@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq;
 
-namespace TBZ_RegistrationService
+namespace TBZ_StringChecker
 {
     static class Constants
     {
@@ -18,53 +19,35 @@ namespace TBZ_RegistrationService
         public const int emailMaxLength = 200;
         public const int passwdMaxLength = 2000;
     }
-    public class RegistrationService
+    public class StringChecker
     {
-        //these two values are needed for login.
-        private string email;
-        public string Email
+        //Okay so this is where ima write my string checker
+        //the jist is that this will centralise all the algos that govern string validation
+        //umm... I should learn the rulez first. XD
+        private string theString;
+        public string FirstName
         {
             get
             {
-                return email;
+                return theString;
             }
         }
-        private string passwd;
-        public string Password
+        public StringChecker(string x)
         {
-            get
-            {
-                return passwd;
-            }
+            this.theString = x;
         }
+        //so my plan here is to make this a rather simple object. you create it out of any string.
+        //and then from there you can use the included methods to anaylize it.
+        //most of them will just return a boolean.
 
-        private RegistrationInfo extras;
-        public RegistrationInfo Extras
+        public bool isEmpty()
         {
-            get
-            {
-                return extras;
-            }
+            return this.theString.CompareTo("")==0;
+            //I THINK that is how this work, but this is an example of how I plan to do this.
         }
 
-        public RegistrationService(string x, string y, string z, string w)
-        {
-            this.email = x;
-            this.passwd = y;
-            this.extras = new RegistrationInfo(z, w);
-            if (!this.isValidEmail())
-            {
-                throw new ArgumentException("invalid email syntax");
-            }
-            if (!this.isSecurePassword())
-            {
-                throw new ArgumentException("password lacks needed criteria");
-            }
-
-
-        }
-
-        //TODO: use String checker for this part.
+        //anyway ima just copy pasta the methods I had in Registration service.
+        //for now, but at some point I wana make this extra shiny.
         public bool isValidEmail()
         {
             // checks if the email is legit.
@@ -79,7 +62,7 @@ namespace TBZ_RegistrationService
             //HACK: this is not the officual way to do it but it works well enough
             // it does some basic level syntax checking on an entered email.
 
-            string compRes = this.email.ToLower();
+            string compRes = this.theString.ToLower();
             //compRes.ToLower();
             bool result = true;
             char look;
@@ -88,10 +71,11 @@ namespace TBZ_RegistrationService
 
             // this loop passes over the input string once and checks if each character would work there.
             // as soon as it find a violation in the string it breaks and returns a False value.
-            for (int i = 0; i<compRes.Length;i++){
+            for (int i = 0; i < compRes.Length; i++)
+            {
                 look = compRes[i];
                 // is this the 2nd '.' in a row?
-                if ((i == 0 | i==(compRes.Length-1) | lookPrior=='.') & look == '.') { result = false; break; }
+                if ((i == 0 | i == (compRes.Length - 1) | lookPrior == '.') & look == '.') { result = false; break; }
                 // did we find another '@' sign?
                 else if (foundAtSign & look == Constants.emailDelim) { result = false; break; }
                 // are we in the name of the email, and is the character correct?
@@ -104,17 +88,16 @@ namespace TBZ_RegistrationService
                 lookPrior = look;
             }
             // check if the email is too long, and THEN return the status.
-            return (result&compRes.Length<=Constants.emailMaxLength);
+            return (result & compRes.Length <= Constants.emailMaxLength);
         }
 
-        //TODO: same story as the above TODO.
         public bool isSecurePassword()
         {
             // okay here is the thing
             // trying to create an algorithm that checks for a secure password a bit too complex.
             // it can be cone but for now im using a simple character requierment.
             //HACK: im just going to check if the password can meet the 4 criteria.
-            string compRes = this.passwd;
+            string compRes = this.theString;
 
             //status bools
             bool hasLower = false;
@@ -123,7 +106,7 @@ namespace TBZ_RegistrationService
             bool hasSpecial = false;
 
             // do we have a lowerCase character?
-            foreach(char i in Constants.lowercaseChars)
+            foreach (char i in Constants.lowercaseChars)
             {
                 if (compRes.Contains(i)) { hasLower = true; break; }
             }
@@ -143,50 +126,9 @@ namespace TBZ_RegistrationService
                 if (compRes.Contains(i)) { hasSpecial = true; break; }
             }
             // check if the password is too long, and return the status
-            return (hasLower&hasUpper&hasNumber&hasSpecial&(compRes.Length>=8 & compRes.Length<=Constants.passwdMaxLength));
-        }
-        public bool matchesPasswd(string x)
-        {
-            //self explanitory, it tells you if the entered string matches this objects stored password.
-            return this.passwd.Equals(x);
+            return (hasLower & hasUpper & hasNumber & hasSpecial & (compRes.Length >= 8 & compRes.Length <= Constants.passwdMaxLength));
         }
 
-        public bool emailExistsIn(string[] x)
-        {
-            // this tells you if the objects stored email exists in the provided array of strings.
-            bool result = false;
-            foreach(string i in x)
-            {
-                if (this.email.Equals(i)) {
-                    result = true;
-                }
-            }
-            return result;
-        }
-
-        public bool storeUser(string x, string[] y)
-        {
-            //this would be called to store the user in the DB.
-            //and it returns a boolean to indicate if it worked or not.
-            //bool cond1 = this.isValidEmail();
-            //bool cond2 = this.isSecurePassword();
-            if (!this.matchesPasswd(x))
-            {
-                throw new ArgumentException("passwords do not match");
-            }
-            if (this.emailExistsIn(y))
-            {
-                throw new ArgumentException("email exists in the list");
-            }
-
-            bool verify;
-            // store the user idk. this is where an server query would go.
-            // it should pass along the needed info found in this class.
-            verify = true;
-
-            return verify;
-            // if this object's parameters are correct, it returns true.
-            //TODO: function can return false if the server response denys the request.
-        }
+        //thats all for nao.
     }
 }
