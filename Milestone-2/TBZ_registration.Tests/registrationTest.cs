@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using TBZ_RegistrationService;
+using TBZ_StringChecker;
 
 namespace TBZ_registration.Tests
 {
