@@ -23,7 +23,7 @@ namespace TBZ_StringChecker
     {
         //Okay so this is where ima write my string checker
         //the jist is that this will centralise all the algos that govern string validation
-        //umm... I should learn the rulez first. XD
+        //umm... I should learn the rulez first. XDD
         private string theString;
         public string FirstName
         {
