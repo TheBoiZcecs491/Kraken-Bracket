@@ -4,22 +4,6 @@ using TBZ_StringChecker;
 
 namespace TBZ_RegistrationService
 {
-    static class Constants
-    {
-        //these are used in string comparisons to check for email validiation
-        public const string validChars = "!#$%&\\*+-/=?^_`{|}qwertyuiopasdfghjklzxcvbnm.1234567890@";
-        public const string validChars2 = "qwertyuiopasdfghjklzxcvbnm.1234567890@";
-
-        //more comparision strings used to check password requirements
-        public const string lowercaseChars = "qwertyuiopasdfghjklzxcvbnm";
-        public const string uppercaseChars = "QWERTYUIOPASDFGHJKLZXCVBNM";
-        public const string numberChars = "1234567890";
-        public const string specialChars = " -=[];\',./\\`~!@#$%^&*()_+{}|:\"<>?";
-        //the email '@' sign.
-        public const char emailDelim = '@';
-        public const int emailMaxLength = 200;
-        public const int passwdMaxLength = 2000;
-    }
     public class RegistrationService
     {
         //these two values are needed for login.
