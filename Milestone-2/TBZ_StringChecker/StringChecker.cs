@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace TBZ_StringChecker
 {
@@ -18,6 +20,13 @@ namespace TBZ_StringChecker
         public const char emailDelim = '@';
         public const int emailMaxLength = 200;
         public const int passwdMaxLength = 2000;
+
+        //regex stuffs
+        public const string DomainNormalizer = @"(@)(.+)$";
+        public const string emailPattern =
+            @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+            @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$"
+            ;
     }
     public class StringChecker
     {
@@ -42,7 +51,7 @@ namespace TBZ_StringChecker
 
         public bool isEmpty()
         {
-            return this.theString.CompareTo("")==0;
+            return this.theString.CompareTo("") == 0;
             //I THINK that is how this work, but this is an example of how I plan to do this.
         }
 
@@ -129,6 +138,51 @@ namespace TBZ_StringChecker
             return (hasLower & hasUpper & hasNumber & hasSpecial & (compRes.Length >= 8 & compRes.Length <= Constants.passwdMaxLength));
         }
 
-        //thats all for nao.
+        public bool isValidEmail2()
+        {
+            //me writing the email checker, part 2 electric boogalo.
+            //also I MAY have nicked this from https://docs.microsoft.com/en-us/dotnet/standard/base-types/how-to-verify-that-strings-are-in-valid-email-format
+            //dont worry ima make it look like I did NOT copy it enterly.
+            string copied = this.theString;
+            //is it NOT empty?
+            if (!string.IsNullOrWhiteSpace(copied) & !(copied.Length>Constants.emailMaxLength))
+            {
+                try
+                {
+                    copied = Regex.Replace(
+                        copied,
+                        Constants.DomainNormalizer,
+                        this.DomainMapper,
+                        RegexOptions.None,
+                        TimeSpan.FromMilliseconds(200)
+                        );
+                }
+                catch (RegexMatchTimeoutException e) { return false; }
+                catch (ArgumentException e) { return false; }
+                try
+                {
+                    return Regex.IsMatch(
+                        copied,
+                        Constants.emailPattern,
+                        RegexOptions.IgnoreCase,
+                        TimeSpan.FromMilliseconds(250)
+                        );
+                }
+                catch (RegexMatchTimeoutException) { return false; }
+
+            }
+            else { return false; }
+
+        }
+        private string DomainMapper(Match match)
+        {
+            // Use IdnMapping class to convert Unicode domain names.
+            var idn = new IdnMapping();
+
+            // Pull out and process domain name (throws ArgumentException on invalid)
+            var domainName = idn.GetAscii(match.Groups[2].Value);
+
+            return match.Groups[1].Value + domainName;
+        }
     }
 }

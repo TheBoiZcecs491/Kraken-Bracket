@@ -54,7 +54,7 @@ namespace TBZ_RegistrationService
         public bool isValidEmail()
         {
             StringChecker dis = new StringChecker(this.email);
-            return dis.isValidEmail();
+            return dis.isValidEmail2();
             //the code that origonaly handled this was moved to a new module
         }
 
