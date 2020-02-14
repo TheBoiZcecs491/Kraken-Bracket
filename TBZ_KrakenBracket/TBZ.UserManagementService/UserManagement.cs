@@ -42,9 +42,23 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public void BulkCreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
+        public bool[] BulkCreateUsers(int[] listOfIDs, string[] listOfPasswords)
         {
-            
+            if (_userManagementManager.CheckListLength(listOfIDs))
+            {
+                bool[] results = new bool[listOfIDs.Length];
+                int i = 0;
+                foreach (int ID in listOfIDs)
+                {
+                    bool temp = _DataAccessService.StoreUser(listOfIDs[i], listOfPasswords[i]);
+                    results[i] = temp;
+                }
+                return results;
+            }
+            else
+            {
+                throw new ArgumentException("Insufficient list length");
+            }
         }
 
         public bool SingleDeleteUser(int ID, string permission) 

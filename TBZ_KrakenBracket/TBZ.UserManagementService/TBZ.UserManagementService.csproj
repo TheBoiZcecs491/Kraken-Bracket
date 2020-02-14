@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TBZ.DataAccess\TBZ.DatabaseAccess.csproj" />
+    <ProjectReference Include="..\TBZ.UserManagementManager\TBZ.UserManagementManager.csproj" />
+    <ProjectReference Include="..\TBZ_StringChecker\TBZ.StringChecker.csproj" />
   </ItemGroup>
 
 </Project>
