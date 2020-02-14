@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TBZ.RegistrationService;
-
+using MySql.Data.MySqlClient;
 namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
+        const string CONNECTION_STRING = @"Data source=localhost; Database=kraken_bracket; User ID=root; Password=Gray$cale917!!";
+
         // List of users and their passwords
         Dictionary<string, string> userDict = new Dictionary<string, string>()
         {
@@ -46,7 +47,6 @@ namespace TBZ.DatabaseAccess
             {"", new List<string>(){ "Search For Tournament Brackets","Search For Event",
                                         "Search For Registered User"} }
         };
-
       
 
         /// <summary>
