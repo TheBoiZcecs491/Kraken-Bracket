@@ -29,7 +29,7 @@ namespace TBZ.UserManagementService
                 stringChecker sc = new stringChecker(password);
                 if (sc.isSecurePassword())
                 {
-                    _DataAccessService.StoreUser(sysID, password);
+                    _DataAccessService.CreateUser(sysID, password);
                 }
                 else
                 {
@@ -42,18 +42,44 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public bool[] BulkCreateUsers(int[] listOfIDs, string[] listOfPasswords)
+        public bool[] BulkCreateUsers(int[] listOfIDs, string[] listOfPasswords, bool passwordCheck)
         {
             if (_userManagementManager.CheckListLength(listOfIDs))
             {
                 bool[] results = new bool[listOfIDs.Length];
                 int i = 0;
-                foreach (int ID in listOfIDs)
+
+                // Password check is enabled
+                if (passwordCheck)
                 {
-                    bool temp = _DataAccessService.StoreUser(listOfIDs[i], listOfPasswords[i]);
-                    results[i] = temp;
+                    foreach (int ID in listOfIDs)
+                    {
+                        stringChecker sc = new stringChecker(listOfPasswords[i]);
+
+                        // Checking if password meets requirements
+                        if (sc.isSecurePassword())
+                        {
+                            bool temp = _DataAccessService.CreateUser(listOfIDs[i], listOfPasswords[i]);
+                            results[i] = temp;
+                        }
+                        else
+                        {
+                            results[i] = false;
+                        }
+                    }
+                    return results;
                 }
-                return results;
+
+                // Password check is disabled
+                else
+                {
+                    foreach (int ID in listOfIDs)
+                    {
+                        bool temp = _DataAccessService.CreateUser(listOfIDs[i], listOfPasswords[i]);
+                        results[i] = temp;
+                    }
+                    return results;
+                }
             }
             else
             {
