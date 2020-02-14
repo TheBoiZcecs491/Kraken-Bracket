@@ -3,6 +3,7 @@ using System.Linq;
 using TBZ.DatabaseAccess;
 using System.Collections.Generic;
 using TBZ.UserManagementManager;
+using TBZ.StringChecker;
 
 namespace TBZ.UserManagementService
 {
@@ -17,6 +18,7 @@ namespace TBZ.UserManagementService
         {
             _DataAccessService = new DataAccess();
             _userManagementManager = new UserManagementManager.UserManagementManager();
+            
         }
 
         public void SingleCreateUsers(int sysID, string password, string permission)
@@ -24,7 +26,15 @@ namespace TBZ.UserManagementService
             // TODO: have a check for password. Use Kevin's registration checker
             if (_userManagementManager.CheckPermission(permission))
             {
-                _DataAccessService.StoreUser(sysID, password);
+                stringChecker sc = new stringChecker(password);
+                if (sc.isSecurePassword())
+                {
+                    _DataAccessService.StoreUser(sysID, password);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid password");
+                }
             }
             else
             {
