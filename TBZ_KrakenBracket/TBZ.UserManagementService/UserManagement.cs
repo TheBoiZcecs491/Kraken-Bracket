@@ -21,7 +21,7 @@ namespace TBZ.UserManagementService
             
         }
 
-        public void SingleCreateUsers(int sysID, string password, string permission)
+        public bool SingleCreateUsers(int sysID, string password, string permission)
         {
             // TODO: have a check for password. Use Kevin's registration checker
             if (_userManagementManager.CheckPermission(permission))
@@ -29,7 +29,7 @@ namespace TBZ.UserManagementService
                 stringChecker sc = new stringChecker(password);
                 if (sc.isSecurePassword())
                 {
-                    _DataAccessService.CreateUser(sysID, password);
+                    return _DataAccessService.CreateUser(sysID, password);
                 }
                 else
                 {
