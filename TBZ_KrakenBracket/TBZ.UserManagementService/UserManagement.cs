@@ -66,6 +66,7 @@ namespace TBZ.UserManagementService
                         {
                             results[i] = false;
                         }
+                        i++;
                     }
                     return results;
                 }
@@ -77,6 +78,7 @@ namespace TBZ.UserManagementService
                     {
                         bool temp = _DataAccessService.CreateUser(listOfIDs[i], listOfPasswords[i]);
                         results[i] = temp;
+                        i++;
                     }
                     return results;
                 }
