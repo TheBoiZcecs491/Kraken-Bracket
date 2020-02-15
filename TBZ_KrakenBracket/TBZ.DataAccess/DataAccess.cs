@@ -7,6 +7,7 @@ namespace TBZ.DatabaseAccess
     public class DataAccess
     {
         const string CONNECTION_STRING = @"Data source=localhost; Database=kraken_bracket; User ID=root; Password=Gray$cale917!!";
+        private MySqlConnection conn;
 
         // List of users and their passwords
         Dictionary<string, string> userDict = new Dictionary<string, string>()
@@ -73,9 +74,22 @@ namespace TBZ.DatabaseAccess
             }
         }
 
-        public bool StoreUser(int sysID, string password)
+        public bool CreateUser(int sysID, string password)
         {
-            return false;
+            try
+            {
+                string query = "INSERT INTO User(System_ID, User_Password) VALUES('" + sysID + "', '" + password + "')";
+                conn = new MySqlConnection(CONNECTION_STRING);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool DeleteUser(int systemID)
