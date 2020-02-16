@@ -84,9 +84,11 @@ namespace TBZ.DatabaseAccess
         {
             try
             {
-                string query = "INSERT INTO User(System_ID, User_Password) VALUES('" + sysID + "', '" + password + "')";
+                string query = string.Format("INSERT INTO User(System_ID, User_Password) VALUES('{0}', '{1}')", sysID, password);
                 conn = new MySqlConnection(CONNECTION_STRING);
+
                 MySqlCommand cmd = new MySqlCommand(query, conn);
+
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -108,7 +110,7 @@ namespace TBZ.DatabaseAccess
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    string selectQuery = "SELECT * FROM User WHERE System_ID=" + systemID;
+                    string selectQuery = string.Format("SELECT * FROM User WHERE System_ID={0}", systemID);
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
 
                     conn.Open();
@@ -123,7 +125,7 @@ namespace TBZ.DatabaseAccess
                         reader.Close();
                         if (count == 1)
                         {
-                            string deleteQuery = "DELETE FROM User WHERE System_ID=" + systemID;
+                            string deleteQuery = string.Format("DELETE FROM User WHERE System_ID={0}", systemID);
                             MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
                             deleteCmd.ExecuteNonQuery();
                             conn.Close();
