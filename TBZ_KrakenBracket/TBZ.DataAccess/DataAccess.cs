@@ -82,24 +82,46 @@ namespace TBZ.DatabaseAccess
         /// <returns></returns>
         public bool CreateUser(int sysID, string password)
         {
-            string query = "INSERT INTO User(System_ID, User_Password) VALUES('" + sysID + "', '" + password + "')";
-            conn = new MySqlConnection(CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand(query, conn);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
-            return true;
+            try
+            {
+                string query = "INSERT INTO User(System_ID, User_Password) VALUES('" + sysID + "', '" + password + "')";
+                conn = new MySqlConnection(CONNECTION_STRING);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool DeleteUser(int systemID)
         {
-            string query = "DELETE FROM User WHERE System_ID=" + systemID;
-            conn = new MySqlConnection(CONNECTION_STRING);
-            MySqlCommand cmd = new MySqlCommand(query, conn);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
-            return true;
+            try
+            {
+                string query = "DELETE FROM User WHERE System_ID=" + systemID;
+                conn = new MySqlConnection(CONNECTION_STRING);
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
