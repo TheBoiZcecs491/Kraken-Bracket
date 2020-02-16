@@ -31,7 +31,68 @@ namespace TBZ.UserManagementTest
             {
                 result = false;
             }
-            catch (Exception) { result = false; }
+            catch (Exception) 
+            { 
+                result = false; 
+            }
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        /// <summary>
+        /// Single create users fail because of insufficient password
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="password"></param>
+        /// <param name="permission"></param>
+        [DataTestMethod]
+        [DataRow(199, "password", "Admin")]
+        public void SingleCreateUsers_Admin_Fail_InsufficientPasswords(int sysID, string password, string permission)
+        {
+            // Arrange
+            var userManagement = new UserManagement();
+            bool result;
+
+            // Act
+            try
+            {
+                result = userManagement.SingleCreateUsers(sysID, password, permission);
+            }
+            catch (ArgumentException)
+            {
+                result = true;
+            }
+            catch (Exception)
+            {
+                result = true;
+            }
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [DataTestMethod]
+        [DataRow(1, "398h389289hNU(F", "Admin")]
+        public void SingleCreateUsers_Admin_Fail_SystemIDAlreadyExists(int sysID, string password, string permission)
+        {
+            // Arrange
+            var userManagement = new UserManagement();
+            bool result;
+
+            // Act
+            try
+            {
+                result = userManagement.SingleCreateUsers(sysID, password, permission);
+            }
+            catch (MySql.Data.MySqlClient.MySqlException)
+            {
+                result = true;
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
 
             // Assert
             Assert.IsTrue(result);
@@ -66,7 +127,7 @@ namespace TBZ.UserManagementTest
         /// <param name="listOfPasswords"></param>
         /// <param name="passwordCheck"></param>
         [DataTestMethod]
-        [DataRow(new int[] { 1, 2, 3 }, new string[] { "BridgesIHaveBurned392!", "JIO389fkqfg4//", "w894uhiM<>" }, true)]
+        [DataRow(new int[] { 4, 5, 6 }, new string[] { "BridgesIHaveBurned392!", "JIO389fkqfg4//", "w894uhiM<>" }, true)]
         public void BulkCreateUsers_PasswordCheck_Pass(int[] listOfIDs, string[] listOfPasswords, bool passwordCheck)
         {
             // Arrange
@@ -81,6 +142,12 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(actual, expected);
         }
 
+        /// <summary>
+        /// Fail test method when bulk creating users fail because of insufficient passwords
+        /// </summary>
+        /// <param name="listOfIDs"></param>
+        /// <param name="listOfPasswords"></param>
+        /// <param name="passwordCheck"></param>
         [DataTestMethod]
         [DataRow(new int[] { 23, 24, 25}, new string[] { " ", "password", "123" }, true)]
         public void BulkCreateUsers_PasswordCheck_Fail_InsufficientPasswords(int[] listOfIDs, 
