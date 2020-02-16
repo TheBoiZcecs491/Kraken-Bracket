@@ -29,7 +29,11 @@ namespace TBZ.UserManagementService
                 stringChecker sc = new stringChecker(password);
                 if (sc.isSecurePassword())
                 {
-                    return _DataAccessService.CreateUser(sysID, password);
+                    if (!(_DataAccessService.CreateUser(sysID, password)))
+                    {
+                        throw new ArgumentException("System ID already exists");
+                    }
+                    return true;
                 }
                 else
                 {
