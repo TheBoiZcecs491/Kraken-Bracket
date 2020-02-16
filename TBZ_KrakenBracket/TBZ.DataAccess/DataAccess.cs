@@ -106,20 +106,45 @@ namespace TBZ.DatabaseAccess
         {
             try
             {
-                string query = "DELETE FROM User WHERE System_ID=" + systemID;
-                conn = new MySqlConnection(CONNECTION_STRING);
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return true;
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    string selectQuery = "SELECT * FROM User WHERE System_ID=" + systemID;
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+
+                    conn.Open();
+
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            count++;
+                        }
+                        reader.Close();
+                        if (count == 1)
+                        {
+                            string deleteQuery = "DELETE FROM User WHERE System_ID=" + systemID;
+                            MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                            deleteCmd.ExecuteNonQuery();
+                            conn.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            conn.Close();
+                            return false;
+                        }
+                    }
+                }
             }
-            catch (MySql.Data.MySqlClient.MySqlException)
+            catch (MySql.Data.MySqlClient.MySqlException e)
             {
+                Console.WriteLine(e);
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }
