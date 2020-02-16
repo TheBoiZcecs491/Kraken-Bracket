@@ -74,27 +74,32 @@ namespace TBZ.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Method to insert user into database
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool CreateUser(int sysID, string password)
         {
-            try
-            {
-                string query = "INSERT INTO User(System_ID, User_Password) VALUES('" + sysID + "', '" + password + "')";
-                conn = new MySqlConnection(CONNECTION_STRING);
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            string query = "INSERT INTO User(System_ID, User_Password) VALUES('" + sysID + "', '" + password + "')";
+            conn = new MySqlConnection(CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return true;
         }
 
         public bool DeleteUser(int systemID)
         {
-            return false;
+            string query = "DELETE FROM User WHERE System_ID=" + systemID;
+            conn = new MySqlConnection(CONNECTION_STRING);
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return true;
         }
     }
 }

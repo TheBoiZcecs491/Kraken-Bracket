@@ -164,5 +164,28 @@ namespace TBZ.UserManagementTest
             // Actual
             CollectionAssert.AreEqual(actual, expected);
         }
+
+
+        [DataTestMethod]
+        [DataRow(1, "Admin")]
+        public void SingleDeleteUser_Pass(int sysID, string permission)
+        {
+            // Arrange
+            var userManagement = new UserManagement();
+            bool result;
+
+            try
+            {
+                result = userManagement.SingleDeleteUser(sysID, permission);
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
+            Assert.IsTrue(result);
+
+
+        }
     }
 }
