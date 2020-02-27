@@ -80,11 +80,11 @@ namespace TBZ.DatabaseAccess
         /// <param name="sysID"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool CreateUser(int sysID, string password)
+        public bool CreateUser(int sysID, string password, string accountType)
         {
             try
             {
-                string query = string.Format("INSERT INTO User(System_ID, User_Password) VALUES('{0}', '{1}')", sysID, password);
+                string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", sysID, password, accountType);
                 conn = new MySqlConnection(CONNECTION_STRING);
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
