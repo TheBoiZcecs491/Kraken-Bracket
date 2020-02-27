@@ -46,11 +46,13 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public bool[] BulkCreateUsers(int[] listOfIDs, string[] listOfPasswords, bool passwordCheck)
+        public IEnumerable<List<int>> BulkCreateUsers(int[] listOfIDs, string[] listOfPasswords, string[] listOfAccountTypes,
+            bool passwordCheck)
         {
+            List<int> passedIDs = new List<int>();
+            List<int> failedIDs = new List<int>();
             if (_userManagementManager.CheckListLength(listOfIDs))
             {
-                bool[] results = new bool[listOfIDs.Length];
                 int i = 0;
 
                 // Password check is enabled
@@ -63,16 +65,23 @@ namespace TBZ.UserManagementService
                         // Checking if password meets requirements
                         if (sc.isSecurePassword())
                         {
-                            bool temp = _DataAccessService.CreateUser(listOfIDs[i], listOfPasswords[i]);
-                            results[i] = temp;
+                            bool temp = _DataAccessService.CreateUser(listOfIDs[i], listOfPasswords[i], listOfAccountTypes[i]);
+                            if (temp == true)
+                            {
+                                passedIDs.Add(listOfIDs[i]);
+                            }
+                            else
+                            {
+                                failedIDs.Add(listOfIDs[i]);
+                            }
                         }
                         else
                         {
-                            results[i] = false;
+                            failedIDs.Add(listOfIDs[i]);
                         }
                         i++;
                     }
-                    return results;
+                    return new List<List<int>> { passedIDs, failedIDs };
                 }
 
                 // Password check is disabled
@@ -81,10 +90,16 @@ namespace TBZ.UserManagementService
                     foreach (int ID in listOfIDs)
                     {
                         bool temp = _DataAccessService.CreateUser(listOfIDs[i], listOfPasswords[i]);
-                        results[i] = temp;
-                        i++;
+                        if (temp == true)
+                        {
+                            passedIDs.Add(listOfIDs[i]);
+                        }
+                        else
+                        {
+                            failedIDs.Add(listOfIDs[i]);
+                        }
                     }
-                    return results;
+                    return new List<List<int>> { passedIDs, failedIDs };
                 }
             }
             else
