@@ -33,9 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.ArchivingService", "TBZ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.DatabaseQuery", "TBZ.DatabaseQuery\TBZ.DatabaseQuery.csproj", "{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.UserManagementService", "TBZ.UserManagementService\TBZ.UserManagementService.csproj", "{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementService", "TBZ.UserManagementService\TBZ.UserManagementService.csproj", "{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.UserManagementTest", "TBZ.UserManagementTest\TBZ.UserManagementTest.csproj", "{5E4C6A67-5185-4178-BF32-3927792671B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementTest", "TBZ.UserManagementTest\TBZ.UserManagementTest.csproj", "{5E4C6A67-5185-4178-BF32-3927792671B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.HashingService", "TBZ.HashingService\TBZ.HashingService.csproj", "{BAB0ED3A-D5EE-4773-803F-9052893A7FC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.Manager.Hashing", "TBZ.Manager.Hashing\TBZ.Manager.Hashing.csproj", "{F9886EE4-5B3D-4A89-BD0A-934E90BED721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +115,14 @@ Global
 		{5E4C6A67-5185-4178-BF32-3927792671B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E4C6A67-5185-4178-BF32-3927792671B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E4C6A67-5185-4178-BF32-3927792671B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAB0ED3A-D5EE-4773-803F-9052893A7FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAB0ED3A-D5EE-4773-803F-9052893A7FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAB0ED3A-D5EE-4773-803F-9052893A7FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAB0ED3A-D5EE-4773-803F-9052893A7FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9886EE4-5B3D-4A89-BD0A-934E90BED721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9886EE4-5B3D-4A89-BD0A-934E90BED721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9886EE4-5B3D-4A89-BD0A-934E90BED721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9886EE4-5B3D-4A89-BD0A-934E90BED721}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,7 +18,8 @@ namespace TBZ.DatabaseQueryService
             {"role_type","role_type(roleID, role_type) VALUES(@roleID, @role_type)"},
             {"team_info","team_info(teamID, team_name) VALUES(@teamID, @team_name)" },
             {"team_list", "team_list(teamID, hashedUserID) VLAUES(@teamID, @hashedUserID)"},
-            {"user_info", "user_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)" }
+            {"gamer_info", "gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)" },
+            {"user_information", "user_information(userID, email, hashed_password, salt, fname, lname) VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname" }
         };
 
         public bool TableExist(string tableName)
@@ -89,6 +90,15 @@ namespace TBZ.DatabaseQueryService
                     comm.Parameters.AddWithValue("@gamerTag", insertList[1]);
                     comm.Parameters.AddWithValue("@gamerTagID", insertList[2]);
                     comm.Parameters.AddWithValue("@teamID", insertList[3]);
+                    break;
+
+                case 10:
+                    comm.Parameters.AddWithValue("@userID", insertList[0]);
+                    comm.Parameters.AddWithValue("@email", insertList[1]);
+                    comm.Parameters.AddWithValue("@hashed_password", insertList[2]);
+                    comm.Parameters.AddWithValue("@salt", insertList[3]);
+                    comm.Parameters.AddWithValue("@fname", insertList[4]);
+                    comm.Parameters.AddWithValue("@lname", insertList[5]);
                     break;
 
                 default:
