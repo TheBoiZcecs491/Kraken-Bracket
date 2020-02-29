@@ -155,7 +155,15 @@ namespace TBZ.DatabaseAccess
                     }
                     else
                     {
-                        return false;
+                        string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
+                        conn = new MySqlConnection(CONNECTION_STRING);
+
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        return true;
                     }
                 }
                 else
