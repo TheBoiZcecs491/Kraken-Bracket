@@ -13,5 +13,7 @@ namespace TBZ.DatabaseAccess
         public string Password { get; set; }
         public string AccountType { get; set; }
         public bool AccountStatus { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }
