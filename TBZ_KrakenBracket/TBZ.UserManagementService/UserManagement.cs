@@ -19,38 +19,23 @@ namespace TBZ.UserManagementService
             
         }
 
-        public bool SingleCreateUsers(int sysID, string password, string accountType, string permission)
+        public bool SingleCreateUsers(User user)
         {
-            // TODO: have a check for password. Use Kevin's registration checker
-            if (_userManagementManager.CheckPermission(permission))
+            bool temp = _DataAccessService.CreateUser(user, true);
+            if (temp == false)
             {
-                stringChecker sc = new stringChecker(password);
-                if (sc.isSecurePassword())
-                {
-                    if (!(_DataAccessService.CreateUser(sysID, password, accountType)))
-                    {
-                        throw new ArgumentException("System ID already exists");
-                    }
-                    return true;
-                }
-                else
-                {
-                    throw new ArgumentException("Invalid password");
-                }
+                throw new ArgumentException("");
             }
-            else
-            {
-                throw new ArgumentException("Invalid permissions");
-            }
+            return temp;
         }
 
-        public IEnumerable<List<int>> BulkCreateUsers(List<User> users, bool passwordCheck)
+        public List<List<int>> BulkCreateUsers(List<User> users, bool passwordCheck)
         {
             List<int> passedIDs = new List<int>();
             List<int> failedIDs = new List<int>();
             foreach(User u in users)
             {
-                bool temp = _DataAccessService.CreateUser(u);
+                bool temp = _DataAccessService.CreateUser(u, passwordCheck);
                 if (temp == true)
                 {
                     passedIDs.Add(u.SystemID);
@@ -61,39 +46,6 @@ namespace TBZ.UserManagementService
                 }
             }
             return new List<List<int>> { passedIDs, failedIDs };
-        }
-
-        public bool SingleDeleteUser(int ID, string permission) 
-        {
-            if (_userManagementManager.CheckPermission(permission))
-            {
-                return _DataAccessService.DeleteUser(ID);
-            }
-            else
-            {
-                throw new ArgumentException("Invalid permissions");
-            }
-        }
-
-        public bool[] BulkDeleteUsers(int[] listOfIDs, string permission)
-        {
-            if (_userManagementManager.CheckPermission(permission) && _userManagementManager.CheckListLength(listOfIDs))
-            {
-                bool[] b = new bool[listOfIDs.Length];
-                int count = 0;
-                foreach (int id in listOfIDs)
-                {
-                    bool temp = _DataAccessService.DeleteUser(id);
-                    b[count] = temp;
-                    count++;
-                }
-                return b;
-            }
-            else
-            {
-                throw new ArgumentException("Invalid permissions");
-            }
-            
         }
     }
 }
