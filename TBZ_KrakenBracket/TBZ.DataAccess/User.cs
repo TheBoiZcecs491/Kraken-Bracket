@@ -6,7 +6,7 @@ namespace TBZ.DatabaseAccess
 {
     public class User
     {
-        public int SystemID { get; set; }
+        public uint SystemID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -18,7 +18,7 @@ namespace TBZ.DatabaseAccess
 
         public User() { }
 
-        public User(int sysID, string fName, string lName, string email, string pass, string accntType, bool accntStatus, string errMsg)
+        public User(uint sysID, string fName, string lName, string email, string pass, string accntType, bool accntStatus, string errMsg)
         {
             SystemID = sysID;
             FirstName = fName;
