@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TBZ.RegistrationService\TBZ.RegistrationService.csproj" />
+    <ProjectReference Include="..\TBZ.StringChecker\TBZ.StringChecker.csproj" />
   </ItemGroup>
 
 </Project>
