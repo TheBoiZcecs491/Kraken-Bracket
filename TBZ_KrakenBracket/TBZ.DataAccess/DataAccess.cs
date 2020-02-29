@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
+using TBZ.StringChecker;
+
 namespace TBZ.DatabaseAccess
 {
     public class DataAccess
@@ -124,22 +126,37 @@ namespace TBZ.DatabaseAccess
         /// <param name="sysID"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool CreateUser(User u)
+        public bool CreateUser(User u, bool passwordCheck)
         {
             try
             {
                 bool result = CheckIDExistence(u.SystemID);
                 if(result == false)
                 {
-                    string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
-                    conn = new MySqlConnection(CONNECTION_STRING);
+                    if (passwordCheck == true)
+                    {
+                        StringCheckerService sc = new StringCheckerService(u.Password);
+                        if(sc.isSecurePassword())
+                        {
+                            string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
+                            conn = new MySqlConnection(CONNECTION_STRING);
 
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                            MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    return true;
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
