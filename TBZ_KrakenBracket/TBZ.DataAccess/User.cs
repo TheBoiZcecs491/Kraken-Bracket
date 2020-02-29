@@ -15,5 +15,20 @@ namespace TBZ.DatabaseAccess
         public bool AccountStatus { get; set; }
 
         public string ErrorMessage { get; set; }
+
+        public User() { }
+
+        public User(int sysID, string fName, string lName, string email, string pass, string accntType, bool accntStatus, string errMsg)
+        {
+            SystemID = sysID;
+            FirstName = fName;
+            LastName = lName;
+            Email = email;
+            Password = pass;
+            AccountType = accntType;
+            AccountStatus = accntStatus;
+            ErrorMessage = errMsg;
+
+        }
     }
 }
