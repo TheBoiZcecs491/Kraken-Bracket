@@ -11,8 +11,6 @@ namespace TBZ.UserManagementService
     {
         private static readonly DataAccess _DataAccessService;
         private static readonly UserManagementManager.UserManagementManager _userManagementManager;
-        private string randomPassword;
-        private Random random = new Random();
 
         static UserManagement()
         {
@@ -21,7 +19,7 @@ namespace TBZ.UserManagementService
             
         }
 
-        public bool SingleCreateUsers(int sysID, string password, string permission)
+        public bool SingleCreateUsers(int sysID, string password, string accountType, string permission)
         {
             // TODO: have a check for password. Use Kevin's registration checker
             if (_userManagementManager.CheckPermission(permission))
@@ -29,7 +27,7 @@ namespace TBZ.UserManagementService
                 stringChecker sc = new stringChecker(password);
                 if (sc.isSecurePassword())
                 {
-                    if (!(_DataAccessService.CreateUser(sysID, password)))
+                    if (!(_DataAccessService.CreateUser(sysID, password, accountType)))
                     {
                         throw new ArgumentException("System ID already exists");
                     }
@@ -46,66 +44,12 @@ namespace TBZ.UserManagementService
             }
         }
 
-        public IEnumerable<List<int>> BulkCreateUsers(int[] listOfIDs, string[] listOfPasswords, string[] listOfAccountTypes,
-            bool passwordCheck)
+        public IEnumerable<List<int>> BulkCreateUsers(List<User> users, bool passwordCheck)
         {
             List<int> passedIDs = new List<int>();
             List<int> failedIDs = new List<int>();
-            if (_userManagementManager.CheckListLength(listOfIDs))
-            {
-                int i = 0;
-
-                // Password check is enabled
-                if (passwordCheck)
-                {
-                    foreach (int ID in listOfIDs)
-                    {
-                        stringChecker sc = new stringChecker(listOfPasswords[i]);
-
-                        // Checking if password meets requirements
-                        if (sc.isSecurePassword())
-                        {
-                            bool temp = _DataAccessService.CreateUser(listOfIDs[i], listOfPasswords[i], listOfAccountTypes[i]);
-                            if (temp == true)
-                            {
-                                passedIDs.Add(listOfIDs[i]);
-                            }
-                            else
-                            {
-                                failedIDs.Add(listOfIDs[i]);
-                            }
-                        }
-                        else
-                        {
-                            failedIDs.Add(listOfIDs[i]);
-                        }
-                        i++;
-                    }
-                    return new List<List<int>> { passedIDs, failedIDs };
-                }
-
-                // Password check is disabled
-                else
-                {
-                    foreach (int ID in listOfIDs)
-                    {
-                        bool temp = _DataAccessService.CreateUser(listOfIDs[i], listOfPasswords[i]);
-                        if (temp == true)
-                        {
-                            passedIDs.Add(listOfIDs[i]);
-                        }
-                        else
-                        {
-                            failedIDs.Add(listOfIDs[i]);
-                        }
-                    }
-                    return new List<List<int>> { passedIDs, failedIDs };
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Insufficient list length");
-            }
+           
+            return new List<List<int>> { passedIDs, failedIDs };
         }
 
         public bool SingleDeleteUser(int ID, string permission) 
@@ -139,14 +83,6 @@ namespace TBZ.UserManagementService
                 throw new ArgumentException("Invalid permissions");
             }
             
-        }
-
-   
-        public string RandomPassword(int len)
-        {
-            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, len)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
