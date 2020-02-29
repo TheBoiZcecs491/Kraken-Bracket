@@ -48,7 +48,18 @@ namespace TBZ.UserManagementService
         {
             List<int> passedIDs = new List<int>();
             List<int> failedIDs = new List<int>();
-           
+            foreach(User u in users)
+            {
+                bool temp = _DataAccessService.CreateUser(u);
+                if (temp == true)
+                {
+                    passedIDs.Add(u.SystemID);
+                }
+                else
+                {
+                    failedIDs.Add(u.SystemID);
+                }
+            }
             return new List<List<int>> { passedIDs, failedIDs };
         }
 
