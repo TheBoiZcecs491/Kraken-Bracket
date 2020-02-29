@@ -74,32 +74,87 @@ namespace TBZ.DatabaseAccess
             }
         }
 
+        public bool CheckIDExistence(int sysID)
+        {
+            try
+            {
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    string selectQuery = string.Format("SELECT * FROM User WHERE System_ID={0}", sysID);
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+
+                    conn.Open();
+
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            count++;
+                        }
+                        reader.Close();
+                        if (count == 1)
+                        {
+                            conn.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            conn.Close();
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
         /// <summary>
         /// Method to insert user into database
         /// </summary>
         /// <param name="sysID"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool CreateUser(int sysID, string password, string accountType)
+        public bool CreateUser(User u)
         {
             try
             {
-                string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", sysID, password, accountType);
-                conn = new MySqlConnection(CONNECTION_STRING);
+                bool result = CheckIDExistence(u.SystemID);
+                if(result == false)
+                {
+                    string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
+                    conn = new MySqlConnection(CONNECTION_STRING);
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return true;
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
             }
-            catch (MySql.Data.MySqlClient.MySqlException)
+            catch (MySql.Data.MySqlClient.MySqlException e)
             {
+                u.ErrorMessage = e.ToString();
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                u.ErrorMessage = e.ToString();
                 return false;
             }
         }
