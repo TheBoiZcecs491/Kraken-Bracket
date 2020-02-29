@@ -123,11 +123,16 @@ namespace TBZ.DatabaseAccess
             try
             {
                 bool result = CheckIDExistence(u.SystemID);
+
+                // ID is not found, so it is safe to proceed
                 if(result == false)
                 {
+                    // Password check is enabled
                     if (passwordCheck == true)
                     {
                         StringCheckerService sc = new StringCheckerService(u.Password);
+
+                        // Password is secured
                         if(sc.isSecurePassword())
                         {
                             string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
@@ -140,11 +145,16 @@ namespace TBZ.DatabaseAccess
                             conn.Close();
                             return true;
                         }
+
+                        // Password is not secured
                         else
                         {
+                            u.ErrorMessage = "Password is not secured";
                             return false;
                         }
                     }
+
+                    // Password check is disabled
                     else
                     {
                         string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
