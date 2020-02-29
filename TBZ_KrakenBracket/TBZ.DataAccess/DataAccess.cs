@@ -76,7 +76,7 @@ namespace TBZ.DatabaseAccess
             }
         }
 
-        public bool CheckIDExistence(int sysID)
+        public bool CheckIDExistence(uint sysID)
         {
             try
             {
