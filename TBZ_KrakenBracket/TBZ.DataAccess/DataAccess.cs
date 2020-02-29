@@ -95,16 +95,8 @@ namespace TBZ.DatabaseAccess
                             count++;
                         }
                         reader.Close();
-                        if (count == 1)
-                        {
-                            conn.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            conn.Close();
-                            return false;
-                        }
+                        conn.Close();
+                        return (count == 1);
                     }
                 }
             }
