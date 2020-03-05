@@ -11,6 +11,7 @@ namespace TBZ.UserManagementTest
     {
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
+        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
         public void SingleCreateUser_Pass(uint sysID, string fName, string lName, string email, string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
@@ -34,6 +35,34 @@ namespace TBZ.UserManagementTest
             // Delete user to clean database
             um.SingleDeleteUser(user);
         }
+
+        [DataTestMethod]
+        [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
+        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
+        public void SingleCreateUser_Fail_SystemIDAlreadyExists(uint sysID, string fName, string lName, string email, string password, string accntType, bool accountStatus, string errMsg)
+        {
+            // Arrange
+            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
+            var um = new UserManagement();
+
+            // Act
+            bool result = um.SingleCreateUsers(user);
+            try
+            {
+                result = um.SingleCreateUsers(user);
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
+            // Assert
+            Assert.IsFalse(result);
+
+            // Delete user to clean database
+            um.SingleDeleteUser(user);
+        }
+
         [TestMethod]
         public void BulkCreateUsers_Pass()
         {
@@ -101,6 +130,8 @@ namespace TBZ.UserManagementTest
             users.Add(u2);
 
             var um = new UserManagement();
+
+            // Act
             um.BulkCreateUsers(users, false);
             List<List<User>> expected = new List<List<User>>()
             {
@@ -108,9 +139,9 @@ namespace TBZ.UserManagementTest
                 new List<User>() {} // Failed ID's
             };
 
-            // Act
             List<List<User>> actual = um.BulkDeleteUsers(users);
 
+            // Assert
             // FIXME: error that element 0 on both collections do not match
             // CollectionAssert.AreEqual(expected, actual);
         }
