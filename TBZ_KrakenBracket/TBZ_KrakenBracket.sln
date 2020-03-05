@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.AuthenticationService", "TBZ.AuthenticationService\TBZ.AuthenticationService.csproj", "{0CFA1259-D746-437D-BFEF-2EE37F9BBB33}"
 EndProject
@@ -33,9 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.ArchivingService", "TBZ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.DatabaseQuery", "TBZ.DatabaseQuery\TBZ.DatabaseQuery.csproj", "{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.UserManagementService", "TBZ.UserManagementService\TBZ.UserManagementService.csproj", "{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementService", "TBZ.UserManagementService\TBZ.UserManagementService.csproj", "{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.UserManagementTest", "TBZ.UserManagementTest\TBZ.UserManagementTest.csproj", "{5E4C6A67-5185-4178-BF32-3927792671B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementTest", "TBZ.UserManagementTest\TBZ.UserManagementTest.csproj", "{5E4C6A67-5185-4178-BF32-3927792671B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.DatabaseQueryTest", "TBZ.DatabaseQueryTest\TBZ.DatabaseQueryTest.csproj", "{76A139C3-0F8A-4341-BB2F-42AF2C6EAB85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{5E4C6A67-5185-4178-BF32-3927792671B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E4C6A67-5185-4178-BF32-3927792671B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E4C6A67-5185-4178-BF32-3927792671B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76A139C3-0F8A-4341-BB2F-42AF2C6EAB85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A139C3-0F8A-4341-BB2F-42AF2C6EAB85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A139C3-0F8A-4341-BB2F-42AF2C6EAB85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A139C3-0F8A-4341-BB2F-42AF2C6EAB85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
