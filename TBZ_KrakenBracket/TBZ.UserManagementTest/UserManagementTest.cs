@@ -59,10 +59,29 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        public void SingleDeleteUser_Pass()
+        [DataTestMethod]
+        [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
+        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
+        public void SingleDeleteUser_Pass(uint sysID, string fName, string lName, string email, string password, string accntType, bool accountStatus, string errMsg)
         {
+            // Arrange
+            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
+            var um = new UserManagement();
+            bool result;
 
+            // Act
+            um.SingleCreateUsers(user);
+            try
+            {
+                result = um.SingleDeleteUser(user);
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
+            // Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
