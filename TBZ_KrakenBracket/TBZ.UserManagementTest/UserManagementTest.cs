@@ -10,11 +10,11 @@ namespace TBZ.UserManagementTest
     public class UserManagementTest
     {
         [DataTestMethod]
-        [DataRow(null, null, null, null, "84092ujIO@>>>", "User", true, null)]
+        [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
         public void SingleCreateUser_Pass(uint sysID, string fName, string lName, string email, string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
-            User user = new User(6, fName, lName, email, password, accntType, accountStatus, errMsg);
+            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
             var um = new UserManagement();
             bool result;
 
@@ -30,6 +30,9 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsTrue(result);
+
+            // Delete user to clean database
+            um.SingleDeleteUser(user);
         }
         [TestMethod]
         public void BulkCreateUsers_Pass()
@@ -46,15 +49,14 @@ namespace TBZ.UserManagementTest
             var um = new UserManagement();
             List<List<User>> expected = new List<List<User>>()
             {
-                users,
+                new List<User>() {u1, u2},
                 new List<User>() {}
             };
-
 
             // Act
             List<List<User>> actual = um.BulkCreateUsers(users, true);
 
-            //CollectionAssert.AreEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
     }
 }
