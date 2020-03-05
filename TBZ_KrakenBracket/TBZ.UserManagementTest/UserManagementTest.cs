@@ -58,5 +58,17 @@ namespace TBZ.UserManagementTest
 
             CollectionAssert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void SingleDeleteUser_Pass()
+        {
+
+        }
+
+        [TestMethod]
+        public void BulkDeleteUsers_Pass()
+        {
+
+        }
     }
 }
