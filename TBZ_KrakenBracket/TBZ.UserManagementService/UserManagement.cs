@@ -50,7 +50,9 @@ namespace TBZ.UserManagementService
 
         public bool SingleDeleteUser(User user)
         {
-            return false;   
+            bool temp = _DataAccessService.DeleteUser(user.SystemID);
+            if (temp == true) return true;
+            else throw new ArgumentException("Failed to create user with associated ID");
         }
 
         public List<List<User>> BulkDeleteUsers(List<User> users)
