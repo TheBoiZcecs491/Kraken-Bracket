@@ -186,7 +186,7 @@ namespace TBZ.DatabaseAccess
             }
         }
 
-        public bool DeleteUser(int systemID)
+        public bool DeleteUser(uint systemID)
         {
             try
             {
