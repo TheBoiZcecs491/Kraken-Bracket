@@ -47,5 +47,29 @@ namespace TBZ.UserManagementService
             }
             return new List<List<User>> { passedIDs, failedIDs };
         }
+
+        public bool SingleDeleteUser(User user)
+        {
+            return false;   
+        }
+
+        public List<List<User>> BulkDeleteUsers(List<User> users)
+        {
+            List<User> passedIDs = new List<User>();
+            List<User> failedIDs = new List<User>();
+            foreach (User u in users)
+            {
+                bool temp = _DataAccessService.DeleteUser(u.SystemID);
+                if (temp == true)
+                {
+                    passedIDs.Add(u);
+                }
+                else
+                {
+                    failedIDs.Add(u);
+                }
+            }
+            return new List<List<User>> { passedIDs, failedIDs };
+        }
     }
 }
