@@ -96,7 +96,7 @@ namespace TBZ.UserManagementTest
         }
 
         [TestMethod]
-        public void BulkCreateUsers_Pass()
+        public void BulkCreateUsers_PasswordCheck_Pass()
         {
             // Arrange
             List<User> users = new List<User>();
@@ -120,8 +120,33 @@ namespace TBZ.UserManagementTest
             um.SingleDeleteUser(u2);
             // FIXME: error that element 0 on both collections do not match
             //CollectionAssert.AreEqual(expected, actual);
+        }
 
+        [TestMethod]
+        public void BulkCreateUsers_NoPasswordCheck_Pass()
+        {
+             // Arrange
+            List<User> users = new List<User>();
 
+            User u1 = new User(3, null, null, null, "8*3kmmrMropongig", "User", true, null);
+            User u2 = new User(4, null, null, null, "meMEeiaj093QNGEJOW~~~", "User", true, null);
+
+            users.Add(u1);
+            users.Add(u2);
+
+            var um = new UserManagement();
+            List<List<User>> expected = new List<List<User>>()
+            {
+                users, // Passed ID's
+                new List<User>() {} // Failed ID's
+            };
+
+            // Act
+            List<List<User>> actual = um.BulkCreateUsers(users, false);
+            um.SingleDeleteUser(u1);
+            um.SingleDeleteUser(u2);
+            // FIXME: error that element 0 on both collections do not match
+            //CollectionAssert.AreEqual(expected, actual);
         }
 
         [DataTestMethod]
