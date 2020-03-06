@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TBZ.DatabaseAccess;
 using TBZ.DatabaseConnectionService;
+using static TBZ.Manager.Hashing.ManagerHashing;
 
 namespace TBZ.DatabaseQueryService
 {
@@ -19,7 +21,8 @@ namespace TBZ.DatabaseQueryService
             {"team_info","team_info(teamID, team_name) VALUES(@teamID, @team_name)" },
             {"team_list", "team_list(teamID, hashedUserID) VLAUES(@teamID, @hashedUserID)"},
             {"gamer_info", "gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)" },
-            {"user_information", "user_information(userID, email, hashed_password, salt, fname, lname) VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname" }
+            {"user_information", "user_information(userID, email, hashed_password, salt, fname, lname) VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname" },
+            {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
         };
 
         public bool TableExist(string tableName)
@@ -31,81 +34,82 @@ namespace TBZ.DatabaseQueryService
             return true;
         }
 
-        public void InsertQuery(string tableName, List<string> insertList)
+        public void InsertUserAcc(string tableName, User tempUser)
         {
             var DB = new Database();
             MySqlConnection conn = new MySqlConnection(DB.GetConnString());
             conn.Open();
             MySqlCommand comm = conn.CreateCommand();
-            comm.CommandText = "INSERT INTO " + tables[tableName];
+            comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname) VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname)";
 
-            int i = Array.IndexOf(tables.Keys.ToArray(), tableName);
-            switch (i)
-            {
-                case 1:
-                    comm.Parameters.AddWithValue("@bracketID", insertList[0]);
-                    comm.Parameters.AddWithValue("@bracket_name", insertList[1]);
-                    comm.Parameters.AddWithValue("@bracketTypeID", insertList[2]);
-                    comm.Parameters.AddWithValue("@number_player", insertList[3]);
-                    break;
+            comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
+            comm.Parameters.AddWithValue("@email", tempUser.Email);
+            comm.Parameters.AddWithValue("@hashed_password", tempUser.Password);
+            comm.Parameters.AddWithValue("@salt", tempUser.salt);
+            comm.Parameters.AddWithValue("@fname", tempUser.FirstName);
+            comm.Parameters.AddWithValue("@lname", tempUser.LastName);
 
-                case 2:
-                    comm.Parameters.AddWithValue("@bracketID", insertList[0]);
-                    comm.Parameters.AddWithValue("@hashedUserID", insertList[1]);
-                    comm.Parameters.AddWithValue("@roleID", insertList[2]);
-                    break;
+            comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
+            comm.Parameters.AddWithValue("@hashed_userID", tempUser.SystemID);
 
-                case 3:
-                    comm.Parameters.AddWithValue("@bracketID", insertList[0]);
-                    comm.Parameters.AddWithValue("@bracket_type", insertList[1]);
-                    break;
-
-                case 4:
-                    comm.Parameters.AddWithValue("@eventID", insertList[0]);
-                    comm.Parameters.AddWithValue("@bracketID", insertList[1]);
-                    break;
-
-                case 5:
-                    comm.Parameters.AddWithValue("@eventID", insertList[0]);
-                    comm.Parameters.AddWithValue("@event_name", insertList[1]);
-                    break;
-
-                case 6:
-                    comm.Parameters.AddWithValue("@roleID", insertList[0]);
-                    comm.Parameters.AddWithValue("@role_type", insertList[1]);
-                    break;
-
-                case 7:
-                    comm.Parameters.AddWithValue("@teamID", insertList[0]);
-                    comm.Parameters.AddWithValue("@team_name", insertList[1]);
-                    break;
-
-                case 8:
-                    comm.Parameters.AddWithValue("@teamID", insertList[0]);
-                    comm.Parameters.AddWithValue("@hashehUserID", insertList[1]);
-                    break;
-
-                case 9:
-                    comm.Parameters.AddWithValue("@hashedUserID", insertList[0]);
-                    comm.Parameters.AddWithValue("@gamerTag", insertList[1]);
-                    comm.Parameters.AddWithValue("@gamerTagID", insertList[2]);
-                    comm.Parameters.AddWithValue("@teamID", insertList[3]);
-                    break;
-
-                case 10:
-                    comm.Parameters.AddWithValue("@userID", insertList[0]);
-                    comm.Parameters.AddWithValue("@email", insertList[1]);
-                    comm.Parameters.AddWithValue("@hashed_password", insertList[2]);
-                    comm.Parameters.AddWithValue("@salt", insertList[3]);
-                    comm.Parameters.AddWithValue("@fname", insertList[4]);
-                    comm.Parameters.AddWithValue("@lname", insertList[5]);
-                    break;
-
-                default:
-                    break;
-            }
             comm.ExecuteNonQuery();
-            conn.Close();
+        }
+
+        public void InsertGamerInfo( Gamer tempGamer)
+        {
+            var DB = new Database();
+            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
+            MySqlCommand comm = conn.CreateCommand();
+            comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)";
+
+            comm.Parameters.AddWithValue("@hashedUserID", tempGamer.HashedUserID);
+            comm.Parameters.AddWithValue("@gamerTag", tempGamer.GamerTag);
+            comm.Parameters.AddWithValue("@gamerTagID", tempGamer.GamerTagID);
+            comm.Parameters.AddWithValue("@teamID", tempGamer.TeamID);
+
+            comm.ExecuteNonQuery();
+        }
+
+        public void InsertBracketInfo(Bracket tempBracket)
+        {
+            var DB = new Database();
+            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
+            MySqlCommand comm = conn.CreateCommand();
+            comm.CommandText = "INSERT INTO bracket_info(bracketID, bracket_name, bracketTypeID, number_player) VALUES(@bracketID, @bracket_name, @bracketTypeID, @number_player)";
+
+            comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
+            comm.Parameters.AddWithValue("@bracket_name", tempBracket.BracketName);
+            comm.Parameters.AddWithValue("@bracketTypeID", tempBracket.BracketTypeID);
+            comm.Parameters.AddWithValue("@number_player", tempBracket.NumberPlayer);
+
+            comm.ExecuteNonQuery();
+        }
+
+        public void InsertBracketPlayer(BracketPlayer tempBracket)
+        {
+            var DB = new Database();
+            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
+            MySqlCommand comm = conn.CreateCommand();
+            comm.CommandText = "INSERT INTO bracket_player_info(bracketID, hashedUserID, roleID) VALUES(@bracketID, @hashedUserID, @roleID)";
+
+            comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
+            comm.Parameters.AddWithValue("@hashedUserID", tempBracket.HashedUserID);
+            comm.Parameters.AddWithValue("@roleID", tempBracket.RoleID);
+
+            comm.ExecuteNonQuery();
+        }
+
+        public void InsertEvnet(Event tempEvent)
+        {
+            var DB = new Database();
+            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
+            MySqlCommand comm = conn.CreateCommand();
+            comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
+
+            comm.Parameters.AddWithValue("@eventID", tempEvent.EventID);
+            comm.Parameters.AddWithValue("@event_Name", tempEvent.EventName);
+
+            comm.ExecuteNonQuery();
         }
 
         public void DeleteQuery(string tableName, string columnName, string deleteValue)

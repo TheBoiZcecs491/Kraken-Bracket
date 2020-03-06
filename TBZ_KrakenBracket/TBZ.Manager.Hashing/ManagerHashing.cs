@@ -1,15 +1,18 @@
 ﻿using System;
+using TBZ.DatabaseAccess;
 using TBZ.HashingService;
 
 namespace TBZ.Manager.Hashing
 {
     public class ManagerHashing
     {
-        string message;
-        string salt;
+        public class hashUser : User
+        {
+            public string salt { get; set; }
+        }
 
-        MessageSalt msgInfo = new MessageSalt(message, salt);
-
+        new MessageSalt
+        
 
     }
 }

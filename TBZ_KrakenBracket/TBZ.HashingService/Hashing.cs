@@ -6,14 +6,8 @@ namespace TBZ.HashingService
 {
     public class MessageSalt
     {
-        public string message;
-        public string salt;
-
-        public MessageSalt(string msg, string slt = null)
-        {
-            this.message = msg;
-            this.salt = slt;
-        }
+        public string message { get; set; }
+        public string salt { get; set; }
     }
 
     public class Hashing
@@ -26,19 +20,19 @@ namespace TBZ.HashingService
             return Convert.ToBase64String(buff);
         }
 
-        public MessageSalt GenerateHash(MessageSalt obj)
+        public MessageSalt GenerateHash(MessageSalt msg)
         {
-            if(obj.salt == null)
+            if(msg.salt == null)
             {
-                obj.salt = CreateSalt(32);
+                msg.salt = CreateSalt(32);
             }
 
-            byte[] bytes = Encoding.UTF8.GetBytes(obj.message + obj.salt);
+            byte[] bytes = Encoding.UTF8.GetBytes(msg.message + msg.salt);
             SHA256Managed sHA256ManagedString = new SHA256Managed();
             byte[] hash = sHA256ManagedString.ComputeHash(bytes);
-            obj.message = Convert.ToBase64String(hash);
+            msg.message = Convert.ToBase64String(hash);
 
-            return obj;
+            return msg;
         }
     }
 }
