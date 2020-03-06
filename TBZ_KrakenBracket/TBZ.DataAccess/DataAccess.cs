@@ -170,6 +170,7 @@ namespace TBZ.DatabaseAccess
                 }
                 else
                 {
+                    u.ErrorMessage = "System ID already exists";
                     return false;
                 }
                 
@@ -186,39 +187,27 @@ namespace TBZ.DatabaseAccess
             }
         }
 
-        public bool DeleteUser(uint systemID)
+        public bool DeleteUser(User user)
         {
             try
             {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
+                bool result = CheckIDExistence(user.SystemID);
+                if (result == true)
                 {
-                    string selectQuery = string.Format("SELECT * FROM User WHERE System_ID={0}", systemID);
-                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-
-                    conn.Open();
-
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    using (conn = new MySqlConnection(CONNECTION_STRING))
                     {
-                        int count = 0;
-                        while (reader.Read())
-                        {
-                            count++;
-                        }
-                        reader.Close();
-                        if (count == 1)
-                        {
-                            string deleteQuery = string.Format("DELETE FROM User WHERE System_ID={0}", systemID);
-                            MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
-                            deleteCmd.ExecuteNonQuery();
-                            conn.Close();
-                            return true;
-                        }
-                        else
-                        {
-                            conn.Close();
-                            return false;
-                        }
+                        string deleteQuery = string.Format("DELETE FROM User WHERE System_ID={0}", user.SystemID);
+                        MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                        deleteCmd.ExecuteNonQuery();
+                        conn.Close();
+                        return true;
+
                     }
+                }
+                else
+                {
+                    user.ErrorMessage = "System ID not found";
+                    return false;
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
