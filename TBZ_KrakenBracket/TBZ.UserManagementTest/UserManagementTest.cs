@@ -39,16 +39,21 @@ namespace TBZ.UserManagementTest
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
-        public void SingleCreateUser_Fail_SystemIDAlreadyExists(uint sysID, string fName, string lName, string email, string password, string accntType, bool accountStatus, string errMsg)
+        public void SingleCreateUser_Fail_SystemIDAlreadyExists(uint sysID, string fName, string lName, string email, 
+            string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
             User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
             var um = new UserManagement();
 
             // Act
-            bool result = um.SingleCreateUsers(user);
+            bool result;
+
+            // Creating a user
+            um.SingleCreateUsers(user);
             try
             {
+                // Creating the exact same user with the same system ID
                 result = um.SingleCreateUsers(user);
             }
             catch (Exception)
@@ -61,6 +66,33 @@ namespace TBZ.UserManagementTest
 
             // Delete user to clean database
             um.SingleDeleteUser(user);
+        }
+
+        [DataTestMethod]
+        [DataRow(6u, null, null, null, "password", "User", true, null)]
+        [DataRow(12u, null, null, null, "123", "User", true, null)]
+        public void SingleCreateUser_Fail_InsufficientPassword(uint sysID, string fName, string lName, string email,
+            string password, string accntType, bool accountStatus, string errMsg)
+        {
+            // Arrange
+            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
+            var um = new UserManagement();
+            bool result;
+
+            // Act
+            try
+            {
+                // Creating the exact same user with the same system ID
+                result = um.SingleCreateUsers(user);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { result = true; }
+
+            // Assert
+            Assert.IsFalse(result);
         }
 
         [TestMethod]
