@@ -324,5 +324,41 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
         }
+
+        [TestMethod]
+        public void BulkDeleteUsers_Fail_SystemIDsDoNotExist()
+        {
+            // Arrange
+            List<User> users = new List<User>();
+
+            var um = new UserManagement();
+
+            User u1 = new User(1, null, null, null, "password", "User", true, null);
+            User u2 = new User(2, null, null, null, "123", "User", true, null);
+            User u3 = new User(3, null, null, null, "", "User", true, null);
+            User u4 = new User(4, null, null, null, null, "User", true, null);
+            User u5 = new User(5, null, null, null, "bad", "User", true, null);
+            User u6 = new User(6, null, null, null, "brian", "User", true, null);
+
+            users.Add(u1);
+            users.Add(u2);
+            users.Add(u3);
+            users.Add(u4);
+            users.Add(u5);
+            users.Add(u6);
+
+            List<List<User>> expected = new List<List<User>>()
+            {
+                new List<User>() {}, // Passed ID's
+                users // Failed ID's
+            };
+
+            // Act
+            List<List<User>> actual = um.BulkDeleteUsers(users);
+
+            // Assert
+            CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
+        }
     }
 }
