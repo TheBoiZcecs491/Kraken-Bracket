@@ -256,10 +256,11 @@ namespace TBZ.UserManagementTest
             {
                 result = um.SingleDeleteUser(user);
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
                 result = false;
             }
+            catch (Exception) { result = false; }
 
             // Assert
             Assert.IsTrue(result);
