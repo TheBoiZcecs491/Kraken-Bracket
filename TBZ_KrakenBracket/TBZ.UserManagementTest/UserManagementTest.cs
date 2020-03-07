@@ -117,10 +117,14 @@ namespace TBZ.UserManagementTest
 
             // Act
             List<List<User>> actual = um.BulkCreateUsers(users, true);
-            um.SingleDeleteUser(u1);
-            um.SingleDeleteUser(u2);
-            // FIXME: error that element 0 on both collections do not match
+            foreach(User u in users)
+            {
+                um.SingleDeleteUser(u);
+            }
+            
+            // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
         }
 
         [TestMethod]
@@ -154,7 +158,44 @@ namespace TBZ.UserManagementTest
             List<List<User>> actual = um.BulkCreateUsers(users, true);
 
             // FIXME: error that element 0 on both collections do not match
+            CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+        }
+
+        [TestMethod]
+        public void BulkCreateUsers_Fail_SystemIDAlreadyExist()
+        {
+            // Arrange
+            List<User> users = new List<User>();
+
+            User u1 = new User(1, null, null, null, "password", "User", true, null);
+            User u2 = new User(1, null, null, null, "123", "User", true, null);
+            User u3 = new User(1, null, null, null, "", "User", true, null);
+            User u4 = new User(1, null, null, null, null, "User", true, null);
+            User u5 = new User(1, null, null, null, "bad", "User", true, null);
+            User u6 = new User(1, null, null, null, "brian", "User", true, null);
+
+            users.Add(u1);
+            users.Add(u2);
+            users.Add(u3);
+            users.Add(u4);
+            users.Add(u5);
+            users.Add(u6);
+
+            var um = new UserManagement();
+            List<List<User>> expected = new List<List<User>>()
+            {
+                new List<User>(){ u1 }, // Passed ID's
+                new List<User>() { u2, u3, u4, u5, u6 } // Failed ID's
+            };
+
+            // Act
+            List<List<User>> actual = um.BulkCreateUsers(users, false);
+
+            // FIXME: error that element 0 on both collections do not match
+            CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
+            um.SingleDeleteUser(u1);
         }
 
         [TestMethod]
@@ -187,8 +228,9 @@ namespace TBZ.UserManagementTest
             // Act
             List<List<User>> actual = um.BulkCreateUsers(users, false);
 
-            // FIXME: error that element 0 on both collections do not match
+            // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
 
             // Delete users to clean database
             foreach (User u in users)
@@ -256,8 +298,8 @@ namespace TBZ.UserManagementTest
             List<List<User>> actual = um.BulkDeleteUsers(users);
 
             // Assert
-            // FIXME: error that element 0 on both collections do not match
             CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
         }
     }
 }
