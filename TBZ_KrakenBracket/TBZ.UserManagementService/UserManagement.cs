@@ -47,7 +47,7 @@ namespace TBZ.UserManagementService
 
         public bool SingleDeleteUser(User user)
         {
-            bool temp = _DataAccessService.DeleteUser(user.SystemID);
+            bool temp = _DataAccessService.DeleteUser(user);
             if (temp == true) return true;
             else throw new ArgumentException("Failed to delete user with associated ID");
         }
@@ -58,7 +58,7 @@ namespace TBZ.UserManagementService
             List<User> failedIDs = new List<User>();
             foreach (User u in users)
             {
-                bool temp = _DataAccessService.DeleteUser(u.SystemID);
+                bool temp = _DataAccessService.DeleteUser(u);
                 if (temp == true)
                 {
                     passedIDs.Add(u);
