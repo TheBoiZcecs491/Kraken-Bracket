@@ -19,6 +19,17 @@ namespace TBZ.UserManagementService
             
         }
 
+        /// <summary>
+        /// Method to create one user
+        /// </summary>
+        /// 
+        /// <param name="user">
+        /// User to create
+        /// </param>
+        /// 
+        /// <returns>
+        /// True to indicate success or error if failed
+        /// </returns>
         public bool SingleCreateUsers(User user)
         {
             bool temp = _DataAccessService.CreateUser(user, true);
@@ -26,6 +37,21 @@ namespace TBZ.UserManagementService
             else throw new ArgumentException("Failed to create user with associated ID");
         }
 
+        /// <summary>
+        /// Method to create multiple users at once
+        /// </summary>
+        /// 
+        /// <param name="users">
+        /// List of user objects to be created
+        /// </param>
+        /// 
+        /// <param name="passwordCheck">
+        /// Option to use password check for each user object
+        /// </param>
+        /// 
+        /// <returns>
+        /// List of users that were sucessfully created and list of users who failed to be created
+        /// </returns>
         public List<List<User>> BulkCreateUsers(List<User> users, bool passwordCheck)
         {
             List<User> passedIDs = new List<User>();
@@ -45,6 +71,13 @@ namespace TBZ.UserManagementService
             return new List<List<User>> { passedIDs, failedIDs };
         }
 
+        /// <summary>
+        /// Method to delete a single user
+        /// </summary>
+        /// <param name="user">User to be deleted</param>
+        /// <returns>
+        /// True to indicate success or error if failed
+        /// </returns>
         public bool SingleDeleteUser(User user)
         {
             bool temp = _DataAccessService.DeleteUser(user);
@@ -52,6 +85,17 @@ namespace TBZ.UserManagementService
             else throw new ArgumentException("Failed to delete user with associated ID");
         }
 
+        /// <summary>
+        /// Method to delete multiple users at once
+        /// </summary>
+        /// 
+        /// <param name="users">
+        /// List of user objects to be deleted
+        /// </param>
+        /// 
+        /// <returns>
+        /// List of users that were sucessfully created and list of users who failed to be created
+        /// </returns>
         public List<List<User>> BulkDeleteUsers(List<User> users)
         {
             List<User> passedIDs = new List<User>();
