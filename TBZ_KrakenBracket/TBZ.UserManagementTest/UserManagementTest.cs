@@ -9,6 +9,18 @@ namespace TBZ.UserManagementTest
     [TestClass]
     public class UserManagementTest
     {
+
+        /// <summary>
+        /// Test method to single create a user
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="accntType"></param>
+        /// <param name="accountStatus"></param>
+        /// <param name="errMsg"></param>
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
@@ -37,6 +49,17 @@ namespace TBZ.UserManagementTest
             um.SingleDeleteUser(user);
         }
 
+        /// <summary>
+        /// Fail test method when attempting to create a user whose system ID already exists
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="accntType"></param>
+        /// <param name="accountStatus"></param>
+        /// <param name="errMsg"></param>
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
@@ -69,6 +92,18 @@ namespace TBZ.UserManagementTest
             um.SingleDeleteUser(user);
         }
 
+        /// <summary>
+        /// Fail test method where attempting to create a user whose password
+        /// does not meet requirements
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="accntType"></param>
+        /// <param name="accountStatus"></param>
+        /// <param name="errMsg"></param>
         [DataTestMethod]
         [DataRow(6u, null, null, null, "password", "User", true, null)]
         [DataRow(12u, null, null, null, "123", "User", true, null)]
@@ -96,6 +131,9 @@ namespace TBZ.UserManagementTest
             Assert.IsFalse(result);
         }
 
+        /// <summary>
+        /// Test method to bulk create users with password check enabled
+        /// </summary>
         [TestMethod]
         public void BulkCreateUsers_PasswordCheck_Pass()
         {
@@ -127,6 +165,10 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
         }
 
+        /// <summary>
+        /// Fail test method where bulk creating users fail because
+        /// of insufficient passwords when password check is enabled
+        /// </summary>
         [TestMethod]
         public void BulkCreateUsers_PasswordCheck_Fail_InsufficientPasswords()
         {
@@ -162,6 +204,10 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
         }
 
+        /// <summary>
+        /// Fail test method where attempting to bulk create users fail
+        /// because a redundant system ID is found
+        /// </summary>
         [TestMethod]
         public void BulkCreateUsers_Fail_SystemIDAlreadyExist()
         {
@@ -198,6 +244,9 @@ namespace TBZ.UserManagementTest
             um.SingleDeleteUser(u1);
         }
 
+        /// <summary>
+        /// Test method to bulk create users with no password check
+        /// </summary>
         [TestMethod]
         public void BulkCreateUsers_NoPasswordCheck_Pass()
         {
@@ -239,6 +288,17 @@ namespace TBZ.UserManagementTest
             }
         }
 
+        /// <summary>
+        /// Test method to delete a single user
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="accntType"></param>
+        /// <param name="accountStatus"></param>
+        /// <param name="errMsg"></param>
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
@@ -266,6 +326,10 @@ namespace TBZ.UserManagementTest
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Fail test method where attempting to delete a user fails because
+        /// the system ID is not found
+        /// </summary>
         [TestMethod]
         public void SingleDeleteUser_Fail_SystemIDDoesNotExist()
         {
@@ -288,6 +352,9 @@ namespace TBZ.UserManagementTest
             Assert.IsFalse(result);
         }
 
+        /// <summary>
+        /// Test method to bulk delete users
+        /// </summary>
         [TestMethod]
         public void BulkDeleteUsers_Pass()
         {
@@ -325,6 +392,10 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
         }
 
+        /// <summary>
+        /// Fail test method where attempting to bulk delete users fail because
+        /// the system ID's do not exist
+        /// </summary>
         [TestMethod]
         public void BulkDeleteUsers_Fail_SystemIDsDoNotExist()
         {
