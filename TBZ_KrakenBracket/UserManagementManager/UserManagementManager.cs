@@ -1,18 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TBZ.DatabaseAccess;
 namespace TBZ.UserManagementManager
 {
     public class UserManagementManager
     {
-        public bool CheckPermission(string permission)
+        public bool CheckPermission(User ThisUser, User CheckedUser, string action)
         {
-            if (permission == "System Admin" || permission == "Admin")
+            /// <summary>
+            /// Compares if the user is authorized to perform an action to the checked user.
+            /// System admins have all access (Create, Update, and Delete) to admins
+            /// and users, admins have access to users (but not other admins),
+            /// and users have access to delete their own accounts.
+            /// </summary>
+            /// <param name="ThisUser"> To check if user is System Admin or Admin. </param>
+            /// <param name="CheckedUser"> To apply the action on specified account. </param>
+            /// <param name="action"> To check if ThisUser is authorized to perform action. </param>
+            /// <returns> A bool to confirm authorization. </returns>
+
+            // System admin permission
+            if (ThisUser.AccountType == "System Admin" && CheckedUser.AccountType != "System Admin")
             {
-                return true;
+                if (action == "Create" ||
+                   action == "Delete" ||
+                   action == "Update")
+                {
+                    return true;
+                }
             }
-            return false;
+            // Admin permission
+            else if ((ThisUser.AccountType == "Admin" && CheckedUser.AccountType != "System Admin") ||
+                    (ThisUser.AccountType == "Admin" && CheckedUser.AccountType != "Admin"))
+            {
+                if (action == "Create" ||
+                   action == "Delete" ||
+                   action == "Update")
+                {
+                    return true;
+                }
+            }
+            else if (ThisUser.AccountType == "User")
+            {
+                if ((ThisUser.SystemID == CheckedUser.SystemID) && (action == "Delete"))
+                {
+                    return true;
+                }
+
+            }
+            else
+            {
+                return false;
+            }
         }
+
         public bool CheckListLength(int[] list)
         {
             if (list.Length < 1)
