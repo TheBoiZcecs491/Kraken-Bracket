@@ -1,0 +1,24 @@
+﻿<Properties StartupConfiguration="{0D876B26-08E7-4CA6-A35A-CD4375E9C90A}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UserManagementManager/UserManagementManager.cs">
+    <Files>
+      <File FileName="UserManagementManager/UserManagementManager.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TBZ_KrakenBracket" expanded="True">
+            <Node name="UserManagementManager" expanded="True" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.TBZ.LoggingTest PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.UserManagementManager FirstBuild="True" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
