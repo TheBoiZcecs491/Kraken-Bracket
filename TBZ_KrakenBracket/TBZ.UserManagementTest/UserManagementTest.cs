@@ -267,6 +267,28 @@ namespace TBZ.UserManagementTest
         }
 
         [TestMethod]
+        public void SingleDeleteUser_Fail_SystemIDDoesNotExist()
+        {
+            // Arrange
+            bool result = true;
+            User u1 = new User(1, null, null, null, "password", "User", true, null);
+            var um = new UserManagement();
+            // Act
+            try
+            {
+                result = um.SingleDeleteUser(u1);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
         public void BulkDeleteUsers_Pass()
         {
             // Arrange
