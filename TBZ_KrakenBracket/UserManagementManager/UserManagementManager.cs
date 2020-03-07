@@ -19,39 +19,37 @@ namespace TBZ.UserManagementManager
             /// <param name="action"> To check if ThisUser is authorized to perform action. </param>
             /// <returns> A bool to confirm authorization. </returns>
 
-            // System admin permission
+            bool permission = false;
+            // System admin level permission
             if (ThisUser.AccountType == "System Admin" && CheckedUser.AccountType != "System Admin")
             {
                 if (action == "Create" ||
                    action == "Delete" ||
                    action == "Update")
                 {
-                    return true;
+                    permission = true;
                 }
             }
-            // Admin permission
-            else if ((ThisUser.AccountType == "Admin" && CheckedUser.AccountType != "System Admin") ||
+            // Admin level permission
+            else if ((ThisUser.AccountType == "Admin" && CheckedUser.AccountType != "System Admin") &&
                     (ThisUser.AccountType == "Admin" && CheckedUser.AccountType != "Admin"))
             {
                 if (action == "Create" ||
                    action == "Delete" ||
                    action == "Update")
                 {
-                    return true;
+                    permission = true;
                 }
             }
+            // User level permission
             else if (ThisUser.AccountType == "User")
             {
                 if ((ThisUser.SystemID == CheckedUser.SystemID) && (action == "Delete"))
                 {
-                    return true;
+                    permission = true;
                 }
-
             }
-            else
-            {
-                return false;
-            }
+            return permission;
         }
 
         public bool CheckListLength(int[] list)
