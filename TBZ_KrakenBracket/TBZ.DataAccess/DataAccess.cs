@@ -198,10 +198,10 @@ namespace TBZ.DatabaseAccess
                     {
                         string deleteQuery = string.Format("DELETE FROM User WHERE System_ID={0}", user.SystemID);
                         MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                        conn.Open();
                         deleteCmd.ExecuteNonQuery();
                         conn.Close();
                         return true;
-
                     }
                 }
                 else
