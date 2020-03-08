@@ -9,26 +9,6 @@ namespace TBZ.UserManagementTest
     [TestClass]
     public class UserManagementTest
     {
-        /// <summary>
-        /// Test method for creating a user as an Admin
-        /// </summary>
-        [TestMethod]
-        public void SingleCreateUsers_Admin_Pass()
-        {
-            var userManagement = new UserManagement();
-            bool result = true;
-            try
-            {
-                userManagement.SingleCreateUsers("Brian", "Nguyen", "brian1234927@gmail.com", "Brian!!!9039", "User", true, "Admin");
-            }
-            catch (ArgumentException)
-            {
-                result = false;
-            }
-            catch (Exception) { }
-
-            Assert.IsTrue(result);
-        }
 
         /// <summary>
         /// Test method to single create a user
@@ -83,7 +63,7 @@ namespace TBZ.UserManagementTest
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
-        public void SingleCreateUser_Fail_SystemIDAlreadyExists(uint sysID, string fName, string lName, string email, 
+        public void SingleCreateUser_Fail_SystemIDAlreadyExists(uint sysID, string fName, string lName, string email,
             string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
@@ -175,11 +155,11 @@ namespace TBZ.UserManagementTest
 
             // Act
             List<List<User>> actual = um.BulkCreateUsers(users, true);
-            foreach(User u in users)
+            foreach (User u in users)
             {
                 um.SingleDeleteUser(u);
             }
-            
+
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
@@ -270,7 +250,7 @@ namespace TBZ.UserManagementTest
         [TestMethod]
         public void BulkCreateUsers_NoPasswordCheck_Pass()
         {
-             // Arrange
+            // Arrange
             List<User> users = new List<User>();
 
             User u1 = new User(1, null, null, null, "password", "User", true, null);

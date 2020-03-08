@@ -50,7 +50,7 @@ namespace TBZ.DatabaseAccess
             {"", new List<string>(){ "Search For Tournament Brackets","Search For Event",
                                         "Search For Registered User"} }
         };
-      
+
 
         /// <summary>
         /// Method used to get claim associated with user
@@ -80,23 +80,6 @@ namespace TBZ.DatabaseAccess
         {
             try
             {
-                int index = users.FindIndex(x => x.SystemID == systemID);
-                User u = users[index];
-                return u;
-            }
-            return null;
-        }
-        public void StoreUser(string firstName, string lastName,
-            string email, string password, string accountType, bool accountStatus)
-        {
-            bool flag = true;
-            while (flag)
-            {
-                if (users.Exists(x => x.SystemID == systemID))
-                {
-                    systemID++;
-                }
-                else
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
                     string selectQuery = string.Format("SELECT * FROM User WHERE System_ID={0}", sysID);
@@ -142,7 +125,7 @@ namespace TBZ.DatabaseAccess
                 bool result = CheckIDExistence(u.SystemID);
 
                 // ID is not found, so it is safe to proceed
-                if(result == false)
+                if (result == false)
                 {
                     // Password check is enabled
                     if (passwordCheck == true)
@@ -150,7 +133,7 @@ namespace TBZ.DatabaseAccess
                         StringCheckerService sc = new StringCheckerService(u.Password);
 
                         // Password is secured
-                        if(sc.isSecurePassword())
+                        if (sc.isSecurePassword())
                         {
                             string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
                             conn = new MySqlConnection(CONNECTION_STRING);
@@ -190,7 +173,7 @@ namespace TBZ.DatabaseAccess
                     u.ErrorMessage = "System ID already exists";
                     return false;
                 }
-                
+
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
