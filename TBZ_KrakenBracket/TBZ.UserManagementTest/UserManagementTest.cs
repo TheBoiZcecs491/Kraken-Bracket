@@ -250,7 +250,33 @@ namespace TBZ.UserManagementTest
         [TestMethod]
         public void BulkCreateUsers_Fail_InvalidPermissions()
         {
+            // Arrange
+            List<User> users = new List<User>();
 
+            User u1 = new User(1, null, null, null, "password", "System Admin", true, null);
+            User u2 = new User(1, null, null, null, "123", "System Admin", true, null);
+            User u3 = new User(1, null, null, null, "", "System Admin", true, null);
+
+            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "Admin", true, null);
+
+            users.Add(u1);
+            users.Add(u2);
+            users.Add(u3);
+           
+
+            var um = new UserManagement();
+            List<List<User>> expected = new List<List<User>>()
+            {
+                new List<User>(){  }, // Passed ID's
+                users // Failed ID's
+            };
+
+            // Act
+            List<List<User>> actual = um.BulkCreateUsers(thisUser, users, false);
+
+            // FIXME: error that element 0 on both collections do not match
+            CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
         }
 
         /// <summary>
