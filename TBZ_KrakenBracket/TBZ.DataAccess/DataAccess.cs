@@ -100,14 +100,12 @@ namespace TBZ.DatabaseAccess
                     }
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException e)
+            catch (MySql.Data.MySqlClient.MySqlException)
             {
-                Console.WriteLine(e);
                 return false;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
                 return false;
             }
         }
@@ -118,11 +116,11 @@ namespace TBZ.DatabaseAccess
         /// <param name="sysID"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool CreateUser(User u, bool passwordCheck)
+        public bool CreateUser(User user, bool passwordCheck)
         {
             try
             {
-                bool result = CheckIDExistence(u.SystemID);
+                bool result = CheckIDExistence(user.SystemID);
 
                 // ID is not found, so it is safe to proceed
                 if (result == false)
@@ -130,7 +128,7 @@ namespace TBZ.DatabaseAccess
                     // Password check is enabled
                     if (passwordCheck == true)
                     {
-                        StringCheckerService sc = new StringCheckerService(u.Password);
+                        StringCheckerService sc = new StringCheckerService(user.Password);
 
                         // Password is secured
                         if (sc.isSecurePassword())
@@ -149,7 +147,7 @@ namespace TBZ.DatabaseAccess
                         // Password is not secured
                         else
                         {
-                            u.ErrorMessage = "Password is not secured";
+                            user.ErrorMessage = "Password is not secured";
                             return false;
                         }
                     }
@@ -170,19 +168,19 @@ namespace TBZ.DatabaseAccess
                 }
                 else
                 {
-                    u.ErrorMessage = "System ID already exists";
+                    user.ErrorMessage = "System ID already exists";
                     return false;
                 }
 
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
-                u.ErrorMessage = e.ToString();
+                user.ErrorMessage = e.ToString();
                 return false;
             }
             catch (Exception e)
             {
-                u.ErrorMessage = e.ToString();
+                user.ErrorMessage = e.ToString();
                 return false;
             }
         }
@@ -212,12 +210,12 @@ namespace TBZ.DatabaseAccess
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
-                Console.WriteLine(e);
+                user.ErrorMessage = e.ToString();
                 return false;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                user.ErrorMessage = e.ToString();
                 return false;
             }
         }
