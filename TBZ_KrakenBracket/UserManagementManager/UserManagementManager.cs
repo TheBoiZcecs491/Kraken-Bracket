@@ -56,9 +56,9 @@ namespace TBZ.UserManagementManager
             return permission;
         }
 
-        public bool CheckListLength(int[] list)
+        public bool CheckListLength(List<User> users)
         {
-            if (list.Length < 1)
+            if (users.Count < 1)
             {
                 return false;
             }

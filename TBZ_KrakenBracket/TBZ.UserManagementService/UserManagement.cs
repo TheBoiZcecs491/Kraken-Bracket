@@ -73,34 +73,43 @@ namespace TBZ.UserManagementService
         /// </returns>
         public List<List<User>> BulkCreateUsers(User thisUser, List<User> users, bool passwordCheck)
         {
-            List<User> passedIDs = new List<User>();
-            List<User> failedIDs = new List<User>();
-            foreach (User u in users)
+            bool listBool = _userManagementManager.CheckListLength(users);
+            if (listBool == true)
             {
-                // Check permissions for user performing operation
-                bool permissionCheck = _userManagementManager.CheckPermission(thisUser, u, "Create");
-                if (permissionCheck == true)
+                List<User> passedIDs = new List<User>();
+                List<User> failedIDs = new List<User>();
+                foreach (User u in users)
                 {
-                    // Attempt to create user
-                    bool temp = _DataAccessService.CreateUser(u, passwordCheck);
-                    if (temp == true)
+                    // Check permissions for user performing operation
+                    bool permissionCheck = _userManagementManager.CheckPermission(thisUser, u, "Create");
+                    if (permissionCheck == true)
                     {
-                        // Creation successful; store user in passed ID's
-                        passedIDs.Add(u);
+                        // Attempt to create user
+                        bool temp = _DataAccessService.CreateUser(u, passwordCheck);
+                        if (temp == true)
+                        {
+                            // Creation successful; store user in passed ID's
+                            passedIDs.Add(u);
+                        }
+                        else
+                        {
+                            // Deletion failed; store user in failed ID's
+                            failedIDs.Add(u);
+                        }
                     }
                     else
                     {
-                        // Deletion failed; store user in failed ID's
+                        // Permission check failed; store user in failed ID's
                         failedIDs.Add(u);
                     }
                 }
-                else
-                {
-                    // Permission check failed; store user in failed ID's
-                    failedIDs.Add(u);
-                }
+                return new List<List<User>> { passedIDs, failedIDs };
             }
-            return new List<List<User>> { passedIDs, failedIDs };
+            else
+            {
+                throw new ArgumentException("List length is insufficient");
+            }
+            
         }
 
         /// <summary>
@@ -148,33 +157,41 @@ namespace TBZ.UserManagementService
         /// </returns>
         public List<List<User>> BulkDeleteUsers(User thisUser, List<User> users)
         {
-            List<User> passedIDs = new List<User>();
-            List<User> failedIDs = new List<User>();
-            foreach (User u in users)
+            bool listBool = _userManagementManager.CheckListLength(users);
+            if (listBool == true)
             {
-                // Check permissions for user performing operation
-                bool permissionCheck = _userManagementManager.CheckPermission(thisUser, u, "Delete");
-                if (permissionCheck == true)
+                List<User> passedIDs = new List<User>();
+                List<User> failedIDs = new List<User>();
+                foreach (User u in users)
                 {
-                    bool temp = _DataAccessService.DeleteUser(u);
-                    if (temp == true)
+                    // Check permissions for user performing operation
+                    bool permissionCheck = _userManagementManager.CheckPermission(thisUser, u, "Delete");
+                    if (permissionCheck == true)
                     {
-                        // Deletion successful; store user in passed ID's
-                        passedIDs.Add(u);
+                        bool temp = _DataAccessService.DeleteUser(u);
+                        if (temp == true)
+                        {
+                            // Deletion successful; store user in passed ID's
+                            passedIDs.Add(u);
+                        }
+                        else
+                        {
+                            // Deletion failed; store user in failed ID's
+                            failedIDs.Add(u);
+                        }
                     }
                     else
                     {
-                        // Deletion failed; store user in failed ID's
+                        // Permission check failed; store user in failed ID's
                         failedIDs.Add(u);
                     }
                 }
-                else
-                {
-                    // Permission check failed; store user in failed ID's
-                    failedIDs.Add(u);
-                }
+                return new List<List<User>> { passedIDs, failedIDs };
             }
-            return new List<List<User>> { passedIDs, failedIDs };
+            else
+            {
+                throw new ArgumentException("List length is insufficient");
+            }
         }
     }
 }
