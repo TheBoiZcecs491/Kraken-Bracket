@@ -95,11 +95,19 @@ namespace TBZ.UserManagementService
         /// <returns>
         /// True to indicate success or error if failed
         /// </returns>
-        public bool SingleDeleteUser(User thisUser, User user)
+        public bool SingleDeleteUser(User thisUser, User checkedUser)
         {
-            bool temp = _DataAccessService.DeleteUser(user);
-            if (temp == true) return true;
-            else throw new ArgumentException("Failed to delete user with associated ID");
+            bool permissionResult = _userManagementManager.CheckPermission(thisUser, checkedUser, "Delete");
+            if (permissionResult == true)
+            {
+                bool temp = _DataAccessService.DeleteUser(checkedUser);
+                if (temp == true) return true;
+                else throw new ArgumentException("Failed to delete user with associated ID");
+            }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
         }
 
         /// <summary>
