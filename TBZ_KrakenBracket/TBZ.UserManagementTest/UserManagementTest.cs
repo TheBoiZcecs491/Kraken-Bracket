@@ -536,10 +536,58 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
         }
 
+        /// <summary>
+        /// Fail test method where attempting to bulk delete users fail because of 
+        /// invalid permissions
+        /// </summary>
         [TestMethod]
         public void BulkDeleteUsers_Fail_InvalidPermissions()
         {
+            // Arrange
+            List<User> users1 = new List<User>();
+            List<User> users2 = new List<User>();
 
+            var um = new UserManagement();
+
+            User u1 = new User(1, null, null, null, "password", "Admin", true, null);
+            User u2 = new User(2, null, null, null, "123", "Admin", true, null);
+            User u3 = new User(3, null, null, null, "", "Admin", true, null);
+            User u4 = new User(4, null, null, null, null, "Admin", true, null);
+            User u5 = new User(5, null, null, null, "bad", "Admin", true, null);
+            User u6 = new User(6, null, null, null, "brian", "Admin", true, null);
+            User thisUser1 = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+
+            User thisUser2 = new User(7, null, null, null, "brian", "Admin", true, null);
+            User u8 = new User(8, null, null, null, "brian", "System Admin", true, null);
+            User u9 = new User(9, null, null, null, "brian", "System Admin", true, null);
+            User u10 = new User(10, null, null, null, "brian", "System Admin", true, null);
+            User u11 = new User(11, null, null, null, "brian", "System Admin", true, null);
+
+            users1.Add(u1);
+            users1.Add(u2);
+            users1.Add(u3);
+            users1.Add(u4);
+            users1.Add(u5);
+            users1.Add(u6);
+
+            um.BulkCreateUsers(thisUser1, users1, false);
+
+            users2.Add(u8);
+            users2.Add(u9);
+            users2.Add(u10);
+            users2.Add(u11);
+
+            List<List<User>> expected = new List<List<User>>()
+            {
+                new List<User>() {}, // Passed ID's
+                users2 // Failed ID's
+            };
+
+            List<List<User>> actual = um.BulkDeleteUsers(thisUser2, users2);
+
+            // Assert
+            CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
         }
     }
 }
