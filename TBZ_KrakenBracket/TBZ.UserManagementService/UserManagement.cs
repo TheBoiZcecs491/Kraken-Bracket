@@ -81,7 +81,6 @@ namespace TBZ.UserManagementService
                 }
                 else
                 {
-                    u.ErrorMessage = "Insufficient permssion";
                     failedIDs.Add(u);
                 }
             }
@@ -121,16 +120,24 @@ namespace TBZ.UserManagementService
         /// <returns>
         /// List of users that were sucessfully created and list of users who failed to be created
         /// </returns>
-        public List<List<User>> BulkDeleteUsers(List<User> users)
+        public List<List<User>> BulkDeleteUsers(User thisUser, List<User> users)
         {
             List<User> passedIDs = new List<User>();
             List<User> failedIDs = new List<User>();
             foreach (User u in users)
             {
-                bool temp = _DataAccessService.DeleteUser(u);
-                if (temp == true)
+                bool permissionCheck = _userManagementManager.CheckPermission(thisUser, u, "Delete");
+                if (permissionCheck == true)
                 {
-                    passedIDs.Add(u);
+                    bool temp = _DataAccessService.DeleteUser(u);
+                    if (temp == true)
+                    {
+                        passedIDs.Add(u);
+                    }
+                    else
+                    {
+                        failedIDs.Add(u);
+                    }
                 }
                 else
                 {
