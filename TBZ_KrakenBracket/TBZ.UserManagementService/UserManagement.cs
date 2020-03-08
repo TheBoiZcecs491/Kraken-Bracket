@@ -23,7 +23,11 @@ namespace TBZ.UserManagementService
         /// Method to create one user
         /// </summary>
         /// 
-        /// <param name="user">
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
+        /// <param name="checkedUser">
         /// User to create
         /// </param>
         /// 
@@ -32,9 +36,12 @@ namespace TBZ.UserManagementService
         /// </returns>
         public bool SingleCreateUsers(User thisUser, User checkedUser)
         {
+
+            // Check permissions for user performing operation
             bool permissionResult = _userManagementManager.CheckPermission(thisUser, checkedUser, "Create");
             if (permissionResult == true)
             {
+                // Attempt to create user
                 bool temp = _DataAccessService.CreateUser(checkedUser, true);
                 if (temp == true) return true;
                 else throw new ArgumentException("Failed to create user with associated ID");
@@ -48,6 +55,10 @@ namespace TBZ.UserManagementService
         /// <summary>
         /// Method to create multiple users at once
         /// </summary>
+        /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
         /// 
         /// <param name="users">
         /// List of user objects to be created
@@ -66,21 +77,26 @@ namespace TBZ.UserManagementService
             List<User> failedIDs = new List<User>();
             foreach (User u in users)
             {
+                // Check permissions for user performing operation
                 bool permissionCheck = _userManagementManager.CheckPermission(thisUser, u, "Create");
                 if (permissionCheck == true)
                 {
+                    // Attempt to create user
                     bool temp = _DataAccessService.CreateUser(u, passwordCheck);
                     if (temp == true)
                     {
+                        // Creation successful; store user in passed ID's
                         passedIDs.Add(u);
                     }
                     else
                     {
+                        // Deletion failed; store user in failed ID's
                         failedIDs.Add(u);
                     }
                 }
                 else
                 {
+                    // Permission check failed; store user in failed ID's
                     failedIDs.Add(u);
                 }
             }
@@ -90,12 +106,18 @@ namespace TBZ.UserManagementService
         /// <summary>
         /// Method to delete a single user
         /// </summary>
-        /// <param name="user">User to be deleted</param>
+        /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
+        /// <param name="checkedUser">User to be deleted</param>
         /// <returns>
         /// True to indicate success or error if failed
         /// </returns>
         public bool SingleDeleteUser(User thisUser, User checkedUser)
         {
+            // Check permissions for user performing operation
             bool permissionResult = _userManagementManager.CheckPermission(thisUser, checkedUser, "Delete");
             if (permissionResult == true)
             {
@@ -113,6 +135,10 @@ namespace TBZ.UserManagementService
         /// Method to delete multiple users at once
         /// </summary>
         /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
         /// <param name="users">
         /// List of user objects to be deleted
         /// </param>
@@ -126,21 +152,25 @@ namespace TBZ.UserManagementService
             List<User> failedIDs = new List<User>();
             foreach (User u in users)
             {
+                // Check permissions for user performing operation
                 bool permissionCheck = _userManagementManager.CheckPermission(thisUser, u, "Delete");
                 if (permissionCheck == true)
                 {
                     bool temp = _DataAccessService.DeleteUser(u);
                     if (temp == true)
                     {
+                        // Deletion successful; store user in passed ID's
                         passedIDs.Add(u);
                     }
                     else
                     {
+                        // Deletion failed; store user in failed ID's
                         failedIDs.Add(u);
                     }
                 }
                 else
                 {
+                    // Permission check failed; store user in failed ID's
                     failedIDs.Add(u);
                 }
             }

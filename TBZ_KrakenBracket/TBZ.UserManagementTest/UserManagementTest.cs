@@ -28,20 +28,24 @@ namespace TBZ.UserManagementTest
             string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
+
+            // Initializing User objects to test
             User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(100, fName, lName, email, password, "System Admin", true, null);
+            User thisUser = new User(114, fName, lName, email, password, "System Admin", true, null);
             var um = new UserManagement();
-            bool result;
+            bool result = false;
 
             // Act
             try
             {
+                // System admin creates an admin
                 result = um.SingleCreateUsers(thisUser, user);
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
                 result = false;
             }
+            catch (Exception) { }
 
             // Assert
             Assert.IsTrue(result);
@@ -68,8 +72,10 @@ namespace TBZ.UserManagementTest
             string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
+
+            // Initializing User objects to test
             User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(100, fName, lName, email, password, "System Admin", true, null);
+            User thisUser = new User(101, fName, lName, email, password, "System Admin", true, null);
             var um = new UserManagement();
 
             // Act
@@ -111,13 +117,15 @@ namespace TBZ.UserManagementTest
             string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
-            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(100, fName, lName, email, password, "Admin", true, null);
-            var um = new UserManagement();
 
-            // Act
+            // Initializing User objects to test
+            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
+            User thisUser = new User(102, fName, lName, email, password, "Admin", true, null);
+
+            var um = new UserManagement();
             bool result = true;
 
+            // Act
             try
             {
                 result = um.SingleCreateUsers(thisUser, user);
@@ -151,10 +159,13 @@ namespace TBZ.UserManagementTest
             string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
+
+            // Initializing User objects to test
             User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(100, fName, lName, email, password, "System Admin", true, null);
+            User thisUser = new User(103, fName, lName, email, password, "System Admin", true, null);
+
             var um = new UserManagement();
-            bool result;
+            bool result = true;
 
             // Act
             try
@@ -166,7 +177,7 @@ namespace TBZ.UserManagementTest
             {
                 result = false;
             }
-            catch (Exception) { result = true; }
+            catch (Exception) { }
 
             // Assert
             Assert.IsFalse(result);
@@ -181,9 +192,11 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
+            // Initializing User objects to test
             User u1 = new User(3, null, null, null, "8*3kmmrMropongig", "User", true, null);
             User u2 = new User(4, null, null, null, "meMEeiaj093QNGEJOW~~~", "User", true, null);
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(104, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+
             users.Add(u1);
             users.Add(u2);
 
@@ -216,6 +229,7 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
+            // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", "User", true, null);
             User u2 = new User(2, null, null, null, "123", "User", true, null);
             User u3 = new User(3, null, null, null, "", "User", true, null);
@@ -223,7 +237,7 @@ namespace TBZ.UserManagementTest
             User u5 = new User(5, null, null, null, "bad", "User", true, null);
             User u6 = new User(6, null, null, null, "brian", "User", true, null);
 
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(105, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
 
             users.Add(u1);
             users.Add(u2);
@@ -242,7 +256,7 @@ namespace TBZ.UserManagementTest
             // Act
             List<List<User>> actual = um.BulkCreateUsers(thisUser, users, true);
 
-            // FIXME: error that element 0 on both collections do not match
+            // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
         }
@@ -253,11 +267,12 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
+            // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", "System Admin", true, null);
             User u2 = new User(1, null, null, null, "123", "System Admin", true, null);
             User u3 = new User(1, null, null, null, "", "System Admin", true, null);
 
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "Admin", true, null);
+            User thisUser = new User(106, null, null, null, "meMEeiaj093QNGEJOW~~~", "Admin", true, null);
 
             users.Add(u1);
             users.Add(u2);
@@ -274,7 +289,7 @@ namespace TBZ.UserManagementTest
             // Act
             List<List<User>> actual = um.BulkCreateUsers(thisUser, users, false);
 
-            // FIXME: error that element 0 on both collections do not match
+            // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
         }
@@ -289,6 +304,7 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
+            // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", "User", true, null);
             User u2 = new User(1, null, null, null, "123", "User", true, null);
             User u3 = new User(1, null, null, null, "", "User", true, null);
@@ -296,7 +312,7 @@ namespace TBZ.UserManagementTest
             User u5 = new User(1, null, null, null, "bad", "User", true, null);
             User u6 = new User(1, null, null, null, "brian", "User", true, null);
 
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(107, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
 
             users.Add(u1);
             users.Add(u2);
@@ -315,9 +331,11 @@ namespace TBZ.UserManagementTest
             // Act
             List<List<User>> actual = um.BulkCreateUsers(thisUser, users, false);
 
-            // FIXME: error that element 0 on both collections do not match
+            // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+
+            // Delete user to clean database
             um.SingleDeleteUser(thisUser, u1);
         }
 
@@ -330,6 +348,7 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
+            // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", "User", true, null);
             User u2 = new User(2, null, null, null, "123", "User", true, null);
             User u3 = new User(3, null, null, null, "", "User", true, null);
@@ -344,7 +363,7 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(108, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
 
             var um = new UserManagement();
             List<List<User>> expected = new List<List<User>>()
@@ -385,8 +404,10 @@ namespace TBZ.UserManagementTest
             string password, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
+
+            // Initializing User objects to test
             User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(109, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
             var um = new UserManagement();
             bool result;
 
@@ -415,8 +436,10 @@ namespace TBZ.UserManagementTest
         {
             // Arrange
             bool result = true;
+
+            // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", "User", true, null);
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(110, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
             var um = new UserManagement();
             // Act
             try
@@ -437,8 +460,10 @@ namespace TBZ.UserManagementTest
         public void SingleDeleteUser_Fail_InvalidPermissions()
         {
             bool result = true;
+
+            // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", "System Admin", true, null);
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "Admin", true, null);
+            User thisUser = new User(111, null, null, null, "meMEeiaj093QNGEJOW~~~", "Admin", true, null);
             var um = new UserManagement();
             um.SingleCreateUsers(u1, thisUser);
             // Act
@@ -454,6 +479,8 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
+
+            um.SingleDeleteUser(u1, thisUser);
         }
 
         /// <summary>
@@ -471,7 +498,7 @@ namespace TBZ.UserManagementTest
             User u4 = new User(4, null, null, null, null, "User", true, null);
             User u5 = new User(5, null, null, null, "bad", "User", true, null);
             User u6 = new User(6, null, null, null, "brian", "User", true, null);
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(112, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
             users.Add(u1);
             users.Add(u2);
             users.Add(u3);
@@ -514,7 +541,7 @@ namespace TBZ.UserManagementTest
             User u4 = new User(4, null, null, null, null, "User", true, null);
             User u5 = new User(5, null, null, null, "bad", "User", true, null);
             User u6 = new User(6, null, null, null, "brian", "User", true, null);
-            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(113, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
             users.Add(u1);
             users.Add(u2);
             users.Add(u3);
@@ -555,7 +582,7 @@ namespace TBZ.UserManagementTest
             User u4 = new User(4, null, null, null, null, "Admin", true, null);
             User u5 = new User(5, null, null, null, "bad", "Admin", true, null);
             User u6 = new User(6, null, null, null, "brian", "Admin", true, null);
-            User thisUser1 = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser1 = new User(1111, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
 
             User thisUser2 = new User(7, null, null, null, "brian", "Admin", true, null);
             User u8 = new User(8, null, null, null, "brian", "System Admin", true, null);
