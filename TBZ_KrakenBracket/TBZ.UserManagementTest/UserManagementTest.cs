@@ -436,7 +436,24 @@ namespace TBZ.UserManagementTest
         [TestMethod]
         public void SingleDeleteUser_Fail_InvalidPermissions()
         {
+            bool result = true;
+            User u1 = new User(1, null, null, null, "password", "System Admin", true, null);
+            User thisUser = new User(100, null, null, null, "meMEeiaj093QNGEJOW~~~", "Admin", true, null);
+            var um = new UserManagement();
+            um.SingleCreateUsers(u1, thisUser);
+            // Act
+            try
+            {
+                result = um.SingleDeleteUser(thisUser, u1);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
 
+            // Assert
+            Assert.IsFalse(result);
         }
 
         /// <summary>
