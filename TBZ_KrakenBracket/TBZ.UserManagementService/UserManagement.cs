@@ -2,13 +2,15 @@
 using System.Linq;
 using TBZ.DatabaseAccess;
 using System.Collections.Generic;
+using TBZ.UserManagementManager;
+using TBZ.StringChecker;
 
 namespace TBZ.UserManagementService
 {
     public class UserManagement
     {
-        private string randomPassword;
-        private Random random = new Random();
+        private static readonly DataAccess _DataAccessService;
+        private static readonly UserManagementManager.UserManagementManager _userManagementManager;
 
         List<string> permissions = new List<string>(new string[] { "Admin", "System Admin" });
 
@@ -52,10 +54,9 @@ namespace TBZ.UserManagementService
         /// <param name="list"></param>
         public void CheckListLength(int[] list)
         {
-            if (list.Length < 1)
-            {
-                throw new ArgumentException("Length of list cannot be less than 1");
-            }
+            _DataAccessService = new DataAccess();
+            _userManagementManager = new UserManagementManager.UserManagementManager();
+            
         }
 
         /// <summary>
@@ -96,12 +97,12 @@ namespace TBZ.UserManagementService
         /// the account that is creating the user</param>
         public void BulkCreateUsers(int amountOfUsers, int amountOfAdmins, string permission)
         {
-            CheckPermission(permission);
-            CheckAmount(amountOfUsers, amountOfAdmins, permission);
-            if (permission == "Admin")
+            List<User> passedIDs = new List<User>();
+            List<User> failedIDs = new List<User>();
+            foreach(User u in users)
             {
-                var dataAccess = new DataAccess();
-                for (int i = 0; i < amountOfUsers; i++)
+                bool temp = _DataAccessService.CreateUser(u, passwordCheck);
+                if (temp == true)
                 {
                     randomPassword = RandomPassword(14);
 
@@ -109,14 +110,7 @@ namespace TBZ.UserManagementService
                     // For now, they will be stored as null
                     dataAccess.StoreUser(null, null, null, randomPassword, "User", true);
                 }
-            }
-
-            else if (permission == "System Admin")
-            {
-                var dataAccess = new DataAccess();
-
-                // Store regular users
-                for (int i = 0; i < amountOfUsers; i++)
+                else
                 {
                     randomPassword = RandomPassword(14);
                     // The emails will be retrieved from a list later on
@@ -238,16 +232,19 @@ namespace TBZ.UserManagementService
         /// <returns>List of booleans for each account. True if operation succeded; false if not</returns>
         public bool[] BulkDisableUsers(int[] listOfIDs, string permission)
         {
-            CheckPermission(permission);
-            CheckListLength(listOfIDs);
-            bool[] b = new bool[listOfIDs.Length];
-            var dataAccess = new DataAccess();
-            int count = 0;
-            foreach (int id in listOfIDs)
+            List<User> passedIDs = new List<User>();
+            List<User> failedIDs = new List<User>();
+            foreach (User u in users)
             {
-                bool temp = dataAccess.DisableUser(id, permission);
-                b[count] = temp;
-                count++;
+                bool temp = _DataAccessService.DeleteUser(u);
+                if (temp == true)
+                {
+                    passedIDs.Add(u);
+                }
+                else
+                {
+                    failedIDs.Add(u);
+                }
             }
             return b;
         }

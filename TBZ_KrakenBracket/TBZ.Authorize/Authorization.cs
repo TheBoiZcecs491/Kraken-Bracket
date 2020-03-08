@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using TBZ.DatabaseAccess;
 
 namespace TBZ.AuthorizationService
@@ -7,9 +8,10 @@ namespace TBZ.AuthorizationService
     {
         public bool UserPermission(string email, string action, bool isLoggedIn)
         {
+            Regex rgx = new Regex(action);
             var dataAccess = new DataAccess();
             bool permission = false;
-            string claim = dataAccess.DSGetClaim(email);
+            string claim = (string)dataAccess.DSGetClaim(email);
             // If user is non-registered
             if ((string.IsNullOrEmpty(email)) && (isLoggedIn == false) && claim.Contains(action))
             {

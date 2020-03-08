@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.19" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TBZ.RegistrationService\TBZ.RegistrationService.csproj" />
+    <ProjectReference Include="..\TBZ.StringChecker\TBZ.StringChecker.csproj" />
   </ItemGroup>
 
 </Project>

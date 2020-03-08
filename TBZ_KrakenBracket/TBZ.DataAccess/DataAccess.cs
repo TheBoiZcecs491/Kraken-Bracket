@@ -1,72 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TBZ.RegistrationService;
+using MySql.Data.MySqlClient;
+using TBZ.StringChecker;
 
 namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
+        const string CONNECTION_STRING = @"Data source=localhost; Database=kraken_bracket; User ID=root; Password=Gray$cale917!!";
+        private MySqlConnection conn;
+
         // List of users and their passwords
         Dictionary<string, string> userDict = new Dictionary<string, string>()
         {
             {"brian@foomail.com", "123"},
             {"test@fmail.com", "legoMyEggo123"}
-        };
-
-        // TODO: remove hardcoded values later
-        List<User> users = new List<User>()
-        {
-            new User
-            {
-                SystemID = 1,
-                FirstName = null,
-                LastName = null,
-                Email = "foomail@gmail.com",
-                Password = "4fweu2fwr",
-                AccountType = "System Admin",
-                AccountStatus = true
-            },
-            new User
-            {
-                SystemID = 2,
-                FirstName = null,
-                LastName = null,
-                Email = "test139@gmail.com",
-                Password = "A3[favrw23",
-                AccountType = "Admin",
-                AccountStatus = true
-            },
-            new User
-            {
-                SystemID = 3,
-                FirstName = null,
-                LastName = null,
-                Email = "test901@gmail.com",
-                Password = "[r4pl323][",
-                AccountType = "User",
-                AccountStatus = true
-            },
-            new User
-            {
-                SystemID = 4,
-                FirstName = null,
-                LastName = null,
-                Email = "test12241@gmail.com",
-                Password = "[r4pl323][",
-                AccountType = "User",
-                AccountStatus = false
-            },
-            new User
-            {
-                SystemID = 5,
-                FirstName = null,
-                LastName = null,
-                Email = "test391@gmail.com",
-                Password = "[r4pl323][",
-                AccountType = "User",
-                AccountStatus = true
-            }
         };
 
         // Check the user's action that was added according to the role(s) they claim to be,
@@ -101,30 +50,7 @@ namespace TBZ.DatabaseAccess
             {"", new List<string>(){ "Search For Tournament Brackets","Search For Event",
                                         "Search For Registered User"} }
         };
-
-        /// <summary>
-        /// Method used to check if email and password used.
-        /// </summary>
-        ///
-        /// <param name="email">Email to search in the datastore</param>
-        /// <param name="password">Password to search for in the datastore</param>
-        ///
-        /// <returns>
-        /// True if both email and password exist. False if at least 1 does not.
-        /// </returns>
-        public bool GetEmailAndPassword(string email, string password)
-        {
-            // Checks if email exists in dictionary
-            if (userDict.TryGetValue(email, out string value))
-            {
-                // Passed-in value matches password associated with email
-                if (value == password)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+      
 
         /// <summary>
         /// Method used to get claim associated with user
@@ -132,7 +58,7 @@ namespace TBZ.DatabaseAccess
         /// <param name="email"></param>
         /// <returns></returns>
         ///
-        public string DSGetClaim(string email)
+        public object DSGetClaim(string email)
         {
             // Checks to see if the passed-in email exists in the claims datastore
             if (userActions.ContainsKey(email))
@@ -142,18 +68,17 @@ namespace TBZ.DatabaseAccess
                 userActions.TryGetValue(email, out List<string> value).ToString();
                 // Convert the list of claims into an array
                 string claimCollection = string.Join(",", value.ToArray());
-                return claimCollection;
+                return (object)claimCollection;
             }
             else
             {
                 throw new Exception();
             }
         }
-        private int systemID = 0;
 
-        public User UserExists(int systemID)
+        public bool CheckIDExistence(uint sysID)
         {
-            if (users.Exists(x => x.SystemID == systemID))
+            try
             {
                 int index = users.FindIndex(x => x.SystemID == systemID);
                 User u = users[index];
@@ -172,162 +97,146 @@ namespace TBZ.DatabaseAccess
                     systemID++;
                 }
                 else
+                using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    flag = false;
-                }
-            }
-            users.Add(new User
-            {
-                SystemID = systemID,
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Password = password,
-                AccountType = accountType,
-                AccountStatus = accountStatus
-            });
-        }
+                    string selectQuery = string.Format("SELECT * FROM User WHERE System_ID={0}", sysID);
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
 
-        public bool DeleteUser(int systemID, string permission)
-        {
-            if (permission == "System Admin")
-            {
-                if(users.Exists(x => x.SystemID == systemID) )
-                {
-                    int index = users.FindIndex(x => x.SystemID == systemID);
-                    User user = users[index];
-                    if (user.AccountType != "System Admin")
+                    conn.Open();
+
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
                     {
-                        var itemToRemove = users.Single(r => r.SystemID == systemID);
-
-                        // Expected to return true
-                        return users.Remove(itemToRemove);
+                        int count = 0;
+                        while (reader.Read())
+                        {
+                            count++;
+                        }
+                        reader.Close();
+                        conn.Close();
+                        return (count == 1);
                     }
                 }
             }
-
-            else if (permission == "Admin")
+            catch (MySql.Data.MySqlClient.MySqlException e)
             {
-                if (users.Exists(x => x.SystemID == systemID))
-                {
-                    int index = users.FindIndex(x => x.SystemID == systemID);
-                    User user = users[index];
-                    if (user.AccountType == "User")
-                    {
-                        var itemToRemove = users.Single(r => r.SystemID == systemID);
-
-                        // Expected to return true
-                        return users.Remove(itemToRemove);
-                    }
-                }
-            }
-            return false;
-        }
-
-        public bool EnableUser(int systemID, string permission)
-        {
-            if (permission == "System Admin")
-            {
-                if (users.Exists(x => x.SystemID == systemID))
-                {
-                    int index = users.FindIndex(x => x.SystemID == systemID);
-                    User user = users[index];
-                    if (user.AccountType != "System Admin" && user.AccountStatus == false)
-                    {
-                        user.AccountStatus = true;
-                        return true;
-                    }
-                }
-            }
-
-            else if (permission == "Admin")
-            {
-                if (users.Exists(x => x.SystemID == systemID))
-                {
-                    int index = users.FindIndex(x => x.SystemID == systemID);
-                    User user = users[index];
-                    if (user.AccountType == "User" && user.AccountStatus == false)
-                    {
-                        user.AccountStatus = true;
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public bool DisableUser(int systemID, string permission)
-        {
-            if (permission == "System Admin")
-            {
-                if (users.Exists(x => x.SystemID == systemID))
-                {
-                    int index = users.FindIndex(x => x.SystemID == systemID);
-                    User user = users[index];
-                    if (user.AccountType != "System Admin" && user.AccountStatus == true)
-                    {
-                        user.AccountStatus = false;
-                        return true;
-                    }
-                }
-            }
-
-            else if (permission == "Admin")
-            {
-                if (users.Exists(x => x.SystemID == systemID))
-                {
-                    int index = users.FindIndex(x => x.SystemID == systemID);
-                    User user = users[index];
-                    if (user.AccountType == "User" && user.AccountStatus == true)
-                    {
-                        user.AccountStatus = false;
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public bool UpdateUser(int sysID,string firstName, string lastName,
-            string email, string password, string accountType, string component, string permission)
-        {
-            // TODO: need to find a way to check only email or password without having to check the other component
-            Registration r = new Registration(email, password, firstName, lastName);
-            
-            User user = UserExists(sysID);
-            if (user == null)
-            {
+                Console.WriteLine(e);
                 return false;
             }
-            else if ((permission == "Admin" && user.AccountType == "User") || (permission == "System Admin" && user.AccountType != "System Admin"))
+            catch (Exception e)
             {
-                if (component == "First Name")
-                {
-                    user.FirstName = firstName;
-                }
-                else if (component == "Last Name")
-                {
-                    user.LastName = lastName;
-                }
-                else if (component == "Email" && r.isValidEmail())
-                {
-                    user.Email = email;
-                }
-                else if (component == "Password" && r.isSecurePassword())
-                {
-                    user.Password = password;   
-                }
-                else if (component == "Account Type")
-                {
-                    user.AccountType = accountType;
-                }
-                return true;
-            }
-            else
-            {
+                Console.WriteLine(e);
                 return false;
             }
-            
+        }
+
+        /// <summary>
+        /// Method to insert user into database
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool CreateUser(User u, bool passwordCheck)
+        {
+            try
+            {
+                bool result = CheckIDExistence(u.SystemID);
+
+                // ID is not found, so it is safe to proceed
+                if(result == false)
+                {
+                    // Password check is enabled
+                    if (passwordCheck == true)
+                    {
+                        StringCheckerService sc = new StringCheckerService(u.Password);
+
+                        // Password is secured
+                        if(sc.isSecurePassword())
+                        {
+                            string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
+                            conn = new MySqlConnection(CONNECTION_STRING);
+
+                            MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                            return true;
+                        }
+
+                        // Password is not secured
+                        else
+                        {
+                            u.ErrorMessage = "Password is not secured";
+                            return false;
+                        }
+                    }
+
+                    // Password check is disabled
+                    else
+                    {
+                        string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
+                        conn = new MySqlConnection(CONNECTION_STRING);
+
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        return true;
+                    }
+                }
+                else
+                {
+                    u.ErrorMessage = "System ID already exists";
+                    return false;
+                }
+                
+            }
+            catch (MySql.Data.MySqlClient.MySqlException e)
+            {
+                u.ErrorMessage = e.ToString();
+                return false;
+            }
+            catch (Exception e)
+            {
+                u.ErrorMessage = e.ToString();
+                return false;
+            }
+        }
+
+        public bool DeleteUser(User user)
+        {
+            try
+            {
+                bool result = CheckIDExistence(user.SystemID);
+                if (result == true)
+                {
+                    using (conn = new MySqlConnection(CONNECTION_STRING))
+                    {
+                        string deleteQuery = string.Format("DELETE FROM User WHERE System_ID={0}", user.SystemID);
+                        MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                        conn.Open();
+                        deleteCmd.ExecuteNonQuery();
+                        conn.Close();
+                        return true;
+                    }
+                }
+                else
+                {
+                    user.ErrorMessage = "System ID not found";
+                    return false;
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
     }
 }
