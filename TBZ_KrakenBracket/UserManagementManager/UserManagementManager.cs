@@ -44,8 +44,7 @@ namespace TBZ.UserManagementManager
             // User level permission
             else if (ThisUser.AccountType == "User")
             {
-                if ((ThisUser.SystemID == CheckedUser.SystemID) && (action == "Update") ||
-                    (ThisUser.SystemID == CheckedUser.SystemID) && (action == "Delete"))
+                if ((ThisUser.SystemID == CheckedUser.SystemID) && (action == "Delete"))
                 {
                     permission = true;
                 }
