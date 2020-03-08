@@ -94,6 +94,17 @@ namespace TBZ.UserManagementTest
             um.SingleDeleteUser(thisUser, user);
         }
 
+        /// <summary>
+        /// Fail test method where attempting to create user fails because of invalid permissions
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="accntType"></param>
+        /// <param name="accountStatus"></param>
+        /// <param name="errMsg"></param>
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", "System Admin", true, null)]
         public void SingleCreateUser_Fail_InvalidPermissions(uint sysID, string fName, string lName, string email,
@@ -234,6 +245,12 @@ namespace TBZ.UserManagementTest
             // FIXME: error that element 0 on both collections do not match
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+        }
+
+        [TestMethod]
+        public void BulkCreateUsers_Fail_InvalidPermissions()
+        {
+
         }
 
         /// <summary>
@@ -390,6 +407,12 @@ namespace TBZ.UserManagementTest
             Assert.IsFalse(result);
         }
 
+        [TestMethod]
+        public void SingleDeleteUser_Fail_InvalidPermissions()
+        {
+
+        }
+
         /// <summary>
         /// Test method to bulk delete users
         /// </summary>
@@ -468,6 +491,12 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+        }
+
+        [TestMethod]
+        public void BulkDeleteUsers_Fail_InvalidPermissions()
+        {
+
         }
     }
 }
