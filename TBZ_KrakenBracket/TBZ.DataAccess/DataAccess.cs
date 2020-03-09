@@ -133,14 +133,7 @@ namespace TBZ.DatabaseAccess
                         // Password is secured
                         if (sc.isSecurePassword())
                         {
-                            string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
-                            conn = new MySqlConnection(CONNECTION_STRING);
-
-                            MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                            conn.Open();
-                            cmd.ExecuteNonQuery();
-                            conn.Close();
+                           
                             return true;
                         }
 
@@ -155,14 +148,6 @@ namespace TBZ.DatabaseAccess
                     // Password check is disabled
                     else
                     {
-                        string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
-                        conn = new MySqlConnection(CONNECTION_STRING);
-
-                        MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
                         return true;
                     }
                 }
@@ -194,11 +179,7 @@ namespace TBZ.DatabaseAccess
                 {
                     using (conn = new MySqlConnection(CONNECTION_STRING))
                     {
-                        string deleteQuery = string.Format("DELETE FROM User WHERE System_ID={0}", user.SystemID);
-                        MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
-                        conn.Open();
-                        deleteCmd.ExecuteNonQuery();
-                        conn.Close();
+                        
                         return true;
                     }
                 }
