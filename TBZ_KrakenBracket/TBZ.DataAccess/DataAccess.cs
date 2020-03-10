@@ -169,12 +169,16 @@ namespace TBZ.DatabaseAccess
             try
             {
                 bool result = CheckIDExistence(user.SystemID);
+
+                // System ID is found
                 if (result == true)
                 {
                     DatabaseQuery dq = new DatabaseQuery();
                     dq.DeleteUser(user.SystemID);
                     return true;
                 }
+
+                // System ID is not found
                 else
                 {
                     user.ErrorMessage = "System ID not found";

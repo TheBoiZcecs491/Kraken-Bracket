@@ -73,11 +73,16 @@ namespace TBZ.UserManagementService
         /// </returns>
         public List<List<User>> BulkCreateUsers(User thisUser, List<User> users, bool passwordCheck)
         {
+            // Check list length
             bool listBool = _userManagementManager.CheckListLength(users);
+
+            // List length is sufficient
             if (listBool == true)
             {
                 List<User> passedIDs = new List<User>();
                 List<User> failedIDs = new List<User>();
+
+                // Process each user in the list
                 foreach (User u in users)
                 {
                     // Check permissions for user performing operation
@@ -105,6 +110,8 @@ namespace TBZ.UserManagementService
                 }
                 return new List<List<User>> { passedIDs, failedIDs };
             }
+
+            // List length is insufficient
             else
             {
                 throw new ArgumentException("List length is insufficient");
@@ -130,6 +137,7 @@ namespace TBZ.UserManagementService
             bool permissionResult = _userManagementManager.CheckPermission(thisUser, checkedUser, "Delete");
             if (permissionResult == true)
             {
+                // Attempt to delete user
                 bool temp = _DataAccessService.DeleteUser(checkedUser);
                 if (temp == true) return true;
                 else throw new ArgumentException("Failed to delete user with associated ID");
@@ -157,18 +165,23 @@ namespace TBZ.UserManagementService
         /// </returns>
         public List<List<User>> BulkDeleteUsers(User thisUser, List<User> users)
         {
+            // Check list length
             bool listBool = _userManagementManager.CheckListLength(users);
             if (listBool == true)
             {
                 List<User> passedIDs = new List<User>();
                 List<User> failedIDs = new List<User>();
+
+                // Process each user in the list
                 foreach (User u in users)
                 {
                     // Check permissions for user performing operation
                     bool permissionCheck = _userManagementManager.CheckPermission(thisUser, u, "Delete");
                     if (permissionCheck == true)
                     {
+                        // Attempt to delete user
                         bool temp = _DataAccessService.DeleteUser(u);
+
                         if (temp == true)
                         {
                             // Deletion successful; store user in passed ID's
