@@ -22,16 +22,16 @@ namespace TBZ.UserManagementTest
         /// <param name="accountStatus"></param>
         /// <param name="errMsg"></param>
         [DataTestMethod]
-        [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
-        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
+        [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "User", false, null)]
+        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", null, "User", false, null)]
         public void SingleCreateUser_Pass(uint sysID, string fName, string lName, string email,
-            string password, string accntType, bool accountStatus, string errMsg)
+            string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
 
             // Initializing User objects to test
-            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(114, fName, lName, email, password, "System Admin", true, null);
+            User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+            User thisUser = new User(114, fName, lName, email, password, null, "System Admin", true, null);
             var um = new UserManagement();
             bool result = false;
 
@@ -66,16 +66,16 @@ namespace TBZ.UserManagementTest
         /// <param name="accountStatus"></param>
         /// <param name="errMsg"></param>
         [DataTestMethod]
-        [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
-        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
+        [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "User", false, null)]
+        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", null, "User", false, null)]
         public void SingleCreateUser_Fail_SystemIDAlreadyExists(uint sysID, string fName, string lName, string email,
-            string password, string accntType, bool accountStatus, string errMsg)
+            string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
 
             // Initializing User objects to test
-            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(101, fName, lName, email, password, "System Admin", true, null);
+            User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+            User thisUser = new User(101, fName, lName, email, password, null, "System Admin", true, null);
             var um = new UserManagement();
 
             // Act
@@ -112,15 +112,15 @@ namespace TBZ.UserManagementTest
         /// <param name="accountStatus"></param>
         /// <param name="errMsg"></param>
         [DataTestMethod]
-        [DataRow(6u, null, null, null, "84092ujIO@>>>", "System Admin", true, null)]
+        [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "System Admin", true, null)]
         public void SingleCreateUser_Fail_InvalidPermissions(uint sysID, string fName, string lName, string email,
-            string password, string accntType, bool accountStatus, string errMsg)
+            string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
 
             // Initializing User objects to test
-            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(102, fName, lName, email, password, "Admin", true, null);
+            User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+            User thisUser = new User(102, fName, lName, email, password, null, "Admin", true, null);
 
             var um = new UserManagement();
             bool result = true;
@@ -153,16 +153,16 @@ namespace TBZ.UserManagementTest
         /// <param name="accountStatus"></param>
         /// <param name="errMsg"></param>
         [DataTestMethod]
-        [DataRow(6u, null, null, null, "password", "User", true, null)]
-        [DataRow(12u, null, null, null, "123", "User", true, null)]
+        [DataRow(6u, null, null, null, "password", null, "User", false, null)]
+        [DataRow(12u, null, null, null, "123", null, "User", false, null)]
         public void SingleCreateUser_Fail_InsufficientPassword(uint sysID, string fName, string lName, string email,
-            string password, string accntType, bool accountStatus, string errMsg)
+            string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
 
             // Initializing User objects to test
-            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(103, fName, lName, email, password, "System Admin", true, null);
+            User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+            User thisUser = new User(103, fName, lName, email, password, salt, "System Admin", true, null);
 
             var um = new UserManagement();
             bool result = true;
@@ -193,9 +193,9 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
-            User u1 = new User(3, null, null, null, "8*3kmmrMropongig", "User", true, null);
-            User u2 = new User(4, null, null, null, "meMEeiaj093QNGEJOW~~~", "User", true, null);
-            User thisUser = new User(104, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User u1 = new User(3, null, null, null, "8*3kmmrMropongig", null, "User", false, null);
+            User u2 = new User(4, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "User", false, null);
+            User thisUser = new User(104, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
             users.Add(u1);
             users.Add(u2);
@@ -230,14 +230,14 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
-            User u1 = new User(1, null, null, null, "password", "User", true, null);
-            User u2 = new User(2, null, null, null, "123", "User", true, null);
-            User u3 = new User(3, null, null, null, "", "User", true, null);
-            User u4 = new User(4, null, null, null, null, "User", true, null);
-            User u5 = new User(5, null, null, null, "bad", "User", true, null);
-            User u6 = new User(6, null, null, null, "brian", "User", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+            User u2 = new User(2, null, null, null, "123", null, "User", false, null);
+            User u3 = new User(3, null, null, null, "", null, "User", false, null);
+            User u4 = new User(4, null, null, null, null, null, "User", false, null);
+            User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
+            User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
 
-            User thisUser = new User(105, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(105, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
             users.Add(u1);
             users.Add(u2);
@@ -268,11 +268,11 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
-            User u1 = new User(1, null, null, null, "password", "System Admin", true, null);
-            User u2 = new User(1, null, null, null, "123", "System Admin", true, null);
-            User u3 = new User(1, null, null, null, "", "System Admin", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "System Admin", true, null);
+            User u2 = new User(1, null, null, null, "123", null, "System Admin", true, null);
+            User u3 = new User(1, null, null, null, "", null, "System Admin", true, null);
 
-            User thisUser = new User(106, null, null, null, "meMEeiaj093QNGEJOW~~~", "Admin", true, null);
+            User thisUser = new User(106, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "Admin", true, null);
 
             users.Add(u1);
             users.Add(u2);
@@ -305,14 +305,14 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
-            User u1 = new User(1, null, null, null, "password", "User", true, null);
-            User u2 = new User(1, null, null, null, "123", "User", true, null);
-            User u3 = new User(1, null, null, null, "", "User", true, null);
-            User u4 = new User(1, null, null, null, null, "User", true, null);
-            User u5 = new User(1, null, null, null, "bad", "User", true, null);
-            User u6 = new User(1, null, null, null, "brian", "User", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+            User u2 = new User(1, null, null, null, "123", null, "User", false, null);
+            User u3 = new User(1, null, null, null, "", null, "User", false, null);
+            User u4 = new User(1, null, null, null, null, null, "User", false, null);
+            User u5 = new User(1, null, null, null, "bad", null, "User", false, null);
+            User u6 = new User(1, null, null, null, "brian", null, "User", false, null);
 
-            User thisUser = new User(107, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(107, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
             users.Add(u1);
             users.Add(u2);
@@ -349,12 +349,12 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
-            User u1 = new User(1, null, null, null, "password", "User", true, null);
-            User u2 = new User(2, null, null, null, "123", "User", true, null);
-            User u3 = new User(3, null, null, null, "", "User", true, null);
-            User u4 = new User(4, null, null, null, null, "User", true, null);
-            User u5 = new User(5, null, null, null, "bad", "User", true, null);
-            User u6 = new User(6, null, null, null, "brian", "User", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+            User u2 = new User(2, null, null, null, "123", null, "User", false, null);
+            User u3 = new User(3, null, null, null, "", null, "User", false, null);
+            User u4 = new User(4, null, null, null, null, null, "User", false, null);
+            User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
+            User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
 
             users.Add(u1);
             users.Add(u2);
@@ -363,7 +363,7 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
-            User thisUser = new User(108, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User thisUser = new User(108, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
             var um = new UserManagement();
             List<List<User>> expected = new List<List<User>>()
@@ -398,16 +398,16 @@ namespace TBZ.UserManagementTest
         /// <param name="accountStatus"></param>
         /// <param name="errMsg"></param>
         [DataTestMethod]
-        [DataRow(6u, null, null, null, "84092ujIO@>>>", "User", true, null)]
-        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", "User", true, null)]
+        [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "User", false, null)]
+        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", null, "User", false, null)]
         public void SingleDeleteUser_Pass(uint sysID, string fName, string lName, string email,
-            string password, string accntType, bool accountStatus, string errMsg)
+            string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
 
             // Initializing User objects to test
-            User user = new User(sysID, fName, lName, email, password, accntType, accountStatus, errMsg);
-            User thisUser = new User(109, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+            User thisUser = new User(109, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             var um = new UserManagement();
             bool result;
 
@@ -438,8 +438,8 @@ namespace TBZ.UserManagementTest
             bool result = true;
 
             // Initializing User objects to test
-            User u1 = new User(1, null, null, null, "password", "User", true, null);
-            User thisUser = new User(110, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+            User thisUser = new User(110, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             var um = new UserManagement();
             // Act
             try
@@ -462,8 +462,8 @@ namespace TBZ.UserManagementTest
             bool result = true;
 
             // Initializing User objects to test
-            User u1 = new User(1, null, null, null, "password", "System Admin", true, null);
-            User thisUser = new User(111, null, null, null, "meMEeiaj093QNGEJOW~~~", "Admin", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "System Admin", true, null);
+            User thisUser = new User(111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "Admin", true, null);
             var um = new UserManagement();
             um.SingleCreateUsers(u1, thisUser);
             // Act
@@ -492,13 +492,13 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
-            User u1 = new User(1, null, null, null, "password", "User", true, null);
-            User u2 = new User(2, null, null, null, "123", "User", true, null);
-            User u3 = new User(3, null, null, null, "", "User", true, null);
-            User u4 = new User(4, null, null, null, null, "User", true, null);
-            User u5 = new User(5, null, null, null, "bad", "User", true, null);
-            User u6 = new User(6, null, null, null, "brian", "User", true, null);
-            User thisUser = new User(112, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+            User u2 = new User(2, null, null, null, "123", null, "User", false, null);
+            User u3 = new User(3, null, null, null, "", null, "User", false, null);
+            User u4 = new User(4, null, null, null, null, null, "User", false, null);
+            User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
+            User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
+            User thisUser = new User(112, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             users.Add(u1);
             users.Add(u2);
             users.Add(u3);
@@ -535,13 +535,13 @@ namespace TBZ.UserManagementTest
 
             var um = new UserManagement();
 
-            User u1 = new User(1, null, null, null, "password", "User", true, null);
-            User u2 = new User(2, null, null, null, "123", "User", true, null);
-            User u3 = new User(3, null, null, null, "", "User", true, null);
-            User u4 = new User(4, null, null, null, null, "User", true, null);
-            User u5 = new User(5, null, null, null, "bad", "User", true, null);
-            User u6 = new User(6, null, null, null, "brian", "User", true, null);
-            User thisUser = new User(113, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+            User u2 = new User(2, null, null, null, "123", null, "User", false, null);
+            User u3 = new User(3, null, null, null, "", null, "User", false, null);
+            User u4 = new User(4, null, null, null, null, null, "User", false, null);
+            User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
+            User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
+            User thisUser = new User(113, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             users.Add(u1);
             users.Add(u2);
             users.Add(u3);
@@ -576,19 +576,19 @@ namespace TBZ.UserManagementTest
 
             var um = new UserManagement();
 
-            User u1 = new User(1, null, null, null, "password", "Admin", true, null);
-            User u2 = new User(2, null, null, null, "123", "Admin", true, null);
-            User u3 = new User(3, null, null, null, "", "Admin", true, null);
-            User u4 = new User(4, null, null, null, null, "Admin", true, null);
-            User u5 = new User(5, null, null, null, "bad", "Admin", true, null);
-            User u6 = new User(6, null, null, null, "brian", "Admin", true, null);
-            User thisUser1 = new User(1111, null, null, null, "meMEeiaj093QNGEJOW~~~", "System Admin", true, null);
+            User u1 = new User(1, null, null, null, "password", null, "Admin", true, null);
+            User u2 = new User(2, null, null, null, "123", null, "Admin", true, null);
+            User u3 = new User(3, null, null, null, "", null, "Admin", true, null);
+            User u4 = new User(4, null, null, null, null, null, "Admin", true, null);
+            User u5 = new User(5, null, null, null, "bad", null, "Admin", true, null);
+            User u6 = new User(6, null, null, null, "brian", null, "Admin", true, null);
+            User thisUser1 = new User(1111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
-            User thisUser2 = new User(7, null, null, null, "brian", "Admin", true, null);
-            User u8 = new User(8, null, null, null, "brian", "System Admin", true, null);
-            User u9 = new User(9, null, null, null, "brian", "System Admin", true, null);
-            User u10 = new User(10, null, null, null, "brian", "System Admin", true, null);
-            User u11 = new User(11, null, null, null, "brian", "System Admin", true, null);
+            User thisUser2 = new User(7, null, null, null, "brian", null, "Admin", true, null);
+            User u8 = new User(8, null, null, null, "brian", null, "System Admin", true, null);
+            User u9 = new User(9, null, null, null, "brian", null, "System Admin", true, null);
+            User u10 = new User(10, null, null, null, "brian", null, "System Admin", true, null);
+            User u11 = new User(11, null, null, null, "brian", null, "System Admin", true, null);
 
             users1.Add(u1);
             users1.Add(u2);
