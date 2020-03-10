@@ -41,7 +41,6 @@ namespace TBZ.DatabaseQueryService
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
-                conn.Open();
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
                     comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname, account_type) " +
@@ -57,8 +56,9 @@ namespace TBZ.DatabaseQueryService
 
                     //comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
                     //comm.Parameters.AddWithValue("@hashed_userID", tempUser.SystemID);
-
+                    conn.Open();
                     comm.ExecuteNonQuery();
+                    conn.Close();
                 }
             }
             
@@ -67,83 +67,119 @@ namespace TBZ.DatabaseQueryService
         public void InsertGamerInfo( Gamer tempGamer)
         {
             var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            MySqlCommand comm = conn.CreateCommand();
-            comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)";
 
-            comm.Parameters.AddWithValue("@hashedUserID", tempGamer.HashedUserID);
-            comm.Parameters.AddWithValue("@gamerTag", tempGamer.GamerTag);
-            comm.Parameters.AddWithValue("@gamerTagID", tempGamer.GamerTagID);
-            comm.Parameters.AddWithValue("@teamID", tempGamer.TeamID);
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)";
 
-            comm.ExecuteNonQuery();
+                    comm.Parameters.AddWithValue("@hashedUserID", tempGamer.HashedUserID);
+                    comm.Parameters.AddWithValue("@gamerTag", tempGamer.GamerTag);
+                    comm.Parameters.AddWithValue("@gamerTagID", tempGamer.GamerTagID);
+                    comm.Parameters.AddWithValue("@teamID", tempGamer.TeamID);
+
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
         }
 
         public void InsertBracketInfo(Bracket tempBracket)
         {
             var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            MySqlCommand comm = conn.CreateCommand();
-            comm.CommandText = "INSERT INTO bracket_info(bracketID, bracket_name, bracketTypeID, number_player) VALUES(@bracketID, @bracket_name, @bracketTypeID, @number_player)";
 
-            comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
-            comm.Parameters.AddWithValue("@bracket_name", tempBracket.BracketName);
-            comm.Parameters.AddWithValue("@bracketTypeID", tempBracket.BracketTypeID);
-            comm.Parameters.AddWithValue("@number_player", tempBracket.NumberPlayer);
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO bracket_info(bracketID, bracket_name, bracketTypeID, number_player) VALUES(@bracketID, @bracket_name, @bracketTypeID, @number_player)";
 
-            comm.ExecuteNonQuery();
+                    comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
+                    comm.Parameters.AddWithValue("@bracket_name", tempBracket.BracketName);
+                    comm.Parameters.AddWithValue("@bracketTypeID", tempBracket.BracketTypeID);
+                    comm.Parameters.AddWithValue("@number_player", tempBracket.NumberPlayer);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
         }
 
         public void InsertBracketPlayer(BracketPlayer tempBracket)
         {
             var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            MySqlCommand comm = conn.CreateCommand();
-            comm.CommandText = "INSERT INTO bracket_player_info(bracketID, hashedUserID, roleID) VALUES(@bracketID, @hashedUserID, @roleID)";
 
-            comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
-            comm.Parameters.AddWithValue("@hashedUserID", tempBracket.HashedUserID);
-            comm.Parameters.AddWithValue("@roleID", tempBracket.RoleID);
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO bracket_player_info(bracketID, hashedUserID, roleID) VALUES(@bracketID, @hashedUserID, @roleID)";
 
-            comm.ExecuteNonQuery();
+                    comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
+                    comm.Parameters.AddWithValue("@hashedUserID", tempBracket.HashedUserID);
+                    comm.Parameters.AddWithValue("@roleID", tempBracket.RoleID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
         }
 
         public void InsertEvent(Event tempEvent)
         {
             var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            MySqlCommand comm = conn.CreateCommand();
-            comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
 
-            comm.Parameters.AddWithValue("@eventID", tempEvent.EventID);
-            comm.Parameters.AddWithValue("@event_Name", tempEvent.EventName);
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
 
-            comm.ExecuteNonQuery();
+                    comm.Parameters.AddWithValue("@eventID", tempEvent.EventID);
+                    comm.Parameters.AddWithValue("@event_Name", tempEvent.EventName);
+
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
         }
 
         public void DeleteUser(uint deleteValue)
         {
+
             var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            conn.Open();
-            MySqlCommand comm = conn.CreateCommand();
-            comm.CommandText = "DELETE FROM user_information WHERE userID= @Value";
-            comm.Parameters.AddWithValue("@Value", deleteValue);
-            comm.ExecuteNonQuery();
-            conn.Close();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "DELETE FROM user_information WHERE userID= @Value";
+                    comm.Parameters.AddWithValue("@Value", deleteValue);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
 
         }
 
         public void UpdateQuery(string tableName, string columnName, string updateValue, string variable, string value)
         {
             var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            conn.Open();
-            MySqlCommand comm = conn.CreateCommand();
-            comm.CommandText = "UPDATE " + tableName + "SET " + columnName + "= " + updateValue + "WHERE" + variable + "= @value";
-            comm.Parameters.AddWithValue("@value", value);
-            comm.ExecuteNonQuery();
-            conn.Close();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "UPDATE " + tableName + "SET " + columnName + "= " + updateValue + "WHERE" + variable + "= @value";
+                    comm.Parameters.AddWithValue("@value", value);
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
         }
 
     }
