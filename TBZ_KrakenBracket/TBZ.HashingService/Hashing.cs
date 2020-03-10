@@ -8,10 +8,14 @@ namespace TBZ.HashingService
     {
         public string message { get; set; }
         public string salt { get; set; }
-    }
 
-    public class Hashing
-    {
+        public MessageSalt() { }
+        public MessageSalt(string msg , string slt)
+        {
+            message = msg;
+            salt = slt;
+        }
+
         public string CreateSalt(int size)
         {
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
@@ -22,7 +26,7 @@ namespace TBZ.HashingService
 
         public MessageSalt GenerateHash(MessageSalt msg)
         {
-            if(msg.salt == null)
+            if (msg.salt == null)
             {
                 msg.salt = CreateSalt(32);
             }

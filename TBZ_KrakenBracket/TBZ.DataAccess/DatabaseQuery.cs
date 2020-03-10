@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TBZ.DatabaseAccess;
 using TBZ.DatabaseConnectionService;
+using TBZ.HashingService;
 //using static TBZ.Manager.Hashing.ManagerHashing;
 
 namespace TBZ.DatabaseQueryService
@@ -36,7 +37,11 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertUserAcc(User tempUser)
         {
-            
+            MessageSalt msalt = new MessageSalt(tempUser.Password, tempUser.Salt);
+            msalt.GenerateHash(msalt);
+            tempUser.Password = msalt.message;
+            tempUser.Salt = msalt.salt;
+
             var DB = new Database();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
