@@ -101,10 +101,6 @@ namespace TBZ.DatabaseAccess
                     }
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException e)
-            {
-                return false;
-            }
             catch (Exception)
             {
                 return false;
@@ -160,12 +156,6 @@ namespace TBZ.DatabaseAccess
                     user.ErrorMessage = "System ID already exists";
                     return false;
                 }
-
-            }
-            catch (MySql.Data.MySqlClient.MySqlException e)
-            {
-                user.ErrorMessage = e.ToString();
-                return false;
             }
             catch (Exception e)
             {
@@ -190,11 +180,6 @@ namespace TBZ.DatabaseAccess
                     user.ErrorMessage = "System ID not found";
                     return false;
                 }
-            }
-            catch (MySql.Data.MySqlClient.MySqlException e)
-            {
-                user.ErrorMessage = e.ToString();
-                return false;
             }
             catch (Exception e)
             {
