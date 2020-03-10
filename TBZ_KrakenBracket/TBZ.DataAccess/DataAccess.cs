@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
+using TBZ.DatabaseQueryService;
 using TBZ.StringChecker;
 
 namespace TBZ.DatabaseAccess
@@ -122,6 +123,7 @@ namespace TBZ.DatabaseAccess
         {
             try
             {
+                DatabaseQuery dq = new DatabaseQuery();
                 bool result = CheckIDExistence(u.SystemID);
 
                 // ID is not found, so it is safe to proceed
