@@ -41,10 +41,12 @@ namespace TBZ.DatabaseQueryService
             MySqlCommand comm = conn.CreateCommand();
             comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname) VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname)";
 
+
+
             comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
             comm.Parameters.AddWithValue("@email", tempUser.Email);
             comm.Parameters.AddWithValue("@hashed_password", tempUser.Password);
-            comm.Parameters.AddWithValue("@salt", tempUser.salt);
+            comm.Parameters.AddWithValue("@salt", tempUser.Salt);
             comm.Parameters.AddWithValue("@fname", tempUser.FirstName);
             comm.Parameters.AddWithValue("@lname", tempUser.LastName);
 
