@@ -8,7 +8,7 @@ namespace TBZ.DatabaseConnectionService
     {
         public string GetConnString()
         {
-            return @"server=localhost; userid=root; password=password; database=cecs491testdb";
+            return @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
         }
 
         public string GetConnStringWrong()

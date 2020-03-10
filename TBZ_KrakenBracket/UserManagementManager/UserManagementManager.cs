@@ -49,12 +49,16 @@ namespace TBZ.UserManagementManager
                     permission = true;
                 }
             }
+            if (permission == false)
+            {
+                CheckedUser.ErrorMessage = "Unable to process user; insufficient permissions";
+            }
             return permission;
         }
 
-        public bool CheckListLength(int[] list)
+        public bool CheckListLength(List<User> users)
         {
-            if (list.Length < 1)
+            if (users.Count < 1)
             {
                 return false;
             }

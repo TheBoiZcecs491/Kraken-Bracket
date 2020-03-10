@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TBZ.DatabaseAccess;
 using TBZ.DatabaseConnectionService;
-using static TBZ.Manager.Hashing.ManagerHashing;
+//using static TBZ.Manager.Hashing.ManagerHashing;
 
 namespace TBZ.DatabaseQueryService
 {
@@ -45,7 +45,7 @@ namespace TBZ.DatabaseQueryService
             comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
             comm.Parameters.AddWithValue("@email", tempUser.Email);
             comm.Parameters.AddWithValue("@hashed_password", tempUser.Password);
-            comm.Parameters.AddWithValue("@salt", tempUser.salt);
+            comm.Parameters.AddWithValue("@salt", tempUser.Salt);
             comm.Parameters.AddWithValue("@fname", tempUser.FirstName);
             comm.Parameters.AddWithValue("@lname", tempUser.LastName);
 
@@ -112,13 +112,13 @@ namespace TBZ.DatabaseQueryService
             comm.ExecuteNonQuery();
         }
 
-        public void DeleteQuery(string tableName, string columnName, string deleteValue)
+        public void DeleteUser( uint deleteValue)
         {
             var DB = new Database();
             MySqlConnection conn = new MySqlConnection(DB.GetConnString());
             conn.Open();
             MySqlCommand comm = conn.CreateCommand();
-            comm.CommandText = "DELETE FROM " + tableName + "WHERE " + columnName + "= @Value";
+            comm.CommandText = "DELETE FROM user_information WHERE userID=@Value";
             comm.Parameters.AddWithValue("@Value", deleteValue);
             comm.ExecuteNonQuery();
             conn.Close();

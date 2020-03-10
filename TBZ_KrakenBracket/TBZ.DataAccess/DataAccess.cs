@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
+using TBZ.DatabaseQueryService;
 using TBZ.StringChecker;
 
 namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
-        const string CONNECTION_STRING = @"Data source=localhost; Database=kraken_bracket; User ID=root; Password=Gray$cale917!!";
+        const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
         private MySqlConnection conn;
 
         // List of users and their passwords
@@ -82,7 +83,7 @@ namespace TBZ.DatabaseAccess
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    string selectQuery = string.Format("SELECT * FROM User WHERE System_ID={0}", sysID);
+                    string selectQuery = string.Format("SELECT * FROM user_information WHERE userID={0}", sysID);
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
 
                     conn.Open();
@@ -102,12 +103,10 @@ namespace TBZ.DatabaseAccess
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
-                Console.WriteLine(e);
                 return false;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
                 return false;
             }
         }
@@ -118,11 +117,11 @@ namespace TBZ.DatabaseAccess
         /// <param name="sysID"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool CreateUser(User u, bool passwordCheck)
+        public bool CreateUser(User user, bool passwordCheck)
         {
             try
             {
-                bool result = CheckIDExistence(u.SystemID);
+                bool result = CheckIDExistence(user.SystemID);
 
                 // ID is not found, so it is safe to proceed
                 if (result == false)
@@ -130,26 +129,20 @@ namespace TBZ.DatabaseAccess
                     // Password check is enabled
                     if (passwordCheck == true)
                     {
-                        StringCheckerService sc = new StringCheckerService(u.Password);
+                        StringCheckerService sc = new StringCheckerService(user.Password);
 
                         // Password is secured
                         if (sc.isSecurePassword())
                         {
-                            string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
-                            conn = new MySqlConnection(CONNECTION_STRING);
-
-                            MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                            conn.Open();
-                            cmd.ExecuteNonQuery();
-                            conn.Close();
+                            DatabaseQuery dq = new DatabaseQuery();
+                            dq.InsertUserAcc(user);
                             return true;
                         }
 
                         // Password is not secured
                         else
                         {
-                            u.ErrorMessage = "Password is not secured";
+                            user.ErrorMessage = "Password is not secured";
                             return false;
                         }
                     }
@@ -157,32 +150,26 @@ namespace TBZ.DatabaseAccess
                     // Password check is disabled
                     else
                     {
-                        string query = string.Format("INSERT INTO User(System_ID, User_Password, Account_Type) VALUES('{0}', '{1}', '{2}')", u.SystemID, u.Password, u.AccountType);
-                        conn = new MySqlConnection(CONNECTION_STRING);
-
-                        MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
+                        DatabaseQuery dq = new DatabaseQuery();
+                        dq.InsertUserAcc(user);
                         return true;
                     }
                 }
                 else
                 {
-                    u.ErrorMessage = "System ID already exists";
+                    user.ErrorMessage = "System ID already exists";
                     return false;
                 }
 
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
-                u.ErrorMessage = e.ToString();
+                user.ErrorMessage = e.ToString();
                 return false;
             }
             catch (Exception e)
             {
-                u.ErrorMessage = e.ToString();
+                user.ErrorMessage = e.ToString();
                 return false;
             }
         }
@@ -194,15 +181,9 @@ namespace TBZ.DatabaseAccess
                 bool result = CheckIDExistence(user.SystemID);
                 if (result == true)
                 {
-                    using (conn = new MySqlConnection(CONNECTION_STRING))
-                    {
-                        string deleteQuery = string.Format("DELETE FROM User WHERE System_ID={0}", user.SystemID);
-                        MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
-                        conn.Open();
-                        deleteCmd.ExecuteNonQuery();
-                        conn.Close();
-                        return true;
-                    }
+                    DatabaseQuery dq = new DatabaseQuery();
+                    dq.DeleteUser(user.SystemID);
+                    return true;
                 }
                 else
                 {
@@ -212,12 +193,12 @@ namespace TBZ.DatabaseAccess
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
-                Console.WriteLine(e);
+                user.ErrorMessage = e.ToString();
                 return false;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                user.ErrorMessage = e.ToString();
                 return false;
             }
         }
