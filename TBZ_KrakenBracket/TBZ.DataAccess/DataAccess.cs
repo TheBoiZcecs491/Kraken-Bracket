@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
+using TBZ.DatabaseQueryService;
 using TBZ.StringChecker;
 
 namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
-        const string CONNECTION_STRING = @"Data source=localhost; Database=kraken_bracket; User ID=root; Password=Gray$cale917!!";
+        const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
         private MySqlConnection conn;
 
         // List of users and their passwords
@@ -82,7 +83,7 @@ namespace TBZ.DatabaseAccess
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    string selectQuery = string.Format("SELECT * FROM User WHERE System_ID={0}", sysID);
+                    string selectQuery = string.Format("SELECT * FROM user_information WHERE userID={0}", sysID);
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
 
                     conn.Open();
@@ -100,7 +101,7 @@ namespace TBZ.DatabaseAccess
                     }
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException)
+            catch (MySql.Data.MySqlClient.MySqlException e)
             {
                 return false;
             }
@@ -133,7 +134,8 @@ namespace TBZ.DatabaseAccess
                         // Password is secured
                         if (sc.isSecurePassword())
                         {
-                           
+                            DatabaseQuery dq = new DatabaseQuery();
+                            dq.InsertUserAcc(user);
                             return true;
                         }
 
@@ -148,6 +150,8 @@ namespace TBZ.DatabaseAccess
                     // Password check is disabled
                     else
                     {
+                        DatabaseQuery dq = new DatabaseQuery();
+                        dq.InsertUserAcc(user);
                         return true;
                     }
                 }
@@ -177,11 +181,9 @@ namespace TBZ.DatabaseAccess
                 bool result = CheckIDExistence(user.SystemID);
                 if (result == true)
                 {
-                    using (conn = new MySqlConnection(CONNECTION_STRING))
-                    {
-                        
-                        return true;
-                    }
+                    DatabaseQuery dq = new DatabaseQuery();
+                    dq.DeleteUser(user.SystemID);
+                    return true;
                 }
                 else
                 {
