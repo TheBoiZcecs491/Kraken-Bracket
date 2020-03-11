@@ -1,13 +1,17 @@
-﻿<Properties StartupConfiguration="{0D876B26-08E7-4CA6-A35A-CD4375E9C90A}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="UserManagementManager/UserManagementManager.cs">
+﻿<Properties StartupConfiguration="{0D876B26-08E7-4CA6-A35A-CD4375E9C90A}|Unit Tests">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TBZ.DataAccess/DataAccess.cs">
     <Files>
       <File FileName="UserManagementManager/UserManagementManager.cs" Line="1" Column="1" />
+      <File FileName="TBZ.DataAccess/DataAccess.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TBZ_KrakenBracket" expanded="True">
-            <Node name="UserManagementManager" expanded="True" selected="True" />
+            <Node name="TBZ.DatabaseAccess" expanded="True">
+              <Node name="DataAccess.cs" selected="True" />
+            </Node>
+            <Node name="TBZ.UserManagementManager" expanded="True" />
           </Node>
         </State>
       </Pad>

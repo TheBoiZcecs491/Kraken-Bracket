@@ -77,6 +77,37 @@ namespace TBZ.DatabaseAccess
             }
         }
 
+        public int DSGetBracketClaim(int bracketID, BracketPlayer user)
+        {
+            // Checks to see if the passed-in email exists in the claims datastore
+            int claim = 0;
+            try
+            {
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    string selectQuery = string.Format(
+                        "SELECT claim FROM bracket_player_info WHERE bracketID={0} AND hashedUserID={1}",
+                        bracketID, user.HashedUserID);
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+
+                    conn.Open();
+
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        return claim = reader.GetInt32(6);
+                    }
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException e)
+            {
+                return claim;
+            }
+            catch (Exception)
+            {
+                return claim;
+            }
+        }
+
         public bool CheckIDExistence(uint sysID)
         {
             try
