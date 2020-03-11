@@ -11,6 +11,10 @@ namespace TBZ.DatabaseQueryService
 {
     public class DatabaseQuery
     {
+        static Database DB = new Database();
+        static MySqlConnection conn = new MySqlConnection(DB.GetConnString());
+        static MySqlCommand comm = conn.CreateCommand();
+
         Dictionary<string, string> tables = new Dictionary<string, string>()
         {
             {"bracket_info","bracket_info(bracketID, bracket_name, bracketTypeID, number_player) VALUES(@bracketID, @bracket_name, @bracketTypeID, @number_player)"},
@@ -42,38 +46,26 @@ namespace TBZ.DatabaseQueryService
             tempUser.Password = msalt.message;
             tempUser.Salt = msalt.salt;
 
-            var DB = new Database();
+            comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname, account_type) " +
+            "VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname, @account_type)";
 
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
-            {
-                conn.Open();
-                using (MySqlCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname, account_type) " +
-                    "VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname, @account_type)";
+            comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
+            comm.Parameters.AddWithValue("@email", tempUser.Email);
+            comm.Parameters.AddWithValue("@hashed_password", tempUser.Password);
+            comm.Parameters.AddWithValue("@salt", tempUser.Salt);
+            comm.Parameters.AddWithValue("@fname", tempUser.FirstName);
+            comm.Parameters.AddWithValue("@lname", tempUser.LastName);
+            comm.Parameters.AddWithValue("@account_type", tempUser.AccountType);
 
-                    comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
-                    comm.Parameters.AddWithValue("@email", tempUser.Email);
-                    comm.Parameters.AddWithValue("@hashed_password", tempUser.Password);
-                    comm.Parameters.AddWithValue("@salt", tempUser.Salt);
-                    comm.Parameters.AddWithValue("@fname", tempUser.FirstName);
-                    comm.Parameters.AddWithValue("@lname", tempUser.LastName);
-                    comm.Parameters.AddWithValue("@account_type", tempUser.AccountType);
+            //comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
+            //comm.Parameters.AddWithValue("@hashed_userID", tempUser.SystemID);
 
-                    //comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
-                    //comm.Parameters.AddWithValue("@hashed_userID", tempUser.SystemID);
-
-                    comm.ExecuteNonQuery();
-                }
-            }
+            comm.ExecuteNonQuery();
             
         }
 
         public void InsertGamerInfo( Gamer tempGamer)
         {
-            var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            MySqlCommand comm = conn.CreateCommand();
             comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)";
 
             comm.Parameters.AddWithValue("@hashedUserID", tempGamer.HashedUserID);
@@ -86,9 +78,6 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertBracketInfo(Bracket tempBracket)
         {
-            var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            MySqlCommand comm = conn.CreateCommand();
             comm.CommandText = "INSERT INTO bracket_info(bracketID, bracket_name, bracketTypeID, number_player) VALUES(@bracketID, @bracket_name, @bracketTypeID, @number_player)";
 
             comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
@@ -101,9 +90,6 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertBracketPlayer(BracketPlayer tempBracket)
         {
-            var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            MySqlCommand comm = conn.CreateCommand();
             comm.CommandText = "INSERT INTO bracket_player_info(bracketID, hashedUserID, roleID) VALUES(@bracketID, @hashedUserID, @roleID)";
 
             comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
@@ -115,9 +101,6 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertEvent(Event tempEvent)
         {
-            var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            MySqlCommand comm = conn.CreateCommand();
             comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
 
             comm.Parameters.AddWithValue("@eventID", tempEvent.EventID);
@@ -128,10 +111,6 @@ namespace TBZ.DatabaseQueryService
 
         public void DeleteUser(uint deleteValue)
         {
-            var DB = new Database();
-            MySqlConnection conn = new MySqlConnection(DB.GetConnString());
-            conn.Open();
-            MySqlCommand comm = conn.CreateCommand();
             comm.CommandText = "DELETE FROM user_information WHERE userID= @Value";
             comm.Parameters.AddWithValue("@Value", deleteValue);
             comm.ExecuteNonQuery();
