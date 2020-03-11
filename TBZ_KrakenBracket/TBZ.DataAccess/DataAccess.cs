@@ -110,9 +110,18 @@ namespace TBZ.DatabaseAccess
         /// <summary>
         /// Method to insert user into database
         /// </summary>
-        /// <param name="sysID"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// 
+        /// <param name="user">
+        /// User to be created
+        /// </param>
+        /// 
+        /// <param name="passwordCheck">
+        /// Boolean to enable or disable password check
+        /// </param>
+        /// 
+        /// <returns>
+        /// true if user is inserted into database; false otherwise
+        /// </returns>
         public bool CreateUser(User user, bool passwordCheck)
         {
             try
@@ -164,6 +173,15 @@ namespace TBZ.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Method to delete user from database
+        /// </summary>
+        /// 
+        /// <param name="user">
+        /// User to be deleted
+        /// </param>
+        /// 
+        /// <returns></returns>
         public bool DeleteUser(User user)
         {
             try
