@@ -36,10 +36,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementService", "TBZ.UserManagementService\TBZ.UserManagementService.csproj", "{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementTest", "TBZ.UserManagementTest\TBZ.UserManagementTest.csproj", "{5E4C6A67-5185-4178-BF32-3927792671B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EEAEB881-A121-4E85-BC59-3B2F75551D2E} = {EEAEB881-A121-4E85-BC59-3B2F75551D2E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.StringChecker", "TBZ.StringChecker\TBZ.StringChecker.csproj", "{6185C2B2-1A4D-47C1-8913-F5DEAB42F494}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementManager", "UserManagementManager\TBZ.UserManagementManager.csproj", "{EEAEB881-A121-4E85-BC59-3B2F75551D2E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7} = {D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

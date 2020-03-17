@@ -1,69 +1,196 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using TBZ.DatabaseAccess;
-namespace TBZ.UserManagementManager
+using TBZ.UM_Service;
+namespace TBZ.UM_Manager
 {
     public class UserManagementManager
     {
-        public bool CheckPermission(User ThisUser, User CheckedUser, string action)
-        {
-            /// <summary>
-            /// Compares if the user is authorized to perform an action to the checked user.
-            /// System admins have all access (Create, Update, and Delete) to admins
-            /// and users, admins have access to users (but not other admins),
-            /// and users have access to delete their own accounts.
-            /// </summary>
-            /// <param name="ThisUser"> To check if user is System Admin or Admin. </param>
-            /// <param name="CheckedUser"> To apply the action on specified account. </param>
-            /// <param name="action"> To check if ThisUser is authorized to perform action. </param>
-            /// <returns> A bool to confirm authorization. </returns>
+        private static readonly DataAccess _DataAccessService;
+        private static readonly UserManagementService _userManagementService;
 
-            bool permission = false;
-            // System admin level permission
-            if (ThisUser.AccountType == "System Admin" && CheckedUser.AccountType != "System Admin")
-            {
-                if (action == "Create" ||
-                   action == "Delete" ||
-                   action == "Update")
-                {
-                    permission = true;
-                }
-            }
-            // Admin level permission
-            else if ((ThisUser.AccountType == "Admin" && CheckedUser.AccountType != "System Admin") &&
-                    (ThisUser.AccountType == "Admin" && CheckedUser.AccountType != "Admin"))
-            {
-                if (action == "Create" ||
-                   action == "Delete" ||
-                   action == "Update")
-                {
-                    permission = true;
-                }
-            }
-            // User level permission
-            else if (ThisUser.AccountType == "User")
-            {
-                if ((ThisUser.SystemID == CheckedUser.SystemID) && (action == "Delete"))
-                {
-                    permission = true;
-                }
-            }
-            if (permission == false)
-            {
-                CheckedUser.ErrorMessage = "Unable to process user; insufficient permissions";
-            }
-            return permission;
+        static UserManagementManager()
+        {
+            _DataAccessService = new DataAccess();
+            _userManagementService = new UserManagementService();
+
         }
 
-        public bool CheckListLength(List<User> users)
+        /// <summary>
+        /// Method to create one user
+        /// </summary>
+        /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
+        /// <param name="checkedUser">
+        /// User to create
+        /// </param>
+        /// 
+        /// <returns>
+        /// True to indicate success or error if failed
+        /// </returns>
+        public bool SingleCreateUsers(User thisUser, User checkedUser)
         {
-            if (users.Count < 1)
+
+            // Check permissions for user performing operation
+            bool permissionResult = _userManagementService.CheckPermission(thisUser, checkedUser, "Create");
+            if (permissionResult == true)
             {
-                return false;
+                // Attempt to create user
+                bool temp = _DataAccessService.CreateUser(checkedUser, true);
+                if (temp == true) return true;
+                else throw new ArgumentException("Failed to create user with associated ID");
             }
-            return true;
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
         }
+
+        /// <summary>
+        /// Method to create multiple users at once
+        /// </summary>
+        /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
+        /// <param name="users">
+        /// List of user objects to be created
+        /// </param>
+        /// 
+        /// <param name="passwordCheck">
+        /// Option to use password check for each user object
+        /// </param>
+        /// 
+        /// <returns>
+        /// List of users that were sucessfully created and list of users who failed to be created
+        /// </returns>
+        public List<List<User>> BulkCreateUsers(User thisUser, List<User> users, bool passwordCheck)
+        {
+            bool listBool = _userManagementService.CheckListLength(users);
+            if (listBool == true)
+            {
+                List<User> passedIDs = new List<User>();
+                List<User> failedIDs = new List<User>();
+                foreach (User u in users)
+                {
+                    // Check permissions for user performing operation
+                    bool permissionCheck = _userManagementService.CheckPermission(thisUser, u, "Create");
+                    if (permissionCheck == true)
+                    {
+                        // Attempt to create user
+                        bool temp = _DataAccessService.CreateUser(u, passwordCheck);
+                        if (temp == true)
+                        {
+                            // Creation successful; store user in passed ID's
+                            passedIDs.Add(u);
+                        }
+                        else
+                        {
+                            // Deletion failed; store user in failed ID's
+                            failedIDs.Add(u);
+                        }
+                    }
+                    else
+                    {
+                        // Permission check failed; store user in failed ID's
+                        failedIDs.Add(u);
+                    }
+                }
+                return new List<List<User>> { passedIDs, failedIDs };
+            }
+            else
+            {
+                throw new ArgumentException("List length is insufficient");
+            }
+
+        }
+
+        /// <summary>
+        /// Method to delete a single user
+        /// </summary>
+        /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
+        /// <param name="checkedUser">User to be deleted</param>
+        /// <returns>
+        /// True to indicate success or error if failed
+        /// </returns>
+        public bool SingleDeleteUser(User thisUser, User checkedUser)
+        {
+            // Check permissions for user performing operation
+            bool permissionResult = _userManagementService.CheckPermission(thisUser, checkedUser, "Delete");
+            if (permissionResult == true)
+            {
+                bool temp = _DataAccessService.DeleteUser(checkedUser);
+                if (temp == true) return true;
+                else throw new ArgumentException("Failed to delete user with associated ID");
+            }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
+        }
+
+        /// <summary>
+        /// Method to delete multiple users at once
+        /// </summary>
+        /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
+        /// <param name="users">
+        /// List of user objects to be deleted
+        /// </param>
+        /// 
+        /// <returns>
+        /// List of users that were sucessfully created and list of users who failed to be created
+        /// </returns>
+        public List<List<User>> BulkDeleteUsers(User thisUser, List<User> users)
+        {
+            bool listBool = _userManagementService.CheckListLength(users);
+            if (listBool == true)
+            {
+                List<User> passedIDs = new List<User>();
+                List<User> failedIDs = new List<User>();
+                foreach (User u in users)
+                {
+                    // Check permissions for user performing operation
+                    bool permissionCheck = _userManagementService.CheckPermission(thisUser, u, "Delete");
+                    if (permissionCheck == true)
+                    {
+                        bool temp = _DataAccessService.DeleteUser(u);
+                        if (temp == true)
+                        {
+                            // Deletion successful; store user in passed ID's
+                            passedIDs.Add(u);
+                        }
+                        else
+                        {
+                            // Deletion failed; store user in failed ID's
+                            failedIDs.Add(u);
+                        }
+                    }
+                    else
+                    {
+                        // Permission check failed; store user in failed ID's
+                        failedIDs.Add(u);
+                    }
+                }
+                return new List<List<User>> { passedIDs, failedIDs };
+            }
+            else
+            {
+                throw new ArgumentException("List length is insufficient");
+            }
+        }
+
     }
 
 }

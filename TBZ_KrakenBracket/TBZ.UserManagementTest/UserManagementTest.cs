@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using TBZ.DatabaseAccess;
-using TBZ.UserManagementService;
+using TBZ.UM_Manager;
 
 namespace TBZ.UserManagementTest
 {
@@ -32,7 +32,7 @@ namespace TBZ.UserManagementTest
             // Initializing User objects to test
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(114, fName, lName, email, password, null, "System Admin", true, null);
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             bool result = false;
 
             // Act
@@ -76,7 +76,7 @@ namespace TBZ.UserManagementTest
             // Initializing User objects to test
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(101, fName, lName, email, password, null, "System Admin", true, null);
-            var um = new UserManagement();
+            var um = new UserManagementManager();
 
             // Act
             bool result;
@@ -122,7 +122,7 @@ namespace TBZ.UserManagementTest
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(102, fName, lName, email, password, null, "Admin", true, null);
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             bool result = true;
 
             // Act
@@ -164,7 +164,7 @@ namespace TBZ.UserManagementTest
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(103, fName, lName, email, password, salt, "System Admin", true, null);
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             bool result = true;
 
             // Act
@@ -200,7 +200,7 @@ namespace TBZ.UserManagementTest
             users.Add(u1);
             users.Add(u2);
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             List<List<User>> expected = new List<List<User>>()
             {
                 users, // Passed ID's
@@ -246,7 +246,7 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             List<List<User>> expected = new List<List<User>>()
             {
                 new List<User>(){ }, // Passed ID's
@@ -277,9 +277,9 @@ namespace TBZ.UserManagementTest
             users.Add(u1);
             users.Add(u2);
             users.Add(u3);
-           
 
-            var um = new UserManagement();
+
+            var um = new UserManagementManager();
             List<List<User>> expected = new List<List<User>>()
             {
                 new List<User>(){  }, // Passed ID's
@@ -321,7 +321,7 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             List<List<User>> expected = new List<List<User>>()
             {
                 new List<User>(){ u1 }, // Passed ID's
@@ -365,7 +365,7 @@ namespace TBZ.UserManagementTest
 
             User thisUser = new User(108, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             List<List<User>> expected = new List<List<User>>()
             {
                 users, // Passed ID's
@@ -408,7 +408,7 @@ namespace TBZ.UserManagementTest
             // Initializing User objects to test
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(109, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             bool result;
 
             // Act
@@ -440,7 +440,7 @@ namespace TBZ.UserManagementTest
             // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User thisUser = new User(110, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             // Act
             try
             {
@@ -464,7 +464,7 @@ namespace TBZ.UserManagementTest
             // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", null, "System Admin", true, null);
             User thisUser = new User(111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "Admin", true, null);
-            var um = new UserManagement();
+            var um = new UserManagementManager();
             um.SingleCreateUsers(u1, thisUser);
             // Act
             try
@@ -506,7 +506,7 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
 
             // Act
             um.BulkCreateUsers(thisUser, users, false);
@@ -533,7 +533,7 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
 
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(2, null, null, null, "123", null, "User", false, null);
@@ -574,7 +574,7 @@ namespace TBZ.UserManagementTest
             List<User> users1 = new List<User>();
             List<User> users2 = new List<User>();
 
-            var um = new UserManagement();
+            var um = new UserManagementManager();
 
             User u1 = new User(1, null, null, null, "password", null, "Admin", true, null);
             User u2 = new User(2, null, null, null, "123", null, "Admin", true, null);
