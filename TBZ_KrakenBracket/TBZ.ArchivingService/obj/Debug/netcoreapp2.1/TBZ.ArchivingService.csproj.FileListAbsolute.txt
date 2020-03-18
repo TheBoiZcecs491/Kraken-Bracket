@@ -1,0 +1,8 @@
+/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/bin/Debug/netcoreapp2.1/TBZ.ArchivingService.deps.json
+/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/bin/Debug/netcoreapp2.1/TBZ.ArchivingService.dll
+/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/bin/Debug/netcoreapp2.1/TBZ.ArchivingService.pdb
+/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/obj/Debug/netcoreapp2.1/TBZ.ArchivingService.csprojAssemblyReference.cache
+/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/obj/Debug/netcoreapp2.1/TBZ.ArchivingService.AssemblyInfoInputs.cache
+/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/obj/Debug/netcoreapp2.1/TBZ.ArchivingService.AssemblyInfo.cs
+/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/obj/Debug/netcoreapp2.1/TBZ.ArchivingService.dll
+/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/obj/Debug/netcoreapp2.1/TBZ.ArchivingService.pdb

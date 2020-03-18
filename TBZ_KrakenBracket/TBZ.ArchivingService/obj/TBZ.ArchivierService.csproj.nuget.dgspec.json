@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/TBZ.ArchivierService.csproj": {}
+  },
+  "projects": {
+    "/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/TBZ.ArchivierService.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/TBZ.ArchivierService.csproj",
+        "projectName": "TBZ.ArchivierService",
+        "projectPath": "/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/TBZ.ArchivierService.csproj",
+        "packagesPath": "/Users/dylan/.nuget/packages/",
+        "outputPath": "/Users/dylan/Desktop/Kraken-Bracket-master/TBZ_KrakenBracket/TBZ.ArchivingService/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/dylan/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.18, )"
+            },
+            "MySql.Data.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.18, )"
+            },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
