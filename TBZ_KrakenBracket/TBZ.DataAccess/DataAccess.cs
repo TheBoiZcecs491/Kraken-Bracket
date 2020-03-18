@@ -9,7 +9,7 @@ namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
-        const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
+        const string CONNECTION_STRING = @"server=localhost; userid=root; password=sim700%^@; database=kraken_bracket";
         private MySqlConnection conn;
 
         // List of users and their passwords
@@ -52,6 +52,8 @@ namespace TBZ.DatabaseAccess
                                         "Search For Registered User"} }
         };
 
+        //TODO: any substrings with "user_information" should be coming from a constant.
+        // this should apply to similar substrings.
 
         /// <summary>
         /// Method used to get claim associated with user
@@ -224,6 +226,54 @@ namespace TBZ.DatabaseAccess
                 {
                     DatabaseQuery dq = new DatabaseQuery();
                     dq.DeleteUser(user.SystemID);
+                    return true;
+                }
+
+                // System ID is not found
+                else
+                {
+                    user.ErrorMessage = "System ID not found";
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                user.ErrorMessage = e.ToString();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// used to update user table values
+        /// </summary>
+        /// 
+        /// <param name="user">
+        /// User to edit
+        /// </param>
+        /// 
+        /// <param attrName="attrName">
+        /// name of the table attribute to edit
+        /// </param>
+        /// 
+        /// <param attrName="attrVal">
+        /// value of the table attribute to edit, this MUST be a string.
+        /// </param>
+        /// 
+        /// <returns></returns>
+        public bool UpdateUserAttr(User user, string attrName, string attrVal)
+        {
+            //TODO: ideally this method should not have to need those two strings specified.
+            // it should update any changes dynamically. maybe i dono.
+            try
+            {
+                bool result = CheckIDExistence(user.SystemID);
+
+                // System ID is found
+                if (result == true)
+                {
+                    DatabaseQuery dq = new DatabaseQuery();
+                    //TODO: this is where i'd have it iterate over all the kosher attributes.
+                    dq.UpdateQuery("user_information",attrName,attrVal,"userID", user.SystemID.ToString());
                     return true;
                 }
 
