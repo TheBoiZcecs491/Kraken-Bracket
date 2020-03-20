@@ -248,19 +248,21 @@ namespace TBZ.DatabaseAccess
         /// </summary>
         /// 
         /// <param name="user">
-        /// User to edit
+        /// User to edit, has the changed values
         /// </param>
         /// 
         /// <param attrName="attrName">
         /// name of the table attribute to edit
-        /// </param>
-        /// 
-        /// <param attrName="attrVal">
-        /// value of the table attribute to edit, this MUST be a string.
+        /// valid attributes
+        /// FirstName
+        /// LastName
+        /// Email
+        /// AccountType
+        /// AccountStatus
         /// </param>
         /// 
         /// <returns></returns>
-        public bool UpdateUserAttr(User user, string attrName, string attrVal)
+        public bool UpdateUserAttr(User user, string attrName)
         {
             //TODO: ideally this method should not have to need those two strings specified.
             // it should update any changes dynamically. maybe i dono.
@@ -272,9 +274,31 @@ namespace TBZ.DatabaseAccess
                 if (result == true)
                 {
                     DatabaseQuery dq = new DatabaseQuery();
-                    //TODO: this is where i'd have it iterate over all the kosher attributes.
-                    dq.UpdateQuery("user_information",attrName,attrVal,"userID", user.SystemID.ToString());
-                    return true;
+                    switch (attrName)
+                    {
+                        case "FirstName":
+                            dq.UpdateQuery("user_information", attrName, user.FirstName, "fName", user.SystemID.ToString());
+                            return true;
+                        case "LastName":
+                            dq.UpdateQuery("user_information", attrName, user.LastName, "lName", user.SystemID.ToString());
+                            return true;
+                        case "Email":
+                            dq.UpdateQuery("user_information", attrName, user.Email, "email", user.SystemID.ToString());
+                            return true;
+                        case "AccountType":
+                            dq.UpdateQuery("user_information", attrName, user.AccountType, "account_type", user.SystemID.ToString());
+                            return true;
+                        case "AccountStatus":
+                            if(user.AccountStatus) dq.UpdateQuery("user_information", attrName, "1", "account_status", user.SystemID.ToString());
+                            else dq.UpdateQuery("user_information", attrName, "0", "account_status", user.SystemID.ToString());
+                            //so the DB uses tinyInts, they can be from -128 to 128, yes even when set to (1)
+                            //ima just interpret this as a value from 0 or 1 for boolena stuffs.
+                            return true;
+                        //you can add other defonitions, how they relate to the DB
+                        //DO NOT UPDATE THE PASSWORD IN THIS METHOD.
+                    }
+                    user.ErrorMessage = "unknown attribute";
+                    return false; //something did not work
                 }
 
                 // System ID is not found
