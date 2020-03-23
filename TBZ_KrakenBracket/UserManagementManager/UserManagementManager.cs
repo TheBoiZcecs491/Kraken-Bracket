@@ -191,6 +191,93 @@ namespace TBZ.UM_Manager
             }
         }
 
+        /// <summary>
+        /// Method to update a single user
+        /// </summary>
+        /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
+        /// <param name="checkedUser">User to be Updated</param>
+        /// <returns>
+        /// True to indicate success or error if failed
+        /// </returns> 
+        /// 
+        /// <param name="attrVal">The attribute to Update</param>
+        /// <returns></returns>
+        public bool SingleUpdateUser(User thisUser, User checkedUser, string attrName)
+        {
+            // Check permissions for user performing operation
+            bool permissionResult = _userManagementService.CheckPermission(thisUser, checkedUser, "Update");
+            if (permissionResult == true)
+            {
+                bool temp = _DataAccessService.UpdateUserAttr(checkedUser, attrName);
+                if (temp == true) return true;
+                else throw new ArgumentException("Failed to Update user with associated ID");
+            }
+            else
+            {
+                throw new ArgumentException("Invalid permissions");
+            }
+        }
+
+        /// <summary>
+        /// Method to update multiple users at once
+        /// </summary>
+        /// 
+        /// <param name="thisUser">
+        /// User performing operation
+        /// </param>
+        /// 
+        /// <param name="users">
+        /// List of user objects to be update
+        /// </param>
+        /// 
+        /// <returns>
+        /// List of users that were sucessfully updated and list of users who failed to be updated
+        /// </returns> 
+        /// 
+        /// <param name="attrVal">The attribute to Update for all users</param>
+        /// <returns></returns>
+        public List<List<User>> BulkUpdateUsers(User thisUser, List<User> users, string attrName)
+        {
+            bool listBool = _userManagementService.CheckListLength(users);
+            if (listBool == true)
+            {
+                List<User> passedIDs = new List<User>();
+                List<User> failedIDs = new List<User>();
+                foreach (User u in users)
+                {
+                    // Check permissions for user performing operation
+                    bool permissionCheck = _userManagementService.CheckPermission(thisUser, u, "Update");
+                    if (permissionCheck == true)
+                    {
+                        bool temp = _DataAccessService.UpdateUserAttr(u, attrName);
+                        if (temp == true)
+                        {
+                            // Deletion successful; store user in passed ID's
+                            passedIDs.Add(u);
+                        }
+                        else
+                        {
+                            // Deletion failed; store user in failed ID's
+                            failedIDs.Add(u);
+                        }
+                    }
+                    else
+                    {
+                        // Permission check failed; store user in failed ID's
+                        failedIDs.Add(u);
+                    }
+                }
+                return new List<List<User>> { passedIDs, failedIDs };
+            }
+            else
+            {
+                throw new ArgumentException("List length is insufficient");
+            }
+        }
     }
 
 }
