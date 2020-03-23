@@ -83,7 +83,7 @@ namespace TBZ.UserManagementTest
             
 
             // Act
-            bool result;
+            bool result = true;
 
             // Creating a user
             _userManagementManager.SingleCreateUsers(thisUser, user);
@@ -92,10 +92,11 @@ namespace TBZ.UserManagementTest
                 // Creating the exact same user with the same system ID
                 result = _userManagementManager.SingleCreateUsers(thisUser, user);
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
                 result = false;
             }
+            catch (Exception) { }
 
             // Assert
             Assert.IsFalse(result);
@@ -413,7 +414,7 @@ namespace TBZ.UserManagementTest
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(109, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             
-            bool result;
+            bool result = false;
 
             // Act
             _userManagementManager.SingleCreateUsers(thisUser, user);
@@ -425,7 +426,7 @@ namespace TBZ.UserManagementTest
             {
                 result = false;
             }
-            catch (Exception) { result = false; }
+            catch (Exception) { }
 
             // Assert
             Assert.IsTrue(result);
