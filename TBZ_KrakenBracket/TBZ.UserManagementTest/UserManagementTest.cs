@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using TBZ.DatabaseAccess;
 using TBZ.UM_Manager;
 
@@ -39,7 +40,10 @@ namespace TBZ.UserManagementTest
             
             bool result = false;
 
+            Stopwatch sw = new Stopwatch();
+
             // Act
+            sw.Start();
             try
             {
                 // System admin creates an admin
@@ -50,6 +54,8 @@ namespace TBZ.UserManagementTest
                 result = false;
             }
             catch (Exception) { }
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             Assert.IsTrue(result);
@@ -80,13 +86,16 @@ namespace TBZ.UserManagementTest
             // Initializing User objects to test
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(101, fName, lName, email, password, null, "System Admin", true, null);
-            
 
-            // Act
+            Stopwatch sw = new Stopwatch();
+
             bool result = true;
 
             // Creating a user
             _userManagementManager.SingleCreateUsers(thisUser, user);
+
+            // Act
+            sw.Start();
             try
             {
                 // Creating the exact same user with the same system ID
@@ -97,6 +106,9 @@ namespace TBZ.UserManagementTest
                 result = false;
             }
             catch (Exception) { }
+
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             Assert.IsFalse(result);
@@ -127,10 +139,12 @@ namespace TBZ.UserManagementTest
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(102, fName, lName, email, password, null, "Admin", true, null);
 
-            
+            Stopwatch sw = new Stopwatch();
+
             bool result = true;
 
             // Act
+            sw.Start();
             try
             {
                 result = _userManagementManager.SingleCreateUsers(thisUser, user);
@@ -140,6 +154,9 @@ namespace TBZ.UserManagementTest
                 result = false;
             }
             catch (Exception) { }
+
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             Assert.IsFalse(result);
@@ -169,10 +186,12 @@ namespace TBZ.UserManagementTest
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
             User thisUser = new User(103, fName, lName, email, password, salt, "System Admin", true, null);
 
-            
+            Stopwatch sw = new Stopwatch();
+
             bool result = true;
 
             // Act
+            sw.Start();
             try
             {
                 // Creating the exact same user with the same system ID
@@ -183,6 +202,9 @@ namespace TBZ.UserManagementTest
                 result = false;
             }
             catch (Exception) { }
+
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             Assert.IsFalse(result);
@@ -205,7 +227,8 @@ namespace TBZ.UserManagementTest
             users.Add(u1);
             users.Add(u2);
 
-            
+            Stopwatch sw = new Stopwatch();
+
             List<List<User>> expected = new List<List<User>>()
             {
                 users, // Passed ID's
@@ -213,15 +236,21 @@ namespace TBZ.UserManagementTest
             };
 
             // Act
+            sw.Start();
             List<List<User>> actual = _userManagementManager.BulkCreateUsers(thisUser, users, true);
-            foreach (User u in users)
-            {
-                _userManagementManager.SingleDeleteUser(thisUser, u);
-            }
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
+
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+
+            // Delete users to clean up database
+            foreach (User u in users)
+            {
+                _userManagementManager.SingleDeleteUser(thisUser, u);
+            }
         }
 
         /// <summary>
@@ -258,8 +287,13 @@ namespace TBZ.UserManagementTest
                 users // Failed ID's
             };
 
+            Stopwatch sw = new Stopwatch();
+
             // Act
+            sw.Start();
             List<List<User>> actual = _userManagementManager.BulkCreateUsers(thisUser, users, true);
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
@@ -289,10 +323,15 @@ namespace TBZ.UserManagementTest
             {
                 new List<User>(){  }, // Passed ID's
                 users // Failed ID's
-            };
+            }; 
+            
+            Stopwatch sw = new Stopwatch();
 
             // Act
+            sw.Start();
             List<List<User>> actual = _userManagementManager.BulkCreateUsers(thisUser, users, false);
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
@@ -333,8 +372,13 @@ namespace TBZ.UserManagementTest
                 new List<User>() { u2, u3, u4, u5, u6 } // Failed ID's
             };
 
+            Stopwatch sw = new Stopwatch();
+
             // Act
+            sw.Start();
             List<List<User>> actual = _userManagementManager.BulkCreateUsers(thisUser, users, false);
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
@@ -377,8 +421,13 @@ namespace TBZ.UserManagementTest
                 new List<User>() {} // Failed ID's
             };
 
+            Stopwatch sw = new Stopwatch();
+
             // Act
+            sw.Start();
             List<List<User>> actual = _userManagementManager.BulkCreateUsers(thisUser, users, false);
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
@@ -418,6 +467,9 @@ namespace TBZ.UserManagementTest
 
             // Act
             _userManagementManager.SingleCreateUsers(thisUser, user);
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             try
             {
                 result = _userManagementManager.SingleDeleteUser(thisUser, user);
@@ -427,6 +479,8 @@ namespace TBZ.UserManagementTest
                 result = false;
             }
             catch (Exception) { }
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             Assert.IsTrue(result);
@@ -445,8 +499,11 @@ namespace TBZ.UserManagementTest
             // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User thisUser = new User(110, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
-            
+
+            Stopwatch sw = new Stopwatch();
+
             // Act
+            sw.Start();
             try
             {
                 result = _userManagementManager.SingleDeleteUser(thisUser, u1);
@@ -456,6 +513,8 @@ namespace TBZ.UserManagementTest
                 result = false;
             }
             catch (Exception) { }
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             Assert.IsFalse(result);
@@ -464,14 +523,19 @@ namespace TBZ.UserManagementTest
         [TestMethod]
         public void SingleDeleteUser_Fail_InvalidPermissions()
         {
+            // Arrange
             bool result = true;
 
             // Initializing User objects to test
             User u1 = new User(1, null, null, null, "password", null, "System Admin", true, null);
             User thisUser = new User(111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "Admin", true, null);
-            
+
+            Stopwatch sw = new Stopwatch();
+
             _userManagementManager.SingleCreateUsers(u1, thisUser);
+
             // Act
+            sw.Start();
             try
             {
                 result = _userManagementManager.SingleDeleteUser(thisUser, u1);
@@ -481,6 +545,8 @@ namespace TBZ.UserManagementTest
                 result = false;
             }
             catch (Exception) { }
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             Assert.IsFalse(result);
@@ -511,7 +577,7 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
-            
+            Stopwatch sw = new Stopwatch();
 
             // Act
             _userManagementManager.BulkCreateUsers(thisUser, users, false);
@@ -521,7 +587,10 @@ namespace TBZ.UserManagementTest
                 new List<User>() {} // Failed ID's
             };
 
+            sw.Start();
             List<List<User>> actual = _userManagementManager.BulkDeleteUsers(thisUser, users);
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
@@ -538,8 +607,6 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
-            
-
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(2, null, null, null, "123", null, "User", false, null);
             User u3 = new User(3, null, null, null, "", null, "User", false, null);
@@ -554,14 +621,20 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
+
             List<List<User>> expected = new List<List<User>>()
             {
                 new List<User>() {}, // Passed ID's
                 users // Failed ID's
             };
 
+            Stopwatch sw = new Stopwatch();
+
             // Act
+            sw.Start();
             List<List<User>> actual = _userManagementManager.BulkDeleteUsers(thisUser, users);
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
@@ -578,8 +651,6 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users1 = new List<User>();
             List<User> users2 = new List<User>();
-
-            
 
             User u1 = new User(1, null, null, null, "password", null, "Admin", true, null);
             User u2 = new User(2, null, null, null, "123", null, "Admin", true, null);
@@ -615,7 +686,12 @@ namespace TBZ.UserManagementTest
                 users2 // Failed ID's
             };
 
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
             List<List<User>> actual = _userManagementManager.BulkDeleteUsers(thisUser2, users2);
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
