@@ -13,7 +13,7 @@ namespace TBZ.ArchiverTest
         int _time = -1;
 
         [TestInitialize]
-        public void PrepLogs_Pass()
+        public void PrepareLogs_Pass()
         {
             //Arrange
             bool result = true;
@@ -21,9 +21,7 @@ namespace TBZ.ArchiverTest
             log += "2019-10-25, 23:30:11:17, Registration, \"Data Store Error\", ID_32,\n";
             log += "2019-11-06, 23:13:21:50, Registration, \"Data Store Error\", ID_0001,\n";
             log += "2019-12-11, 20:53:20:07, Authorization, \"Invalid Access Error\", ID_0321,\n";
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            Directory.CreateDirectory(docPath + Path.DirectorySeparatorChar + "logs");
-            string path = Path.Combine(docPath, "_logs.csv");
+            string path = Path.Combine(_srcDir, "_logs.csv");
             //Act
             try
             {
@@ -38,7 +36,7 @@ namespace TBZ.ArchiverTest
         }
 
         [TestMethod]
-        public void CreateObj_Pass()
+        public void CreateObject_Pass()
         {
             //Arrange
             bool result = true;
@@ -56,7 +54,7 @@ namespace TBZ.ArchiverTest
         }
 
         [TestMethod]
-        public void InvalidPath_Fail()
+        public void InvalidDirectory_Fail()
         {
             //Arrange
             bool result = true;
