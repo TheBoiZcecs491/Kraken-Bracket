@@ -214,13 +214,16 @@ namespace TBZ.UM_Manager
             {
                 if (attrName.Equals("Password"))
                 {
-                    bool temp2 = _DataAccessService.UpdateUserPass(checkedUser, true);
-                    if (temp2 == true) return true;
+                    bool temp = _DataAccessService.UpdateUserPass(checkedUser, true);
+                    if (temp == true) return true;
                     else throw new ArgumentException("Failed to Update user Password with associated ID");
                 }
-                bool temp = _DataAccessService.UpdateUserAttr(checkedUser, attrName);
-                if (temp == true) return true;
-                else throw new ArgumentException("Failed to Update user with associated ID");
+                else
+                {
+                    bool temp = _DataAccessService.UpdateUserAttr(checkedUser, attrName);
+                    if (temp == true) return true;
+                    else throw new ArgumentException("Failed to Update user with associated ID");
+                }
             }
             else
             {
@@ -260,9 +263,14 @@ namespace TBZ.UM_Manager
                     if (permissionCheck == true)
                     {
                         bool temp = false;
-                        if (attrName.Equals("Password")) temp = _DataAccessService.UpdateUserPass(u, true);
-                        temp = _DataAccessService.UpdateUserAttr(u, attrName);
-                        
+                        if (attrName.Equals("Password"))
+                        {
+                            temp = _DataAccessService.UpdateUserPass(u, true);
+                        }
+                        else
+                        {
+                            temp = _DataAccessService.UpdateUserAttr(u, attrName);
+                        }
                         if (temp == true)
                         {
                             // Deletion successful; store user in passed ID's
@@ -287,8 +295,6 @@ namespace TBZ.UM_Manager
                 throw new ArgumentException("List length is insufficient");
             }
         }
-
-
     }
 
 }

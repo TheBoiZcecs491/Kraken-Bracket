@@ -323,14 +323,14 @@ namespace TBZ.DatabaseAccess
         /// User to edit, has the changed values
         /// </param>
         /// 
-        /// <param attrName="newPassword">
-        /// the new password. it will auto gen the salt somewhere in here.
+        /// <param passwordCheck="passwordCheck">
+        /// do a password security check.
         /// </param>
         /// 
         /// <returns></returns>
         public bool UpdateUserPass(User user, bool passwordCheck)
         {
-
+            //TODO: for this the authentication module's GetHashedPassword() method needs to be fixed for this to work.
             try
             {
                 bool result = CheckIDExistence(user.SystemID);
@@ -340,17 +340,18 @@ namespace TBZ.DatabaseAccess
                     if (passwordCheck == true)
                     {
                         StringCheckerService sc = new StringCheckerService(user.Password);
-
                         // Password is secured
                         if (sc.isSecurePassword())
                         {
-                            DatabaseQuery dq2 = new DatabaseQuery();
-
-                            //TODO: now would be a good time to generate a salt and hash the newPassword+salt
-
-                            dq2.UpdateQuery("user_information", "hashed_password", user.Password, "userID", user.SystemID.ToString());
+                            
+                            DatabaseQuery dq = new DatabaseQuery();
+                            string concat = user.Password + user.Salt;
+                            //TODO: generate a Salt and concatinate it with the password. then store the hash
+                            dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
+                            dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
                             return true;
                         }
+
                         // Password is not secured
                         else
                         {
@@ -358,15 +359,19 @@ namespace TBZ.DatabaseAccess
                             return false;
                         }
                     }
-                    //nvm the password check
-                    DatabaseQuery dq = new DatabaseQuery();
-
-                    //TODO: now would be a good time to generate a salt and hash the newPassword+salt
-
-                    dq.UpdateQuery("user_information", "hashed_password", user.Password, "userID", user.SystemID.ToString());
-                    return true;
+                    else
+                    {
+                        
+                        DatabaseQuery dq = new DatabaseQuery();
+                        string concat = user.Password + user.Salt;
+                        //TODO: generate a Salt and concatinate it with the password. then store the hash
+                        dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
+                        dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
+                        return true;
+                    }
                 }
-                else// System ID is not found
+                // System ID is not found
+                else
                 {
                     user.ErrorMessage = "System ID not found";
                     return false;
@@ -378,6 +383,5 @@ namespace TBZ.DatabaseAccess
                 return false;
             }
         }
-
     }
 }
