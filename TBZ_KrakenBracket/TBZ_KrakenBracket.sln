@@ -27,10 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.RegistrationTest", "TBZ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.DatabaseConnectionTest", "TBZ.DatabaseConnectionTest\TBZ.DatabaseConnectionTest.csproj", "{7EDAA6E9-C594-4523-B78C-8D7C7C35D173}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.ArchivingTest", "TBZ.ArchivingTest\TBZ.ArchivingTest.csproj", "{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.ArchivingService", "TBZ.ArchivingService\TBZ.ArchivingService.csproj", "{F5A91C25-8676-43DB-9EFE-3A92F826DC92}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.DatabaseQuery", "TBZ.DatabaseQuery\TBZ.DatabaseQuery.csproj", "{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementService", "TBZ.UserManagementService\TBZ.UserManagementService.csproj", "{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}"
@@ -46,6 +42,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementManager",
 	ProjectSection(ProjectDependencies) = postProject
 		{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7} = {D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.ArchiverService", "TBZ.ArchiverService\TBZ.ArchiverService.csproj", "{E903A540-8FF5-4E04-BDF5-1EFF43FF6AD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.ArchiverTest", "TBZ.ArchiverTest\TBZ.ArchiverTest.csproj", "{20D99A1D-5168-4097-BF9C-E43428375F0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,14 +101,6 @@ Global
 		{7EDAA6E9-C594-4523-B78C-8D7C7C35D173}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EDAA6E9-C594-4523-B78C-8D7C7C35D173}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EDAA6E9-C594-4523-B78C-8D7C7C35D173}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5A91C25-8676-43DB-9EFE-3A92F826DC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5A91C25-8676-43DB-9EFE-3A92F826DC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5A91C25-8676-43DB-9EFE-3A92F826DC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5A91C25-8676-43DB-9EFE-3A92F826DC92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -129,6 +121,14 @@ Global
 		{EEAEB881-A121-4E85-BC59-3B2F75551D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEAEB881-A121-4E85-BC59-3B2F75551D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEAEB881-A121-4E85-BC59-3B2F75551D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E903A540-8FF5-4E04-BDF5-1EFF43FF6AD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E903A540-8FF5-4E04-BDF5-1EFF43FF6AD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E903A540-8FF5-4E04-BDF5-1EFF43FF6AD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E903A540-8FF5-4E04-BDF5-1EFF43FF6AD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20D99A1D-5168-4097-BF9C-E43428375F0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20D99A1D-5168-4097-BF9C-E43428375F0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20D99A1D-5168-4097-BF9C-E43428375F0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20D99A1D-5168-4097-BF9C-E43428375F0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
