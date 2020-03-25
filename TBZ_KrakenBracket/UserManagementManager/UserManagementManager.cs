@@ -212,6 +212,12 @@ namespace TBZ.UM_Manager
             bool permissionResult = _userManagementService.CheckPermission(thisUser, checkedUser, "Update");
             if (permissionResult == true)
             {
+                if (attrName.Equals("Password"))
+                {
+                    bool temp2 = _DataAccessService.UpdateUserPass(checkedUser, true);
+                    if (temp2 == true) return true;
+                    else throw new ArgumentException("Failed to Update user Password with associated ID");
+                }
                 bool temp = _DataAccessService.UpdateUserAttr(checkedUser, attrName);
                 if (temp == true) return true;
                 else throw new ArgumentException("Failed to Update user with associated ID");
@@ -253,7 +259,10 @@ namespace TBZ.UM_Manager
                     bool permissionCheck = _userManagementService.CheckPermission(thisUser, u, "Update");
                     if (permissionCheck == true)
                     {
-                        bool temp = _DataAccessService.UpdateUserAttr(u, attrName);
+                        bool temp = false;
+                        if (attrName.Equals("Password")) temp = _DataAccessService.UpdateUserPass(u, true);
+                        temp = _DataAccessService.UpdateUserAttr(u, attrName);
+                        
                         if (temp == true)
                         {
                             // Deletion successful; store user in passed ID's
@@ -278,6 +287,8 @@ namespace TBZ.UM_Manager
                 throw new ArgumentException("List length is insufficient");
             }
         }
+
+
     }
 
 }

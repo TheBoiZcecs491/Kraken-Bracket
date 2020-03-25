@@ -314,5 +314,70 @@ namespace TBZ.DatabaseAccess
                 return false;
             }
         }
+
+        /// <summary>
+        /// used to update user table values
+        /// </summary>
+        /// 
+        /// <param name="user">
+        /// User to edit, has the changed values
+        /// </param>
+        /// 
+        /// <param attrName="newPassword">
+        /// the new password. it will auto gen the salt somewhere in here.
+        /// </param>
+        /// 
+        /// <returns></returns>
+        public bool UpdateUserPass(User user, bool passwordCheck)
+        {
+
+            try
+            {
+                bool result = CheckIDExistence(user.SystemID);
+                // System ID is found
+                if (result == true)
+                {
+                    if (passwordCheck == true)
+                    {
+                        StringCheckerService sc = new StringCheckerService(user.Password);
+
+                        // Password is secured
+                        if (sc.isSecurePassword())
+                        {
+                            DatabaseQuery dq2 = new DatabaseQuery();
+
+                            //TODO: now would be a good time to generate a salt and hash the newPassword+salt
+
+                            dq2.UpdateQuery("user_information", "hashed_password", user.Password, "userID", user.SystemID.ToString());
+                            return true;
+                        }
+                        // Password is not secured
+                        else
+                        {
+                            user.ErrorMessage = "Password is not secured";
+                            return false;
+                        }
+                    }
+                    //nvm the password check
+                    DatabaseQuery dq = new DatabaseQuery();
+
+                    //TODO: now would be a good time to generate a salt and hash the newPassword+salt
+
+                    dq.UpdateQuery("user_information", "hashed_password", user.Password, "userID", user.SystemID.ToString());
+                    return true;
+                }
+                else// System ID is not found
+                {
+                    user.ErrorMessage = "System ID not found";
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                user.ErrorMessage = e.ToString();
+                return false;
+            }
+        }
+
     }
 }
