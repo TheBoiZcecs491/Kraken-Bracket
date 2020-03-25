@@ -52,6 +52,29 @@ namespace TBZ.DatabaseAccess
                                         "Search For Registered User"} }
         };
 
+        /// <summary>
+        /// Method used to check if email and password used.
+        /// </summary>
+        ///
+        /// <param name="email">Email to search in the datastore</param>
+        /// <param name="password">Password to search for in the datastore</param>
+        ///
+        /// <returns>
+        /// True if both email and password exist. False if at least 1 does not.
+        /// </returns>
+        public bool GetEmailAndPassword(string email, string password)
+        {
+            // Checks if email exists in dictionary
+            if (userDict.TryGetValue(email, out string value))
+            {
+                // Passed-in value matches password associated with email
+                if (value == password)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         /// Method used to get claim associated with user
