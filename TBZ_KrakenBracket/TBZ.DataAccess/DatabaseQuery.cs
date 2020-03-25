@@ -19,7 +19,7 @@ namespace TBZ.DatabaseQueryService
             {"event_info","event_info(eventID, event_name) VALUES(@eventID, @event_name)"},
             {"role_type","role_type(roleID, role_type) VALUES(@roleID, @role_type)"},
             {"team_info","team_info(teamID, team_name) VALUES(@teamID, @team_name)" },
-            {"team_list", "team_list(teamID, hashedUserID) VLAUES(@teamID, @hashedUserID)"},
+            {"team_list", "team_list(teamID, hashedUserID) VALUES(@teamID, @hashedUserID)"},
             {"gamer_info", "gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)" },
             {"user_information", "user_information(userID, email, hashed_password, salt, fname, lname) VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname" },
             {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
@@ -174,13 +174,18 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "UPDATE " + tableName + "SET " + columnName + "= " + updateValue + "WHERE" + variable + "= @value";
-                    comm.Parameters.AddWithValue("@value", value);
-                    comm.ExecuteNonQuery();
+                    comm.CommandText = "UPDATE " + tableName + " SET " + columnName + " = '"+ updateValue +"'" + " WHERE " + variable + " = "+ value;
+                    //comm.Parameters.AddWithValue("@value", value);
+                    //comm.Parameters.AddWithValue("@updateValue", updateValue);
+                    conn.Open();//ya bongus u needed to open the connection
+                    comm.ExecuteNonQuery(); 
+                    //TODO: okay b/c I was having trubbs with trying to get this to work. ONLY TO REALIZE THAT BOIO FORGOT TO PUT IN comm.Open()
+                    //now, this is not the kosher way to handle these update sql commands, so I will need to come back and fix that.
+                    //I should use those comm.Parameters which I commented out due to string format paranoia.
                     conn.Close();
                 }
             }
         }
-
+        
     }
 }

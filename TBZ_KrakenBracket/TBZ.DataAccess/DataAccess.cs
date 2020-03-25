@@ -277,20 +277,20 @@ namespace TBZ.DatabaseAccess
                     switch (attrName)
                     {
                         case "FirstName":
-                            dq.UpdateQuery("user_information", attrName, user.FirstName, "fName", user.SystemID.ToString());
+                            dq.UpdateQuery("user_information", "fName", user.FirstName, "userID", user.SystemID.ToString());
                             return true;
                         case "LastName":
-                            dq.UpdateQuery("user_information", attrName, user.LastName, "lName", user.SystemID.ToString());
+                            dq.UpdateQuery("user_information", "lName", user.LastName, "userID", user.SystemID.ToString());
                             return true;
                         case "Email":
-                            dq.UpdateQuery("user_information", attrName, user.Email, "email", user.SystemID.ToString());
+                            dq.UpdateQuery("user_information", "email", user.Email, "userID", user.SystemID.ToString());
                             return true;
                         case "AccountType":
-                            dq.UpdateQuery("user_information", attrName, user.AccountType, "account_type", user.SystemID.ToString());
+                            dq.UpdateQuery("user_information", "account_type", user.AccountType, "userID", user.SystemID.ToString());
                             return true;
                         case "AccountStatus":
-                            if(user.AccountStatus) dq.UpdateQuery("user_information", attrName, "1", "account_status", user.SystemID.ToString());
-                            else dq.UpdateQuery("user_information", attrName, "0", "account_status", user.SystemID.ToString());
+                            if(user.AccountStatus) dq.UpdateQuery("user_information", "account_status", "1", "userID", user.SystemID.ToString());
+                            else dq.UpdateQuery("user_information", "account_status", "0", "userID", user.SystemID.ToString());
                             //so the DB uses tinyInts, they can be from -128 to 128, yes even when set to (1)
                             //ima just interpret this as a value from 0 or 1 for boolena stuffs.
                             return true;

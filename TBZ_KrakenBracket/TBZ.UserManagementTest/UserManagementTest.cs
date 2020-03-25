@@ -4,12 +4,31 @@ using System.Collections.Generic;
 using TBZ.DatabaseAccess;
 using TBZ.UM_Manager;
 
+//these two are for my reset button
+using MySql.Data.MySqlClient;
+using TBZ.DatabaseConnectionService;
+
 namespace TBZ.UserManagementTest
 {
     [TestClass]
     public class UserManagementTest
     {
+        //FIX: my reset button of making shit work actually.
+        public void resetDB()
+        {
+            var DB = new Database();
 
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "TRUNCATE TABLE `user_information`";
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
         /// <summary>
         /// Test method to single create a user
         /// </summary>
@@ -52,6 +71,7 @@ namespace TBZ.UserManagementTest
 
             // Delete user to clean database
             um.SingleDeleteUser(thisUser, user);
+            resetDB();
         }
 
         /// <summary>
@@ -98,6 +118,7 @@ namespace TBZ.UserManagementTest
 
             // Delete user to clean database
             um.SingleDeleteUser(thisUser, user);
+            resetDB();
         }
 
         /// <summary>
@@ -138,6 +159,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
+            resetDB();
         }
 
         /// <summary>
@@ -181,6 +203,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
+            resetDB();
         }
 
         /// <summary>
@@ -217,6 +240,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+            resetDB();
         }
 
         /// <summary>
@@ -259,6 +283,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+            resetDB();
         }
 
         [TestMethod]
@@ -292,6 +317,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+            resetDB();
         }
 
         /// <summary>
@@ -337,6 +363,7 @@ namespace TBZ.UserManagementTest
 
             // Delete user to clean database
             um.SingleDeleteUser(thisUser, u1);
+            resetDB();
         }
 
         /// <summary>
@@ -384,6 +411,7 @@ namespace TBZ.UserManagementTest
             {
                 um.SingleDeleteUser(thisUser, u);
             }
+            resetDB();
         }
 
         /// <summary>
@@ -425,6 +453,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsTrue(result);
+            resetDB();
         }
 
         /// <summary>
@@ -454,6 +483,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
+            resetDB();
         }
 
         [TestMethod]
@@ -481,6 +511,7 @@ namespace TBZ.UserManagementTest
             Assert.IsFalse(result);
 
             um.SingleDeleteUser(u1, thisUser);
+            resetDB();
         }
 
         /// <summary>
@@ -521,6 +552,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+            resetDB();
         }
 
         /// <summary>
@@ -561,11 +593,14 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+            resetDB();
         }
 
         /// <summary>
         /// Fail test method where attempting to bulk delete users fail because of 
         /// invalid permissions
+        /// ALSO also: I realised this doesnt clear the test DB when it finishes,
+        /// that is screwing up the next test BulkDeleteUsers_Fail_SystemIDsDoNotExist
         /// </summary>
         [TestMethod]
         public void BulkDeleteUsers_Fail_InvalidPermissions()
@@ -615,6 +650,102 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
+            resetDB();
         }
+
+
+        /// <summary>
+        /// Test method to Update a single user
+        /// </summary>
+        /// <param name="sysID"></param>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="accntType"></param>
+        /// <param name="accountStatus"></param>
+        /// <param name="errMsg"></param>
+        [DataTestMethod]
+        [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "User", false, null)]
+        [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", null, "User", false, null)]
+        public void SingleUpdateUser_Pass(uint sysID, string fName, string lName, string email,
+            string password, string salt, string accntType, bool accountStatus, string errMsg)
+        {
+            // Arrange
+
+            // Initializing User objects to test
+            User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+            User thisUser = new User(109, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
+            var um = new UserManagementManager();
+            bool result;
+
+            // Act
+            um.SingleCreateUsers(thisUser, user);
+            try
+            {
+                string nameChange = "Bob";
+                user.FirstName = nameChange; //attempts to change the user's name to Bob
+                result = um.SingleUpdateUser(thisUser, user, "FirstName"); //then pushes the update
+                //TODO: wait... shouldnt we test to see IF our DB is changing values?
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { result = false; }
+
+            // Assert
+            Assert.IsTrue(result);
+            resetDB();
+        }
+
+        /// <summary>
+        /// Test method to bulk Update users
+        /// </summary>
+        [TestMethod]
+        public void BulkUpdateUsers_Pass()
+        {
+            // Arrange
+            List<User> users = new List<User>();
+
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+            User u2 = new User(2, null, null, null, "123", null, "User", false, null);
+            User u3 = new User(3, null, null, null, "", null, "User", false, null);
+            User u4 = new User(4, null, null, null, null, null, "User", false, null);
+            User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
+            User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
+            User thisUser = new User(112, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
+            users.Add(u1);
+            users.Add(u2);
+            users.Add(u3);
+            users.Add(u4);
+            users.Add(u5);
+            users.Add(u6);
+
+            var um = new UserManagementManager();
+
+            // Act
+            um.BulkCreateUsers(thisUser, users, false);
+            List<List<User>> expected = new List<List<User>>()
+            {
+                users, // Passed ID's
+                new List<User>() {} // Failed ID's
+            };
+
+
+            string nameChange = "Bob";
+            foreach (User u in users)
+            {
+                u.FirstName = nameChange;
+            }
+            List<List<User>> actual = um.BulkUpdateUsers(thisUser, users, "FirstName");
+
+            // Assert
+            CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
+            resetDB();
+        }
+
     }
+
 }
