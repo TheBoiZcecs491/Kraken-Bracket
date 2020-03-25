@@ -49,9 +49,14 @@ namespace TBZ.ArchiverService
         /// </summary>
         /// <param name="dir"> String of the target directory </param>
         /// <returns> String of final destination </returns>
-        protected string CreateFile(string dir)
+        protected string CreateFolder(string dir)
         {
-            return dir + Path.DirectorySeparatorChar + DateTime.UtcNow.ToString("_yyyyMMdd") + ".7z";
+            return dir + Path.DirectorySeparatorChar + DateTime.UtcNow.ToString("_yyyyMMdd");
+        }
+
+        protected string CreateExtension()
+        {
+            return ".7z";
         }
 
         /// <summary>
@@ -60,16 +65,15 @@ namespace TBZ.ArchiverService
         /// <returns> Bool of success or failure </returns>
         public bool Archive()
         {
-            Console.WriteLine("Success 2.0.");
-
+            string folder = CreateFolder(_endDir.ToString());
+            Directory.CreateDirectory(folder);
             if (_srcDir.Exists && _endDir.Exists && _endDrive.IsReady)
             {
-                Console.WriteLine("Success 2.1.");
-
                 // check each file in src dir
                 FileInfo[] files = _srcDir.GetFiles();
                 foreach (FileInfo fi in files)
                 {
+                    string old = fi.FullName;
                     // check last access time > time
                     DateTime now = DateTime.UtcNow;
                     TimeSpan ts = now.Subtract(fi.LastWriteTimeUtc);
@@ -79,16 +83,14 @@ namespace TBZ.ArchiverService
                         if (fi.Length <= _endDrive.AvailableFreeSpace)
                         {
                             // move files
-                            fi.MoveTo(_endDir.ToString() + Path.DirectorySeparatorChar + fi.Name);
+                            fi.MoveTo(folder + Path.DirectorySeparatorChar + fi.Name);
+                            File.Delete(old);
                         }
                     }
                 }
-                Console.WriteLine("Success 2.2.");
-                _endDir.MoveTo(CreateFile(_endDir.ToString()));
                 // compress files
-                //ZipFile.CreateFromDirectory(_endDir.ToString(), CreateFile(_endDir.ToString()));
-                Console.WriteLine("Success 2.3.");
-
+                ZipFile.CreateFromDirectory(folder, folder + CreateExtension());
+                Directory.Delete(folder, true);
                 return true;
             }
             else
