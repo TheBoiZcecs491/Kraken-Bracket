@@ -1,22 +1,29 @@
-﻿<Properties StartupConfiguration="{0D876B26-08E7-4CA6-A35A-CD4375E9C90A}|Unit Tests">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TBZ.DataAccess/DataAccess.cs">
+﻿<Properties StartupConfiguration="{5E4C6A67-5185-4178-BF32-3927792671B8}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UserManagementManager/UserManagementManager.cs">
     <Files>
       <File FileName="UserManagementManager/UserManagementManager.cs" Line="1" Column="1" />
       <File FileName="TBZ.DataAccess/DataAccess.cs" Line="1" Column="1" />
+      <File FileName="TBZ.ArchiverService/Archiver.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TBZ_KrakenBracket" expanded="True">
-            <Node name="TBZ.DatabaseAccess" expanded="True">
-              <Node name="DataAccess.cs" selected="True" />
-            </Node>
+            <Node name="TBZ.ArchiverService" expanded="True" />
+            <Node name="TBZ.ArchiverTest" expanded="True" />
+            <Node name="TBZ.DatabaseAccess" expanded="True" />
             <Node name="TBZ.UserManagementManager" expanded="True" />
           </Node>
         </State>
       </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="TBZ_KrakenBracket" expanded="True" selected="True" />
+        </State>
+      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.TBZ.UserManagementTest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.TBZ.LoggingTest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.UserManagementManager FirstBuild="True" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
