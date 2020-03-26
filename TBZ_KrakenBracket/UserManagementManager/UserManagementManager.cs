@@ -265,7 +265,14 @@ namespace TBZ.UM_Manager
                         bool temp = false;
                         if (attrName.Equals("Password"))
                         {
-                            temp = _DataAccessService.UpdateUserPass(u, true);
+                            u.AccountStatus = false; //TODO: change this to an int or something,
+                            /// we will need to have the statuses enabled, disabled, banned, and passChangeRequired.
+                            /// our DB can handle this as it doesnt have a bool type, but we use tinyint(1) to fudge that.
+                            /// intrestingly enough tinyint(1) can still store values from -128 to 127. so hence my clever idea.
+                            temp = _DataAccessService.UpdateUserAttr(u, "AccountStatus");
+                            /// actually no, this should NOT update the password.
+                            /// instead it should disable the account,
+                            /// and leave a message requireing a password change.
                         }
                         else
                         {
