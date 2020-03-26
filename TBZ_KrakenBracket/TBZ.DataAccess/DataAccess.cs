@@ -9,7 +9,7 @@ namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
-        const string CONNECTION_STRING = @"server=localhost; userid=root; password=sim700%^@; database=kraken_bracket";
+        const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
         private MySqlConnection conn;
 
         // List of users and their passwords
@@ -122,10 +122,6 @@ namespace TBZ.DatabaseAccess
                         return claim = reader.GetInt32(6);
                     }
                 }
-            }
-            catch (MySql.Data.MySqlClient.MySqlException e)
-            {
-                return claim;
             }
             catch (Exception)
             {
