@@ -19,11 +19,12 @@ namespace TBZ.UserManagementTest
         static UserManagementTest()
         {
             _userManagementManager = new UserManagementManager();
-
         }
-      
-        //FIX: my reset button of making shit work actually.
-        public void resetDB()
+
+        /// <summary>
+        /// Method to clean data from database
+        /// </summary>
+        public void ResetDB()
         {
             var DB = new Database();
 
@@ -37,6 +38,7 @@ namespace TBZ.UserManagementTest
                     conn.Close();
                 }
             }
+        }
 
         /// <summary>
         /// Test method to single create a user
@@ -58,7 +60,11 @@ namespace TBZ.UserManagementTest
             // Arrange
 
             // Initializing User objects to test
+
+            // User to insert into DB
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+
+            // User to perform operation
             User thisUser = new User(114, fName, lName, email, password, null, "System Admin", true, null);
             
             bool result = false;
@@ -77,6 +83,7 @@ namespace TBZ.UserManagementTest
                 result = false;
             }
             catch (Exception) { }
+
             sw.Stop();
             Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
@@ -84,7 +91,7 @@ namespace TBZ.UserManagementTest
             Assert.IsTrue(result);
 
             // Delete user to clean database
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -107,7 +114,11 @@ namespace TBZ.UserManagementTest
             // Arrange
 
             // Initializing User objects to test
+
+            // User to insert into DB
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+
+            // User performing operation
             User thisUser = new User(101, fName, lName, email, password, null, "System Admin", true, null);
 
             Stopwatch sw = new Stopwatch();
@@ -137,7 +148,7 @@ namespace TBZ.UserManagementTest
             Assert.IsFalse(result);
 
             // Delete user to clean database
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -159,7 +170,11 @@ namespace TBZ.UserManagementTest
             // Arrange
 
             // Initializing User objects to test
+
+            // User to insert into DB
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+
+            // User performing action
             User thisUser = new User(102, fName, lName, email, password, null, "Admin", true, null);
 
             Stopwatch sw = new Stopwatch();
@@ -183,7 +198,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -207,7 +222,11 @@ namespace TBZ.UserManagementTest
             // Arrange
 
             // Initializing User objects to test
+
+            // User to insert into DB
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+
+            // User performing operation
             User thisUser = new User(103, fName, lName, email, password, salt, "System Admin", true, null);
 
             Stopwatch sw = new Stopwatch();
@@ -218,7 +237,6 @@ namespace TBZ.UserManagementTest
             sw.Start();
             try
             {
-                // Creating the exact same user with the same system ID
                 result = _userManagementManager.SingleCreateUsers(thisUser, user);
             }
             catch (ArgumentException)
@@ -232,7 +250,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -245,8 +263,12 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
+
+            // Users to insert into DB
             User u1 = new User(3, null, null, null, "8*3kmmrMropongig", null, "User", false, null);
             User u2 = new User(4, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "User", false, null);
+
+            // User performing operation
             User thisUser = new User(104, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
             users.Add(u1);
@@ -271,7 +293,7 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
 
-            resetDB();
+            ResetDB();
 
         }
 
@@ -286,6 +308,8 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
+
+            // Users to insert into DB
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(2, null, null, null, "123", null, "User", false, null);
             User u3 = new User(3, null, null, null, "", null, "User", false, null);
@@ -293,6 +317,7 @@ namespace TBZ.UserManagementTest
             User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
             User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
 
+            // User performing operation
             User thisUser = new User(105, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
             users.Add(u1);
@@ -320,7 +345,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            resetDB();
+            ResetDB();
         }
 
         [TestMethod]
@@ -330,18 +355,19 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
+
+            // Users to insert into DB
             User u1 = new User(1, null, null, null, "password", null, "System Admin", true, null);
             User u2 = new User(1, null, null, null, "123", null, "System Admin", true, null);
             User u3 = new User(1, null, null, null, "", null, "System Admin", true, null);
 
+            // User performing operation
             User thisUser = new User(106, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "Admin", true, null);
 
             users.Add(u1);
             users.Add(u2);
             users.Add(u3);
 
-
-            
             List<List<User>> expected = new List<List<User>>()
             {
                 new List<User>(){  }, // Passed ID's
@@ -359,7 +385,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -373,6 +399,8 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
+
+            // Users to insert into DB
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(1, null, null, null, "123", null, "User", false, null);
             User u3 = new User(1, null, null, null, "", null, "User", false, null);
@@ -380,6 +408,7 @@ namespace TBZ.UserManagementTest
             User u5 = new User(1, null, null, null, "bad", null, "User", false, null);
             User u6 = new User(1, null, null, null, "brian", null, "User", false, null);
 
+            // User performing operation
             User thisUser = new User(107, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
             users.Add(u1);
@@ -389,7 +418,6 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
-            
             List<List<User>> expected = new List<List<User>>()
             {
                 new List<User>(){ u1 }, // Passed ID's
@@ -409,7 +437,7 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
 
             // Delete user to clean database
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -422,6 +450,8 @@ namespace TBZ.UserManagementTest
             List<User> users = new List<User>();
 
             // Initializing User objects to test
+
+            // Users to insert into DB
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(2, null, null, null, "123", null, "User", false, null);
             User u3 = new User(3, null, null, null, "", null, "User", false, null);
@@ -436,9 +466,9 @@ namespace TBZ.UserManagementTest
             users.Add(u5);
             users.Add(u6);
 
+            // User performing operation
             User thisUser = new User(108, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
-            
             List<List<User>> expected = new List<List<User>>()
             {
                 users, // Passed ID's
@@ -458,7 +488,7 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
 
             // Delete users to clean database
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -481,7 +511,11 @@ namespace TBZ.UserManagementTest
             // Arrange
 
             // Initializing User objects to test
+
+            // User to delete from DB
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+
+            // User performing operation
             User thisUser = new User(109, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             
             bool result = false;
@@ -505,7 +539,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsTrue(result);
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -519,7 +553,11 @@ namespace TBZ.UserManagementTest
             bool result = true;
 
             // Initializing User objects to test
+
+            // User to delete from DB
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+
+            // User performing operation
             User thisUser = new User(110, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
             Stopwatch sw = new Stopwatch();
@@ -540,7 +578,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
-            resetDB();
+            ResetDB();
         }
 
         [TestMethod]
@@ -550,7 +588,11 @@ namespace TBZ.UserManagementTest
             bool result = true;
 
             // Initializing User objects to test
+
+            // User to delete from DB
             User u1 = new User(1, null, null, null, "password", null, "System Admin", true, null);
+
+            // User performing operation
             User thisUser = new User(111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "Admin", true, null);
 
             Stopwatch sw = new Stopwatch();
@@ -573,7 +615,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -585,12 +627,15 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
+            // Users to delete from DB
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(2, null, null, null, "123", null, "User", false, null);
             User u3 = new User(3, null, null, null, "", null, "User", false, null);
             User u4 = new User(4, null, null, null, null, null, "User", false, null);
             User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
             User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
+
+            // User performing operation
             User thisUser = new User(112, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             users.Add(u1);
             users.Add(u2);
@@ -617,7 +662,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -630,12 +675,15 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
+            // Users to delete from DB
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(2, null, null, null, "123", null, "User", false, null);
             User u3 = new User(3, null, null, null, "", null, "User", false, null);
             User u4 = new User(4, null, null, null, null, null, "User", false, null);
             User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
             User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
+
+            // User performing operation
             User thisUser = new User(113, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             users.Add(u1);
             users.Add(u2);
@@ -662,7 +710,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -675,54 +723,45 @@ namespace TBZ.UserManagementTest
         public void BulkDeleteUsers_Fail_InvalidPermissions()
         {
             // Arrange
-            List<User> users1 = new List<User>();
-            List<User> users2 = new List<User>();
-
+            List<User> users = new List<User>();
+   
+            // Populate admins in DB
             User u1 = new User(1, null, null, null, "password", null, "Admin", true, null);
             User u2 = new User(2, null, null, null, "123", null, "Admin", true, null);
             User u3 = new User(3, null, null, null, "", null, "Admin", true, null);
             User u4 = new User(4, null, null, null, null, null, "Admin", true, null);
             User u5 = new User(5, null, null, null, "bad", null, "Admin", true, null);
             User u6 = new User(6, null, null, null, "brian", null, "Admin", true, null);
-            User thisUser1 = new User(1111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
+            User thisUser = new User(1111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
 
-            User thisUser2 = new User(7, null, null, null, "brian", null, "Admin", true, null);
-            User u8 = new User(8, null, null, null, "brian", null, "System Admin", true, null);
-            User u9 = new User(9, null, null, null, "brian", null, "System Admin", true, null);
-            User u10 = new User(10, null, null, null, "brian", null, "System Admin", true, null);
-            User u11 = new User(11, null, null, null, "brian", null, "System Admin", true, null);
+            users.Add(u1);
+            users.Add(u2);
+            users.Add(u3);
+            users.Add(u4);
+            users.Add(u5);
+            users.Add(u6);
 
-            users1.Add(u1);
-            users1.Add(u2);
-            users1.Add(u3);
-            users1.Add(u4);
-            users1.Add(u5);
-            users1.Add(u6);
+            _userManagementManager.BulkCreateUsers(thisUser, users, false);
 
-            _userManagementManager.BulkCreateUsers(thisUser1, users1, false);
-
-            users2.Add(u8);
-            users2.Add(u9);
-            users2.Add(u10);
-            users2.Add(u11);
 
             List<List<User>> expected = new List<List<User>>()
             {
                 new List<User>() {}, // Passed ID's
-                users2 // Failed ID's
+                users // Failed ID's
             };
 
             Stopwatch sw = new Stopwatch();
 
             sw.Start();
-            List<List<User>> actual = _userManagementManager.BulkDeleteUsers(thisUser2, users2);
+            // An admin will attempt to bulk delete other admins
+            List<List<User>> actual = _userManagementManager.BulkDeleteUsers(u6, users);
             sw.Stop();
             Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
 
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            resetDB();
+            ResetDB();
         }
 
 
@@ -746,7 +785,11 @@ namespace TBZ.UserManagementTest
             // Arrange
 
             // Initializing User objects to test
+
+            // User to update in DB
             User user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
+
+            // User performing operation
             User thisUser = new User(109, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             var um = new UserManagementManager();
             bool result;
@@ -768,7 +811,7 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsTrue(result);
-            resetDB();
+            ResetDB();
         }
 
         /// <summary>
@@ -780,12 +823,15 @@ namespace TBZ.UserManagementTest
             // Arrange
             List<User> users = new List<User>();
 
+            // Users to update in DB
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(2, null, null, null, "123", null, "User", false, null);
             User u3 = new User(3, null, null, null, "", null, "User", false, null);
             User u4 = new User(4, null, null, null, null, null, "User", false, null);
             User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
             User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
+
+            // User performing operation
             User thisUser = new User(112, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
             users.Add(u1);
             users.Add(u2);
@@ -815,7 +861,7 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            resetDB();
+            ResetDB();
         }
 
     }
