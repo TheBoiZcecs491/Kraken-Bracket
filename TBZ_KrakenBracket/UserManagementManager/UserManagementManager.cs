@@ -127,6 +127,7 @@ namespace TBZ.UM_Manager
             bool permissionResult = _userManagementService.CheckPermission(thisUser, checkedUser, "Delete");
             if (permissionResult == true)
             {
+                // Attempt to delete user
                 bool temp = _DataAccessService.DeleteUser(checkedUser);
                 if (temp == true) return true;
                 else throw new ArgumentException("Failed to delete user with associated ID");
@@ -165,6 +166,7 @@ namespace TBZ.UM_Manager
                     bool permissionCheck = _userManagementService.CheckPermission(thisUser, u, "Delete");
                     if (permissionCheck == true)
                     {
+                        // Attempt to delete user
                         bool temp = _DataAccessService.DeleteUser(u);
                         if (temp == true)
                         {

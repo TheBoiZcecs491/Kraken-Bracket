@@ -52,8 +52,31 @@ namespace TBZ.DatabaseAccess
                                         "Search For Registered User"} }
         };
 
-        //TODO: any substrings with "user_information" should be coming from a constant.
-        // this should apply to similar substrings.
+
+        /// <summary>
+        /// Method used to check if email and password used.
+        /// </summary>
+        ///
+        /// <param name="email">Email to search in the datastore</param>
+        /// <param name="password">Password to search for in the datastore</param>
+        ///
+        /// <returns>
+        /// True if both email and password exist. False if at least 1 does not.
+        /// </returns>
+        public bool GetEmailAndPassword(string email, string password)
+        {
+            // Checks if email exists in dictionary
+            if (userDict.TryGetValue(email, out string value))
+            {
+                // Passed-in value matches password associated with email
+                if (value == password)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         /// <summary>
         /// Method used to get claim associated with user
@@ -61,7 +84,7 @@ namespace TBZ.DatabaseAccess
         /// <param name="email"></param>
         /// <returns></returns>
         ///
-        public object DSGetClaim(string email)
+        public string DSGetClaim(string email)
         {
             // Checks to see if the passed-in email exists in the claims datastore
             if (userActions.ContainsKey(email))
@@ -71,7 +94,7 @@ namespace TBZ.DatabaseAccess
                 userActions.TryGetValue(email, out List<string> value).ToString();
                 // Convert the list of claims into an array
                 string claimCollection = string.Join(",", value.ToArray());
-                return (object)claimCollection;
+                return claimCollection;
             }
             else
             {
