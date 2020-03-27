@@ -1,9 +1,8 @@
-﻿<Properties StartupConfiguration="{5E4C6A67-5185-4178-BF32-3927792671B8}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="UserManagementManager/UserManagementManager.cs">
+﻿<Properties StartupConfiguration="{0D876B26-08E7-4CA6-A35A-CD4375E9C90A}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TBZ.ArchiverTest/ArchiverTest.cs">
     <Files>
-      <File FileName="UserManagementManager/UserManagementManager.cs" Line="1" Column="1" />
-      <File FileName="TBZ.DataAccess/DataAccess.cs" Line="1" Column="1" />
-      <File FileName="TBZ.ArchiverService/Archiver.cs" Line="1" Column="1" />
+      <File FileName="TBZ.ArchiverService/Archiver.cs" Line="54" Column="108" />
+      <File FileName="TBZ.ArchiverTest/ArchiverTest.cs" Line="18" Column="22" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -11,8 +10,6 @@
           <Node name="TBZ_KrakenBracket" expanded="True">
             <Node name="TBZ.ArchiverService" expanded="True" />
             <Node name="TBZ.ArchiverTest" expanded="True" />
-            <Node name="TBZ.DatabaseAccess" expanded="True" />
-            <Node name="TBZ.UserManagementManager" expanded="True" />
           </Node>
         </State>
       </Pad>

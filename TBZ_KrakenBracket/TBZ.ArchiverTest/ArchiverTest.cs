@@ -135,26 +135,5 @@ namespace TBZ.ArchiverTest
             //Assert
             Assert.IsTrue(result);
         }
-
-        //[TestCleanup]
-        //[TestMethod]
-        //public void DeleteLogFile_Pass()
-        //{
-        //    //Arrange
-        //    bool result = true;
-        //    string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        //    string path = Path.Combine(docPath, "_logs.csv");
-        //    //Act
-        //    try
-        //    {
-        //        File.Delete(path);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        result = false;
-        //    }
-        //    //Assert
-        //    Assert.IsTrue(result);
-        //}
     }
 }

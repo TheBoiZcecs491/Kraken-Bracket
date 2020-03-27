@@ -21,27 +21,48 @@ namespace TBZ.ArchiverService
         /// <param name="endDir"> String of target directory </param>
         public Archiver(string srcDir, int days, string endDir)
         {
+            DirectoryInfo sDI;
+            DirectoryInfo eDI;
             // check whitespace
-            if (string.IsNullOrWhiteSpace(srcDir) || string.IsNullOrWhiteSpace(endDir) || days < -1)
+            if (string.IsNullOrWhiteSpace(srcDir))
             {
-                throw new ArgumentException();
-            }
-            DirectoryInfo sDI = new DirectoryInfo(srcDir);
-            DirectoryInfo eDI = new DirectoryInfo(endDir);
-            DriveInfo endDrive = new DriveInfo(Path.GetPathRoot(endDir));
-
-            // check if directories exist
-            if (!sDI.Exists || !eDI.Exists || !endDrive.IsReady)
-            {
+                Console.WriteLine("Source Directory Is Null or Blank.");
                 throw new ArgumentException();
             }
             else
             {
-                _srcDir = sDI;
-                _days = days;
-                _endDir = eDI;
-                _endDrive = endDrive;
+                sDI = new DirectoryInfo(srcDir);
+                if (!sDI.Exists)
+                {
+                    Console.WriteLine("Invalid Source Directory.");
+                    throw new ArgumentException();
+                }
             }
+            if (string.IsNullOrWhiteSpace(endDir))
+            {
+                Console.WriteLine("Target Directory Is Null Or Blank.");
+                throw new ArgumentException();
+            }
+            else
+            {
+                eDI = new DirectoryInfo(endDir);
+                if (!eDI.Exists)
+                {
+                    Console.WriteLine("Invalid Target Directory.");
+                    throw new ArgumentException();
+                }
+            }
+            if (days < -1)
+            {
+                Console.WriteLine("Invalid Number Of Days.");
+                throw new ArgumentException();
+            }
+
+            DriveInfo endDrive = new DriveInfo(Path.GetPathRoot(endDir));
+            _srcDir = sDI;
+            _days = days;
+            _endDir = eDI;
+            _endDrive = endDrive;
         }
 
         /// <summary>
@@ -51,9 +72,13 @@ namespace TBZ.ArchiverService
         /// <returns> String of final destination </returns>
         protected string CreateFolder(string dir)
         {
-            return dir + Path.DirectorySeparatorChar + DateTime.UtcNow.ToString("_yyyyMMdd");
+            return dir + Path.DirectorySeparatorChar + DateTime.UtcNow.ToString("_yyyyMMdd_HHmmssff");
         }
 
+        /// <summary>
+        /// A helper method to create the extension for the archive files.
+        /// </summary>
+        /// <returns></returns>
         protected string CreateExtension()
         {
             return ".7z";
