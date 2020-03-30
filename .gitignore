@@ -40,6 +40,10 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
+# for our project
+*.vs
+*.manifest
+*.csproj
 
 # Build results
 
