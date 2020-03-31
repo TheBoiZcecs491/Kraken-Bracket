@@ -814,6 +814,86 @@ namespace TBZ.UserManagementTest
             ResetDB();
         }
 
+        [TestMethod]
+        public void SingleUpdateUser_Fail_InvalidPermissions()
+        {
+            // Arrange
+            bool result = true;
+
+            // Initializing User objects to test
+
+            // User to delete from DB
+            User u1 = new User(1, null, null, null, "password", null, "System Admin", true, null);
+
+            // User performing operation
+            User thisUser = new User(111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "Admin", true, null);
+
+            Stopwatch sw = new Stopwatch();
+
+            _userManagementManager.SingleCreateUsers(u1, thisUser);
+
+            // Act
+            sw.Start();
+            try
+            {
+                u1.FirstName = "Barry"; // lets see if this works
+                result = _userManagementManager.SingleUpdateUser(thisUser, u1, "FirstName");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
+
+            // Assert
+            Assert.IsFalse(result);
+            ResetDB();
+        }
+
+        /// <summary>
+        /// Fail test method where attempting to Update a user fails because
+        /// the system ID is not found
+        /// </summary>
+        [TestMethod]
+        public void SingleUpdateUser_Fail_SystemIDDoesNotExist()
+        {
+            // Arrange
+            bool result = true;
+
+            // Initializing User objects to test
+
+            // User to delete from DB
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+
+            // User performing operation
+            User thisUser = new User(110, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
+
+            Stopwatch sw = new Stopwatch();
+
+            // Act
+            sw.Start();
+            try
+            {
+                u1.FirstName = "Raul";
+                result = _userManagementManager.SingleUpdateUser(thisUser, u1, "FirstName");
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            catch (Exception) { }
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
+
+            // Assert
+            Assert.IsFalse(result);
+            ResetDB();
+        }
+
+
+
         /// <summary>
         /// Test method to bulk Update users
         /// </summary>
@@ -863,6 +943,117 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
             ResetDB();
         }
+
+        /// <summary>
+        /// Fail test method where attempting to bulk update users fail because
+        /// the system ID's do not exist
+        /// </summary>
+        [TestMethod]
+        public void BulkDUpdateUsers_Fail_SystemIDsDoNotExist()
+        {
+            // Arrange
+            List<User> users = new List<User>();
+
+            // Users to delete from DB
+            User u1 = new User(1, null, null, null, "password", null, "User", false, null);
+            User u2 = new User(2, null, null, null, "123", null, "User", false, null);
+            User u3 = new User(3, null, null, null, "", null, "User", false, null);
+            User u4 = new User(4, null, null, null, null, null, "User", false, null);
+            User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
+            User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
+
+            // User performing operation
+            User thisUser = new User(113, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
+            users.Add(u1);
+            u1.FirstName = "Joe";
+            users.Add(u2);
+            u2.FirstName = "Barry";
+            users.Add(u3);
+            u3.FirstName = "Snerp";
+            users.Add(u4);
+            u4.FirstName = "Suzy";
+            users.Add(u5);
+            u5.FirstName = "Brulee";
+            users.Add(u6);
+            u6.FirstName = "Carl";
+
+
+            List<List<User>> expected = new List<List<User>>()
+            {
+                new List<User>() {}, // Passed ID's
+                users // Failed ID's
+            };
+
+            Stopwatch sw = new Stopwatch();
+
+            // Act
+            sw.Start();
+            List<List<User>> actual = _userManagementManager.BulkUpdateUsers(thisUser, users, "FirstName");
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
+
+            // Assert
+            CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
+            ResetDB();
+        }
+
+        /// <summary>
+        /// Fail test method where attempting to bulk update users fail because of 
+        /// invalid permissions
+        /// </summary>
+        [TestMethod]
+        public void BulkUpdateUsers_Fail_InvalidPermissions()
+        {
+            // Arrange
+            List<User> users = new List<User>();
+
+            // Populate admins in DB
+            User u1 = new User(1, null, null, null, "password", null, "Admin", true, null);
+            User u2 = new User(2, null, null, null, "123", null, "Admin", true, null);
+            User u3 = new User(3, null, null, null, "", null, "Admin", true, null);
+            User u4 = new User(4, null, null, null, null, null, "Admin", true, null);
+            User u5 = new User(5, null, null, null, "bad", null, "Admin", true, null);
+            User u6 = new User(6, null, null, null, "brian", null, "Admin", true, null);
+            User thisUser = new User(1111, null, null, null, "meMEeiaj093QNGEJOW~~~", null, "System Admin", true, null);
+
+            users.Add(u1);
+            users.Add(u2);
+            users.Add(u3);
+            users.Add(u4);
+            users.Add(u5);
+            users.Add(u6);
+
+            _userManagementManager.BulkCreateUsers(thisUser, users, false);
+
+            u1.FirstName = "John";
+            u2.FirstName = "Lyana";
+            u3.FirstName = "Gregory";
+            u4.FirstName = "Fred";
+            u5.FirstName = "Kyle";
+            u6.FirstName = "Scoffle";
+
+
+            List<List<User>> expected = new List<List<User>>()
+            {
+                new List<User>() {}, // Passed ID's
+                users // Failed ID's
+            };
+
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
+            // An admin will attempt to bulk delete other admins
+            List<List<User>> actual = _userManagementManager.BulkUpdateUsers(u6, users, "FirstName");
+            sw.Stop();
+            Console.WriteLine("Elapsed = {0} ms", sw.ElapsedMilliseconds);
+
+            // Assert
+            CollectionAssert.AreEqual(expected[0], actual[0]);
+            CollectionAssert.AreEqual(expected[1], actual[1]);
+            ResetDB();
+        }
+
 
     }
 
