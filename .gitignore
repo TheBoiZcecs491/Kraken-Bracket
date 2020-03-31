@@ -43,7 +43,6 @@ local.properties
 # for our project
 *.vs
 *.manifest
-*.csproj
 
 # Build results
 
