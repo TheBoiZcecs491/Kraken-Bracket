@@ -37,7 +37,7 @@ namespace TBZ.DatabaseQueryService
         public void InsertUserAcc(User tempUser)
         {
 
-            var DB = new Database();
+            var DB = new DatabaseConnectionService.DatabaseConnectionService();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -66,7 +66,7 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertGamerInfo(Gamer tempGamer)
         {
-            var DB = new Database();
+            var DB = new DatabaseConnectionService.DatabaseConnectionService();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -88,7 +88,7 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertBracketInfo(Bracket tempBracket)
         {
-            var DB = new Database();
+            var DB = new DatabaseConnectionService.DatabaseConnectionService();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -109,7 +109,7 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertBracketPlayer(BracketPlayer tempBracket)
         {
-            var DB = new Database();
+            var DB = new DatabaseConnectionService.DatabaseConnectionService();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -129,7 +129,7 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertEvent(Event tempEvent)
         {
-            var DB = new Database();
+            var DB = new DatabaseConnectionService.DatabaseConnectionService();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -150,7 +150,7 @@ namespace TBZ.DatabaseQueryService
         public void DeleteUser(uint deleteValue)
         {
 
-            var DB = new Database();
+            var DB = new DatabaseConnectionService.DatabaseConnectionService();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -168,7 +168,7 @@ namespace TBZ.DatabaseQueryService
 
         public void UpdateQuery(string tableName, string columnName, string updateValue, string variable, string value)
         {
-            var DB = new Database();
+            var DB = new DatabaseConnectionService.DatabaseConnectionService();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
