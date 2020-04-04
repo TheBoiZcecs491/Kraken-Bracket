@@ -11,7 +11,7 @@ namespace TBZ.Manager.Hashing
             public string salt { get; set; }
         }
 
-        new MessageSalt
+       // new MessageSalt
 
 
     }
