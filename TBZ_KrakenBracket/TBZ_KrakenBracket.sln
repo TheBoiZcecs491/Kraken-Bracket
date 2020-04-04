@@ -27,19 +27,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.RegistrationTest", "TBZ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.DatabaseConnectionTest", "TBZ.DatabaseConnectionTest\TBZ.DatabaseConnectionTest.csproj", "{7EDAA6E9-C594-4523-B78C-8D7C7C35D173}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.ArchivingTest", "TBZ.ArchivingTest\TBZ.ArchivingTest.csproj", "{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.ArchivingService", "TBZ.ArchivingService\TBZ.ArchivingService.csproj", "{F5A91C25-8676-43DB-9EFE-3A92F826DC92}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.DatabaseQuery", "TBZ.DatabaseQuery\TBZ.DatabaseQuery.csproj", "{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementService", "TBZ.UserManagementService\TBZ.UserManagementService.csproj", "{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementTest", "TBZ.UserManagementTest\TBZ.UserManagementTest.csproj", "{5E4C6A67-5185-4178-BF32-3927792671B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EEAEB881-A121-4E85-BC59-3B2F75551D2E} = {EEAEB881-A121-4E85-BC59-3B2F75551D2E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.StringChecker", "TBZ.StringChecker\TBZ.StringChecker.csproj", "{6185C2B2-1A4D-47C1-8913-F5DEAB42F494}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.UserManagementManager", "UserManagementManager\TBZ.UserManagementManager.csproj", "{EEAEB881-A121-4E85-BC59-3B2F75551D2E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7} = {D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.ArchiverService", "TBZ.ArchiverService\TBZ.ArchiverService.csproj", "{9C67E3EF-BB2A-44FF-BEA3-3DBD29531723}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBZ.ArchiverTest", "TBZ.ArchiverTest\TBZ.ArchiverTest.csproj", "{9A1CF201-8C4A-4EC2-924F-69CF6027EA88}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.HashingService", "TBZ.HashingService\TBZ.HashingService.csproj", "{7463C032-3C06-4D52-A7A0-7CFBC443B2C8}"
 EndProject
@@ -97,18 +101,6 @@ Global
 		{7EDAA6E9-C594-4523-B78C-8D7C7C35D173}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EDAA6E9-C594-4523-B78C-8D7C7C35D173}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EDAA6E9-C594-4523-B78C-8D7C7C35D173}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB4CF6EF-BD10-42C5-A38D-7374D576FCE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5A91C25-8676-43DB-9EFE-3A92F826DC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5A91C25-8676-43DB-9EFE-3A92F826DC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5A91C25-8676-43DB-9EFE-3A92F826DC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5A91C25-8676-43DB-9EFE-3A92F826DC92}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB4C9A2A-1B2C-44AA-896F-8BFEEF94B0CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9C0D3A0-12C8-4048-8166-0B0EE913A2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -125,10 +117,15 @@ Global
 		{EEAEB881-A121-4E85-BC59-3B2F75551D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEAEB881-A121-4E85-BC59-3B2F75551D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEAEB881-A121-4E85-BC59-3B2F75551D2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7463C032-3C06-4D52-A7A0-7CFBC443B2C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7463C032-3C06-4D52-A7A0-7CFBC443B2C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7463C032-3C06-4D52-A7A0-7CFBC443B2C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7463C032-3C06-4D52-A7A0-7CFBC443B2C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C67E3EF-BB2A-44FF-BEA3-3DBD29531723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C67E3EF-BB2A-44FF-BEA3-3DBD29531723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C67E3EF-BB2A-44FF-BEA3-3DBD29531723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C67E3EF-BB2A-44FF-BEA3-3DBD29531723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A1CF201-8C4A-4EC2-924F-69CF6027EA88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A1CF201-8C4A-4EC2-924F-69CF6027EA88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A1CF201-8C4A-4EC2-924F-69CF6027EA88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A1CF201-8C4A-4EC2-924F-69CF6027EA88}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

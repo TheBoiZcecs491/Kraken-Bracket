@@ -54,12 +54,37 @@ namespace TBZ.DatabaseAccess
 
 
         /// <summary>
+        /// Method used to check if email and password used.
+        /// </summary>
+        ///
+        /// <param name="email">Email to search in the datastore</param>
+        /// <param name="password">Password to search for in the datastore</param>
+        ///
+        /// <returns>
+        /// True if both email and password exist. False if at least 1 does not.
+        /// </returns>
+        public bool GetEmailAndPassword(string email, string password)
+        {
+            // Checks if email exists in dictionary
+            if (userDict.TryGetValue(email, out string value))
+            {
+                // Passed-in value matches password associated with email
+                if (value == password)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        /// <summary>
         /// Method used to get claim associated with user
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
         ///
-        public object DSGetClaim(string email)
+        public string DSGetClaim(string email)
         {
             // Checks to see if the passed-in email exists in the claims datastore
             if (userActions.ContainsKey(email))
@@ -69,11 +94,38 @@ namespace TBZ.DatabaseAccess
                 userActions.TryGetValue(email, out List<string> value).ToString();
                 // Convert the list of claims into an array
                 string claimCollection = string.Join(",", value.ToArray());
-                return (object)claimCollection;
+                return claimCollection;
             }
             else
             {
                 throw new Exception();
+            }
+        }
+
+        public int DSGetBracketClaim(int bracketID, BracketPlayer user)
+        {
+            // Checks to see if the passed-in email exists in the claims datastore
+            int claim = 0;
+            try
+            {
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    string selectQuery = string.Format(
+                        "SELECT claim FROM bracket_player_info WHERE bracketID={0} AND hashedUserID={1}",
+                        bracketID, user.HashedUserID);
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+
+                    conn.Open();
+
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        return claim = reader.GetInt32(6);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return claim;
             }
         }
 
@@ -101,10 +153,6 @@ namespace TBZ.DatabaseAccess
                     }
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException e)
-            {
-                return false;
-            }
             catch (Exception)
             {
                 return false;
@@ -114,9 +162,18 @@ namespace TBZ.DatabaseAccess
         /// <summary>
         /// Method to insert user into database
         /// </summary>
-        /// <param name="sysID"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// 
+        /// <param name="user">
+        /// User to be created
+        /// </param>
+        /// 
+        /// <param name="passwordCheck">
+        /// Boolean to enable or disable password check
+        /// </param>
+        /// 
+        /// <returns>
+        /// true if user is inserted into database; false otherwise
+        /// </returns>
         public bool CreateUser(User user, bool passwordCheck)
         {
             try
@@ -160,12 +217,6 @@ namespace TBZ.DatabaseAccess
                     user.ErrorMessage = "System ID already exists";
                     return false;
                 }
-
-            }
-            catch (MySql.Data.MySqlClient.MySqlException e)
-            {
-                user.ErrorMessage = e.ToString();
-                return false;
             }
             catch (Exception e)
             {
@@ -174,27 +225,176 @@ namespace TBZ.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Method to delete user from database
+        /// </summary>
+        /// 
+        /// <param name="user">
+        /// User to be deleted
+        /// </param>
+        /// 
+        /// <returns></returns>
         public bool DeleteUser(User user)
         {
             try
             {
                 bool result = CheckIDExistence(user.SystemID);
+
+                // System ID is found
                 if (result == true)
                 {
                     DatabaseQuery dq = new DatabaseQuery();
                     dq.DeleteUser(user.SystemID);
                     return true;
                 }
+
+                // System ID is not found
                 else
                 {
                     user.ErrorMessage = "System ID not found";
                     return false;
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException e)
+            catch (Exception e)
             {
                 user.ErrorMessage = e.ToString();
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// used to update user table values
+        /// </summary>
+        /// 
+        /// <param name="user">
+        /// User to edit, has the changed values
+        /// </param>
+        /// 
+        /// <param attrName="attrName">
+        /// name of the table attribute to edit
+        /// valid attributes
+        /// FirstName
+        /// LastName
+        /// Email
+        /// AccountType
+        /// AccountStatus
+        /// </param>
+        /// 
+        /// <returns></returns>
+        public bool UpdateUserAttr(User user, string attrName)
+        {
+            //TODO: ideally this method should not have to need those two strings specified.
+            // it should update any changes dynamically. maybe i dono.
+            try
+            {
+                bool result = CheckIDExistence(user.SystemID);
+
+                // System ID is found
+                if (result == true)
+                {
+                    DatabaseQuery dq = new DatabaseQuery();
+                    switch (attrName)
+                    {
+                        case "FirstName":
+                            dq.UpdateQuery("user_information", "fName", user.FirstName, "userID", user.SystemID.ToString());
+                            return true;
+                        case "LastName":
+                            dq.UpdateQuery("user_information", "lName", user.LastName, "userID", user.SystemID.ToString());
+                            return true;
+                        case "Email":
+                            dq.UpdateQuery("user_information", "email", user.Email, "userID", user.SystemID.ToString());
+                            return true;
+                        case "AccountType":
+                            dq.UpdateQuery("user_information", "account_type", user.AccountType, "userID", user.SystemID.ToString());
+                            return true;
+                        case "AccountStatus":
+                            if(user.AccountStatus) dq.UpdateQuery("user_information", "account_status", "1", "userID", user.SystemID.ToString());
+                            else dq.UpdateQuery("user_information", "account_status", "0", "userID", user.SystemID.ToString());
+                            //so the DB uses tinyInts, they can be from -128 to 128, yes even when set to (1)
+                            //ima just interpret this as a value from 0 or 1 for boolena stuffs.
+                            return true;
+                        //you can add other defonitions, how they relate to the DB
+                        //DO NOT UPDATE THE PASSWORD IN THIS METHOD.
+                    }
+                    user.ErrorMessage = "unknown attribute";
+                    return false; //something did not work
+                }
+
+                // System ID is not found
+                else
+                {
+                    user.ErrorMessage = "System ID not found";
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                user.ErrorMessage = e.ToString();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// used to update user table values
+        /// </summary>
+        /// 
+        /// <param name="user">
+        /// User to edit, has the changed values
+        /// </param>
+        /// 
+        /// <param passwordCheck="passwordCheck">
+        /// do a password security check.
+        /// </param>
+        /// 
+        /// <returns></returns>
+        public bool UpdateUserPass(User user, bool passwordCheck)
+        {
+            //TODO: for this the authentication module's GetHashedPassword() method needs to be fixed for this to work.
+            try
+            {
+                bool result = CheckIDExistence(user.SystemID);
+                // System ID is found
+                if (result == true)
+                {
+                    if (passwordCheck == true)
+                    {
+                        StringCheckerService sc = new StringCheckerService(user.Password);
+                        // Password is secured
+                        if (sc.isSecurePassword())
+                        {
+                            
+                            DatabaseQuery dq = new DatabaseQuery();
+                            string concat = user.Password + user.Salt;
+                            //TODO: generate a Salt and concatinate it with the password. then store the hash
+                            dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
+                            dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
+                            return true;
+                        }
+
+                        // Password is not secured
+                        else
+                        {
+                            user.ErrorMessage = "Password is not secured";
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        
+                        DatabaseQuery dq = new DatabaseQuery();
+                        string concat = user.Password + user.Salt;
+                        //TODO: generate a Salt and concatinate it with the password. then store the hash
+                        dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
+                        dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
+                        return true;
+                    }
+                }
+                // System ID is not found
+                else
+                {
+                    user.ErrorMessage = "System ID not found";
+                    return false;
+                }
             }
             catch (Exception e)
             {
