@@ -26,7 +26,7 @@ namespace TBZ.UserManagementTest
         /// </summary>
         public void ResetDB()
         {
-            var DB = new DatabaseConnectionService.DatabaseConnectionService();
+            var DB = new Database();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
