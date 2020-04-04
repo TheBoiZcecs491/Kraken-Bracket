@@ -15,7 +15,7 @@ namespace TBZ.AuthenticationTest
         {
             // Arrange
             var authenticationService = new Authentication();
-            string email = "kevin@foomail.com";
+            string email = "brian@foomail.com";
             string password = "123";
             bool result = true;
 
