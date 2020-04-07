@@ -9,17 +9,19 @@ namespace TBZ.LoggingTest
     [TestClass]
     public class LoggingTest
     {
+        string _endDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.DirectorySeparatorChar + "logs";
+        int _tries = 3;
         [TestMethod]
         public void CreateLoggingInstance_Pass()
         {
             //Arrange
             bool result = true;
-            string path = "output.csv";
-            int tries = 3;
+            string dir = _endDir;
+            int tries = _tries;
             //Act
             try
             {
-                var l = new Logging(path, tries);
+                var l = new Logging(dir, tries);
             }
             catch (Exception)
             {
@@ -30,19 +32,19 @@ namespace TBZ.LoggingTest
         }
 
         [TestMethod]
-        public void LogValidPath_Pass()
+        public void LogValidDirectory_Pass()
         {
             //Arrange
             bool result;
-            string path = "output.csv";
+            string dir = _endDir;
             string op = "op";
             string msg = "";
             string id = "id";
-            int tries = 3;
+            int tries = _tries;
             //Act
             try
             {
-                var l = new Logging(path, tries);
+                var l = new Logging(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception)
@@ -54,11 +56,11 @@ namespace TBZ.LoggingTest
         }
 
         [TestMethod]
-        public void LogInvalidPathType_Fail()
+        public void LogInvalidDirectory_Pass()
         {
             //Arrange
             bool result;
-            string path = "output.txt";
+            string dir = "logthis";
             string op = "op";
             string msg = "";
             string id = "id";
@@ -66,7 +68,7 @@ namespace TBZ.LoggingTest
             //Act
             try
             {
-                var l = new Logging(path, tries);
+                var l = new Logging(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception e)
@@ -82,17 +84,13 @@ namespace TBZ.LoggingTest
         public void LogInvalidTries_Fail()
         {
             //Arrange
-            bool result;
-            string path = "output.csv";
-            string op = "op";
-            string msg = "";
-            string id = "id";
+            bool result = true;
+            string dir = _endDir;
             int tries = 0;
             //Act
             try
             {
-                var l = new Logging(path, tries);
-                result = l.Log(op, msg, id);
+                var l = new Logging(dir, tries);
             }
             catch (Exception e)
             {
@@ -108,15 +106,15 @@ namespace TBZ.LoggingTest
         {
             //Arrange
             bool result;
-            string path = "output.csv";
+            string dir = _endDir;
             string op = "";
             string msg = "";
             string id = "id";
-            int tries = 3;
+            int tries = _tries;
             //Act
             try
             {
-                var l = new Logging(path, tries);
+                var l = new Logging(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception)
@@ -132,15 +130,15 @@ namespace TBZ.LoggingTest
         {
             //Arrange
             bool result;
-            string path = "output.csv";
+            string dir = _endDir;
             string op = "op";
             string msg = "";
             string id = "";
-            int tries = 3;
+            int tries = _tries;
             //Act
             try
             {
-                var l = new Logging(path, tries);
+                var l = new Logging(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception)
@@ -156,16 +154,15 @@ namespace TBZ.LoggingTest
         {
             //Arrange
             bool result;
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string path = Path.Combine(docPath, "logs.csv");
+            string dir = _endDir;
             string op = "Registration";
             string msg = "Data Store Error";
             string id = "0001";
-            int tries = 3;
+            int tries = _tries;
             //Act
             try
             {
-                var l = new Logging(path, tries);
+                var l = new Logging(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception)
@@ -181,16 +178,15 @@ namespace TBZ.LoggingTest
         {
             //Arrange
             bool result = false;
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string path = Path.Combine(docPath, "logs.csv");
+            string dir = _endDir;
             string op = "Authorization";
             string msg = "Invalid Access Error";
-            int tries = 3;
+            int tries = _tries;
             //Act
             Logging l = null;
             try
             {
-                l = new Logging(path, tries);
+                l = new Logging(dir, tries);
             }
             catch (Exception)
             {
