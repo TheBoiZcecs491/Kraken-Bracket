@@ -5,26 +5,35 @@ namespace TBZ.LoggingService
 {
     public class Logging
     {
-        static string path;
-        static int tries;
+        readonly DirectoryInfo _endDir;
+        readonly int _tries;
 
         /// <summary>
-        /// A logging object requires a document path to save logs.
+        /// A logging object requires a directory path to save logs.
         /// </summary>
-        /// <param name="doc"> String of document path </param>
+        /// <param name="dir"> String of directory path </param>
         /// <param name="runs"> Integer of the number of attempts to try to log </param>
-        public Logging(string doc, int runs)
+        public Logging(string dir, int runs)
         {
-            if (string.IsNullOrWhiteSpace(doc) || !doc.Contains(".csv"))
+            DirectoryInfo eDI;          // check whitespace
+            if (string.IsNullOrWhiteSpace(dir))
             {
-                throw new ArgumentException("Invalid document type.");
+                throw new ArgumentException("Target Directory Is Null Or Blank.");
+            }
+            else
+            {
+                eDI = new DirectoryInfo(dir);
+                if (!eDI.Exists)
+                {
+                    throw new ArgumentException("Invalid Target Directory.");
+                }
             }
             if (runs < 1)
             {
-                throw new ArgumentException("Invalid amount of tries.");
+                throw new ArgumentException("Invalid Amount Of Tries.");
             }
-            path = doc;
-            tries = runs;
+            _endDir = eDI;
+            _tries = runs;
         }
 
         /// <summary>
@@ -59,14 +68,14 @@ namespace TBZ.LoggingService
         /// </summary>
         /// <param name="log"> String of the correctly formatted log contents from FormatLog </param>
         /// <returns> Boolean of success or failure to log </returns>
-        protected bool AppendLog(string log)
+        protected bool AppendLog(string dest, string log)
         {
             bool success = false;
-            for (int i = 0; i < tries; i++)
+            for (int i = 0; i < _tries; i++)
             {
                 try
                 {
-                    File.AppendAllText(path, log);      // Appends to a new file if one does not
+                    File.AppendAllText(dest, log);      // Appends to a new file if one does not
                     success = true;                     // previously exist for this file path
                     break;
                 }
@@ -80,6 +89,11 @@ namespace TBZ.LoggingService
                 }
             }
             return success;
+        }
+
+        protected string CreateDestination(string dir)
+        {
+            return dir + Path.DirectorySeparatorChar + DateTime.UtcNow.ToString("_yyyyMMdd") + ".csv";
         }
 
         /// <summary>
@@ -102,7 +116,8 @@ namespace TBZ.LoggingService
             string log = FormatLog(operation, msg, id, time);
             try
             {
-                success = AppendLog(log);
+                string dest = CreateDestination(_endDir.ToString());
+                success = AppendLog(dest, log);
             }
             catch (Exception e)
             {
