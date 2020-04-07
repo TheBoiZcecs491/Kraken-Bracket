@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TBZ.DatabaseAccess;
 using TBZ.DatabaseConnectionService;
+using TBZ.HashingService;
 //using static TBZ.Manager.Hashing.ManagerHashing;
 
 namespace TBZ.DatabaseQueryService
@@ -43,6 +44,10 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
+                    MessageSalt msalt = new MessageSalt(tempUser.Password, tempUser.Salt);
+                    msalt.GenerateHash(msalt);
+                    tempUser.Password = msalt.message;
+                    tempUser.Salt = msalt.salt;
                     comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname, account_type) " +
                     "VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname, @account_type)";
 
