@@ -255,8 +255,6 @@ namespace TBZ.DatabaseAccess
             // it should update any changes dynamically. maybe i dono.
 
             bool idFound = CheckIDExistence(user.SystemID);
-
-            // System ID is found
             if (!idFound)
             {
                 user.ErrorMessage = "System ID not found";
@@ -310,35 +308,20 @@ namespace TBZ.DatabaseAccess
         public bool UpdateUserPass(User user, bool passwordCheck)
         {
             //TODO: for this the authentication module's GetHashedPassword() method needs to be fixed for this to work.
-            try
+
+            bool idFound = CheckIDExistence(user.SystemID);
+            if (!idFound) 
             {
-                bool result = CheckIDExistence(user.SystemID);
-                // System ID is found
-                if (result == true)
+                user.ErrorMessage = "System ID not found";
+                return false;
+            }
+            else
+            {
+                if (passwordCheck)
                 {
-                    if (passwordCheck == true)
-                    {
-                        StringCheckerService sc = new StringCheckerService(user.Password);
-                        // Password is secured
-                        if (sc.isSecurePassword())
-                        {
-
-                            DatabaseQuery dq = new DatabaseQuery();
-                            string concat = user.Password + user.Salt;
-                            //TODO: generate a Salt and concatinate it with the password. then store the hash
-                            dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
-                            dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
-                            return true;
-                        }
-
-                        // Password is not secured
-                        else
-                        {
-                            user.ErrorMessage = "Password is not secured";
-                            return false;
-                        }
-                    }
-                    else
+                    StringCheckerService sc = new StringCheckerService(user.Password);
+                    // Password is secured
+                    if (sc.isSecurePassword())
                     {
 
                         DatabaseQuery dq = new DatabaseQuery();
@@ -348,18 +331,21 @@ namespace TBZ.DatabaseAccess
                         dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
                         return true;
                     }
+                    else
+                    {
+                        user.ErrorMessage = "Password is not secured";
+                        return false;
+                    }
                 }
-                // System ID is not found
                 else
                 {
-                    user.ErrorMessage = "System ID not found";
-                    return false;
+                    DatabaseQuery dq = new DatabaseQuery();
+                    string concat = user.Password + user.Salt;
+                    //TODO: generate a Salt and concatinate it with the password. then store the hash
+                    dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
+                    dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
+                    return true;
                 }
-            }
-            catch (Exception e)
-            {
-                user.ErrorMessage = e.ToString();
-                return false;
             }
         }
     }
