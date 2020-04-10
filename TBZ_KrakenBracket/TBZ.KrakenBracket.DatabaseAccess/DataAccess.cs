@@ -176,7 +176,7 @@ namespace TBZ.DatabaseAccess
         /// </returns>
         public bool CreateUser(User user, bool passwordCheck)
         {
-           
+
             bool idFound = CheckIDExistence(user.SystemID);
             if (idFound) { user.ErrorMessage = "ID already exists"; return false; }
             else
@@ -253,54 +253,46 @@ namespace TBZ.DatabaseAccess
         {
             //TODO: ideally this method should not have to need those two strings specified.
             // it should update any changes dynamically. maybe i dono.
-            try
+
+            bool idFound = CheckIDExistence(user.SystemID);
+
+            // System ID is found
+            if (!idFound)
             {
-                bool result = CheckIDExistence(user.SystemID);
-
-                // System ID is found
-                if (result == true)
-                {
-                    DatabaseQuery dq = new DatabaseQuery();
-                    switch (attrName)
-                    {
-                        case "FirstName":
-                            dq.UpdateQuery("user_information", "fName", user.FirstName, "userID", user.SystemID.ToString());
-                            return true;
-                        case "LastName":
-                            dq.UpdateQuery("user_information", "lName", user.LastName, "userID", user.SystemID.ToString());
-                            return true;
-                        case "Email":
-                            dq.UpdateQuery("user_information", "email", user.Email, "userID", user.SystemID.ToString());
-                            return true;
-                        case "AccountType":
-                            dq.UpdateQuery("user_information", "account_type", user.AccountType, "userID", user.SystemID.ToString());
-                            return true;
-                        case "AccountStatus":
-                            if (user.AccountStatus) dq.UpdateQuery("user_information", "account_status", "1", "userID", user.SystemID.ToString());
-                            else dq.UpdateQuery("user_information", "account_status", "0", "userID", user.SystemID.ToString());
-                            //so the DB uses tinyInts, they can be from -128 to 128, yes even when set to (1)
-                            //ima just interpret this as a value from 0 or 1 for boolena stuffs.
-                            return true;
-                            //you can add other defonitions, how they relate to the DB
-                            //DO NOT UPDATE THE PASSWORD IN THIS METHOD.
-                    }
-                    user.ErrorMessage = "unknown attribute";
-                    return false; //something did not work
-                }
-
-                // System ID is not found
-                else
-                {
-                    user.ErrorMessage = "System ID not found";
-                    return false;
-                }
+                user.ErrorMessage = "System ID not found";
+                return false;
             }
-            catch (Exception e)
+            else
             {
-                user.ErrorMessage = e.ToString();
+                DatabaseQuery dq = new DatabaseQuery();
+                switch (attrName)
+                {
+                    case "FirstName":
+                        dq.UpdateQuery("user_information", "fName", user.FirstName, "userID", user.SystemID.ToString());
+                        return true;
+                    case "LastName":
+                        dq.UpdateQuery("user_information", "lName", user.LastName, "userID", user.SystemID.ToString());
+                        return true;
+                    case "Email":
+                        dq.UpdateQuery("user_information", "email", user.Email, "userID", user.SystemID.ToString());
+                        return true;
+                    case "AccountType":
+                        dq.UpdateQuery("user_information", "account_type", user.AccountType, "userID", user.SystemID.ToString());
+                        return true;
+                    case "AccountStatus":
+                        if (user.AccountStatus) dq.UpdateQuery("user_information", "account_status", "1", "userID", user.SystemID.ToString());
+                        else dq.UpdateQuery("user_information", "account_status", "0", "userID", user.SystemID.ToString());
+                        //so the DB uses tinyInts, they can be from -128 to 128, yes even when set to (1)
+                        //ima just interpret this as a value from 0 or 1 for boolena stuffs.
+                        return true;
+                        //you can add other defonitions, how they relate to the DB
+                        //DO NOT UPDATE THE PASSWORD IN THIS METHOD.
+                }
                 return false;
             }
         }
+    
+
 
         /// <summary>
         /// used to update user table values
