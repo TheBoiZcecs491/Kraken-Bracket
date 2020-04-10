@@ -176,54 +176,78 @@ namespace TBZ.DatabaseAccess
         /// </returns>
         public bool CreateUser(User user, bool passwordCheck)
         {
-            try
+           
+            bool idFound = CheckIDExistence(user.SystemID);
+            if (idFound) { user.ErrorMessage = "ID already exists"; return false; }
+            else
             {
-                bool result = CheckIDExistence(user.SystemID);
-
-                // ID is not found, so it is safe to proceed
-                if (result == false)
+                if (passwordCheck)
                 {
-                    // Password check is enabled
-                    if (passwordCheck == true)
-                    {
-                        StringCheckerService sc = new StringCheckerService(user.Password);
-
-                        // Password is secured
-                        if (sc.isSecurePassword())
-                        {
-                            DatabaseQuery dq = new DatabaseQuery();
-                            dq.InsertUserAcc(user);
-                            return true;
-                        }
-
-                        // Password is not secured
-                        else
-                        {
-                            user.ErrorMessage = "Password is not secured";
-                            return false;
-                        }
-                    }
-
-                    // Password check is disabled
-                    else
+                    StringCheckerService sc = new StringCheckerService(user.Password);
+                    if (sc.isSecurePassword())
                     {
                         DatabaseQuery dq = new DatabaseQuery();
                         dq.InsertUserAcc(user);
                         return true;
                     }
+                    else
+                    {
+                        user.ErrorMessage = "Password is not secured";
+                        return false;
+                    }
                 }
                 else
                 {
-                    user.ErrorMessage = "System ID already exists";
-                    return false;
+                    DatabaseQuery dq = new DatabaseQuery();
+                    dq.InsertUserAcc(user);
+                    return true;
                 }
             }
-            catch (Exception e)
-            {
-                user.ErrorMessage = e.ToString();
-                return false;
-            }
         }
+            //    // ID is not found, so it is safe to proceed
+            //    if (result == false)
+            //    {
+            //        // Password check is enabled
+            //        if (passwordCheck == true)
+            //        {
+            //            StringCheckerService sc = new StringCheckerService(user.Password);
+
+            //            // Password is secured
+            //            if (sc.isSecurePassword())
+            //            {
+            //                DatabaseQuery dq = new DatabaseQuery();
+            //                dq.InsertUserAcc(user);
+            //                return true;
+            //            }
+
+            //            // Password is not secured
+            //            else
+            //            {
+            //                user.ErrorMessage = "Password is not secured";
+            //                return false;
+            //            }
+            //        }
+
+            //        // Password check is disabled
+            //        else
+            //        {
+            //            DatabaseQuery dq = new DatabaseQuery();
+            //            dq.InsertUserAcc(user);
+            //            return true;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        user.ErrorMessage = "System ID already exists";
+            //        return false;
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    user.ErrorMessage = e.ToString();
+            //    return false;
+            //}
+        
 
         /// <summary>
         /// Method to delete user from database
