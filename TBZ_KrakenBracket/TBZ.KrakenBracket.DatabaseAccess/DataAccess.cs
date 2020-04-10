@@ -204,50 +204,6 @@ namespace TBZ.DatabaseAccess
                 }
             }
         }
-            //    // ID is not found, so it is safe to proceed
-            //    if (result == false)
-            //    {
-            //        // Password check is enabled
-            //        if (passwordCheck == true)
-            //        {
-            //            StringCheckerService sc = new StringCheckerService(user.Password);
-
-            //            // Password is secured
-            //            if (sc.isSecurePassword())
-            //            {
-            //                DatabaseQuery dq = new DatabaseQuery();
-            //                dq.InsertUserAcc(user);
-            //                return true;
-            //            }
-
-            //            // Password is not secured
-            //            else
-            //            {
-            //                user.ErrorMessage = "Password is not secured";
-            //                return false;
-            //            }
-            //        }
-
-            //        // Password check is disabled
-            //        else
-            //        {
-            //            DatabaseQuery dq = new DatabaseQuery();
-            //            dq.InsertUserAcc(user);
-            //            return true;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        user.ErrorMessage = "System ID already exists";
-            //        return false;
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    user.ErrorMessage = e.ToString();
-            //    return false;
-            //}
-        
 
         /// <summary>
         /// Method to delete user from database
@@ -260,29 +216,17 @@ namespace TBZ.DatabaseAccess
         /// <returns></returns>
         public bool DeleteUser(User user)
         {
-            try
+            bool idFound = CheckIDExistence(user.SystemID);
+            if (!idFound)
             {
-                bool result = CheckIDExistence(user.SystemID);
-
-                // System ID is found
-                if (result == true)
-                {
-                    DatabaseQuery dq = new DatabaseQuery();
-                    dq.DeleteUser(user.SystemID);
-                    return true;
-                }
-
-                // System ID is not found
-                else
-                {
-                    user.ErrorMessage = "System ID not found";
-                    return false;
-                }
-            }
-            catch (Exception e)
-            {
-                user.ErrorMessage = e.ToString();
+                user.ErrorMessage = "System ID not found";
                 return false;
+            }
+            else
+            {
+                DatabaseQuery dq = new DatabaseQuery();
+                dq.DeleteUser(user.SystemID);
+                return true;
             }
         }
 
