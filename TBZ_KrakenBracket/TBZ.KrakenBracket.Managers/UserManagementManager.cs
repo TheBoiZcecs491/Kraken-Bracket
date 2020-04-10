@@ -7,15 +7,8 @@ namespace TBZ.UM_Manager
 {
     public class UserManagementManager
     {
-        private static readonly DataAccess _DataAccessService;
-        private static readonly UserManagementService _userManagementService;
-
-        static UserManagementManager()
-        {
-            _DataAccessService = new DataAccess();
-            _userManagementService = new UserManagementService();
-
-        }
+        private readonly DataAccess _DataAccessService = new DataAccess();
+        private readonly UserManagementService _userManagementService = new UserManagementService();
 
         /// <summary>
         /// Method to create one user
