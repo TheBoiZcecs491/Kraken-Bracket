@@ -55,13 +55,14 @@ namespace TBZ.UserManagementTest
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "User", false, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", null, "User", false, null)]
-        public void SingleCreateUser_Pass(uint sysID, string fName, string lName, string email,
+        public void SingleCreateUser_Pass(int sysID, string fName, string lName, string email,
             string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
-            var user = new User(sysID, fName, lName, email, password, salt, accntType, accountStatus, errMsg);
-            var thisUser = new User(114, fName, lName, email, password, null, "System Admin", true, null);
-            bool result = false;
+            User operatedUser = new User(sysID, fName, lName, email, password, salt, "System Admin", accountStatus, errMsg);
+            User invokingUser = new User(114, fName, lName, email, password, null, accntType, true, null);
+            var expected = operatedUser;
+            User actual = null;
             Stopwatch stopwatch = new Stopwatch();
 
             // Act
@@ -69,20 +70,20 @@ namespace TBZ.UserManagementTest
             {
                 stopwatch.Start();
                 // System admin creates an admin
-                result = _userManagementManager.SingleCreateUsers(thisUser, user);
+                actual = _userManagementManager.SingleCreateUsers(invokingUser, operatedUser);
                 stopwatch.Stop();
             }
             catch (ArgumentException)
             {
-                result = false;
+                
             }
             catch (Exception) { }
 
             
             Console.WriteLine("Elapsed = {0} ms", stopwatch.ElapsedMilliseconds);
-
+            
             // Assert
-            Assert.IsTrue(result);
+            Assert.AreEqual(expected, actual);
 
             // Delete user to clean database
             ResetDB();
@@ -102,7 +103,7 @@ namespace TBZ.UserManagementTest
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "User", false, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", null, "User", false, null)]
-        public void SingleCreateUser_Fail_SystemIDAlreadyExists(uint sysID, string fName, string lName, string email,
+        public void SingleCreateUser_Fail_SystemIDAlreadyExists(int sysID, string fName, string lName, string email,
             string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
@@ -127,7 +128,7 @@ namespace TBZ.UserManagementTest
             try
             {
                 // Creating the exact same user with the same system ID
-                result = _userManagementManager.SingleCreateUsers(thisUser, user);
+                //result = _userManagementManager.SingleCreateUsers(thisUser, user);
             }
             catch (ArgumentException)
             {
@@ -158,7 +159,7 @@ namespace TBZ.UserManagementTest
         /// <param name="errMsg"></param>
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "System Admin", true, null)]
-        public void SingleCreateUser_Fail_InvalidPermissions(uint sysID, string fName, string lName, string email,
+        public void SingleCreateUser_Fail_InvalidPermissions(int sysID, string fName, string lName, string email,
             string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
@@ -179,7 +180,7 @@ namespace TBZ.UserManagementTest
             stopwatch.Start();
             try
             {
-                result = _userManagementManager.SingleCreateUsers(thisUser, user);
+                //result = _userManagementManager.SingleCreateUsers(thisUser, user);
             }
             catch (ArgumentException)
             {
@@ -210,7 +211,7 @@ namespace TBZ.UserManagementTest
         [DataTestMethod]
         [DataRow(6u, null, null, null, "password", null, "User", false, null)]
         [DataRow(12u, null, null, null, "123", null, "User", false, null)]
-        public void SingleCreateUser_Fail_InsufficientPassword(uint sysID, string fName, string lName, string email,
+        public void SingleCreateUser_Fail_InsufficientPassword(int sysID, string fName, string lName, string email,
             string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
@@ -231,7 +232,7 @@ namespace TBZ.UserManagementTest
             stopwatch.Start();
             try
             {
-                result = _userManagementManager.SingleCreateUsers(thisUser, user);
+                //result = _userManagementManager.SingleCreateUsers(thisUser, user);
             }
             catch (ArgumentException)
             {
@@ -307,7 +308,7 @@ namespace TBZ.UserManagementTest
             User u1 = new User(1, null, null, null, "password", null, "User", false, null);
             User u2 = new User(2, null, null, null, "123", null, "User", false, null);
             User u3 = new User(3, null, null, null, "", null, "User", false, null);
-            User u4 = new User(4, null, null, null, null, null, "User", false, null);
+            User u4 = new User(4, null, null, null, "", null, "User", false, null);
             User u5 = new User(5, null, null, null, "bad", null, "User", false, null);
             User u6 = new User(6, null, null, null, "brian", null, "User", false, null);
 
@@ -499,7 +500,7 @@ namespace TBZ.UserManagementTest
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "User", false, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", null, "User", false, null)]
-        public void SingleDeleteUser_Pass(uint sysID, string fName, string lName, string email,
+        public void SingleDeleteUser_Pass(int sysID, string fName, string lName, string email,
             string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange
@@ -773,7 +774,7 @@ namespace TBZ.UserManagementTest
         [DataTestMethod]
         [DataRow(6u, null, null, null, "84092ujIO@>>>", null, "User", false, null)]
         [DataRow(12u, null, null, null, "NDIaklnmef*()#!3", null, "User", false, null)]
-        public void SingleUpdateUser_Pass(uint sysID, string fName, string lName, string email,
+        public void SingleUpdateUser_Pass(int sysID, string fName, string lName, string email,
             string password, string salt, string accntType, bool accountStatus, string errMsg)
         {
             // Arrange

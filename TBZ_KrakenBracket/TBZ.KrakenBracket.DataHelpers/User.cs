@@ -6,7 +6,7 @@ namespace TBZ.DatabaseAccess
 {
     public class User
     {
-        public uint SystemID { get; set; } //IMMUTABLE
+        public int SystemID { get; set; } //IMMUTABLE
         public string FirstName { get; set; } //attr
         public string LastName { get; set; } //attr
         public string Email { get; set; } // update email thingy
@@ -24,7 +24,7 @@ namespace TBZ.DatabaseAccess
 
         public User() { }
 
-        public User(uint sysID, string fName, string lName, string email, string pass, string salt, string accntType, bool accntStatus, string errMsg)
+        public User(int sysID, string fName, string lName, string email, string pass, string salt, string accntType, bool accntStatus, string errMsg)
         {
             SystemID = sysID;
             FirstName = fName;

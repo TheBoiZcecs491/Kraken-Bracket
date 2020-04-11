@@ -18,36 +18,34 @@ namespace TBZ.UM_Manager
         /// User performing operation
         /// </param>
         /// 
-        /// <param name="checkedUser">
+        /// <param name="operatedUser">
         /// User to create
         /// </param>
         /// 
         /// <returns>
         /// True to indicate success or error if failed
         /// </returns>
-        public bool SingleCreateUsers(User thisUser, User checkedUser)
+        public User SingleCreateUsers(User invokingUser, User operatedUser)
         {
-
+            //TODO: have input validation for if the User object is null
             // Check permissions for user performing operation
-            bool permissionResult = _userManagementService.CheckPermission(thisUser, checkedUser, "Create");
-            if (permissionResult == true)
+            bool permissionResult = _userManagementService.CheckPermission(invokingUser, operatedUser, "Create");
+            if (permissionResult)
             {
-                // Attempt to create user
-                bool temp = _DataAccessService.CreateUser(checkedUser, true);
-                if (temp == true) return true;
-                else throw new ArgumentException("Failed to create user with associated ID");
+                _DataAccessService.CreateUser(operatedUser, true);
             }
             else
             {
-                throw new ArgumentException("Invalid permissions");
+                operatedUser.ErrorMessage = "Invalid permissions";
             }
+            return operatedUser;
         }
 
         /// <summary>
-        /// Method to create multiple users at once
+        /// Create multiple users at once
         /// </summary>
         /// 
-        /// <param name="thisUser">
+        /// <param name="invokingUser">
         /// User performing operation
         /// </param>
         /// 
@@ -62,43 +60,31 @@ namespace TBZ.UM_Manager
         /// <returns>
         /// List of users that were sucessfully created and list of users who failed to be created
         /// </returns>
-        public List<List<User>> BulkCreateUsers(User thisUser, List<User> users, bool passwordCheck)
+        public List<List<User>> BulkCreateUsers(User invokingUser, List<User> users, bool passwordCheck)
         {
-            bool listBool = _userManagementService.CheckListLength(users);
-            if (listBool == true)
+            bool sufficientLength = _userManagementService.CheckListLength(users);
+            if (!sufficientLength)
             {
-                List<User> passedIDs = new List<User>();
-                List<User> failedIDs = new List<User>();
-                foreach (User u in users)
-                {
-                    // Check permissions for user performing operation
-                    bool permissionCheck = _userManagementService.CheckPermission(thisUser, u, "Create");
-                    if (permissionCheck == true)
-                    {
-                        // Attempt to create user
-                        bool temp = _DataAccessService.CreateUser(u, passwordCheck);
-                        if (temp == true)
-                        {
-                            // Creation successful; store user in passed ID's
-                            passedIDs.Add(u);
-                        }
-                        else
-                        {
-                            // Deletion failed; store user in failed ID's
-                            failedIDs.Add(u);
-                        }
-                    }
-                    else
-                    {
-                        // Permission check failed; store user in failed ID's
-                        failedIDs.Add(u);
-                    }
-                }
-                return new List<List<User>> { passedIDs, failedIDs };
+                throw new ArgumentException("Insufficient list length");
             }
             else
             {
-                throw new ArgumentException("List length is insufficient");
+                List<User> passedIDs = new List<User>();
+                List<User> failedIDs = new List<User>();
+                foreach (User operatedUser in users)
+                {
+                    // Check permissions for user performing operation
+                    bool permissionCheck = _userManagementService.CheckPermission(invokingUser, operatedUser, "Create");
+                    if (permissionCheck)
+                    {
+                        // Attempt to create user
+                        bool creationResult = _DataAccessService.CreateUser(operatedUser, passwordCheck);
+                        if (creationResult) passedIDs.Add(operatedUser);
+                        else failedIDs.Add(operatedUser);
+                    }
+                    else failedIDs.Add(operatedUser);
+                }
+                return new List<List<User>> { passedIDs, failedIDs };
             }
 
         }

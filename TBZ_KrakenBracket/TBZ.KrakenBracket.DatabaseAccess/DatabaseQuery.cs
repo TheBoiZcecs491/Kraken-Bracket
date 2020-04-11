@@ -152,7 +152,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void DeleteUser(uint deleteValue)
+        public void DeleteUser(int deleteValue)
         {
 
             var DB = new Database();
