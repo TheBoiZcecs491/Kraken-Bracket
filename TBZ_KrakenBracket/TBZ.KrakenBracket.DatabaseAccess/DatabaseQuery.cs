@@ -5,6 +5,7 @@ using System.Linq;
 using TBZ.DatabaseAccess;
 using TBZ.DatabaseConnectionService;
 using TBZ.HashingService;
+using TBZ.KrakenBracket.DataHelpers;
 //using static TBZ.Manager.Hashing.ManagerHashing;
 
 namespace TBZ.DatabaseQueryService
@@ -91,7 +92,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void InsertBracketInfo(Bracket tempBracket)
+        public void InsertBracketInfo(BracketInfo tempBracket)
         {
             var DB = new Database();
 
@@ -104,7 +105,7 @@ namespace TBZ.DatabaseQueryService
                     comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
                     comm.Parameters.AddWithValue("@bracket_name", tempBracket.BracketName);
                     comm.Parameters.AddWithValue("@bracketTypeID", tempBracket.BracketTypeID);
-                    comm.Parameters.AddWithValue("@number_player", tempBracket.NumberPlayer);
+                    comm.Parameters.AddWithValue("@number_player", tempBracket.PlayerCount);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
