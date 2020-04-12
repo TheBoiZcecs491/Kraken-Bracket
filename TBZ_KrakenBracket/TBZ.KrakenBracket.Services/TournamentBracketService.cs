@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TBZ.KrakenBracket.Services
 {
-    class TournamentBracketService
+    public class TournamentBracketService
     {
     }
 }
