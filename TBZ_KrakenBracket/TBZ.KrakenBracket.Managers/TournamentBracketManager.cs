@@ -13,9 +13,21 @@ namespace TBZ.KrakenBracket.Managers
         {
             _tournamentBracketService = tournamentBracketService;
         }
-        public BracketInfo GetStatusCode(int bracketID)
+        public BracketInfo GetStatusCode(BracketInfo bracket)
         {
-            
+            int bracketID = _tournamentBracketService.CheckBracketStatusCode(bracket);
+            switch (bracketID)
+            {
+                case 0:
+                    return bracket;
+                case 1:
+                    return bracket;
+                case 2:
+                    return bracket;
+                default:
+                    return null;
+            }
+
         }
     }
 }
