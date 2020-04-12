@@ -19,9 +19,11 @@ namespace ClientApp.Controllers
             _tournamentBracketManager = tournamentBracketManager;
         }
         [HttpGet("TournamentBracket/{id}")]
-        public ActionResult<BracketInfo> GetBracketStatusCode(int bracketID)
+        public ActionResult<BracketInfo> GetBracketStatusCode(BracketInfo bracket)
         {
-            
+            var result = _tournamentBracketManager.GetStatusCode(bracket);
+            return result;
+
         }
 
     }
