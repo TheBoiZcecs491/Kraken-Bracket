@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TBZ.KrakenBracket.DataHelpers;
 
 namespace TBZ.KrakenBracket.DatabaseAccess
 {
@@ -37,6 +38,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 return false;
             }
+        }
+
+        public int GetBracketStatus(BracketInfo bracket)
+        {
+            bool bracketStatus = CheckBracketIDExistence(bracket.BracketID);
+            if (!bracketStatus) return -1;
+            else return bracket.StatusCode;
         }
     }
 }
