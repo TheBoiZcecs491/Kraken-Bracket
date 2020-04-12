@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TBZ.KrakenBracket.DataHelpers\TBZ.KrakenBracket.DataHelpers.csproj" />
+    <ProjectReference Include="..\TBZ.KrakenBracket.DatabaseAccess\TBZ.KrakenBracket.DatabaseAccess.csproj" />
   </ItemGroup>
 
 </Project>
