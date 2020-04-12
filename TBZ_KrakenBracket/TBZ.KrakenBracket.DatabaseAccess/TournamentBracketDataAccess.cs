@@ -40,11 +40,11 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public int GetBracketStatus(BracketInfo bracket)
+        public int GetBracketStatus(int bracketID)
         {
-            bool bracketStatus = CheckBracketIDExistence(bracket.BracketID);
+            bool bracketStatus = CheckBracketIDExistence(bracketID);
             if (!bracketStatus) return -1;
-            else return bracket.StatusCode;
+            else return bracketID;
         }
     }
 }

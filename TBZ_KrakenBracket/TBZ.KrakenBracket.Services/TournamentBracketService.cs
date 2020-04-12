@@ -13,10 +13,10 @@ namespace TBZ.KrakenBracket.Services
         {
             _tournamentBracketDataAccess = tournamentBracketDataAccess;
         }
-        public int CheckBracketStatusCode(BracketInfo bracket)
+        public int CheckBracketStatusCode(int bracketID)
         {
             
-            var result = _tournamentBracketDataAccess.GetBracketStatus(bracket);
+            var result = _tournamentBracketDataAccess.GetBracketStatus(bracketID);
             return result;
         }
     }
