@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TBZ.KrakenBracket.DatabaseAccess;
+using TBZ.KrakenBracket.Managers;
+using TBZ.KrakenBracket.Services;
 using TBZ.UM_Manager;
 
 namespace ClientApp
@@ -28,6 +31,9 @@ namespace ClientApp
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<UserManagementManager>();
+            services.AddSingleton<TournamentBracketManager>();
+            services.AddSingleton<TournamentBracketService>();
+            services.AddSingleton<TournamentBracketDataAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
