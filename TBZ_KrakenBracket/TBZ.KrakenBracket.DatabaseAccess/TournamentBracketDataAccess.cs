@@ -46,12 +46,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    string selectQuery = string.Format("SELECT number_player FROM bracket_info WHERE bracektID={0}", bracketID);
+                    string selectQuery = string.Format("SELECT number_player FROM bracket_info WHERE bracketID={0}", bracketID);
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                     conn.Open();
                     using (MySqlDataReader reader = selectCmd.ExecuteReader())
                     {
-                        return reader.GetInt32(0) ;
+                        return reader.Read() ?  reader.GetInt32(0) : -1;
                     }
                 }
             }
