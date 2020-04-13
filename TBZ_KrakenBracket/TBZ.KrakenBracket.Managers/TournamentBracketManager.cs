@@ -13,11 +13,17 @@ namespace TBZ.KrakenBracket.Managers
         {
             _tournamentBracketService = tournamentBracketService;
         }
-        public int GetStatusCode(int bracketID)
+        public int GetBracketStatusCode(int bracketID)
         {
             int result = _tournamentBracketService.CheckBracketStatusCode(bracketID);
             return result;
 
+        }
+
+        public int GetNumberOfCompetitors(int bracketID)
+        {
+            int result = _tournamentBracketService.GetNumberOfCompetitors(bracketID);
+            return result;
         }
     }
 }
