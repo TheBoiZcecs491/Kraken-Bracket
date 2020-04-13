@@ -18,13 +18,13 @@ namespace ClientApp.Controllers
         {
             _tournamentBracketManager = tournamentBracketManager;
         }
-        [HttpGet("{id}")]
+        [HttpGet]
         [Produces("application/json")]
         public IActionResult GetBracketStatusCode(int bracketID)
         {
             return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
         }
-        [HttpGet("{id}")]
+        [HttpGet("{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracketNumberOfCompetitors(int bracketID)
         {
