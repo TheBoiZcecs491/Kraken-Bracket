@@ -5,7 +5,7 @@ using System.Text;
 using TBZ.KrakenBracket.DataHelpers;
 using TBZ.KrakenBracket.Managers;
 
-namespace TBZ.KrakenBracket.Tests
+namespace TBZ.TournamentBracketTest
 {
     [TestClass]
     public class TournamentBracketTest
@@ -17,7 +17,7 @@ namespace TBZ.KrakenBracket.Tests
         {
             BracketInfo bracketInfo = new BracketInfo(1, "Test Name", 1, 127, "Mortal Kombat 11", "Xbox One", 
                 "No rules atm", new DateTime(2020, 5, 3), new DateTime(2020, 5, 3), 0);
-            var expected = 1;
+            var expected = bracketInfo.StatusCode;
             var actual = _tournamentBracketManager.GetBracketStatusCode(bracketInfo.BracketID);
             Assert.AreEqual(expected, actual);
         }
