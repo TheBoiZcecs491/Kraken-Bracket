@@ -65,7 +65,19 @@ namespace TBZ.KrakenBracket.DatabaseAccess
         {
             bool bracketStatus = CheckBracketIDExistence(bracketID);
             if (!bracketStatus) return -1;
-            else return bracketID;
+            else
+            {
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    string selectQuery = string.Format("SELECT status_code FROM bracket_info WHERE bracketID={0}", bracketID);
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                    conn.Open();
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        return reader.Read() ? reader.GetInt32(0) : -1;
+                    }
+                }
+            }
         }
     }
 }
