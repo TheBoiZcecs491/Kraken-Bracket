@@ -8,11 +8,8 @@ namespace TBZ.KrakenBracket.Services
 {
     public class TournamentBracketService
     {
-        private readonly TournamentBracketDataAccess _tournamentBracketDataAccess;
-        public TournamentBracketService(TournamentBracketDataAccess tournamentBracketDataAccess)
-        {
-            _tournamentBracketDataAccess = tournamentBracketDataAccess;
-        }
+        private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
+        
         public int CheckBracketStatusCode(int bracketID)
         {
             

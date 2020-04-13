@@ -8,11 +8,8 @@ namespace TBZ.KrakenBracket.Managers
 {
     public class TournamentBracketManager
     {
-        private readonly TournamentBracketService _tournamentBracketService;
-        public TournamentBracketManager(TournamentBracketService tournamentBracketService)
-        {
-            _tournamentBracketService = tournamentBracketService;
-        }
+        private readonly TournamentBracketService _tournamentBracketService = new TournamentBracketService();
+        
         public int GetBracketStatusCode(int bracketID)
         {
             int result = _tournamentBracketService.CheckBracketStatusCode(bracketID);
