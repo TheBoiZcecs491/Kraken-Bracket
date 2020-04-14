@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using TBZ.AuthorizationManager;
-using TBZ.DatabaseAccess;
+using TBZ.KrakenBracket.DataHelpers;
 using TBZ.KrakenBracket.Services;
 
 namespace TBZ.KrakenBracket.Managers
 {
-    class TournamentBracketManager
+    public class TournamentBracketManager
     {
         private readonly TournamentBracketService _TournamentBracketService = new TournamentBracketService();
         private readonly DataAccess TournamentDA = new DataAccess();
@@ -66,6 +65,20 @@ namespace TBZ.KrakenBracket.Managers
             {
                 return true;
             }
+        }
+        
+        public int GetBracketStatusCode(int bracketID)
+        {
+            int result = _tournamentBracketService.CheckBracketStatusCode(bracketID);
+            return result;
+
+        }
+
+        public int GetNumberOfCompetitors(int bracketID)
+        {
+            int result = _tournamentBracketService.GetNumberOfCompetitors(bracketID);
+            return result;
+
         }
     }
 }

@@ -47,19 +47,6 @@ namespace TBZ.DatabaseAccess
         public int TeamID { get; set; }
     }
 
-    public class Bracket
-    {
-        public int BracketID { get; set; }
-        public string BracketName { get; set; }
-        public int BracketTypeID { get; set; }
-        public int NumberPlayer { get; set; }
-        public string GamePlayed { get; set; }
-        public string GamingPlatform { get; set; }
-        public string Rules { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-    }
-
     public class BracketPlayer
     {
         public int BracketID { get; set; }
