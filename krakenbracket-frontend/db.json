@@ -11,6 +11,18 @@
             "start_date": "1000-01-01 00:00:00",
             "end_date": "9999-12-31 23:59:59",
             "status_code": 0
+        },
+        {
+            "id": 2,
+            "bracket_name": "Test Name 2",
+            "bracketTypeID": 2,
+            "number_player": 43,
+            "game_played": "Mortal Kombat X",
+            "gaming_platform": "PS4",
+            "rules": "No rules again",
+            "start_date": "1000-01-01 00:00:00",
+            "end_date": "9999-12-31 23:59:59",
+            "status_code": 2
         }
     ]
 }
