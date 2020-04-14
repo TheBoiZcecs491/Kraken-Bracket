@@ -2,7 +2,7 @@
     "brackets":[
         {
             "id": 1,
-            "bracket_name": "Test Name",
+            "bracket_name": "EVO 2020 - MK11",
             "bracketTypeID": 1,
             "number_player": 127,
             "game_played": "Mortal Kombat 11",
@@ -14,10 +14,10 @@
         },
         {
             "id": 2,
-            "bracket_name": "Test Name 2",
+            "bracket_name": "EVO 2020 - SFV AE",
             "bracketTypeID": 2,
             "number_player": 43,
-            "game_played": "Mortal Kombat X",
+            "game_played": "Street Fighter V: AE",
             "gaming_platform": "PS4",
             "rules": "No rules again",
             "start_date": "1000-01-01 00:00:00",
