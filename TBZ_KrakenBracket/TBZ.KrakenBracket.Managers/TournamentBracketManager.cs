@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TBZ.AuthorizationManager;
+using TBZ.KrakenBracket.DatabaseAccess;
 using TBZ.KrakenBracket.DataHelpers;
 using TBZ.KrakenBracket.Services;
 
@@ -8,8 +10,8 @@ namespace TBZ.KrakenBracket.Managers
 {
     public class TournamentBracketManager
     {
-        private readonly TournamentBracketService _TournamentBracketService = new TournamentBracketService();
-        private readonly DataAccess TournamentDA = new DataAccess();
+        private readonly TournamentBracketService _tournamentBracketService = new TournamentBracketService();
+        private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
         
         /// <summary>
         /// Checks to see if user is authorized to create a tournament bracket.
@@ -30,14 +32,14 @@ namespace TBZ.KrakenBracket.Managers
         /// </summary>
         /// <param name="bracketFields"> Fields passed from controller layer. </param>
         /// <returns> A boolean to confirm that fields align with business rules. </returns>
-        public bool ValidateFields(Bracket bracketFields)
+        public bool ValidateFields(BracketInfo bracketFields)
         {
             if ((bracketFields.BracketName.Length < 5) ||
                     (bracketFields.BracketName.Length > 75))
             {
                 throw new ArgumentException("Bracket name must be between 5-75 characters");
             }
-            else if (bracketFields.NumberPlayer > 128)
+            else if (bracketFields.PlayerCount > 128)
             {
                 throw new ArgumentException("No more than 128 competitors allowed");
             }

@@ -10,18 +10,18 @@ namespace TBZ.KrakenBracket.Services
     {
 
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
-        public bool CreateTournamentBracket(DataAccess _TournamentDA, Bracket bracketFields)
+        public bool CreateTournamentBracket(TournamentBracketDataAccess tournamentBracketDataAccess, BracketInfo bracketFields)
         {
             return true;
         }
         public bool GetBracketID(string email)
         {
             bool result = true;
+            return result;
         }
         
         public int CheckBracketStatusCode(int bracketID)
         {
-            
             var result = _tournamentBracketDataAccess.GetBracketStatusCode(bracketID);
             return result;
         }
@@ -29,7 +29,6 @@ namespace TBZ.KrakenBracket.Services
         public int GetNumberOfCompetitors(int bracketID)
         {
             var result = _tournamentBracketDataAccess.GetNumberOfCompetitors(bracketID);
-
             return result;
         }
     }
