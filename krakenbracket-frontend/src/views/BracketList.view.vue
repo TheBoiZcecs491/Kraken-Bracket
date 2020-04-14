@@ -2,7 +2,7 @@
     <div>
         <h1>Bracket Listings</h1>
         <!-- the :event sends each prop to the Bracket component -->
-        <Bracket v-for="bracket in brackets" :key="bracket.id" :event="bracket"/>
+        <Bracket v-for="bracket in brackets" :key="bracket.id" :bracket="bracket"/>
     </div>
 </template>
 
