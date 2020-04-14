@@ -21,7 +21,7 @@ export default {
         axios
         .get('http://localhost:3000/brackets')
         .then(response => {
-            this.brackets = response.data
+            console.log(response.data)
         })
         .catch(error =>{
             console.log("There was an error: " + error);
