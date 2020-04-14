@@ -4,7 +4,6 @@ using System.Text;
 using TBZ.AuthorizationManager;
 using TBZ.DatabaseAccess;
 using TBZ.KrakenBracket.Services;
-using Microsoft.AspNetCore.Authentication;
 
 namespace TBZ.KrakenBracket.Managers
 {
@@ -30,7 +29,7 @@ namespace TBZ.KrakenBracket.Managers
         /// <summary>
         /// Validates the bracket fields given according to business rules.
         /// </summary>
-        /// <param name="bracketFields"> Fields pass from controller layer. </param>
+        /// <param name="bracketFields"> Fields passed from controller layer. </param>
         /// <returns> A boolean to confirm that fields align with business rules. </returns>
         public bool ValidateFields(Bracket bracketFields)
         {

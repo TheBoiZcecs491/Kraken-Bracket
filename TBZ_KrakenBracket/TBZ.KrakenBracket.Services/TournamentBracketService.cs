@@ -7,9 +7,9 @@ namespace TBZ.KrakenBracket.Services
 {
     public class TournamentBracketService
     {
-        public int TournamentClaim(DataAccess _TournamentDA, string email, string claim, bool isLoggedIn)
+        public bool CreateTournamentBracket(DataAccess _TournamentDA, Bracket bracketFields)
         {
-            return 0;
+            return true;
         }
         public bool GetBracketID(string email)
         {
