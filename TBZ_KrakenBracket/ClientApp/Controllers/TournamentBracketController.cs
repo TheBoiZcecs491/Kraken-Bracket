@@ -9,7 +9,7 @@ using TBZ.KrakenBracket.Managers;
 
 namespace ClientApp.Controllers
 {
-    [Route("TournamentBracket/")]
+    [Route("api/bracket")]
     [ApiController]
     public class TournamentBracketController : ControllerBase
     {
@@ -18,12 +18,14 @@ namespace ClientApp.Controllers
         {
             _tournamentBracketManager = tournamentBracketManager;
         }
+
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetBracketStatusCode(int bracketID)
         {
             return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
         }
+
         [HttpGet("{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracketNumberOfCompetitors(int bracketID)
