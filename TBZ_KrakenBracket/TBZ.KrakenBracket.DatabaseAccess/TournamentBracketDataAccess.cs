@@ -79,5 +79,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
             }
         }
+
+        public BracketInfo GetBracket(int bracketID)
+        {
+            bool bracketStatus = CheckBracketIDExistence(bracketID);
+            if (!bracketStatus) return null;
+            else return null;
+        }
     }
 }

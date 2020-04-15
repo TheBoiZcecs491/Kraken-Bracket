@@ -26,7 +26,7 @@ namespace ClientApp.Controllers
             return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
         }
 
-        [HttpGet("{bracketID}")]
+        [HttpGet("competitors/{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracketNumberOfCompetitors(int bracketID)
         {
@@ -39,6 +39,12 @@ namespace ClientApp.Controllers
             {
                 return StatusCode(StatusCodes.Status204NoContent);
             }
+        }
+        [HttpGet("{bracketID}")]
+        [Produces("application/json")]
+        public IActionResult GetBracket(int bracketID)
+        {
+            return Ok(_tournamentBracketManager.GetBracket(bracketID));
         }
     }
 }

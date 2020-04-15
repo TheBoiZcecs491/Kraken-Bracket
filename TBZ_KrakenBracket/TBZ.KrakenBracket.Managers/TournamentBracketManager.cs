@@ -68,7 +68,12 @@ namespace TBZ.KrakenBracket.Managers
                 return true;
             }
         }
-        
+
+        public BracketInfo GetBracket(int bracketID)
+        {
+            return _tournamentBracketDataAccess.GetBracket(bracketID);
+        }
+
         public int GetBracketStatusCode(int bracketID)
         {
             int result = _tournamentBracketService.CheckBracketStatusCode(bracketID);
