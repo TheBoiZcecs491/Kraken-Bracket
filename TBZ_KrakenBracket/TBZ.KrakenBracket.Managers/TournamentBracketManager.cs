@@ -11,7 +11,6 @@ namespace TBZ.KrakenBracket.Managers
     public class TournamentBracketManager
     {
         private readonly TournamentBracketService _tournamentBracketService = new TournamentBracketService();
-        private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
         
         /// <summary>
         /// Checks to see if user is authorized to create a tournament bracket.

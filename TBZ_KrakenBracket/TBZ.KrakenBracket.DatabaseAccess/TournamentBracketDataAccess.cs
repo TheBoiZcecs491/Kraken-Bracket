@@ -79,5 +79,71 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
             }
         }
+
+        public bool InsertNewBracket(BracketInfo bracketFields)
+        {
+            try
+            {
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    string insertQuery = string.Format("INSERT INTO bracket_info " +
+                        "(bracket_name, bracketTypeID, number_player, game_played, gaming_platform, rules, start_date, end_date)" +
+                        "VALUES({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
+                        bracketFields.BracketName, bracketFields.BracketTypeID, bracketFields.PlayerCount, bracketFields.GamingPlatform,
+                        bracketFields.Rules, bracketFields.StartDate, bracketFields.EndDate);
+                    MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn);
+                    insertCmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false; // unsuccessful insert
+            }
+
+        }
+
+        public bool UpdateBracket(BracketInfo bracketFields)
+        {
+            try
+            {
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    string updateQuery = string.Format("UPDATE bracket_info " +
+                        "SET(bracket_name, bracketTypeID, number_player, game_played, gaming_platform, rules, start_date, end_date)" +
+                        "VALUES({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}) WHERE bracketID = {8}",
+                        bracketFields.BracketName, bracketFields.BracketTypeID, bracketFields.PlayerCount, bracketFields.GamingPlatform,
+                        bracketFields.Rules, bracketFields.StartDate, bracketFields.EndDate, bracketFields.BracketID);
+                    MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
+                    updateCmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false; // unsuccessful update
+            }
+        }
+
+        public bool DeleteBracket(BracketInfo bracketFields)
+        {
+            try
+            {
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    string deleteQuery = string.Format("DELETE FROM bracket_info WHERE bracketID = {0}", bracketFields.BracketID);
+                    MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                    deleteCmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false; // unsuccessful delete
+            }
+        }
     }
 }
