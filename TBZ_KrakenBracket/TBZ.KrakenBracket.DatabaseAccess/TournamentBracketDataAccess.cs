@@ -88,12 +88,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    string selectQuery = string.Format("SELECT status_code FROM bracket_info WHERE bracketID={0}", bracketID);
+                    string selectQuery = string.Format("SELECT * FROM bracket_info WHERE bracketID={0}", bracketID);
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                     conn.Open();
                     using (MySqlDataReader reader = selectCmd.ExecuteReader())
                     {
                         BracketInfo bracket = new BracketInfo();
+                        reader.Read();
                         bracket.BracketID = reader.GetInt32("bracketID");
                         bracket.BracketName = reader.GetString("bracket_name");
                         bracket.BracketTypeID = reader.GetInt32("bracketTypeID");
