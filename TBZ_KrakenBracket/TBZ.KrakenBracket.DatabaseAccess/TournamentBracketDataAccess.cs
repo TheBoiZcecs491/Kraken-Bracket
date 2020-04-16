@@ -80,19 +80,47 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public bool InsertNewBracket(BracketInfo bracketFields)
+        public int GetLatestBracketID()
         {
             try
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
+                    string selectQuery = string.Format(
+                        "SELECT MAX(bracketID) FROM bracket_info");
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                    conn.Open();
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        return reader.Read() ? reader.GetInt32(0) : -1; // Why is this not reading?
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error: ", e);
+            }
+            return -1;
+        }
+
+        public bool InsertNewBracket(BracketInfo bracketFields)
+        {
+            bracketFields.BracketID = GetLatestBracketID();
+            try
+            {
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    // TODO: Get the last BracketID (PRIMARY KEY) needed for this insert
                     string insertQuery = string.Format("INSERT INTO bracket_info " +
-                        "(bracket_name, bracketTypeID, number_player, game_played, gaming_platform, rules, start_date, end_date)" +
-                        "VALUES({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
-                        bracketFields.BracketName, bracketFields.BracketTypeID, bracketFields.PlayerCount, bracketFields.GamingPlatform,
-                        bracketFields.Rules, bracketFields.StartDate, bracketFields.EndDate);
+                        "(bracketID, bracket_name, bracketTypeID, number_player, game_played, gaming_platform, rules, start_date, end_date )" +
+                        "VALUES({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})",
+                        bracketFields.BracketID, bracketFields.BracketName, bracketFields.BracketTypeID, bracketFields.PlayerCount,
+                        bracketFields.GamePlayed, bracketFields.GamingPlatform, bracketFields.Rules, bracketFields.StartDate, bracketFields.EndDate);
                     MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn);
-                    insertCmd.ExecuteNonQuery();
+                    MySqlDataReader reader;
+                    conn.Open();
+                    reader = insertCmd.ExecuteReader();
+                    // insertCmd.ExecuteNonQuery();
                     conn.Close();
                 }
                 return true;
@@ -116,6 +144,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         bracketFields.BracketName, bracketFields.BracketTypeID, bracketFields.PlayerCount, bracketFields.GamingPlatform,
                         bracketFields.Rules, bracketFields.StartDate, bracketFields.EndDate, bracketFields.BracketID);
                     MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
+                    conn.Open();
                     updateCmd.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -135,6 +164,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     string deleteQuery = string.Format("DELETE FROM bracket_info WHERE bracketID = {0}", bracketFields.BracketID);
                     MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                    conn.Open();
                     deleteCmd.ExecuteNonQuery();
                     conn.Close();
                 }

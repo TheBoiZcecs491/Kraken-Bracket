@@ -38,7 +38,8 @@ namespace TBZ.DatabaseAccess
         // Have these test users with actions assigned
         Dictionary<string, List<string>> userActions = new Dictionary<string, List<string>>()
         {
-            {"brian@foomail.com", new List<string>(){"Update Event Information",
+            {"brian@foomail.com", new List<string>(){"Create Tournament Bracket",
+                                        "Update Event Information",
                                         "Update Tournament Bracket Information",
                                         "Manage Tournament Bracket",
                                         "Delete Tournament Bracket and Event",
