@@ -40,9 +40,9 @@ namespace TBZ.DatabaseAccess
         {
             {"brian@foomail.com", new List<string>(){"Create Tournament Bracket",
                                         "Update Event Information",
-                                        "Update Tournament Bracket Information",
+                                        "Update Tournament Bracket",
                                         "Manage Tournament Bracket",
-                                        "Delete Tournament Bracket and Event",
+                                        "Delete Tournament Bracket",
                                         "Assign Other Registered Users To Be A Co-Host",
                                         "Search For Tournament Brackets",
                                         "Search For Event", "Search For Registered User"} },

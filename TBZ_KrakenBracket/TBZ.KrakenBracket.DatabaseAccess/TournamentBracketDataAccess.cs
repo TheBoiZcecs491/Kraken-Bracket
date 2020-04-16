@@ -110,7 +110,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    // TODO: Get the last BracketID (PRIMARY KEY) needed for this insert
                     using(MySqlCommand insertCmd = conn.CreateCommand())
                     {
                         insertCmd.CommandText = "INSERT INTO bracket_info(bracketID, bracket_name, bracketTypeID, " +
@@ -137,7 +136,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 return false; // unsuccessful insert
             }
-
         }
 
         public bool UpdateBracket(BracketInfo bracketFields)
@@ -146,17 +144,34 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    string updateQuery = string.Format("UPDATE bracket_info " +
-                        "SET(bracket_name, bracketTypeID, number_player, game_played, gaming_platform, rules, start_date, end_date)" +
-                        "VALUES({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}) WHERE bracketID = {8}",
-                        bracketFields.BracketName, bracketFields.BracketTypeID, bracketFields.PlayerCount, bracketFields.GamingPlatform,
-                        bracketFields.Rules, bracketFields.StartDate, bracketFields.EndDate, bracketFields.BracketID);
-                    MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
-                    conn.Open();
-                    updateCmd.ExecuteNonQuery();
-                    conn.Close();
+                    using (MySqlCommand updateCmd = conn.CreateCommand())
+                    {
+                        updateCmd.CommandText = "UPDATE bracket_info " +
+                            "SET " +
+                            "bracket_name = @bracket_name, " +
+                            "bracketTypeID = @bracketTypeID, " +
+                            "number_player = @number_player, " +
+                            "game_played = @game_played, " +
+                            "gaming_platform = @gaming_platform, " +
+                            "rules = @rules, " +
+                            "start_date = @start_date, " +
+                            "end_date = @end_date " +
+                            "WHERE bracketID = @bracketID";
+                        updateCmd.Parameters.AddWithValue("@bracketID", bracketFields.BracketID);
+                        updateCmd.Parameters.AddWithValue("@bracket_name", bracketFields.BracketName);
+                        updateCmd.Parameters.AddWithValue("@bracketTypeID", bracketFields.BracketTypeID);
+                        updateCmd.Parameters.AddWithValue("@number_player", bracketFields.PlayerCount);
+                        updateCmd.Parameters.AddWithValue("@game_played", bracketFields.GamePlayed);
+                        updateCmd.Parameters.AddWithValue("@gaming_platform", bracketFields.GamingPlatform);
+                        updateCmd.Parameters.AddWithValue("@rules", bracketFields.Rules);
+                        updateCmd.Parameters.AddWithValue("@start_date", bracketFields.StartDate);
+                        updateCmd.Parameters.AddWithValue("@end_date", bracketFields.EndDate);
+                        conn.Open();
+                        updateCmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    return true;
                 }
-                return true;
             }
             catch (Exception)
             {
