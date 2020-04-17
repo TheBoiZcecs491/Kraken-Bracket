@@ -12,5 +12,8 @@ import axios from 'axios'
     export default {
       getBrackets() {
         return apiClient.get('/brackets')
+      },
+      getBracketByID(bracketID){
+        return apiClient.get('/brackets/' + bracketID)
       }
     }
