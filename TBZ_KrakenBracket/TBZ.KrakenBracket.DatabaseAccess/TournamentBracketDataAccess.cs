@@ -92,7 +92,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     conn.Open();
                     using (MySqlDataReader reader = selectCmd.ExecuteReader())
                     {
-                        return reader.Read() ? reader.GetInt32(0) : -1; // Why is this not reading?
+                        return reader.Read() ? reader.GetInt32(0) : -1;
                     }
                 }
             }
@@ -140,6 +140,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         public bool UpdateBracket(BracketInfo bracketFields)
         {
+            if(!CheckBracketIDExistence(bracketFields.BracketID))
+                return false;
             try
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
@@ -169,8 +171,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         conn.Open();
                         updateCmd.ExecuteNonQuery();
                         conn.Close();
+                        return true;
                     }
-                    return true;
                 }
             }
             catch (Exception)
