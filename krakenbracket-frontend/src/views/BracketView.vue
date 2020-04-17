@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="title">{{bracket.bracket_name}}</h1>
+        <h1 id="title">{{bracket.bracket_name}}</h1>
         <h3>Start Date: {{bracket.start_date}}</h3>
         <h3>End Date: {{bracket.end_date}}</h3>
         <h4>Number of players: {{bracket.number_player}}</h4>
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style scoped>
-.title{
+#title{
     font-size: 100px;
     font-weight: 800;
 }
