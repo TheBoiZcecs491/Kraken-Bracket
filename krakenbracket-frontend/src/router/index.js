@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import BracketList from "../views/BracketList.view.vue";
-import BracketView from "../views/BracketView.vue"
+import BracketView from "../views/BracketView.vue";
 
 Vue.use(VueRouter);
 
@@ -22,13 +22,13 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
-    path: '/bracket-list',
-    name: 'bracket-list',
+    path: "/bracket-list",
+    name: "bracket-list",
     component: BracketList
   },
   {
-    path: '/bracket-view/:id',
-    name: 'bracket-view',
+    path: "/bracket-view/:id",
+    name: "bracket-view",
     component: BracketView,
     props: true
   }
