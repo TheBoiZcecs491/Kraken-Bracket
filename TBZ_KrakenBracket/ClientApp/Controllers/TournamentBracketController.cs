@@ -42,9 +42,9 @@ namespace ClientApp.Controllers
 
         [HttpGet("{bracketID}")]
         [Produces("application/json")]
-        public IActionResult GetBracket(int bracketID)
+        public IActionResult GetBracketByID(int bracketID)
         {
-            return Ok(_tournamentBracketManager.GetBracket(bracketID));
+            return Ok(_tournamentBracketManager.GetBracketByID(bracketID));
         }
 
         [HttpGet]

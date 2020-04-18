@@ -80,7 +80,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public BracketInfo GetBracket(int bracketID)
+        public BracketInfo GetBracketByID(int bracketID)
         {
             bool bracketStatus = CheckBracketIDExistence(bracketID);
             if (!bracketStatus) return null;
