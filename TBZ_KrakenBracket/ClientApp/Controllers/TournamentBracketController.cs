@@ -9,7 +9,7 @@ using TBZ.KrakenBracket.Managers;
 
 namespace ClientApp.Controllers
 {
-    [Route("api/bracket")]
+    [Route("api/brackets")]
     [ApiController]
     public class TournamentBracketController : ControllerBase
     {
