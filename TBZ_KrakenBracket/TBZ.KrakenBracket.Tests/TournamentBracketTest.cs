@@ -45,6 +45,21 @@ namespace TBZ.TournamentBracketTest
             }
             Assert.IsTrue(result);
         }
+        [TestMethod]
+        public void GetAllBrackets_Pass()
+        {
+            bool result = true;
+            try
+            {
+                List<BracketInfo> actual = _tournamentBracketManager.GetAllBrackets();
+                if (actual == null) result = false;
+            }
+            catch(Exception e)
+            {
+                result = false;
+            }
+            Assert.IsTrue(result);
+        }
         
     }
 }
