@@ -19,7 +19,6 @@ namespace ClientApp.Controllers
             _tournamentBracketManager = tournamentBracketManager;
         }
 
-        [HttpGet]
         [Produces("application/json")]
         public IActionResult GetBracketStatusCode(int bracketID)
         {
@@ -40,13 +39,15 @@ namespace ClientApp.Controllers
                 return StatusCode(StatusCodes.Status204NoContent);
             }
         }
+
         [HttpGet("{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracket(int bracketID)
         {
             return Ok(_tournamentBracketManager.GetBracket(bracketID));
         }
-        [HttpGet("AllBrackets")]
+
+        [HttpGet]
         [Produces("application/json")]
         public IActionResult GetAllBrackets()
         {
