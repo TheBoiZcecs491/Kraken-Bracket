@@ -1,21 +1,23 @@
 <template>
-    <router-link class="bracket-link" :to="{name : 'bracket-view', params: {id: bracket.bracketID}}">
+  <router-link
+    class="bracket-link"
+    :to="{ name: 'bracket-view', params: { id: bracket.bracketID } }"
+  >
     <div class="bracket-card">
-        <h2>{{bracket.bracketName}}</h2>
-        <h3>Start Date: {{bracket.startDate}}</h3>
-        <h3>End Date: {{bracket.startDate}}</h3>
-        <h4>Number of players: {{bracket.playerCount}}</h4>
+      <h2>{{ bracket.bracketName }}</h2>
+      <h3>Start Date: {{ bracket.startDate }}</h3>
+      <h3>End Date: {{ bracket.startDate }}</h3>
+      <h4>Number of players: {{ bracket.playerCount }}</h4>
     </div>
-    </router-link>
+  </router-link>
 </template>
 
 <script>
-
 export default {
-    props: {
-        bracket: Object
-    }
-}
+  props: {
+    bracket: Object
+  }
+};
 </script>
 
 <style>
