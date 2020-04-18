@@ -46,5 +46,12 @@ namespace ClientApp.Controllers
         {
             return Ok(_tournamentBracketManager.GetBracket(bracketID));
         }
+        [HttpGet("AllBrackets")]
+        [Produces("application/json")]
+        public IActionResult GetAllBrackets()
+        {
+            return Ok(_tournamentBracketManager.GetAllBrackets());
+        }
+
     }
 }
