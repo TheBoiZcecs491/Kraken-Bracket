@@ -1,10 +1,10 @@
 <template>
-    <router-link class="bracket-link" :to="{name : 'bracket-view', params: {id: bracket.id}}">
+    <router-link class="bracket-link" :to="{name : 'bracket-view', params: {id: bracket.bracketID}}">
     <div class="bracket-card">
-        <h2>{{bracket.bracket_name}}</h2>
-        <h3>Start Date: {{bracket.start_date}}</h3>
-        <h3>End Date: {{bracket.end_date}}</h3>
-        <h4>Number of players: {{bracket.number_player}}</h4>
+        <h2>{{bracket.bracketName}}</h2>
+        <h3>Start Date: {{bracket.startDate}}</h3>
+        <h3>End Date: {{bracket.startDate}}</h3>
+        <h4>Number of players: {{bracket.playerCount}}</h4>
     </div>
     </router-link>
 </template>
