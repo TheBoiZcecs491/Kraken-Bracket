@@ -24,10 +24,21 @@ npm run test:unit
 ```
 npm run test:e2e
 ```
+```
+npx cypress run 
+```
+```
+npm cypress open
+```
 
 ### Lints and fixes files
 ```
 npm run lint
+```
+
+### Run JSON server 
+```
+json-server --watch db.json
 ```
 
 ### Customize configuration
