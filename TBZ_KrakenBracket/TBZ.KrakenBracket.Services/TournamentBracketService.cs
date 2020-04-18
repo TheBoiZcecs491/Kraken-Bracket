@@ -41,5 +41,9 @@ namespace TBZ.KrakenBracket.Services
             var result = _tournamentBracketDataAccess.GetNumberOfCompetitors(bracketID);
             return result;
         }
+        public BracketInfo GetTournamentBracket(int bracketID)
+        {
+            return _tournamentBracketDataAccess.GetBracket(bracketID);
+        }
     }
 }

@@ -15,6 +15,23 @@ namespace TBZ.TournamentBracketTest
     {
         private readonly TournamentBracketManager _tournamentBracketManager = new TournamentBracketManager();
         private readonly TournamentBracketService _tournamentBracketService = new TournamentBracketService();
+
+        [TestMethod]
+        public void GetBracket_Pass()
+        {
+            bool result = true;
+            try
+            {
+                BracketInfo actual = _tournamentBracketManager.GetBracket(1);
+                if (actual == null) result = false;
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+            Assert.IsTrue(result);
+        }
+
         [TestMethod]
         public void GetBracketStatusCode_Pass()
         {
