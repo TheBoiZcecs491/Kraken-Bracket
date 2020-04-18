@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h1 id="title">{{bracket.bracket_name}}</h1>
-        <h3>Start Date: {{bracket.start_date}}</h3>
-        <h3>End Date: {{bracket.end_date}}</h3>
-        <h4>Number of players: {{bracket.number_player}}</h4>
-        <h4>Game: {{bracket.game_played}}</h4>
-        <h4>Gaming platform: {{bracket.gaming_platform}}</h4>
+        <h1 id="title">{{bracket.bracketName}}</h1>
+        <h3>Start Date: {{bracket.startDate}}</h3>
+        <h3>End Date: {{bracket.endDate}}</h3>
+        <h4>Number of players: {{bracket.playerCount}}</h4>
+        <h4>Game: {{bracket.gamePlayed}}</h4>
+        <h4>Gaming platform: {{bracket.gamingPlatform}}</h4>
         <div>
             <h4>Rules:</h4>
             <p>{{bracket.rules}}</p>
