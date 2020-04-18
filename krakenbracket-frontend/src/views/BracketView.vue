@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div>
     <h1 id="title">{{ bracket.bracketName }}</h1>
     <h3>Start Date: {{ bracket.startDate }}</h3>
@@ -9,6 +10,10 @@
     <div>
       <h4>Rules:</h4>
       <p>{{ bracket.rules }}</p>
+=======
+    <div v-if="bracket">
+        <h1>{{bracket.id}}</h1>
+>>>>>>> parent of 1f5a6a7... Bracket Info Displayed (via URL)
     </div>
     <button>Register!</button>
   </div>
@@ -16,6 +21,7 @@
 <script>
 import BracketService from "@/services/BracketService.js";
 export default {
+<<<<<<< HEAD
   props: ["id"],
   data() {
     return {
@@ -40,3 +46,17 @@ export default {
   font-weight: 800;
 }
 </style>
+=======
+    props: ['id'],
+    data() {
+        return{
+            bracket: {}
+        }
+    },
+    created(){
+        BracketService.getBrackets(this.id)
+        .then(response => {this.bracket = response.data})
+    }
+}
+</script>
+>>>>>>> parent of 1f5a6a7... Bracket Info Displayed (via URL)
