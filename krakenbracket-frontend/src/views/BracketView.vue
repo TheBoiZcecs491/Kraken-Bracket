@@ -4,7 +4,9 @@
       <h1 id="title">{{ bracket.bracketName }}</h1>
       <h3>Start Date: {{ bracket.startDate }}</h3>
       <h3>End Date: {{ bracket.endDate }}</h3>
-      <h4>Number of players: {{ bracket.playerCount }}</h4>
+      <h4>
+        Number of players: {{ bracket.playerCount ? bracket.playerCount : 0 }}
+      </h4>
       <h4>Game: {{ bracket.gamePlayed }}</h4>
       <h4>Gaming platform: {{ bracket.gamingPlatform }}</h4>
       <div>
@@ -17,8 +19,17 @@
           params: { id: bracket.bracketID }
         }"
       >
-        <v-btn type="submit">Register!</v-btn>
+        <v-btn
+          v-show="bracket.statusCode === 0 && bracket.playerCount < 128"
+          type="submit"
+          >Register!</v-btn
+        >
       </router-link>
+      <v-btn
+        v-show="bracket.statusCode !== 0 || bracket.playerCount === 128"
+        disabled
+        >Register!</v-btn
+      >
     </div>
   </v-app>
 </template>
