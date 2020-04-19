@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using TBZ.DatabaseQueryService;
+using TBZ.KrakenBracket.DataHelpers;
 using TBZ.StringChecker;
 
 namespace TBZ.DatabaseAccess

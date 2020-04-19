@@ -133,7 +133,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void InsertEvent(Event tempEvent)
+        public void InsertEvent(EventInfo tempEvent)
         {
             var DB = new Database();
 
