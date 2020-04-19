@@ -113,7 +113,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void InsertBracketPlayer(BracketPlayer tempBracket)
+        public void InsertBracketPlayer(BracketPlayer bracketPlayer)
         {
             var DB = new Database();
 
@@ -121,11 +121,13 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "INSERT INTO bracket_player_info(bracketID, hashedUserID, roleID) VALUES(@bracketID, @hashedUserID, @roleID)";
+                    comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score)";
 
-                    comm.Parameters.AddWithValue("@bracketID", tempBracket.BracketID);
-                    comm.Parameters.AddWithValue("@hashedUserID", tempBracket.HashedUserID);
-                    comm.Parameters.AddWithValue("@roleID", tempBracket.RoleID);
+                    comm.Parameters.AddWithValue("@bracketID", bracketPlayer.BracketID);
+                    comm.Parameters.AddWithValue("@hashedUserID", bracketPlayer.HashedUserID);
+                    comm.Parameters.AddWithValue("@roleID", bracketPlayer.RoleID);
+                    comm.Parameters.AddWithValue("@placement", bracketPlayer.Placement);
+                    comm.Parameters.AddWithValue("@score", bracketPlayer.Score);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
