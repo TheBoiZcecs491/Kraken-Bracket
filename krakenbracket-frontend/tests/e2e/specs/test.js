@@ -19,15 +19,19 @@ describe("Viewing specific brackets", () => {
   it("Makes sure you are on the bracket listings", () => {
     //cy.pause();
     cy.contains("h1", "Bracket Listings");
-    cy.url().should('include', '/bracket-list')
+    cy.url().should("include", "/bracket-list");
   });
   it("Clicks on a bracket", () => {
     //cy.pause();
-    cy.get(".bracket-card:first").click();
+    cy.get(".bracket-link:first").click();
   });
   it("Makes sure you are on a specific bracket page", () => {
     cy.get("#title");
     cy.contains("button", "Register!");
     cy.url().should("include", "bracket-view");
   });
+  it("Clicks on the 'Register!' button and takes you to the bracket registration page", () =>{
+    cy.contains("Register!").click();
+    cy.contains("h1", "Signup");
+  })
 });
