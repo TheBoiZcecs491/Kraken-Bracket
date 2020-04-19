@@ -1,4 +1,5 @@
 <template>
+<v-app>
   <div>
     <h1 id="title">{{ bracket.bracketName }}</h1>
     <h3>Start Date: {{ bracket.startDate }}</h3>
@@ -10,11 +11,14 @@
       <h4>Rules:</h4>
       <p>{{ bracket.rules }}</p>
     </div>
-    <button>Register!</button>
+    <v-btn>Register!</v-btn>
   </div>
+  </v-app>
 </template>
+
 <script>
 import BracketService from "@/services/BracketService.js";
+
 export default {
   props: ["id"],
   data() {
@@ -36,7 +40,7 @@ export default {
 
 <style scoped>
 #title {
-  font-size: 100px;
+  font-size: 75px;
   font-weight: 800;
 }
 </style>
