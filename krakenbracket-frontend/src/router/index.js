@@ -35,7 +35,8 @@ const routes = [
   {
     path: "/bracket-view/:id/signup",
     name: "bracket-registration",
-    component: BracketRegistrationForm
+    component: BracketRegistrationForm,
+    props: true
   }
 ];
 
