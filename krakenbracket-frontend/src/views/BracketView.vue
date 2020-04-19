@@ -11,7 +11,12 @@
         <h4>Rules:</h4>
         <p>{{ bracket.rules }}</p>
       </div>
-      <router-link :to="{ name: 'bracket-registration', params: { id: bracket.bracketID } }">
+      <router-link
+        :to="{
+          name: 'bracket-registration',
+          params: { id: bracket.bracketID }
+        }"
+      >
         <v-btn type="submit">Register!</v-btn>
       </router-link>
     </div>

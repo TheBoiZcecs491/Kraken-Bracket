@@ -16,7 +16,13 @@
                 :rules="emailRules"
                 required
               ></v-text-field>
-              <v-text-field label="GamerTag" type="text" :rules="gamerTagRules" placeholder="gamertag#9999" required></v-text-field>
+              <v-text-field
+                label="GamerTag"
+                type="text"
+                :rules="gamerTagRules"
+                placeholder="gamertag#9999"
+                required
+              ></v-text-field>
               <v-btn type="submit" color="primary">Register!</v-btn>
             </v-flex>
             <v-flex xs4>
@@ -42,11 +48,15 @@ export default {
       email =>
         (email.length > 5 && email.length <= 200) || "Invalid email length"
     ],
-    gamerTagRules:[
-        gamerTag => !!gamerTag || "GamerTag is required",
-        gamerTag => gamerTag.includes("#") || "GamerTag must have # symbol",
-        gamerTag => gamerTag.indexOf("#") !== 0 || "Must have your Username before the # symbol",
-        gamerTag => (gamerTag.length >= 2 && gamerTag.length <= 20) || "Invalid GamerTag length. Must be between 2 and 20 characters"
+    gamerTagRules: [
+      gamerTag => !!gamerTag || "GamerTag is required",
+      gamerTag => gamerTag.includes("#") || "GamerTag must have # symbol",
+      gamerTag =>
+        gamerTag.indexOf("#") !== 0 ||
+        "Must have your Username before the # symbol",
+      gamerTag =>
+        (gamerTag.length >= 2 && gamerTag.length <= 20) ||
+        "Invalid GamerTag length. Must be between 2 and 20 characters"
     ]
   })
 };
