@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TBZ.DatabaseQueryService;
 using TBZ.KrakenBracket.DataHelpers;
 
 namespace TBZ.KrakenBracket.DatabaseAccess
@@ -108,6 +109,21 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         return bracket;
                     }
                 }
+            }
+        }
+
+        // TODO: retrieve the bracket and increment the number of players
+        public BracketPlayer InsertGamerToBracket(BracketPlayer bracketPlayer)
+        {
+            DatabaseQuery dq = new DatabaseQuery();
+            try
+            {
+                dq.InsertBracketPlayer(bracketPlayer);
+                return bracketPlayer;
+            }
+            catch
+            {
+                return null;
             }
         }
 
