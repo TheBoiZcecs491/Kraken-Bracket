@@ -69,6 +69,11 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
+        public BracketPlayer InsertGamerIntoBracket(BracketPlayer bracketPlayer)
+        {
+            return _tournamentBracketDataAccess.InsertGamerToBracket(bracketPlayer);
+        }
+
         public List<BracketInfo> GetAllBrackets()
         {
             List<BracketInfo> brackets = _tournamentBracketDataAccess.GetAllBrackets();
