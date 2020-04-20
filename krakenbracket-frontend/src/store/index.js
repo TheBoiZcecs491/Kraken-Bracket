@@ -5,7 +5,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: {isLoggedIn: false}
+    user: {
+      //gamerTagID: 'null',
+      isLoggedIn: false
+    }
   },
   mutations: {
     CHANGE_LOGGED_IN_STATUS(state){
@@ -13,5 +16,6 @@ export default new Vuex.Store({
     }
   },
   actions: {},
+  getters:{},
   modules: {}
 });
