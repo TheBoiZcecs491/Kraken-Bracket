@@ -13,7 +13,14 @@
         <h4>Rules:</h4>
         <p>{{ bracket.rules }}</p>
       </div>
-      <router-link
+      <router-link v-if="$store.state.user.isLoggedIn === false"
+        :to="{
+          name: 'login-view'
+        }"
+      >
+        <v-btn>Register!</v-btn>
+      </router-link>
+      <router-link v-else
         :to="{
           name: 'bracket-registration',
           params: { id: bracket.bracketID }
