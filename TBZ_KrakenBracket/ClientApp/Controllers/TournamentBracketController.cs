@@ -54,10 +54,10 @@ namespace ClientApp.Controllers
             return Ok(_tournamentBracketManager.GetAllBrackets());
         }
 
-        [HttpPost("{bracketID}/competitors")]
-        public IActionResult InsertGamerIntoBracket(BracketPlayer bracketPlayer)
+        [HttpPost("register")]
+        public IActionResult RegisterGamerIntoBracket(BracketPlayer bracketPlayer)
         {
-            return Ok(_tournamentBracketManager.InsertGamerIntoBracket(bracketPlayer));
+            return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(bracketPlayer));
         }
     }
 }

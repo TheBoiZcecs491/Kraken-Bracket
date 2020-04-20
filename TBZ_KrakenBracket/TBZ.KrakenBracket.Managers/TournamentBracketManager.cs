@@ -69,7 +69,7 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
-        public BracketPlayer InsertGamerIntoBracket(BracketPlayer bracketPlayer)
+        public BracketPlayer RegisterGamerIntoBracket(BracketPlayer bracketPlayer)
         {
             return _tournamentBracketDataAccess.InsertGamerToBracket(bracketPlayer);
         }
