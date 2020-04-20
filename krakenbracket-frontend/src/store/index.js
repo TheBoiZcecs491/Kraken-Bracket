@@ -1,11 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+//import axios from "axios";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    user: {isLoggedIn: false}
+  },
+  mutations: {
+    CHANGE_LOGGED_IN_STATUS(state){
+      state.user.isLoggedIn = !state.user.isLoggedIn
+    }
+  },
   actions: {},
   modules: {}
 });
