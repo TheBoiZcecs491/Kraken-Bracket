@@ -119,6 +119,22 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             try
             {
                 dq.InsertBracketPlayer(bracketPlayer);
+                using (conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    BracketInfo bracket = GetBracketByID(bracketPlayer.BracketID);
+                    if(bracket.PlayerCount >= 128)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        string updateQuery = string.Format("UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID={0}", bracketPlayer.BracketID);
+                        MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
+                        conn.Open();
+                        updateCmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
                 return bracketPlayer;
             }
             catch
