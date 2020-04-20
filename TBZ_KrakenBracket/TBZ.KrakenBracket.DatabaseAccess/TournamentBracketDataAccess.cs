@@ -112,13 +112,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        // TODO: retrieve the bracket and increment the number of players
         public BracketPlayer InsertGamerToBracket(BracketPlayer bracketPlayer)
         {
-            DatabaseQuery dq = new DatabaseQuery();
             try
             {
-                dq.InsertBracketPlayer(bracketPlayer);
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
                     BracketInfo bracket = GetBracketByID(bracketPlayer.BracketID);
@@ -128,6 +125,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     }
                     else
                     {
+                        DatabaseQuery dq = new DatabaseQuery();
+                        dq.InsertBracketPlayer(bracketPlayer);
                         string updateQuery = string.Format("UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID={0}", bracketPlayer.BracketID);
                         MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
                         conn.Open();
