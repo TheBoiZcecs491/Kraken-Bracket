@@ -3,7 +3,7 @@
     <v-container id="page-layout-fix">
       <h1 id="title">{{ bracket.bracketName }}</h1>
       <div style="text-align: left">
-        <v-row >
+        <v-row>
           <v-col cols="12" lg="6">
             <h3 class="dates">Start Date: {{ bracket.startDate }}</h3>
           </v-col>
@@ -13,6 +13,7 @@
         </v-row>
         <h4>
           Number of players: {{ bracket.playerCount ? bracket.playerCount : 0 }}
+          <span v-show="bracket.playerCount === 128">(MAX)</span>
         </h4>
         <h4>Game: {{ bracket.gamePlayed }}</h4>
         <h4>Gaming platform: {{ bracket.gamingPlatform }}</h4>
@@ -41,6 +42,7 @@
               name: 'bracket-registration',
               params: { id: bracket.bracketID }
             }"
+            class="register-btn"
           >
             <v-btn
               v-show="bracket.statusCode === 0 && bracket.playerCount < 128"
@@ -49,10 +51,16 @@
             >
           </router-link>
           <div v-if="bracket.statusCode === 1">
-            <p><strong>NOTE:</strong> Registration is disabled; bracket has already completed</p>
+            <p>
+              <strong>NOTE:</strong> Registration is disabled; bracket has
+              already completed
+            </p>
           </div>
           <div v-else-if="bracket.statusCode === 2">
-            <p><strong>NOTE:</strong> Registration is disabled; bracket is in progress</p>
+            <p>
+              <strong>NOTE:</strong> Registration is disabled; bracket is in
+              progress
+            </p>
           </div>
           <v-btn
             v-show="bracket.statusCode !== 0 || bracket.playerCount === 128"
@@ -97,9 +105,12 @@ export default {
   font-size: 50px;
   font-weight: 800;
 }
-#page-layout-fix{
+#page-layout-fix {
   padding-left: 10%;
   padding-right: 10%;
+}
+.register-btn {
+  text-decoration: none;
 }
 .dates {
   padding-top: 1em;
