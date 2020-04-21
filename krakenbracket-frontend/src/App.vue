@@ -4,7 +4,10 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/bracket-list">Bracket List</router-link> |
-      <router-link to="/login">Login</router-link>
+      <router-link v-if="$store.state.user.isLoggedIn === false" to="/login"
+        >Login</router-link
+      >
+      <router-link v-else to="/login">Logout</router-link>
     </div>
     <router-view />
   </div>
