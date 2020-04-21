@@ -3,7 +3,8 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/bracket-list">Bracket List</router-link>
+      <router-link to="/bracket-list">Bracket List</router-link> |
+      <router-link to="/new-bracket">New Bracket</router-link>
     </div>
     <router-view />
   </div>
