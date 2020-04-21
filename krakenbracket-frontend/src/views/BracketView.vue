@@ -20,6 +20,7 @@
           <h4>Rules:</h4>
           <p>{{ bracket.rules }}</p>
         </div>
+        <!-- State if the user is not logged in -->
         <div v-if="$store.state.user.isLoggedIn === false">
           <p>
             <strong>NOTE:</strong> You are not currently logged in. Please login
@@ -33,6 +34,7 @@
             <v-btn color="primary">Login</v-btn>
           </router-link>
         </div>
+        <!-- State if the user is logged in -->
         <div v-else>
           <router-link
             :to="{
@@ -46,6 +48,12 @@
               >Register!</v-btn
             >
           </router-link>
+          <div v-if="bracket.statusCode === 1">
+            <p><strong>NOTE:</strong> Registration is disabled; bracket has already completed</p>
+          </div>
+          <div v-else-if="bracket.statusCode === 2">
+            <p><strong>NOTE:</strong> Registration is disabled; bracket is in progress</p>
+          </div>
           <v-btn
             v-show="bracket.statusCode !== 0 || bracket.playerCount === 128"
             disabled
