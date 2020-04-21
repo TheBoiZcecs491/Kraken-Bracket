@@ -11,11 +11,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    CHANGE_LOGGED_IN_STATUS(state){
-      state.user.isLoggedIn = !state.user.isLoggedIn
+    CHANGE_LOGGED_IN_STATUS(state) {
+      state.user.isLoggedIn = !state.user.isLoggedIn;
     }
   },
   actions: {},
-  getters:{},
+  getters: {
+    isUserLoggedIn: state => {
+      return state.user.isLoggedIn;
+    }
+  },
   modules: {}
 });
