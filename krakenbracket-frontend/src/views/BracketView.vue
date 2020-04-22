@@ -22,7 +22,7 @@
           <p>{{ bracket.rules }}</p>
         </div>
         <!-- State if the user is not logged in -->
-        <div v-if="$store.state.user.isLoggedIn === false">
+        <div v-if="!loggedIn">
           <p>
             <strong>NOTE:</strong> You are not currently logged in. Please login
             to register for this bracket
@@ -75,7 +75,7 @@
 
 <script>
 import BracketService from "@/services/BracketService.js";
-
+import {authComputed} from '../store/helpers.js'
 export default {
   props: ["id"],
   data() {
@@ -93,9 +93,7 @@ export default {
       });
   },
   computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    }
+    ...authComputed
   }
 };
 </script>
