@@ -18,10 +18,10 @@ export default new Vuex.Store({
     // }
     SET_USER_DATA(state, userData) {
       state.user = userData;
-      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("user", JSON.stringify(userData))
       Axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${userData.token}`;
+      ] = `Bearer ${userData.token}`
     }
   },
   actions: {
@@ -35,9 +35,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    // isUserLoggedIn: state => {
-    //   return state.user.isLoggedIn;
-    // }
+    loggedIn (state){
+      return !!state.user
+    }
   },
   modules: {}
 });
