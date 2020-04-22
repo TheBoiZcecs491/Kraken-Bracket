@@ -1,6 +1,7 @@
 ﻿using System;
 using TBZ.DatabaseAccess;
 using TBZ.HashingService;
+using TBZ.KrakenBracket.DataHelpers;
 
 namespace TBZ.Manager.Hashing
 {

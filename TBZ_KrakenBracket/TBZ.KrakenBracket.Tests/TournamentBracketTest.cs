@@ -11,7 +11,7 @@ namespace TBZ.TournamentBracketTest
     public class TournamentBracketTest
     {
         private readonly TournamentBracketManager _tournamentBracketManager = new TournamentBracketManager();
-        
+
         [TestMethod]
         public void GetBracketStatusCode_Pass()
         {
@@ -53,6 +53,21 @@ namespace TBZ.TournamentBracketTest
             {
                 List<BracketInfo> actual = _tournamentBracketManager.GetAllBrackets();
                 if (actual == null) result = false;
+            }
+            catch(Exception e)
+            {
+                result = false;
+            }
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void GetUser()
+        {
+            bool result = true;
+            try
+            {
+                User user = _tournamentBracketManager.GetUser("user1@krakenbracket.com", "Pass1");
+                if (user == null) result = false;
             }
             catch(Exception e)
             {

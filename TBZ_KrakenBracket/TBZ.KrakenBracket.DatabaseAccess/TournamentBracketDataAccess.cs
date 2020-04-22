@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TBZ.DatabaseQueryService;
+using TBZ.HashingService;
 using TBZ.KrakenBracket.DataHelpers;
 
 namespace TBZ.KrakenBracket.DatabaseAccess
@@ -106,37 +107,78 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         bracket.StartDate = reader.GetDateTime("start_date");
                         bracket.EndDate = reader.GetDateTime("end_date");
                         bracket.StatusCode = reader.GetInt32("status_code");
+                        conn.Close();
                         return bracket;
                     }
                 }
             }
         }
 
-        public BracketPlayer InsertGamerToBracket(BracketPlayer bracketPlayer)
+        public User GetUser(string email, string password)
+        {
+            using (conn = new MySqlConnection(CONNECTION_STRING))
+            {
+                string selectQuery = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    User user = new User();
+                    reader.Read();
+                    user.Password = reader.GetString("hashed_password");
+                    user.Salt = reader.GetString("salt");
+                    MessageSalt msalt = new MessageSalt(password, user.Salt);
+                    msalt.GenerateHash(msalt);
+                    
+                    if (msalt.message == user.Password)
+                    {
+                        return user;
+                    }
+                    
+                }
+            }
+            return null;
+        }
+
+        public BracketPlayer InsertGamerToBracket(Gamer gamer, int bracketID)
         {
             try
             {
                 using (conn = new MySqlConnection(CONNECTION_STRING))
                 {
-                    BracketInfo bracket = GetBracketByID(bracketPlayer.BracketID);
+                    BracketInfo bracket = GetBracketByID(bracketID);
                     if(bracket.PlayerCount >= 128)
                     {
                         return null;
                     }
                     else
                     {
+                        
+                        string gamerSearch = string.Format("SELECT * FROM gamer_info WHERE gamerTag='{0}' AND gamerTagID={1}", gamer.GamerTag, gamer.GamerTagID);
+                        MySqlCommand gamerSearchCmd = new MySqlCommand(gamerSearch, conn);
+                        conn.Open();
+                        MySqlDataReader reader= gamerSearchCmd.ExecuteReader();
+
+                        BracketPlayer bracketPlayer = new BracketPlayer();
+                        bracketPlayer.BracketID = bracket.BracketID;
+                        reader.Read();
+                        
+                        bracketPlayer.HashedUserID = reader.GetString("hashedUserID");
+                        conn.Close();
                         DatabaseQuery dq = new DatabaseQuery();
                         dq.InsertBracketPlayer(bracketPlayer);
-                        string updateQuery = string.Format("UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID={0}", bracketPlayer.BracketID);
+                        string updateQuery = string.Format("UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID={0}", bracket.BracketID);
+
                         MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
                         conn.Open();
                         updateCmd.ExecuteNonQuery();
                         conn.Close();
+                        return bracketPlayer;
                     }
                 }
-                return bracketPlayer;
+                
             }
-            catch
+            catch(Exception e)
             {
                 return null;
             }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TBZ.DatabaseAccess
+namespace TBZ.KrakenBracket.DataHelpers
 {
     public class User
     {
