@@ -65,7 +65,6 @@ export default {
         console.log("data", response);
         this.bracket = response.data;
       });
-      // FIX: rework database to NOT accept hashed user ID
       axios.post(`https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`, {
         bracketID: this.bracket.bracketID,
         gamerTag: this.gamerTag,
