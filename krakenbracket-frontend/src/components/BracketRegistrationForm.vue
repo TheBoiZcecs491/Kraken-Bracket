@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div>
-      <h1>Signup for {{bracket.bracketName}}</h1>
+      <h1>Signup for {{ bracket.bracketName }}</h1>
       <v-form @submit.prevent="formSubmit">
         <v-container fluid>
           <v-layout row>
@@ -9,21 +9,17 @@
               <!-- This element's content is intentionally empty -->
             </v-flex>
             <v-flex xs4>
-              <!-- <input type="text" value> -->
-              <v-text-field
-                v-model="userID"
-                label="Email"
-                type="text"
-                placeholder="john@gmail.com"
-                :rules="emailRules"
-                required
-              ></v-text-field>
               <v-text-field
                 v-model="gamerTag"
                 label="GamerTag"
                 type="text"
-                :rules="gamerTagRules"
-                placeholder="gamertag#9999"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="gamerTagID"
+                label="ID"
+                type="text"
+                placeholder="9999"
                 required
               ></v-text-field>
               <v-btn type="submit" color="primary">Register!</v-btn>
@@ -44,12 +40,15 @@ import axios from "axios";
 
 export default {
   props: ["id"],
-  data () {
+  data() {
     return {
       bracket: {},
-      bracketID: '',
-      userID: ''
-    }
+      gamer:{
+        gamerTag: "",
+        gamerTagID: ""
+      }
+      
+    };
   },
   created() {
     BracketService.getBracketByID(this.id)
@@ -61,40 +60,40 @@ export default {
       });
   },
   methods: {
-      formSubmit(){
-        BracketService.getBracketByID(this.id)
-        .then(response => {
-          console.log('data', response);
-          this.bracket = response.data;
-        })
-        // FIX: rework database to NOT accept hashed user ID
-        axios.post('https://localhost:44352/api/brackets/register', {
-            bracketID: this.bracket.bracketID,
-            hashedUserID: this.userID
-        })
-      }
+    formSubmit() {
+      BracketService.getBracketByID(this.id).then(response => {
+        console.log("data", response);
+        this.bracket = response.data;
+      });
+      // FIX: rework database to NOT accept hashed user ID
+      axios.post(`https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`, {
+        bracketID: this.bracket.bracketID,
+        gamerTag: this.gamerTag,
+        gamerTagID: this.gamerTagID
+      });
     }
   }
-  // data: () => ({
-  //   emailRules: [
-  //     email => !!email || "Email is required",
-  //     email => email.indexOf("@") !== 0 || "Email should have a name before it",
-  //     email => email.includes("@") || "Email should include @ symbol",
-  //     email =>
-  //       email.indexOf(".") - email.indexOf("@") > 1 ||
-  //       "Email should contain a valid domain name",
-  //     email =>
-  //       (email.length > 5 && email.length <= 200) || "Invalid email length"
-  //   ],
-  //   gamerTagRules: [
-  //     gamerTag => !!gamerTag || "GamerTag is required",
-  //     gamerTag => gamerTag.includes("#") || "GamerTag must have # symbol",
-  //     gamerTag =>
-  //       gamerTag.indexOf("#") !== 0 ||
-  //       "Must have your Username before the # symbol",
-  //     gamerTag =>
-  //       (gamerTag.length >= 2 && gamerTag.length <= 20) ||
-  //       "Invalid GamerTag length. Must be between 2 and 20 characters"
-  //   ]
-  // })
+};
+// data: () => ({
+//   emailRules: [
+//     email => !!email || "Email is required",
+//     email => email.indexOf("@") !== 0 || "Email should have a name before it",
+//     email => email.includes("@") || "Email should include @ symbol",
+//     email =>
+//       email.indexOf(".") - email.indexOf("@") > 1 ||
+//       "Email should contain a valid domain name",
+//     email =>
+//       (email.length > 5 && email.length <= 200) || "Invalid email length"
+//   ],
+//   gamerTagRules: [
+//     gamerTag => !!gamerTag || "GamerTag is required",
+//     gamerTag => gamerTag.includes("#") || "GamerTag must have # symbol",
+//     gamerTag =>
+//       gamerTag.indexOf("#") !== 0 ||
+//       "Must have your Username before the # symbol",
+//     gamerTag =>
+//       (gamerTag.length >= 2 && gamerTag.length <= 20) ||
+//       "Invalid GamerTag length. Must be between 2 and 20 characters"
+//   ]
+// })
 </script>
