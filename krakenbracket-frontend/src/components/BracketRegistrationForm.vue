@@ -1,6 +1,9 @@
 <template>
   <v-app>
-    <div>
+    <div v-if="!loggedIn">
+      <NotLoggedIn />
+    </div>
+    <div v-else>
       <h1>Signup for {{ bracket.bracketName }}</h1>
       <v-form @submit.prevent="formSubmit">
         <v-container fluid>
@@ -37,17 +40,21 @@
 <script>
 import BracketService from "@/services/BracketService.js";
 import axios from "axios";
+import { authComputed } from "../store/helpers.js";
+import NotLoggedIn from "../components/NotLoggedIn.vue";
 
 export default {
   props: ["id"],
+  components: {
+    NotLoggedIn
+  },
   data() {
     return {
       bracket: {},
-      gamer:{
+      gamer: {
         gamerTag: "",
         gamerTagID: ""
       }
-      
     };
   },
   created() {
@@ -65,12 +72,18 @@ export default {
         console.log("data", response);
         this.bracket = response.data;
       });
-      axios.post(`https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`, {
-        bracketID: this.bracket.bracketID,
-        gamerTag: this.gamerTag,
-        gamerTagID: this.gamerTagID
-      });
+      axios.post(
+        `https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`,
+        {
+          bracketID: this.bracket.bracketID,
+          gamerTag: this.gamerTag,
+          gamerTagID: this.gamerTagID
+        }
+      );
     }
+  },
+  computed: {
+    ...authComputed
   }
 };
 // data: () => ({
