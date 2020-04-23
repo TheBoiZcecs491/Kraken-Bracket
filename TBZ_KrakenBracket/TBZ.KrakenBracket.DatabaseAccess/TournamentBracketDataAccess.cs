@@ -153,26 +153,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     }
                     else
                     {
-                        
-                        string gamerSearch = string.Format("SELECT * FROM gamer_info WHERE gamerTag='{0}' AND gamerTagID={1}", gamer.GamerTag, gamer.GamerTagID);
-                        MySqlCommand gamerSearchCmd = new MySqlCommand(gamerSearch, conn);
-                        conn.Open();
-                        MySqlDataReader reader= gamerSearchCmd.ExecuteReader();
-
+                        DatabaseQuery databaseQuery = new DatabaseQuery();
+                        Gamer tempGamer = databaseQuery.GetGamerInfo(gamer);
                         BracketPlayer bracketPlayer = new BracketPlayer();
                         bracketPlayer.BracketID = bracket.BracketID;
-                        reader.Read();
-                        
-                        bracketPlayer.HashedUserID = reader.GetString("hashedUserID");
-                        conn.Close();
-                        DatabaseQuery dq = new DatabaseQuery();
-                        dq.InsertBracketPlayer(bracketPlayer);
-                        string updateQuery = string.Format("UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID={0}", bracket.BracketID);
-
-                        MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
-                        conn.Open();
-                        updateCmd.ExecuteNonQuery();
-                        conn.Close();
+                        bracketPlayer.HashedUserID = tempGamer.HashedUserID;
+                        databaseQuery.InsertBracketPlayer(bracketPlayer);
+                        databaseQuery.IncrementBracketPlayerCount(bracket);
                         return bracketPlayer;
                     }
                 }
@@ -180,6 +167,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
             catch(Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
