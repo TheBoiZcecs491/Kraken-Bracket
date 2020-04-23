@@ -10,9 +10,7 @@
   </div>
 </template>
 
-<script>
-
-</script>
+<script></script>
 
 <style>
 #app {
