@@ -144,26 +144,22 @@ namespace TBZ.KrakenBracket.DatabaseAccess
         {
             try
             {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
+                BracketInfo bracket = GetBracketByID(bracketID);
+                if(bracket.PlayerCount >= 128)
                 {
-                    BracketInfo bracket = GetBracketByID(bracketID);
-                    if(bracket.PlayerCount >= 128)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        DatabaseQuery databaseQuery = new DatabaseQuery();
-                        Gamer tempGamer = databaseQuery.GetGamerInfo(gamer);
-                        BracketPlayer bracketPlayer = new BracketPlayer();
-                        bracketPlayer.BracketID = bracket.BracketID;
-                        bracketPlayer.HashedUserID = tempGamer.HashedUserID;
-                        databaseQuery.InsertBracketPlayer(bracketPlayer);
-                        databaseQuery.IncrementBracketPlayerCount(bracket);
-                        return bracketPlayer;
-                    }
+                    return null;
                 }
-                
+                else
+                {
+                    DatabaseQuery databaseQuery = new DatabaseQuery();
+                    Gamer tempGamer = databaseQuery.GetGamerInfo(gamer);
+                    BracketPlayer bracketPlayer = new BracketPlayer();
+                    bracketPlayer.BracketID = bracket.BracketID;
+                    bracketPlayer.HashedUserID = tempGamer.HashedUserID;
+                    databaseQuery.InsertBracketPlayer(bracketPlayer);
+                    databaseQuery.IncrementBracketPlayerCount(bracket);
+                    return bracketPlayer;
+                }
             }
             catch(Exception e)
             {
