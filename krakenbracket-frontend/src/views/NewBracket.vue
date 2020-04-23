@@ -10,7 +10,7 @@
                     placeholder="EVO 2020 SFVAE Pools - 1"
                 ></v-text-field>
 
-                <v-container id="dropdown">
+                <v-container id="BracketType">
                     <v-overflow-btn
                         class="my-4"
                         :items="dropdown_bracketType"
@@ -20,7 +20,7 @@
                 </v-container>
 
                 <v-slider
-                v-model="slider"
+                v-model="CompetitorCount"
                 class="align-center"
                 :max=128
                 :min=2
@@ -38,7 +38,7 @@
                 </template>
                 </v-slider>
 
-                <v-container id="dropdown-playground">
+                <v-container id="GamePlayed">
                     <v-overflow-btn
                         class="my-2"
                         :items="dropdown_gamePlayed"
@@ -56,6 +56,8 @@
                         label="Game played"
                         target="#dropdown_gamePlayed"
                     ></v-overflow-btn>
+                </v-container>
+                <v-container id="GamePlatform">
                     <v-overflow-btn
                         class="my-2"
                         :items="dropdown_gamePlatform"
@@ -78,7 +80,7 @@
                 <v-row>
                     <v-col cols="12" md="15">
                         <v-textarea
-                        name="input-7-1"
+                        name="Rules"
                         label="Rule set"
                         hint="700 char max"
                         ></v-textarea>
@@ -90,7 +92,7 @@
                         <v-col cols="12" lg="6">
                             <v-menu
                             ref="menu1"
-                            v-model="menu1"
+                            v-model="StartDate"
                             :close-on-content-click="false"
                             transition="scale-transition"
                             offset-y
@@ -113,7 +115,7 @@
                         <v-col cols="12" lg="6">
                             <v-menu
                             ref="menu1"
-                            v-model="menu1"
+                            v-model="EndDate"
                             :close-on-content-click="false"
                             transition="scale-transition"
                             offset-y
@@ -153,5 +155,10 @@
       'Mortal Kombat 11', 'Injustice 2', 'Killer Instinct'],
       dropdown_gamePlatform: ['Playstation 3', 'Playstation 4', 'Xbox 360', 'Xbox One', 'Wii', 'Wii U', "Switch"]
     }),
+    methods: {
+        Submit() {
+        }
+
+    },
   }
 </script>
