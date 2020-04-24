@@ -114,38 +114,46 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public List<BracketPlayer> GetBracketPlayerInfo(User user)
+        public List<BracketPlayer> GetBracketPlayerInfo(string email)
         {
             using(conn = new MySqlConnection(CONNECTION_STRING))
             {
-                string selectQuery = string.Format("SELECT * FROM userid WHERE userID={0}", user.SystemID);
-                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                string selectQuery0 = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
+                MySqlCommand selectCmd0 = new MySqlCommand(selectQuery0, conn);
                 conn.Open();
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                using(MySqlDataReader reader0 = selectCmd0.ExecuteReader())
                 {
-                    reader.Read();
-                    string hashedUserID = reader.GetString("hashed_userID");
+                    reader0.Read();
+                    int systemID = reader0.GetInt32("userID");
                     conn.Close();
-                    string selectQuery2 = string.Format("SELECT * FROM bracket_player_info WHERE hashedUserID='{0}'", hashedUserID);
-                    MySqlCommand selectCmd2 = new MySqlCommand(selectQuery2, conn);
+                    string selectQuery = string.Format("SELECT * FROM userid WHERE userID={0}", systemID);
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                     conn.Open();
-                    using(MySqlDataReader reader2 = selectCmd2.ExecuteReader())
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
                     {
-                        List<BracketPlayer> bracketPlayers = new List<BracketPlayer>();
-                        while (reader.Read())
+                        reader.Read();
+                        string hashedUserID = reader.GetString("hashed_userID");
+                        conn.Close();
+                        string selectQuery2 = string.Format("SELECT * FROM bracket_player_info WHERE hashedUserID='{0}'", hashedUserID);
+                        MySqlCommand selectCmd2 = new MySqlCommand(selectQuery2, conn);
+                        conn.Open();
+                        using (MySqlDataReader reader2 = selectCmd2.ExecuteReader())
                         {
-                            BracketPlayer bracketPlayer = new BracketPlayer();
-                            bracketPlayer.BracketID = reader2.GetInt32("bracketID");
-                            bracketPlayer.HashedUserID = reader2.GetString("hashedUserID");
-                            bracketPlayer.RoleID = reader2.GetInt32("roleID");
-                            bracketPlayer.Placement = reader2.GetInt32("placement");
-                            bracketPlayer.Score = reader2.GetInt32("score");
-                            bracketPlayers.Add(bracketPlayer);
+                            List<BracketPlayer> bracketPlayers = new List<BracketPlayer>();
+                            while (reader2.Read())
+                            {
+                                BracketPlayer bracketPlayer = new BracketPlayer();
+                                bracketPlayer.BracketID = reader2.GetInt32("bracketID");
+                                bracketPlayer.HashedUserID = reader2.GetString("hashedUserID");
+                                bracketPlayer.RoleID = reader2.GetInt32("roleID");
+                                bracketPlayer.Placement = reader2.GetInt32("placement");
+                                bracketPlayer.Score = reader2.GetInt32("score");
+                                bracketPlayers.Add(bracketPlayer);
+                            }
+                            conn.Close();
+                            return bracketPlayers;
                         }
-                        conn.Close()
-                        return bracketPlayers;
                     }
-
                 }
             }
         }
