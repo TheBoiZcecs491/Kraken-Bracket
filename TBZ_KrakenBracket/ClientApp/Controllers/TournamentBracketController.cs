@@ -40,9 +40,28 @@ namespace ClientApp.Controllers
         }
         [HttpGet("{bracketID}")]
         [Produces("application/json")]
-        public IActionResult GetBracket(int bracketID)
+        public IActionResult GetBracketByID(int bracketID)
         {
-            return Ok(_tournamentBracketManager.GetBracket(bracketID));
+            return Ok(_tournamentBracketManager.GetBracketByID(bracketID));
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetAllBrackets()
+        {
+            return Ok(_tournamentBracketManager.GetAllBrackets());
+        }
+
+        [HttpPost("{bracketID}/register/{gamer}")]
+        [Produces("application/json")]
+        public IActionResult RegisterGamerIntoBracket(int bracketID, Gamer gamer)
+        {
+            return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
+        }
+        [HttpPost("login")]
+        public IActionResult LoginUser(User user)
+        {
+            return Ok(_tournamentBracketManager.GetUser(user.Email, user.Password));
         }
     }
 }

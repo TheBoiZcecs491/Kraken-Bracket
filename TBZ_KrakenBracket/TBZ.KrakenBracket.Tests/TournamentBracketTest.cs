@@ -22,7 +22,7 @@ namespace TBZ.TournamentBracketTest
             bool result = true;
             try
             {
-                BracketInfo actual = _tournamentBracketManager.GetBracket(1);
+                BracketInfo actual = _tournamentBracketManager.GetBracketByID(1);
                 if (actual == null) result = false;
             }
             catch (Exception e)

@@ -11,7 +11,8 @@ namespace TBZ.KrakenBracket.Managers
     public class TournamentBracketManager
     {
         private readonly TournamentBracketService _tournamentBracketService = new TournamentBracketService();
-        
+        private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
+
         /// <summary>
         /// Checks to see if user is authorized to create a tournament bracket.
         /// User only needs to be a registered user and logged in to do so.
@@ -67,7 +68,28 @@ namespace TBZ.KrakenBracket.Managers
                 return true;
             }
         }
-        
+
+        public User GetUser(string email, string password)
+        {
+            return _tournamentBracketDataAccess.GetUser(email, password);
+        }
+
+        public BracketPlayer RegisterGamerIntoBracket(Gamer gamer, int bracketID)
+        {
+            return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
+        }
+
+        public List<BracketInfo> GetAllBrackets()
+        {
+            List<BracketInfo> brackets = _tournamentBracketDataAccess.GetAllBrackets();
+            return brackets;
+        }
+
+        public BracketInfo GetBracketByID(int bracketID)
+        {
+            return _tournamentBracketDataAccess.GetBracketByID(bracketID);
+        }
+
         public int GetBracketStatusCode(int bracketID)
         {
             int result = _tournamentBracketService.CheckBracketStatusCode(bracketID);
@@ -80,10 +102,6 @@ namespace TBZ.KrakenBracket.Managers
             int result = _tournamentBracketService.GetNumberOfCompetitors(bracketID);
             return result;
 
-        }
-        public BracketInfo GetBracket(int bracketID)
-        {
-            return _tournamentBracketService.GetTournamentBracket(bracketID);
         }
     }
 }

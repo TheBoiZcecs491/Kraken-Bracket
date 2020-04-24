@@ -10,15 +10,6 @@
                     placeholder="EVO 2020 SFVAE Pools - 1"
                 ></v-text-field>
 
-                <v-container id="BracketType">
-                    <v-overflow-btn
-                        class="my-4"
-                        :items="dropdown_bracketType"
-                        label="Bracket Type"
-                        target="#dropdown"
-                    ></v-overflow-btn>
-                </v-container>
-
                 <v-slider
                 v-model="CompetitorCount"
                 class="align-center"
@@ -149,7 +140,6 @@
 <script>
   export default {
     data: () => ({
-      dropdown_bracketType: ['Single Elimination', 'Double Elimination', 'Round Robin'],
       dropdown_gamePlayed:['Street Fighter V - Arcade Edition', 'The King of Fighters XIV',
       'Tekken 7', 'Super Smash Bros. Ultimate', 'Samurai Shodown', "Soul Calibur VI", 
       'Mortal Kombat 11', 'Injustice 2', 'Killer Instinct'],
