@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
     };
   },
   methods: {
@@ -50,12 +50,18 @@ export default {
       this.$store
         .dispatch("login", {
           email: this.email,
-          password: this.password
-        })
+          password: this.password})
+        // }).then(() => {
+        //   this.$router.push({name: "Home"})
+        // });
+      this.$store.dispatch("bracketPlayerInfo", this.email)
         .then(() => {
           this.$router.push({ name: "Home" });
         });
     }
+  },
+  created(){
+
   }
 };
 </script>
