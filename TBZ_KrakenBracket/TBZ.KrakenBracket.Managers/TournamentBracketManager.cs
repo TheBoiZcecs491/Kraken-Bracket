@@ -69,6 +69,11 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
+        public List<BracketPlayer> GetBracketPlayerInfo(string email)
+        {
+            return _tournamentBracketDataAccess.GetBracketPlayerInfo(email);
+        }
+
         public User GetUser(string email, string password)
         {
             return _tournamentBracketDataAccess.GetUser(email, password);

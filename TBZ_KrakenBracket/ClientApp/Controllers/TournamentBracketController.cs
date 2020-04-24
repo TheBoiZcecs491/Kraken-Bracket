@@ -60,6 +60,13 @@ namespace ClientApp.Controllers
         {
             return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
         }
+        [HttpGet("{email}/bracketPlayerInfo")]
+        [Produces("application/json")]
+        public IActionResult GetBracketPlayerInfo(int userID)
+        {
+            return Ok(_tournamentBracketManager.GetBracketPlayerInfo(userID));
+        }
+
         [HttpPost("login")]
         public IActionResult LoginUser(User user)
         {
