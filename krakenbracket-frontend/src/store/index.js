@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import Axios from "axios";
-//import axios from "axios";
+import axios from "axios";
+import BracketService from "@/services/BracketService.js";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -10,7 +11,8 @@ export default new Vuex.Store({
     //   //gamerTagID: 'null',
     //   isLoggedIn: false
     // }
-    user: null
+    user: null,
+    bracketPlayerInfo: []
   },
   mutations: {
     // CHANGE_LOGGED_IN_STATUS(state) {
@@ -19,24 +21,39 @@ export default new Vuex.Store({
     SET_USER_DATA(state, userData) {
       state.user = userData;
       localStorage.setItem("user", JSON.stringify(userData));
-      Axios.defaults.headers.common[
+      axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${userData.token}`;
+    },
+    SET_USER_BRACKET_INFO(state, data){
+      state.bracketPlayerInfo =data;
+      localStorage.setItem("user", JSON.stringify(data));
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${data.token}`;
     }
   },
   actions: {
     login({ commit }, credentials) {
-      return Axios.post(
+      return axios.post(
         "https://localhost:44352/api/brackets/login",
         credentials
       ).then(({ data }) => {
         commit("SET_USER_DATA", data);
       });
+    },
+    bracketPlayerInfo({commit}, email){
+      BracketService.getBracketPlayerInfo(email).then(({data}) =>{
+        commit("SET_USER_BRACKET_INFO", data);
+      })
     }
   },
   getters: {
     loggedIn(state) {
       return !!state.user;
+    },
+    bracketPlayerInfo(state){
+      return state.bracketPlayerInfo
     }
   },
   modules: {}
