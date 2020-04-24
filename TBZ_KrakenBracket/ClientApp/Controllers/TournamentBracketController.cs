@@ -62,9 +62,9 @@ namespace ClientApp.Controllers
         }
         [HttpGet("{email}/bracketPlayerInfo")]
         [Produces("application/json")]
-        public IActionResult GetBracketPlayerInfo(int userID)
+        public IActionResult GetBracketPlayerInfo(string email)
         {
-            return Ok(_tournamentBracketManager.GetBracketPlayerInfo(userID));
+            return Ok(_tournamentBracketManager.GetBracketPlayerInfo(email));
         }
 
         [HttpPost("login")]
