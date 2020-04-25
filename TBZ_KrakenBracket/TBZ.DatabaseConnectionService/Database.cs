@@ -9,7 +9,7 @@ namespace TBZ.DatabaseConnectionService
         public string GetConnString()
         {
             //return @"server=localhost; userid=root; password=gray$cale917!!; database=kraken_bracket";
-            return @"server=localhost; userid=root; password=password; database=tbz_krackenbracket";
+            return @"server=localhost:3306; userid=root; password=password; database=tbz_krackenbracket";
         }
 
         public string GetConnStringWrong()
