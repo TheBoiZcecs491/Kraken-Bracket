@@ -24,20 +24,7 @@ namespace ClientApp.Controllers
         {
             return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
         }
-        [HttpGet("{bracketID}")]
-        [Produces("application/json")]
-        public IActionResult GetBracketNumberOfCompetitors(int bracketID)
-        {
-            var result = _tournamentBracketManager.GetBracketStatusCode(bracketID);
-            if (result == 0)
-            {
-                return Ok(_tournamentBracketManager.GetNumberOfCompetitors(bracketID));
-            }
-            else
-            {
-                return StatusCode(StatusCodes.Status204NoContent);
-            }
-        }
+        
         [HttpGet("{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracketByID(int bracketID)

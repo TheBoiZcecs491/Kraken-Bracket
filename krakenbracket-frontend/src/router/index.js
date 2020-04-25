@@ -4,7 +4,8 @@ import Home from "../views/Home.vue";
 import BracketList from "../views/BracketList.view.vue";
 import BracketView from "../views/BracketView.vue";
 import NewBracket from "../views/NewBracket.vue";
-
+import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
+import LoginView from "../views/LoginView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -32,6 +33,17 @@ const routes = [
     name: "bracket-view",
     component: BracketView,
     props: true
+  },
+  {
+    path: "/bracket-view/:id/signup",
+    name: "bracket-registration",
+    component: BracketRegistrationForm,
+    props: true
+  },
+  {
+    path: "/login",
+    name: "login-view",
+    component: LoginView
   },
   {
     path: "/new-bracket",
