@@ -7,6 +7,7 @@
             <v-col cols="4"></v-col>
             <v-col cols="12" sm="4">
               <v-text-field
+                class="email-input"
                 label="Email"
                 type="email"
                 placeholder="john@foomail.com"
@@ -14,6 +15,7 @@
                 required
               ></v-text-field>
               <v-text-field
+                class="password-input"
                 label="Password"
                 type="password"
                 v-model="password"
