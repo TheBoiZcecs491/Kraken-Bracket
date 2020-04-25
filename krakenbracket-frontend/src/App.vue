@@ -4,10 +4,13 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/bracket-list">Bracket List</router-link>
+      <!-- <router-link to="/login">Login</router-link> -->
     </div>
     <router-view />
   </div>
 </template>
+
+<script></script>
 
 <style>
 #app {
@@ -28,6 +31,6 @@
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #80308d;
 }
 </style>

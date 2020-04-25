@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TBZ.DatabaseAccess
+namespace TBZ.KrakenBracket.DataHelpers
 {
     public class User
     {
@@ -38,33 +38,4 @@ namespace TBZ.DatabaseAccess
 
         }
     }
-
-    public class Gamer
-    {
-        public int HashedUserID { get; set; }
-        public string GamerTag { get; set; }
-        public int GamerTagID { get; set; }
-        public int TeamID { get; set; }
-    }
-
-    public class BracketPlayer
-    {
-        public int BracketID { get; set; }
-        public int HashedUserID { get; set; }
-        public int RoleID { get; set; }
-        public int Placement { get; set; }
-        public int Score { get; set; }
-    }
-
-    public class Event
-    {
-        public int EventID { get; set; }
-        public string EventName { get; set; }
-        public string Address { get; set; }
-        public string Description { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-    }
-
-
 }

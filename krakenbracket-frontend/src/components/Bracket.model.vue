@@ -1,40 +1,45 @@
 <template>
-    <router-link class="bracket-link" :to="{name : 'bracket-view', params: {id: bracket.id}}">
-    <div class="bracket-card">
-        <h2>{{bracket.bracket_name}}</h2>
-        <h3>Start Date: {{bracket.start_date}}</h3>
-        <h3>End Date: {{bracket.end_date}}</h3>
-        <h4>Number of players: {{bracket.number_player}}</h4>
-    </div>
+  <div class="bracket-card">
+    <h2 class="bracket-name">{{ bracket.bracketName }}</h2>
+    <h3>Start Date: {{ bracket.startDate }}</h3>
+    <h3>End Date: {{ bracket.startDate }}</h3>
+    <h4>
+      Number of players: {{ bracket.playerCount }}
+      <span v-show="bracket.playerCount === 128">(MAX)</span>
+    </h4>
+    <br />
+    <router-link
+      class="bracket-link"
+      :to="{ name: 'bracket-view', params: { id: bracket.bracketID } }"
+    >
+      <v-btn class="primary" color="#2196F3">View Bracket</v-btn>
     </router-link>
+  </div>
 </template>
 
 <script>
-
 export default {
-    props: {
-        bracket: Object
-    }
-}
+  props: {
+    bracket: Object
+  }
+};
 </script>
 
 <style>
 .bracket-card {
   padding: 20px;
+  padding-top: 30px;
   margin-bottom: 24px;
   transition: all 0.2s linear;
-  cursor: pointer;
-}
-.bracket-card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2), 0 1px 15px 0 rgba(0, 0, 0, 0.19);
-}
-.bracket-card > .title {
-  margin: 0;
 }
 .bracket-link {
   color: black;
   text-decoration: none;
   font-weight: 100;
+}
+.bracket-name {
+  padding-bottom: 10px;
+  font-style: italic;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 </style>

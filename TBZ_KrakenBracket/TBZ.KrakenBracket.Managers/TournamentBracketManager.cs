@@ -69,9 +69,25 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
-        public BracketInfo GetBracket(int bracketID)
+        public User GetUser(string email, string password)
         {
-            return _tournamentBracketDataAccess.GetBracket(bracketID);
+            return _tournamentBracketDataAccess.GetUser(email, password);
+        }
+
+        public BracketPlayer RegisterGamerIntoBracket(Gamer gamer, int bracketID)
+        {
+            return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
+        }
+
+        public List<BracketInfo> GetAllBrackets()
+        {
+            List<BracketInfo> brackets = _tournamentBracketDataAccess.GetAllBrackets();
+            return brackets;
+        }
+
+        public BracketInfo GetBracketByID(int bracketID)
+        {
+            return _tournamentBracketDataAccess.GetBracketByID(bracketID);
         }
 
         public int GetBracketStatusCode(int bracketID)
