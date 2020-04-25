@@ -35,6 +35,10 @@
             <v-btn color="primary">Login</v-btn>
           </router-link>
         </div>
+        <div v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)">
+          <p>You are already registered for this event</p>
+          <v-btn>Unregister</v-btn>
+        </div>
         <!-- State if the user is logged in -->
         <div v-else>
           <router-link
@@ -94,6 +98,15 @@ export default {
   },
   computed: {
     ...authComputed
+  },
+  methods:{
+    registeredStatus(bracketPlayerInfo, bracket){
+      for (let index = 0; index < bracketPlayerInfo.length; index++) {
+        if (bracketPlayerInfo[index].bracketID === bracket.bracketID){
+          return true
+        }
+      }
+    }
   }
 };
 </script>
