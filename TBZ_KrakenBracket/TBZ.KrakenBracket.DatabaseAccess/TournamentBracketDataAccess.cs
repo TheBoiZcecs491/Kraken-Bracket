@@ -116,71 +116,45 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         public List<BracketPlayer> GetBracketPlayerInfo(string email)
         {
-            using(conn = new MySqlConnection(CONNECTION_STRING))
-            {
-                string selectQuery0 = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
-                MySqlCommand selectCmd0 = new MySqlCommand(selectQuery0, conn);
-                conn.Open();
-                using(MySqlDataReader reader0 = selectCmd0.ExecuteReader())
-                {
-                    reader0.Read();
-                    int systemID = reader0.GetInt32("userID");
-                    conn.Close();
-                    string selectQuery = string.Format("SELECT * FROM userid WHERE userID={0}", systemID);
-                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                    conn.Open();
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                    {
-                        reader.Read();
-                        string hashedUserID = reader.GetString("hashed_userID");
-                        conn.Close();
-                        string selectQuery2 = string.Format("SELECT * FROM bracket_player_info WHERE hashedUserID='{0}'", hashedUserID);
-                        MySqlCommand selectCmd2 = new MySqlCommand(selectQuery2, conn);
-                        conn.Open();
-                        using (MySqlDataReader reader2 = selectCmd2.ExecuteReader())
-                        {
-                            List<BracketPlayer> bracketPlayers = new List<BracketPlayer>();
-                            while (reader2.Read())
-                            {
-                                BracketPlayer bracketPlayer = new BracketPlayer();
-                                bracketPlayer.BracketID = reader2.GetInt32("bracketID");
-                                bracketPlayer.HashedUserID = reader2.GetString("hashedUserID");
-                                bracketPlayer.RoleID = reader2.GetInt32("roleID");
-                                bracketPlayer.Placement = reader2.GetInt32("placement");
-                                bracketPlayer.Score = reader2.GetInt32("score");
-                                bracketPlayers.Add(bracketPlayer);
-                            }
-                            conn.Close();
-                            return bracketPlayers;
-                        }
-                    }
-                }
-            }
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            string hashedUserID = databaseQuery.GetHashedUserID(user.SystemID);
+            List<BracketPlayer> bracketPlayers = databaseQuery.GetBracketPlayerInfo(hashedUserID);
+            return bracketPlayers;            
         }
 
         public User GetUser(string email, string password)
         {
-            using (conn = new MySqlConnection(CONNECTION_STRING))
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            MessageSalt messageSalt = new MessageSalt(password, user.Salt);
+            messageSalt.GenerateHash(messageSalt);
+            if (messageSalt.message == user.Password)
             {
-                string selectQuery = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
-                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                conn.Open();
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                {
-                    User user = new User();
-                    reader.Read();
-                    user.Password = reader.GetString("hashed_password");
-                    user.Salt = reader.GetString("salt");
-                    MessageSalt msalt = new MessageSalt(password, user.Salt);
-                    msalt.GenerateHash(msalt);
-                    
-                    if (msalt.message == user.Password)
-                    {
-                        return user;
-                    }
-                    
-                }
+                return user;
             }
+            //using (conn = new MySqlConnection(CONNECTION_STRING))
+            //{
+            //    string selectQuery = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
+            //    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+            //    conn.Open();
+            //    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+            //    {
+            //        User user = new User();
+            //        reader.Read();
+            //        user.Password = reader.GetString("hashed_password");
+            //        user.Salt = reader.GetString("salt");
+            //        conn.Close();
+            //        MessageSalt msalt = new MessageSalt(password, user.Salt);
+            //        msalt.GenerateHash(msalt);
+
+            //        if (msalt.message == user.Password)
+            //        {
+            //            return user;
+            //        }
+
+            //    }
+            //}
             return null;
         }
 

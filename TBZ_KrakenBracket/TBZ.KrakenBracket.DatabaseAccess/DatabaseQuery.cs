@@ -182,13 +182,8 @@ namespace TBZ.DatabaseQueryService
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
                     comm.CommandText = "UPDATE " + tableName + " SET " + columnName + " = '" + updateValue + "'" + " WHERE " + variable + " = " + value;
-                    //comm.Parameters.AddWithValue("@value", value);
-                    //comm.Parameters.AddWithValue("@updateValue", updateValue);
-                    conn.Open();//ya bongus u needed to open the connection
+                    conn.Open();
                     comm.ExecuteNonQuery();
-                    //TODO: okay b/c I was having trubbs with trying to get this to work. ONLY TO REALIZE THAT BOIO FORGOT TO PUT IN comm.Open()
-                    //now, this is not the kosher way to handle these update sql commands, so I will need to come back and fix that.
-                    //I should use those comm.Parameters which I commented out due to string format paranoia.
                     conn.Close();
                 }
             }
@@ -201,7 +196,6 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    //string updateQuery = string.Format("UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID={0}", bracket.BracketID);
                     comm.CommandText = "UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID=@BracketID";
                     comm.Parameters.AddWithValue("@BracketID", bracket.BracketID);
                     conn.Open();
@@ -234,6 +228,80 @@ namespace TBZ.DatabaseQueryService
                 }
             }
             
+        }
+        public User GetUserInfo(string email)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "SELECT * FROM user_information WHERE email=@Email";
+                    comm.Parameters.AddWithValue("@Email", email);
+                    conn.Open();
+                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    {
+                        User user = new User();
+                        reader.Read();
+                        user.SystemID = reader.GetInt32("userID");
+                        user.Email = reader.GetString("email");
+                        user.FirstName = reader.GetString("fname");
+                        user.LastName = reader.GetString("lname");
+                        user.Password = reader.GetString("hashed_password");
+                        user.Salt = reader.GetString("salt");
+                        user.AccountType = reader.GetString("account_type");
+                        user.AccountStatus = reader.GetBoolean("account_status");
+                        conn.Close();
+                        return user;
+                    }
+                }
+            }
+        }
+        public string GetHashedUserID(int systemID)
+        {
+            var DB = new Database();
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                // Retrieve the system ID
+                string selectQuery0 = string.Format("SELECT * FROM userid WHERE userID={0}", systemID);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery0, conn);
+                conn.Open();
+                using (MySqlDataReader reader0 = selectCmd.ExecuteReader())
+                {
+                    reader0.Read();
+                    string hashedUserID = reader0.GetString("hashed_userID");
+                    conn.Close();
+                    return hashedUserID;
+                }
+            }
+        }
+
+        public List<BracketPlayer> GetBracketPlayerInfo(string hashedUserID)
+        {
+            var DB = new Database();
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string selectQuery2 = string.Format("SELECT * FROM bracket_player_info WHERE hashedUserID='{0}'", hashedUserID);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery2, conn);
+                conn.Open();
+                using (MySqlDataReader reader0 = selectCmd.ExecuteReader())
+                {
+                    List<BracketPlayer> bracketPlayers = new List<BracketPlayer>();
+                    while (reader0.Read())
+                    {
+                        BracketPlayer bracketPlayer = new BracketPlayer();
+                        bracketPlayer.BracketID = reader0.GetInt32("bracketID");
+                        bracketPlayer.HashedUserID = reader0.GetString("hashedUserID");
+                        bracketPlayer.RoleID = reader0.GetInt32("roleID");
+                        bracketPlayer.Placement = reader0.GetInt32("placement");
+                        bracketPlayer.Score = reader0.GetInt32("score");
+                        bracketPlayers.Add(bracketPlayer);
+                    }
+                    conn.Close();
+                    return bracketPlayers;
+                }
+            }
         }
     }
 }
