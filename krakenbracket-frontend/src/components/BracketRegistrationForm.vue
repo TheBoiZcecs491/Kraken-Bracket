@@ -13,6 +13,15 @@
             </v-flex>
             <v-flex xs4>
               <v-text-field
+                class="email-input"
+                v-model="email"
+                label="Email"
+                type="email"
+                placeholder="john@foomail.com"
+                required
+              >
+              </v-text-field>
+              <v-text-field
                 class="gamertag-input"
                 v-model="gamerTag"
                 label="GamerTag"
@@ -59,7 +68,8 @@ export default {
       gamer: {
         gamerTag: "",
         gamerTagID: ""
-      }
+      },
+      email: ""
     };
   },
   created() {
@@ -73,10 +83,6 @@ export default {
   },
   methods: {
     formSubmit() {
-      BracketService.getBracketByID(this.id).then(response => {
-        console.log("data", response);
-        this.bracket = response.data;
-      });
       axios.post(
         `https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`,
         {
@@ -85,12 +91,12 @@ export default {
           gamerTagID: this.gamerTagID
         }
       );
-      // this.$store.dispatch("bracketPlayerInfo", this.email);
+      setTimeout(() => { this.$store.dispatch("bracketPlayerInfo", this.email);}, 500)
     }
   },
   computed: {
     ...authComputed
-  }
+  },
 };
 // data: () => ({
 //   emailRules: [
