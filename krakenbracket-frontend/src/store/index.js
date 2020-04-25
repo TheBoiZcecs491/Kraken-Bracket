@@ -12,7 +12,7 @@ export default new Vuex.Store({
     //   isLoggedIn: false
     // }
     user: null,
-    bracketPlayerInfo: []
+    bracketPlayerInfo: [],
   },
   mutations: {
     // CHANGE_LOGGED_IN_STATUS(state) {
@@ -27,7 +27,7 @@ export default new Vuex.Store({
     },
     SET_USER_BRACKET_INFO(state, data){
       state.bracketPlayerInfo =data;
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("bracketPlayerInfo", JSON.stringify(data));
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${data.token}`;
@@ -54,6 +54,9 @@ export default new Vuex.Store({
     },
     bracketPlayerInfo(state){
       return state.bracketPlayerInfo
+    },
+    userInformation(state){
+      return state.user
     }
   },
   modules: {}
