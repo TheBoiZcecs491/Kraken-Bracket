@@ -12,7 +12,7 @@ namespace TBZ.KrakenBracket.Managers
     {
         private readonly TournamentBracketService _tournamentBracketService = new TournamentBracketService();
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
-        
+
         /// <summary>
         /// Checks to see if user is authorized to create a tournament bracket.
         /// User only needs to be a registered user and logged in to do so.
@@ -72,11 +72,6 @@ namespace TBZ.KrakenBracket.Managers
         public List<BracketPlayer> GetBracketPlayerInfo(string email)
         {
             return _tournamentBracketDataAccess.GetBracketPlayerInfo(email);
-        }
-
-        public User GetUser(string email, string password)
-        {
-            return _tournamentBracketDataAccess.GetUser(email, password);
         }
 
         public BracketPlayer RegisterGamerIntoBracket(Gamer gamer, int bracketID)

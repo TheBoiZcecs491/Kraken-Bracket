@@ -9,6 +9,7 @@ using TBZ.UM_Manager;
 //these two are for my reset button
 using MySql.Data.MySqlClient;
 using TBZ.DatabaseConnectionService;
+using TBZ.KrakenBracket.DataHelpers;
 
 namespace TBZ.UserManagementTest
 {

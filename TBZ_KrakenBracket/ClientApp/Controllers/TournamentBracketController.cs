@@ -24,20 +24,31 @@ namespace ClientApp.Controllers
         {
             return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
         }
-
+        
         [HttpGet("competitors/{bracketID}")]
         [Produces("application/json")]
-        public IActionResult GetBracketNumberOfCompetitors(int bracketID)
+        public IActionResult GetBracketByID(int bracketID)
         {
-            var result = _tournamentBracketManager.GetBracketStatusCode(bracketID);
-            if (result == 0)
-            {
-                return Ok(_tournamentBracketManager.GetNumberOfCompetitors(bracketID));
-            }
-            else
-            {
-                return StatusCode(StatusCodes.Status204NoContent);
-            }
+            return Ok(_tournamentBracketManager.GetBracketByID(bracketID));
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetAllBrackets()
+        {
+            return Ok(_tournamentBracketManager.GetAllBrackets());
+        }
+
+        [HttpPost("{bracketID}/register/{gamer}")]
+        [Produces("application/json")]
+        public IActionResult RegisterGamerIntoBracket(int bracketID, Gamer gamer)
+        {
+            return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
+        }
+        [HttpPost("login")]
+        public IActionResult LoginUser(User user)
+        {
+            return Ok(_tournamentBracketManager.GetUser(user.Email, user.Password));
         }
 
         [HttpGet("{bracketID}")]

@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import BracketList from "../views/BracketList.view.vue";
 import BracketView from "../views/BracketView.vue";
+import NewBracket from "../views/NewBracket.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
 import LoginView from "../views/LoginView.vue";
 Vue.use(VueRouter);
@@ -43,6 +44,11 @@ const routes = [
     path: "/login",
     name: "login-view",
     component: LoginView
+  },
+  {
+    path: "/new-bracket",
+    name: "new-bracket",
+    component: NewBracket
   }
 ];
 

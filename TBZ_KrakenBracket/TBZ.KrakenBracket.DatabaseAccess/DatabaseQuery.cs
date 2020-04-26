@@ -277,6 +277,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
+
         public List<BracketPlayer> GetBracketPlayerInfo(string hashedUserID)
         {
             var DB = new Database();
@@ -302,6 +303,49 @@ namespace TBZ.DatabaseQueryService
                     return bracketPlayers;
                 }
             }
+        }
+
+        public void IncrementBracketPlayerCount(BracketInfo bracket)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    //string updateQuery = string.Format("UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID={0}", bracket.BracketID);
+                    comm.CommandText = "UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID=@BracketID";
+                    comm.Parameters.AddWithValue("@BracketID", bracket.BracketID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+        public Gamer GetGamerInfo(Gamer gamer)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag AND gamerTagID=@GamerTagID";
+                    comm.Parameters.AddWithValue("@GamerTag", gamer.GamerTag);
+                    comm.Parameters.AddWithValue("@GamerTagID", gamer.GamerTagID);
+                    conn.Open();
+                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    {
+                        reader.Read();
+                        gamer.GamerTag = reader.GetString("gamerTag");
+                        gamer.GamerTagID = reader.GetInt32("gamerTagID");
+                        gamer.HashedUserID = reader.GetString("hashedUserID");
+                        conn.Close();
+                        return gamer;
+                    }
+                }
+            }
+
         }
     }
 }

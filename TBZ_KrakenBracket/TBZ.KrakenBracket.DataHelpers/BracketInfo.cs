@@ -23,7 +23,7 @@ namespace TBZ.KrakenBracket.DataHelpers
         {
             BracketID = bracketID;
             BracketName = bracketName;
-            BracketTypeID = bracketTypeID;
+            BracketTypeID = bracketTypeID; // 1: Single Elimination, 2: Double Elimination, 3: Round Robin
             PlayerCount = playerCount;
             GamePlayed = gamePlayed;
             GamingPlatform = gamingPlatform;
