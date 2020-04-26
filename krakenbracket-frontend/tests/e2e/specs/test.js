@@ -60,7 +60,6 @@ describe("Register for a bracket", () => {
     cy.url().should("include", "bracket-view");
   });
   it("Makes sure that you are not logged in", () => {
-    //cy.contains("p","NOTE: You are not currently logged in,");
     cy.contains("button", "Login");
   })
   it("Clicks on the 'login' button", ()=>{
@@ -72,10 +71,6 @@ describe("Register for a bracket", () => {
     cy.get('.email-input').type(email);
     cy.get('.password-input').type(password);
     cy.contains("button", "Login").click()
-  })
-  // FIX: have it so the user is redirected to the bracket that they are in
-  it("Should be redirected to the current bracket", () =>{
-    cy.url().should("include","http://localhost:8080/#/");
   })
   it("Makes sure you are on a specific bracket page", () => {
     cy.get("#title");
