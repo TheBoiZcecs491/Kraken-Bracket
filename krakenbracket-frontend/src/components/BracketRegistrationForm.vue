@@ -13,19 +13,24 @@
             </v-flex>
             <v-flex xs4>
               <v-text-field
-                v-model="gamerTag"
-                label="GamerTag"
-                type="text"
+                class="email-input"
+                v-model="email"
+                label="Email"
+                type="email"
+                placeholder="john@foomail.com"
                 required
-              ></v-text-field>
+              >
+              </v-text-field>
               <v-text-field
-                v-model="gamerTagID"
-                label="ID"
-                type="text"
-                placeholder="9999"
-                required
-              ></v-text-field>
-              <v-btn type="submit" color="primary">Register!</v-btn>
+                class="gamertag-input"
+
+                class="gamertag-id-input"
+
+              <router-link :to="{name: 'bracket-view', params: {id: bracket.bracketID}}">
+                <v-btn @click="formSubmit" type="submit" color="primary">Register!</v-btn>
+              </router-link>
+              
+
             </v-flex>
             <v-flex xs4>
               <!-- This element's content is intentionally empty -->
@@ -42,6 +47,7 @@ import BracketService from "@/services/BracketService.js";
 import axios from "axios";
 import { authComputed } from "../store/helpers.js";
 import NotLoggedIn from "../components/NotLoggedIn.vue";
+
 export default {
   props: ["id"],
   components: {
@@ -53,7 +59,8 @@ export default {
       gamer: {
         gamerTag: "",
         gamerTagID: ""
-      }
+      },
+      email: ""
     };
   },
   created() {
@@ -67,10 +74,6 @@ export default {
   },
   methods: {
     formSubmit() {
-      BracketService.getBracketByID(this.id).then(response => {
-        console.log("data", response);
-        this.bracket = response.data;
-      });
       axios.post(
         `https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`,
         {
@@ -79,6 +82,7 @@ export default {
           gamerTagID: this.gamerTagID
         }
       );
+      setTimeout(() => { this.$store.dispatch("bracketPlayerInfo", this.email);}, 500)
     }
   },
   computed: {
@@ -108,3 +112,4 @@ export default {
 //   ]
 // })
 </script>
+

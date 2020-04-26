@@ -113,6 +113,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+
         public int GetLatestBracketID()
         {
             try
@@ -135,6 +136,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
             return -1;
         }
+
 
         public BracketInfo GetBracketByID(int bracketID)
         {
@@ -168,29 +170,49 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+
+        public List<BracketPlayer> GetBracketPlayerInfo(string email)
+        {
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            string hashedUserID = databaseQuery.GetHashedUserID(user.SystemID);
+            List<BracketPlayer> bracketPlayers = databaseQuery.GetBracketPlayerInfo(hashedUserID);
+            return bracketPlayers;            
+        }
+
         public User GetUser(string email, string password)
         {
-            using (conn = new MySqlConnection(CONNECTION_STRING))
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            MessageSalt messageSalt = new MessageSalt(password, user.Salt);
+            messageSalt.GenerateHash(messageSalt);
+            if (messageSalt.message == user.Password)
             {
-                string selectQuery = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
-                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                conn.Open();
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                {
-                    User user = new User();
-                    reader.Read();
-                    user.Password = reader.GetString("hashed_password");
-                    user.Salt = reader.GetString("salt");
-                    MessageSalt msalt = new MessageSalt(password, user.Salt);
-                    msalt.GenerateHash(msalt);
-
-                    if (msalt.message == user.Password)
-                    {
-                        return user;
-                    }
-
-                }
+                return user;
             }
+            //using (conn = new MySqlConnection(CONNECTION_STRING))
+            //{
+            //    string selectQuery = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
+            //    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+            //    conn.Open();
+            //    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+            //    {
+            //        User user = new User();
+            //        reader.Read();
+            //        user.Password = reader.GetString("hashed_password");
+            //        user.Salt = reader.GetString("salt");
+            //        conn.Close();
+            //        MessageSalt msalt = new MessageSalt(password, user.Salt);
+            //        msalt.GenerateHash(msalt);
+
+            //        if (msalt.message == user.Password)
+            //        {
+            //            return user;
+            //        }
+
+            //    }
+            //}
+
             return null;
         }
 
@@ -199,7 +221,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             try
             {
                 BracketInfo bracket = GetBracketByID(bracketID);
-                if (bracket.PlayerCount >= 128)
+
+                if(bracket.PlayerCount >= 128)
                 {
                     return null;
                 }
@@ -215,6 +238,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     return bracketPlayer;
                 }
             }
+
             catch (Exception e)
             {
                 Console.WriteLine(e);
@@ -250,7 +274,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
                 return listOfBrackets;
             }
-
         }
 
         public bool InsertNewBracket(BracketInfo bracketFields)

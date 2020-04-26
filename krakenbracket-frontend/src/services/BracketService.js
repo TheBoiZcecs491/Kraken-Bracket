@@ -1,11 +1,11 @@
+import axios from "axios";
 
-import axios from 'axios'
-    
-    const apiClient = axios.create({  
-      baseURL: `http://localhost:44352/`,
-      withCredentials: false, // This is the default
-      headers: {
-        Accept: "application/json",
+const apiClient = axios.create({
+  baseURL: `https://localhost:44352`,
+  withCredentials: false,
+  headers: {
+    Accept: "application/json",
+
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*"
   }
@@ -17,5 +17,8 @@ export default {
   },
   getBracketByID(bracketID) {
     return apiClient.get("api/brackets/" + bracketID);
+  },
+  getBracketPlayerInfo(email){
+    return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`)
   }
 };

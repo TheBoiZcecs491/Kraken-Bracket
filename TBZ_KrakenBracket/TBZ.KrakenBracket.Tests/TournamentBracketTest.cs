@@ -14,6 +14,7 @@ namespace TBZ.TournamentBracketTest
     public class TournamentBracketTest
     {
         private readonly TournamentBracketManager _tournamentBracketManager = new TournamentBracketManager();
+
         private readonly TournamentBracketService _tournamentBracketService = new TournamentBracketService();
 
         [TestMethod]
@@ -49,6 +50,52 @@ namespace TBZ.TournamentBracketTest
             var expected = bracketInfo.PlayerCount;
             var actual = _tournamentBracketManager.GetNumberOfCompetitors(bracketInfo.BracketID);
             Assert.AreEqual(expected, actual);
+        }
+      
+        [TestMethod]
+        public void GetBracket_Pass()
+        {
+            bool result = true;
+            try
+            {
+                BracketInfo actual = _tournamentBracketManager.GetBracketByID(1);
+                if (actual == null) result = false;
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void GetAllBrackets_Pass()
+        {
+            bool result = true;
+            try
+            {
+                List<BracketInfo> actual = _tournamentBracketManager.GetAllBrackets();
+                if (actual == null) result = false;
+            }
+            catch(Exception e)
+            {
+                result = false;
+            }
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void GetUser()
+        {
+            bool result = true;
+            try
+            {
+                User user = _tournamentBracketManager.GetUser("user1@krakenbracket.com", "Pass1");
+                if (user == null) result = false;
+            }
+            catch(Exception e)
+            {
+                result = false;
+            }
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
