@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog v-model="dialog" width="600">
       <template v-slot:activator="{ on }">
         <v-btn color="red lighten-2" dark v-on="on">
           unregister
@@ -17,6 +17,7 @@
         1 - bracket not in progress and has already completed
         0 - bracket not in progress and has not begun
                  -->
+        <div style="text-align: center;">
         <v-card-text v-if="bracket.statusCode === 0">
           <p>
             The bracket has not begun yet. Are you sure you want to unregister?
@@ -28,6 +29,7 @@
         <v-card-text v-else-if="bracket.statusCode === 2">
           <p>Bracket is in progress. Are you sure you want to unregister?</p>
         </v-card-text>
+        </div>
         <v-divider></v-divider>
 
         <v-card-actions>

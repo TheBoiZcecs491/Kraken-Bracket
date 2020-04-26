@@ -43,27 +43,24 @@ export default {
   data() {
     return {
       email: "",
-      password: "",
+      password: ""
     };
   },
   methods: {
     login() {
       // this.$store.commit("CHANGE_LOGGED_IN_STATUS");
-      this.$store
-        .dispatch("login", {
-          email: this.email,
-          password: this.password})
-        // }).then(() => {
-        //   this.$router.push({name: "Home"})
-        // });
-      this.$store.dispatch("bracketPlayerInfo", this.email)
-        .then(() => {
-          this.$router.go(-1);
-        });
+      this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password
+      });
+      // }).then(() => {
+      //   this.$router.push({name: "Home"})
+      // });
+      this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
+        this.$router.go(-1);
+      });
     }
   },
-  created(){
-
-  }
+  created() {}
 };
 </script>

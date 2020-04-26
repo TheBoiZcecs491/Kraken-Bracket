@@ -1,7 +1,5 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-
-
 describe("My First Test", () => {
   it("Visits the app root url", () => {
     cy.visit("http://localhost:8080/#/");
@@ -61,35 +59,35 @@ describe("Register for a bracket", () => {
   });
   it("Makes sure that you are not logged in", () => {
     cy.contains("button", "Login");
-  })
-  it("Clicks on the 'login' button", ()=>{
-    cy.contains("button", "Login").click()
-  })
+  });
+  it("Clicks on the 'login' button", () => {
+    cy.contains("button", "Login").click();
+  });
   it("Logs the user in", () => {
     const email = "user1@krakenbracket.com";
     const password = "Pass1";
-    cy.get('.email-input').type(email);
-    cy.get('.password-input').type(password);
-    cy.contains("button", "Login").click()
-  })
+    cy.get(".email-input").type(email);
+    cy.get(".password-input").type(password);
+    cy.contains("button", "Login").click();
+  });
   it("Makes sure you are on a specific bracket page", () => {
     cy.get("#title");
     cy.url().should("include", "/bracket-view/1");
   });
-  it("Clicks on the 'REGISTER!' button", () =>{
-    cy.contains("button", "Register!").click()
-  })
-  it("Registers the gamer", () =>{
+  it("Clicks on the 'REGISTER!' button", () => {
+    cy.contains("button", "Register!").click();
+  });
+  it("Registers the gamer", () => {
     const email = "user1@krakenbracket.com";
     const gamerTag = "GamerTag1";
     const gamerTagID = 1111;
     cy.get(".email-input").type(email);
     cy.get(".gamertag-input").type(gamerTag);
     cy.get(".gamertag-id-input").type(gamerTagID);
-    cy.contains("button", "Register!").click()
-  })
+    cy.contains("button", "Register!").click();
+  });
   it("Directs you back to bracket page and makes sure that you are registered", () => {
     cy.contains("button", "Unregister");
     cy.contains("p", "You are already registered for this event");
-  })
-})
+  });
+});

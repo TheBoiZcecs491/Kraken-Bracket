@@ -38,8 +38,15 @@
                 placeholder="9999"
                 required
               ></v-text-field>
-              <router-link :to="{name: 'bracket-view', params: {id: bracket.bracketID}}">
-                <v-btn @click="formSubmit" type="submit" color="primary">Register!</v-btn>
+              <router-link
+                :to="{
+                  name: 'bracket-view',
+                  params: { id: bracket.bracketID }
+                }"
+              >
+                <v-btn @click="formSubmit" type="submit" color="primary"
+                  >Register!</v-btn
+                >
               </router-link>
             </v-flex>
             <v-flex xs4>
@@ -92,12 +99,14 @@ export default {
           gamerTagID: this.gamerTagID
         }
       );
-      setTimeout(() => { this.$store.dispatch("bracketPlayerInfo", this.email);}, 500)
+      setTimeout(() => {
+        this.$store.dispatch("bracketPlayerInfo", this.email);
+      }, 500);
     }
   },
   computed: {
     ...authComputed
-  },
+  }
 };
 // data: () => ({
 //   emailRules: [

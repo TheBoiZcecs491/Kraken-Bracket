@@ -12,7 +12,7 @@ export default new Vuex.Store({
     //   isLoggedIn: false
     // }
     user: null,
-    bracketPlayerInfo: [],
+    bracketPlayerInfo: []
   },
   mutations: {
     // CHANGE_LOGGED_IN_STATUS(state) {
@@ -25,38 +25,35 @@ export default new Vuex.Store({
         "Authorization"
       ] = `Bearer ${userData.token}`;
     },
-    SET_USER_BRACKET_INFO(state, data){
-      state.bracketPlayerInfo =data;
+    SET_USER_BRACKET_INFO(state, data) {
+      state.bracketPlayerInfo = data;
       localStorage.setItem("bracketPlayerInfo", JSON.stringify(data));
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${data.token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
     }
   },
   actions: {
     login({ commit }, credentials) {
-      return axios.post(
-        "https://localhost:44352/api/brackets/login",
-        credentials
-      ).then(({ data }) => {
-        commit("SET_USER_DATA", data);
-      });
+      return axios
+        .post("https://localhost:44352/api/brackets/login", credentials)
+        .then(({ data }) => {
+          commit("SET_USER_DATA", data);
+        });
     },
-    bracketPlayerInfo({commit}, email){
-      BracketService.getBracketPlayerInfo(email).then(({data}) =>{
+    bracketPlayerInfo({ commit }, email) {
+      BracketService.getBracketPlayerInfo(email).then(({ data }) => {
         commit("SET_USER_BRACKET_INFO", data);
-      })
+      });
     }
   },
   getters: {
     loggedIn(state) {
       return !!state.user;
     },
-    bracketPlayerInfo(state){
-      return state.bracketPlayerInfo
+    bracketPlayerInfo(state) {
+      return state.bracketPlayerInfo;
     },
-    userInformation(state){
-      return state.user
+    userInformation(state) {
+      return state.user;
     }
   },
   modules: {}
