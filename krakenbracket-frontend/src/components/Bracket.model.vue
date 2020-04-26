@@ -2,7 +2,7 @@
   <div class="bracket-card">
     <h2 class="bracket-name">{{ bracket.bracketName }}</h2>
     <h3>Start Date: {{ bracket.startDate }}</h3>
-    <h3>End Date: {{ bracket.startDate }}</h3>
+    <h3>End Date: {{ bracket.endDate }}</h3>
     <h4>
       Number of players: {{ bracket.playerCount }}
       <span v-show="bracket.playerCount === 128">(MAX)</span>

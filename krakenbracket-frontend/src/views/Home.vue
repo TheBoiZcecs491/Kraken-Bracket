@@ -8,6 +8,11 @@
         event registration
       </p>
     </div>
+    <div v-else>
+      <p>
+        <router-link to="/new-bracket"> Create a new bracket</router-link>
+      </p>
+    </div>
   </div>
 </template>
 
