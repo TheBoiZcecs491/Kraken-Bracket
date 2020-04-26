@@ -74,25 +74,12 @@ describe("Register for a bracket", () => {
     cy.contains("button", "Login").click()
   })
   // FIX: have it so the user is redirected to the bracket that they are in
-  it("Should be redirected to the home page", () =>{
+  it("Should be redirected to the current bracket", () =>{
     cy.url().should("include","http://localhost:8080/#/");
   })
-  it("Clicks on the Bracket List router link", () => {
-    //cy.pause();
-    cy.contains("Bracket List").click();
-  });
-  it("Makes sure you are on the bracket listings", () => {
-    //cy.pause();
-    cy.contains("h1", "Bracket Listings");
-    cy.url().should("include", "/bracket-list");
-  });
-  it("Clicks on a bracket", () => {
-    //cy.pause();
-    cy.get(".bracket-link:first").click();
-  });
   it("Makes sure you are on a specific bracket page", () => {
     cy.get("#title");
-    cy.url().should("include", "bracket-view");
+    cy.url().should("include", "/bracket-view/1");
   });
   it("Clicks on the 'REGISTER!' button", () =>{
     cy.contains("button", "Register!").click()
