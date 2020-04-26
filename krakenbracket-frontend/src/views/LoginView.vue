@@ -58,7 +58,7 @@ export default {
         // });
       this.$store.dispatch("bracketPlayerInfo", this.email)
         .then(() => {
-          this.$router.push({ name: "Home" });
+          this.$router.go(-1);
         });
     }
   },

@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container id="page-layout-fix">
+      <v-btn @click="$router.go(-1)">&lt; BACK</v-btn>
       <h1 id="title">{{ bracket.bracketName }}</h1>
       <div style="text-align: left">
         <v-row>

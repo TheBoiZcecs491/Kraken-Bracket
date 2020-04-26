@@ -4,6 +4,8 @@
       <NotLoggedIn />
     </div>
     <div v-else>
+      <!-- "$router.go(-1)" -->
+      <v-btn @click="$router.go(-1)">&lt; BACK</v-btn>
       <h1>Signup for {{ bracket.bracketName }}</h1>
       <v-form @submit.prevent="formSubmit">
         <v-container fluid>
@@ -39,7 +41,6 @@
               <router-link :to="{name: 'bracket-view', params: {id: bracket.bracketID}}">
                 <v-btn @click="formSubmit" type="submit" color="primary">Register!</v-btn>
               </router-link>
-              
             </v-flex>
             <v-flex xs4>
               <!-- This element's content is intentionally empty -->
