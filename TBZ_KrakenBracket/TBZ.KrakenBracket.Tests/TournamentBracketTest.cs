@@ -51,37 +51,7 @@ namespace TBZ.TournamentBracketTest
             var actual = _tournamentBracketManager.GetNumberOfCompetitors(bracketInfo.BracketID);
             Assert.AreEqual(expected, actual);
         }
-      
-        [TestMethod]
-        public void GetBracket_Pass()
-        {
-            bool result = true;
-            try
-            {
-                BracketInfo actual = _tournamentBracketManager.GetBracketByID(1);
-                if (actual == null) result = false;
-            }
-            catch (Exception e)
-            {
-                result = false;
-            }
-            Assert.IsTrue(result);
-        }
-        [TestMethod]
-        public void GetAllBrackets_Pass()
-        {
-            bool result = true;
-            try
-            {
-                List<BracketInfo> actual = _tournamentBracketManager.GetAllBrackets();
-                if (actual == null) result = false;
-            }
-            catch(Exception e)
-            {
-                result = false;
-            }
-            Assert.IsTrue(result);
-        }
+        
         [TestMethod]
         public void GetUser()
         {

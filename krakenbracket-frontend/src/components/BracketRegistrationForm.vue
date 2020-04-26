@@ -23,14 +23,23 @@
               </v-text-field>
               <v-text-field
                 class="gamertag-input"
-
+                v-model="gamerTag"
+                label="GamerTag"
+                type="text"
+                required
+              ></v-text-field>
+              <v-text-field
                 class="gamertag-id-input"
-
+                v-model="gamerTagID"
+                label="ID"
+                type="text"
+                placeholder="9999"
+                required
+              ></v-text-field>
               <router-link :to="{name: 'bracket-view', params: {id: bracket.bracketID}}">
                 <v-btn @click="formSubmit" type="submit" color="primary">Register!</v-btn>
               </router-link>
               
-
             </v-flex>
             <v-flex xs4>
               <!-- This element's content is intentionally empty -->
@@ -47,7 +56,6 @@ import BracketService from "@/services/BracketService.js";
 import axios from "axios";
 import { authComputed } from "../store/helpers.js";
 import NotLoggedIn from "../components/NotLoggedIn.vue";
-
 export default {
   props: ["id"],
   components: {
@@ -87,7 +95,7 @@ export default {
   },
   computed: {
     ...authComputed
-  }
+  },
 };
 // data: () => ({
 //   emailRules: [
@@ -112,4 +120,3 @@ export default {
 //   ]
 // })
 </script>
-
