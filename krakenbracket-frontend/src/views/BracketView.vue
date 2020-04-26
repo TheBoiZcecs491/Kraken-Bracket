@@ -40,42 +40,11 @@
           v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)"
         >
           <p>You are already registered for this event</p>
-          <UnregisterBracketModel :key="bracket.id" :bracket="bracket"/>
-          
-          <!-- <v-btn>Unregister</v-btn> -->
+          <UnregisterBracketModel :key="bracket.id" :bracket="bracket" />
         </div>
         <!-- State if the user is logged in -->
         <div v-else>
-          <router-link
-            :to="{
-              name: 'bracket-registration',
-              params: { id: bracket.bracketID }
-            }"
-            class="register-btn"
-          >
-            <v-btn
-              v-show="bracket.statusCode === 0 && bracket.playerCount < 128"
-              type="submit"
-              >Register!</v-btn
-            >
-          </router-link>
-          <div v-if="bracket.statusCode === 1">
-            <p>
-              <strong>NOTE:</strong> Registration is disabled; bracket has
-              already completed
-            </p>
-          </div>
-          <div v-else-if="bracket.statusCode === 2">
-            <p>
-              <strong>NOTE:</strong> Registration is disabled; bracket is in
-              progress
-            </p>
-          </div>
-          <v-btn
-            v-show="bracket.statusCode !== 0 || bracket.playerCount === 128"
-            disabled
-            >Register!</v-btn
-          >
+          <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
         </div>
       </div>
     </v-container>
@@ -85,11 +54,13 @@
 <script>
 import BracketService from "@/services/BracketService.js";
 import { authComputed } from "../store/helpers.js";
-import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue"
+import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue";
+import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
 export default {
   props: ["id"],
   components: {
-    UnregisterBracketModel
+    UnregisterBracketModel,
+    RegisterBracketModel
   },
   data() {
     return {
