@@ -36,9 +36,13 @@
             <v-btn color="primary">Login</v-btn>
           </router-link>
         </div>
-        <div v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)">
+        <div
+          v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)"
+        >
           <p>You are already registered for this event</p>
-          <v-btn>Unregister</v-btn>
+          <UnregisterBracketModel :key="bracket.id" :bracket="bracket"/>
+          
+          <!-- <v-btn>Unregister</v-btn> -->
         </div>
         <!-- State if the user is logged in -->
         <div v-else>
@@ -81,10 +85,15 @@
 <script>
 import BracketService from "@/services/BracketService.js";
 import { authComputed } from "../store/helpers.js";
+import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue"
 export default {
   props: ["id"],
+  components: {
+    UnregisterBracketModel
+  },
   data() {
     return {
+      dialog: false,
       bracket: {}
     };
   },
@@ -100,11 +109,11 @@ export default {
   computed: {
     ...authComputed
   },
-  methods:{
-    registeredStatus(bracketPlayerInfo, bracket){
+  methods: {
+    registeredStatus(bracketPlayerInfo, bracket) {
       for (let index = 0; index < bracketPlayerInfo.length; index++) {
-        if (bracketPlayerInfo[index].bracketID === bracket.bracketID){
-          return true
+        if (bracketPlayerInfo[index].bracketID === bracket.bracketID) {
+          return true;
         }
       }
     }
