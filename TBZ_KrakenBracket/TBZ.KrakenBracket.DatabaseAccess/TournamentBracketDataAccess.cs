@@ -114,6 +114,22 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        public bool RemoveGamerFromBracket(int systemID, int bracketID)
+        {
+            try
+            {
+                DatabaseQuery databaseQuery = new DatabaseQuery();
+                string hashedUserID = databaseQuery.GetHashedUserID(systemID);
+                databaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
+                databaseQuery.DecrementBracketPlayerCount(bracketID);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public List<BracketPlayer> GetBracketPlayerInfo(string email)
         {
             DatabaseQuery databaseQuery = new DatabaseQuery();

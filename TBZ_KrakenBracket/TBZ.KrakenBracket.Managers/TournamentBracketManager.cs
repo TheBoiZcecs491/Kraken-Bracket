@@ -83,6 +83,10 @@ namespace TBZ.KrakenBracket.Managers
         {
             return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
         }
+        public bool UnregisterGamerFromBracket(int systemID, int bracketID)
+        {
+            return _tournamentBracketDataAccess.RemoveGamerFromBracket(systemID, bracketID);
+        }
 
         public List<BracketInfo> GetAllBrackets()
         {

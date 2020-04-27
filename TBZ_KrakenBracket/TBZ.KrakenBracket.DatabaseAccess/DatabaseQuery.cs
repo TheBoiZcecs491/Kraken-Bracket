@@ -113,6 +113,23 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
+        public void RemoveGamerFromBracket(string hashedUserID, int bracketID)
+        {
+            var DB = new Database();
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "DELETE FROM bracket_player_info WHERE hashedUserID=@HashedUserID AND bracketID=@BracketID";
+                    comm.Parameters.AddWithValue("@HashedUserID", hashedUserID);
+                    comm.Parameters.AddWithValue("@BracketID", bracketID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
         public void InsertBracketPlayer(BracketPlayer bracketPlayer)
         {
             var DB = new Database();
@@ -134,6 +151,7 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
+        
 
         public void InsertEvent(EventInfo tempEvent)
         {
@@ -198,6 +216,22 @@ namespace TBZ.DatabaseQueryService
                 {
                     comm.CommandText = "UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID=@BracketID";
                     comm.Parameters.AddWithValue("@BracketID", bracket.BracketID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+        public void DecrementBracketPlayerCount(int bracketID)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "UPDATE bracket_info SET number_player = number_player - 1 WHERE bracketID=@BracketID";
+                    comm.Parameters.AddWithValue("@BracketID", bracketID);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
