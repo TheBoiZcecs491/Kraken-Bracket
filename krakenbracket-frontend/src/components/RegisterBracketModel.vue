@@ -10,6 +10,7 @@
             class="register-btn"
           >
             <v-btn
+              color="primary"
               v-show="bracket.statusCode === 0 && bracket.playerCount < 128"
               type="submit"
               >Register!</v-btn
