@@ -31,5 +31,15 @@ namespace TBZ.KrakenBracket.Services
         {
             return _tournamentBracketDataAccess.CheckBracketIDExistence(bracketID);
         }
+
+        public List<BracketInfo> GetAllBrackets()
+        {
+            return _tournamentBracketDataAccess.GetAllBrackets();
+        }
+
+        public BracketInfo GetBracketByID(int bracketID)
+        {
+            return _tournamentBracketDataAccess.GetBracketByID(bracketID);
+        }
     }
 }

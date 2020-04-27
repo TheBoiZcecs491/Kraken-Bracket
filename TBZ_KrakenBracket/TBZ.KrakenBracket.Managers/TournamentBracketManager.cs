@@ -97,13 +97,12 @@ namespace TBZ.KrakenBracket.Managers
 
         public List<BracketInfo> GetAllBrackets()
         {
-            List<BracketInfo> brackets = _tournamentBracketDataAccess.GetAllBrackets();
-            return brackets;
+            return _tournamentBracketService.GetAllBrackets();
         }
 
         public BracketInfo GetBracketByID(int bracketID)
         {
-            return _tournamentBracketDataAccess.GetBracketByID(bracketID);
+            return _tournamentBracketService.GetBracketByID(bracketID);
         }
     }
 }
