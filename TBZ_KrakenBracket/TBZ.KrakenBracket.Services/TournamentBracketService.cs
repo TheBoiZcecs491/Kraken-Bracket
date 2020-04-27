@@ -10,6 +10,7 @@ namespace TBZ.KrakenBracket.Services
     {
 
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
+        private readonly GamerDataAccess _gamerDataAccess = new GamerDataAccess();
         public bool CreateTournamentBracket(TournamentBracketDataAccess tournamentBracketDataAccess, BracketInfo bracketFields)
         {
             return true;
@@ -19,17 +20,16 @@ namespace TBZ.KrakenBracket.Services
             bool result = true;
             return result;
         }
-        
-        public int CheckBracketStatusCode(int bracketID)
+        public bool CheckGamerExistence(Gamer gamer)
         {
-            var result = _tournamentBracketDataAccess.GetBracketStatusCode(bracketID);
-            return result;
+            var gamerResult = _gamerDataAccess.GetGamerInfo(gamer);
+            if (gamerResult == null) return false;
+            else return true;
         }
 
-        public int GetNumberOfCompetitors(int bracketID)
+        public bool CheckBracketExistence(int bracketID)
         {
-            var result = _tournamentBracketDataAccess.GetNumberOfCompetitors(bracketID);
-            return result;
+            return _tournamentBracketDataAccess.CheckBracketIDExistence(bracketID);
         }
     }
 }
