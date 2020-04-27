@@ -242,28 +242,34 @@ namespace TBZ.DatabaseQueryService
         }
         public Gamer GetGamerInfo(Gamer gamer)
         {
-            var DB = new Database();
-
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            try
             {
-                using (MySqlCommand comm = conn.CreateCommand())
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
                 {
-                    comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag AND gamerTagID=@GamerTagID";
-                    comm.Parameters.AddWithValue("@GamerTag", gamer.GamerTag);
-                    comm.Parameters.AddWithValue("@GamerTagID", gamer.GamerTagID);
-                    conn.Open();
-                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    using (MySqlCommand comm = conn.CreateCommand())
                     {
-                        reader.Read();
-                        gamer.GamerTag = reader.GetString("gamerTag");
-                        gamer.GamerTagID = reader.GetInt32("gamerTagID");
-                        gamer.HashedUserID = reader.GetString("hashedUserID");
-                        conn.Close();
-                        return gamer;
+                        comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag AND gamerTagID=@GamerTagID";
+                        comm.Parameters.AddWithValue("@GamerTag", gamer.GamerTag);
+                        comm.Parameters.AddWithValue("@GamerTagID", gamer.GamerTagID);
+                        conn.Open();
+                        using (MySqlDataReader reader = comm.ExecuteReader())
+                        {
+                            reader.Read();
+                            gamer.GamerTag = reader.GetString("gamerTag");
+                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
+                            gamer.HashedUserID = reader.GetString("hashedUserID");
+                            conn.Close();
+                            return gamer;
+                        }
                     }
                 }
             }
-            
+            catch (Exception)
+            {
+                return null;
+            }
         }
         public BracketInfo GetBracketInfo(int bracketID)
         {
