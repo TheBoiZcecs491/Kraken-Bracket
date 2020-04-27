@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" width="600">
       <template v-slot:activator="{ on }">
         <v-btn color="red lighten-2" dark v-on="on">
-          unregister
+          Unregister
         </v-btn>
       </template>
 
@@ -34,8 +34,8 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click="dialog = false">
-            I accept
+          <v-btn color="primary" flat @click="unregisterSubmit">
+            I Accept
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -45,13 +45,14 @@
 
 <script>
 import BracketService from "@/services/BracketService.js";
+import axios from "axios";
 export default {
   props: {
     bracket: Object
   },
   data() {
     return {
-      dialog: false
+      dialog: false,
     };
   },
   created() {
@@ -63,5 +64,21 @@ export default {
         console.log("Error: " + error.response);
       });
   },
+  methods: {
+    unregisterSubmit(){
+      //var systemID = this.$store.state.user.systemID;
+      var email = this.$store.state.user.email;
+      axios.delete(`https://localhost:44352/api/brackets/${this.bracket.bracketID}/unregister/${this.$store.state.user.systemID}`,
+        {
+          bracketID: this.bracket.bracketID,
+          systemID: this.$store.state.user.systemID
+        }
+
+      );
+       setTimeout(() => {
+        this.$store.dispatch("bracketPlayerInfo", email);
+      }, 500);
+    }
+  }
 };
 </script>
