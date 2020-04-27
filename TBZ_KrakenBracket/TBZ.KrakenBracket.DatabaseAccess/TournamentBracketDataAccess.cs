@@ -42,48 +42,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-
-
-        public int GetNumberOfCompetitors(int bracketID)
-        {
-            try
-            {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
-                {
-                    string selectQuery = string.Format("SELECT number_player FROM bracket_info WHERE bracketID={0}", bracketID);
-                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                    conn.Open();
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                    {
-                        return reader.Read() ?  reader.GetInt32(0) : -1;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
-        }
-
-        public int GetBracketStatusCode(int bracketID)
-        {
-            bool bracketStatus = CheckBracketIDExistence(bracketID);
-            if (!bracketStatus) return -1;
-            else
-            {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
-                {
-                    string selectQuery = string.Format("SELECT status_code FROM bracket_info WHERE bracketID={0}", bracketID);
-                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                    conn.Open();
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                    {
-                        return reader.Read() ? reader.GetInt32(0) : -1;
-                    }
-                }
-            }
-        }
-
         public BracketInfo GetBracketByID(int bracketID)
         {
             bool bracketStatus = CheckBracketIDExistence(bracketID);
