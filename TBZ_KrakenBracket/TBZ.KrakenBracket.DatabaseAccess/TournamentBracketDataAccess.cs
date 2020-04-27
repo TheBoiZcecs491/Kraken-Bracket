@@ -42,6 +42,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+
+
         public int GetNumberOfCompetitors(int bracketID)
         {
             try
@@ -88,29 +90,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             if (!bracketStatus) return null;
             else
             {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
-                {
-                    string selectQuery = string.Format("SELECT * FROM bracket_info WHERE bracketID={0}", bracketID);
-                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                    conn.Open();
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                    {
-                        BracketInfo bracket = new BracketInfo();
-                        reader.Read();
-                        bracket.BracketID = reader.GetInt32("bracketID");
-                        bracket.BracketName = reader.GetString("bracket_name");
-                        bracket.BracketTypeID = reader.GetInt32("bracketTypeID");
-                        bracket.PlayerCount = reader.GetInt32("number_player");
-                        bracket.GamePlayed = reader.GetString("game_played");
-                        bracket.GamingPlatform = reader.GetString("gaming_platform");
-                        bracket.Rules = reader.GetString("rules");
-                        bracket.StartDate = reader.GetDateTime("start_date");
-                        bracket.EndDate = reader.GetDateTime("end_date");
-                        bracket.StatusCode = reader.GetInt32("status_code");
-                        conn.Close();
-                        return bracket;
-                    }
-                }
+                DatabaseQuery databaseQuery = new DatabaseQuery();
+                BracketInfo bracket = databaseQuery.GetBracketInfo(bracketID);
+                return bracket;
             }
         }
 
@@ -149,28 +131,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 return user;
             }
-            //using (conn = new MySqlConnection(CONNECTION_STRING))
-            //{
-            //    string selectQuery = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
-            //    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-            //    conn.Open();
-            //    using (MySqlDataReader reader = selectCmd.ExecuteReader())
-            //    {
-            //        User user = new User();
-            //        reader.Read();
-            //        user.Password = reader.GetString("hashed_password");
-            //        user.Salt = reader.GetString("salt");
-            //        conn.Close();
-            //        MessageSalt msalt = new MessageSalt(password, user.Salt);
-            //        msalt.GenerateHash(msalt);
-
-            //        if (msalt.message == user.Password)
-            //        {
-            //            return user;
-            //        }
-
-            //    }
-            //}
             return null;
         }
 
