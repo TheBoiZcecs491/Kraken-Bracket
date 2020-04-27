@@ -27,6 +27,8 @@ namespace TBZ.DatabaseQueryService
             {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
         };
 
+        
+
         public bool TableExist(string tableName)
         {
             if (!tables.ContainsKey(tableName))
@@ -262,6 +264,38 @@ namespace TBZ.DatabaseQueryService
                 }
             }
             
+        }
+        public BracketInfo GetBracketInfo(int bracketID)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    
+                    comm.CommandText = "SELECT * FROM bracket_info WHERE bracketID=@BracketID";
+                    comm.Parameters.AddWithValue("@BracketID", bracketID);
+                    conn.Open();
+                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    {
+                        BracketInfo bracket = new BracketInfo();
+                        reader.Read();
+                        bracket.BracketID = reader.GetInt32("bracketID");
+                        bracket.BracketName = reader.GetString("bracket_name");
+                        bracket.BracketTypeID = reader.GetInt32("bracketTypeID");
+                        bracket.PlayerCount = reader.GetInt32("number_player");
+                        bracket.GamePlayed = reader.GetString("game_played");
+                        bracket.GamingPlatform = reader.GetString("gaming_platform");
+                        bracket.Rules = reader.GetString("rules");
+                        bracket.StartDate = reader.GetDateTime("start_date");
+                        bracket.EndDate = reader.GetDateTime("end_date");
+                        bracket.StatusCode = reader.GetInt32("status_code");
+                        conn.Close();
+                        return bracket;
+                    }
+                }
+            }
         }
         public User GetUserInfo(string email)
         {
