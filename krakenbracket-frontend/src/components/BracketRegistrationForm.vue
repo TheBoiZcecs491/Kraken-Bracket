@@ -75,9 +75,11 @@ export default {
   data() {
     return {
       bracket: {},
+      gamerTag: "",
+      gamerTagID: "",
         gamer: {
-          gamerTag: "",
-          gamerTagID: ""
+          gamerTag: this.gamerTag,
+          gamerTagID: this.gamerTagID
         },
       email: "",
       emailRules: [
