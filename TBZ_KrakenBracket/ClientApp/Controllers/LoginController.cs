@@ -13,11 +13,11 @@ namespace ClientApp.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly AuthenticationManager _authenticationManager;
+        private readonly AuthenticationManager _authenticationManager = new AuthenticationManager();
         [HttpPost]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login(User user)
         {
-            return Ok(_authenticationManager.Login(email, password));
+            return Ok(_authenticationManager.Login(user.Email, user.Password));
         }
     }
 }
