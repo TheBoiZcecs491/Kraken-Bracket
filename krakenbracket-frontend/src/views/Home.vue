@@ -10,7 +10,7 @@
     </div>
     <div v-else>
       <p>
-        <router-link to="/new-bracket"> Create a new bracket</router-link>
+        <router-link to="/new-bracket"> <v-btn x-large>Create a new bracket</v-btn></router-link>
       </p>
     </div>
   </div>
