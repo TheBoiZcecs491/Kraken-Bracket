@@ -18,17 +18,20 @@
         0 - bracket not in progress and has not begun
                  -->
         <div style="text-align: center;">
-        <v-card-text v-if="bracket.statusCode === 0">
-          <p>
-            The bracket has not begun yet. Are you sure you want to unregister?
-          </p>
-        </v-card-text>
-        <v-card-text v-else-if="bracket.statusCode === 1">
-          <p>Unregistration disabled. The bracket has already been completed</p>
-        </v-card-text>
-        <v-card-text v-else-if="bracket.statusCode === 2">
-          <p>Bracket is in progress. Are you sure you want to unregister?</p>
-        </v-card-text>
+          <v-card-text v-if="bracket.statusCode === 0">
+            <p>
+              The bracket has not begun yet. Are you sure you want to
+              unregister?
+            </p>
+          </v-card-text>
+          <v-card-text v-else-if="bracket.statusCode === 1">
+            <p>
+              Unregistration disabled. The bracket has already been completed
+            </p>
+          </v-card-text>
+          <v-card-text v-else-if="bracket.statusCode === 2">
+            <p>Bracket is in progress. Are you sure you want to unregister?</p>
+          </v-card-text>
         </div>
         <v-divider></v-divider>
 
@@ -52,7 +55,7 @@ export default {
   },
   data() {
     return {
-      dialog: false,
+      dialog: false
     };
   },
   created() {
@@ -65,17 +68,17 @@ export default {
       });
   },
   methods: {
-    unregisterSubmit(){
+    unregisterSubmit() {
       //var systemID = this.$store.state.user.systemID;
       var email = this.$store.state.user.email;
-      axios.delete(`https://localhost:44352/api/brackets/${this.bracket.bracketID}/unregister/${this.$store.state.user.systemID}`,
+      axios.delete(
+        `https://localhost:44352/api/brackets/${this.bracket.bracketID}/unregister/${this.$store.state.user.systemID}`,
         {
           bracketID: this.bracket.bracketID,
           systemID: this.$store.state.user.systemID
         }
-
       );
-       setTimeout(() => {
+      setTimeout(() => {
         this.$store.dispatch("bracketPlayerInfo", email);
       }, 500);
     }

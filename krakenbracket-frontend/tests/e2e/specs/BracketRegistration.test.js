@@ -87,13 +87,12 @@ describe("Register for a bracket", () => {
     cy.contains("button", "Register!").click();
   });
   it("Directs you back to bracket page and makes sure that you are registered", () => {
-    
     cy.contains("p", "You are already registered for this event");
     cy.contains("button", "Unregister");
   });
 });
 
-describe("Unregister from a bracket", () =>{
+describe("Unregister from a bracket", () => {
   it("Makes sure that you are registered", () => {
     cy.contains("button", "Unregister");
     cy.contains("p", "You are already registered for this event");
@@ -101,13 +100,13 @@ describe("Unregister from a bracket", () =>{
   it("Clicks on the unregister button", () => {
     cy.contains("button", "Unregister").click();
   });
-  it("Shows a popup window to confirm unregistration", () =>{
-    cy.contains("button", "I Accept")
+  it("Shows a popup window to confirm unregistration", () => {
+    cy.contains("button", "I Accept");
   });
-  it("Clicks on the button to confirm unregistration", () =>{
+  it("Clicks on the button to confirm unregistration", () => {
     cy.contains("button", "I Accept").click();
   });
-  it("Confirms that the user is unregistered from the bracket", () =>{
+  it("Confirms that the user is unregistered from the bracket", () => {
     cy.contains("button", "Register!");
-  })
-})
+  });
+});

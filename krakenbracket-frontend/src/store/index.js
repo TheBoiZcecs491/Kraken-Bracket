@@ -7,17 +7,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // user: {
-    //   //gamerTagID: 'null',
-    //   isLoggedIn: false
-    // }
     user: null,
     bracketPlayerInfo: []
   },
   mutations: {
-    // CHANGE_LOGGED_IN_STATUS(state) {
-    //   state.user.isLoggedIn = !state.user.isLoggedIn;
-    // }
     SET_USER_DATA(state, userData) {
       state.user = userData;
       localStorage.setItem("user", JSON.stringify(userData));

@@ -78,7 +78,7 @@ export default {
       });
   },
   computed: {
-    ...authComputed
+    ...authComputed,
   },
   methods: {
     registeredStatus(bracketPlayerInfo, bracket) {
@@ -86,8 +86,9 @@ export default {
         if (bracketPlayerInfo[index].bracketID === bracket.bracketID) {
           return true;
         }
+        else return false;
       }
-    }
+    },
   }
 };
 </script>
