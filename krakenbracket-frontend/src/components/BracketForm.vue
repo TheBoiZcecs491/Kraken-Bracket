@@ -58,6 +58,7 @@
                 <v-row>
                     <v-col cols="12" md="15">
                         <v-textarea
+                        v-model="ruleSet"
                         :rules="rulesMaxChars"
                         name="Rules"
                         label="Rule set"
@@ -110,7 +111,6 @@
                                     v-model="startTime"
                                     label="Start Time"
                                     :rules="[value => !!value || 'Required']"
-                                    readonly
                                     v-on="on"
                                 ></v-text-field>
                                 </template>
@@ -118,7 +118,6 @@
                                 v-if="menu2"
                                 v-model="startTime"
                                 full-width
-                                @click:minute="$refs.menu.save(startTime)"
                                 ></v-time-picker>
                             </v-menu>
                         </v-col>
@@ -173,7 +172,6 @@
                                 v-if="menu4"
                                 v-model="endTime"
                                 full-width
-                                @click:minute="$refs.menu.save(time)"
                                 ></v-time-picker>
                             </v-menu>
                         </v-col>
@@ -199,11 +197,17 @@ export default {
     'Mortal Kombat 11', 'Injustice 2', 'Killer Instinct'],
     dropdown_gamePlatform: ['Playstation 3', 'Playstation 4', 'Xbox 360', 'Xbox One', 'Wii', 'Wii U', "Switch"],
     currentDate: new Date().toISOString().substr(0, 10),
-    //time: null,
+    topMenu: null,
+    time: null,
     menu1: false,
     menu2: false,
     menu3: false,
     menu4: false,
+    BracketName: "",
+    CompetitorCount: "",
+    GamePlayed: "",
+    GamePlatform: "",
+    ruleSet: "",
     startDate: null,
     startTime: null,
     endDate: null,
@@ -217,7 +221,7 @@ export default {
     gamePlayedRules:
     [value => !!value || 'Game required'],
     platformRules:
-    [value => !!value || 'Platform required']
+    [value => !!value || 'Platform required'],
     }),
 //   data() {
 //     return {
@@ -241,7 +245,7 @@ export default {
                 CompetitorCount: this.CompetitorCount,
                 GamePlayed: this.GamePlayed,
                 GamePlatform: this.GamePlatform,
-                Rules: this.Rules,
+                Rules: this.ruleSet,
                 StartDate: this.startDate,
                 StartTime: this.startTime,
                 EndDate: this.endDate,
