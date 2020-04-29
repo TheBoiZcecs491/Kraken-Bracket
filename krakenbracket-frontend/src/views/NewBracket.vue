@@ -32,6 +32,7 @@
 
                 <v-container id="GamePlayed">
                     <v-overflow-btn
+                        v-model="GamePlayed"
                         class="my-2"
                         :items="dropdown_gamePlayed"
                         :editable= true
@@ -43,6 +44,7 @@
                 </v-container>
                 <v-container id="GamePlatform">
                     <v-overflow-btn
+                        v-model="GamePlatform"
                         class="my-2"
                         :items="dropdown_gamePlatform"
                         :editable= true
@@ -178,7 +180,7 @@
                     </v-row>
                 </v-container>
 
-                <v-btn x-large>Create Bracket</v-btn>
+                <v-btn x-large @click="Submit">Create Bracket</v-btn>
                 
                 </v-col>
         </v-row>
@@ -192,33 +194,60 @@ export default {
     components: {
   },
   data: () => ({
-      dropdown_gamePlayed:['Street Fighter V - Arcade Edition', 'The King of Fighters XIV',
-      'Tekken 7', 'Super Smash Bros. Ultimate', 'Samurai Shodown', "Soul Calibur VI", 
-      'Mortal Kombat 11', 'Injustice 2', 'Killer Instinct'],
-      dropdown_gamePlatform: ['Playstation 3', 'Playstation 4', 'Xbox 360', 'Xbox One', 'Wii', 'Wii U', "Switch"],
-      currentDate: new Date().toISOString().substr(0, 10),
-      time: null,
-      menu1: false,
-      menu2: false,
-      menu3: false,
-      menu4: false,
-      startDate: null,
-      startTime: null,
-      endDate: null,
-      endTime: null,
-      rulesMaxChars: 
-      [value => (value || '').length <= 700 || 'Max 700 characters',],
-      bracketNameRules: 
-      [value => !!value || 'Bracket name required',
-      value => (value || '').length >= 5 || 'Min 5 characters', 
-      value => (value || '').length <= 75 || 'Max 75 characters'],
-      gamePlayedRules:
-      [value => !!value || 'Game required'],
-      platformRules:
-      [value => !!value || 'Platform required']
+    dropdown_gamePlayed:['Street Fighter V - Arcade Edition', 'The King of Fighters XIV',
+    'Tekken 7', 'Super Smash Bros. Ultimate', 'Samurai Shodown', "Soul Calibur VI", 
+    'Mortal Kombat 11', 'Injustice 2', 'Killer Instinct'],
+    dropdown_gamePlatform: ['Playstation 3', 'Playstation 4', 'Xbox 360', 'Xbox One', 'Wii', 'Wii U', "Switch"],
+    currentDate: new Date().toISOString().substr(0, 10),
+    time: null,
+    menu1: false,
+    menu2: false,
+    menu3: false,
+    menu4: false,
+    startDate: null,
+    startTime: null,
+    endDate: null,
+    endTime: null,
+    rulesMaxChars: 
+    [value => (value || '').length <= 700 || 'Max 700 characters',],
+    bracketNameRules: 
+    [value => !!value || 'Bracket name required',
+    value => (value || '').length >= 5 || 'Min 5 characters', 
+    value => (value || '').length <= 75 || 'Max 75 characters'],
+    gamePlayedRules:
+    [value => !!value || 'Game required'],
+    platformRules:
+    [value => !!value || 'Platform required']
     }),
+//   data() {
+//     return {
+//         bracketInfo: {
+//             BracketName: "",
+//             CompetorCount: "",
+//             GamePlayed: "",
+//             GamePlatform: "",
+//             Rules: "",
+//             StartDate: "",
+//             StartTime: "",
+//             EndDate: "",
+//             EndTime: ""
+//         }
+//     }
+//     },
     methods: {
         Submit() {
+            const bracketInfo = {
+                BracketName: this.BracketName,
+                CompetitorCount: this.CompetitorCount,
+                GamePlayed: this.GamePlayed,
+                GamePlatform: this.GamePlatform,
+                Rules: this.Rules,
+                StartDate: this.startDate,
+                StartTime: this.startTime,
+                EndDate: this.endDate,
+                EndTime: this.endTime 
+            }
+            console.log(bracketInfo)
         }
 
     },
