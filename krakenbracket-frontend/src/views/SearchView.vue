@@ -17,8 +17,8 @@
 import SearchService from "@/services/SearchService.js";
 import BracketModel from "@/components/BracketModel.vue";
 //import BracketService from "@/services/BracketService.js";
-// GamerModel & Service
-// EventModel & Service
+// GamerModel
+// EventModel
 
 export default {
     static: {
@@ -27,7 +27,6 @@ export default {
     props: {
         search: String,
         keyword: String
-        //["search", "keyword"]
     },
     components: {
         BracketModel,
@@ -45,16 +44,36 @@ export default {
         };
     },
     created() {
-        SearchService.getSearchBrackets(this.search) // this.pageNum, this.skipPage)
-        .then(response => {
-            this.brackets = response.data;
-            //console.log(response.data)
-        })
-        .catch(error => {
-            console.log("There was an error: " + error);
-        });
-        // .getSearchGamers
-        // .getSearchEvents
-    }
+        if(this.keyword == "bracket"){
+            SearchService.searchBrackets(this.search) // this.pageNum, this.skipPage)
+            .then(response => {
+                this.brackets = response.data;
+                //console.log(response.data)
+            })
+            .catch(error => {
+                console.log("There was an error: " + error);
+            });
+        } else if(this.keyword == "event"){
+            // SearchService.searchEvents(this.search) // this.pageNum, this.skipPage)
+            // .then(response => {
+            //     this.brackets = response.data;
+            //     //console.log(response.data)
+            // })
+            // .catch(error => {
+            //     console.log("There was an error: " + error);
+            // });
+        } else if(this.keyword == "gamer"){
+            // SearchService.searchGamers(this.search) // this.pageNum, this.skipPage)
+            // .then(response => {
+            //     this.brackets = response.data;
+            //     //console.log(response.data)
+            // })
+            // .catch(error => {
+            //     console.log("There was an error: " + error);
+            // });
+        }
+
+    },
+
 };
 </script>
