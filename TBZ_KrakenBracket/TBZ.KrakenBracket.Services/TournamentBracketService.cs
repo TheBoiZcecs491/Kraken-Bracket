@@ -15,11 +15,7 @@ namespace TBZ.KrakenBracket.Services
         {
             return true;
         }
-        public bool GetBracketID(string email)
-        {
-            bool result = true;
-            return result;
-        }
+
         public bool CheckGamerExistence(Gamer gamer)
         {
             var gamerResult = _gamerDataAccess.GetGamerInfo(gamer);
@@ -27,9 +23,9 @@ namespace TBZ.KrakenBracket.Services
             else return true;
         }
 
-        public bool CheckBracketExistence(int bracketID)
+        public bool CheckBracketExistenceByID(int bracketID)
         {
-            return _tournamentBracketDataAccess.CheckBracketIDExistence(bracketID);
+            return _tournamentBracketDataAccess.CheckBracketExistenceByID(bracketID);
         }
 
         public List<BracketInfo> GetAllBrackets()
@@ -40,6 +36,11 @@ namespace TBZ.KrakenBracket.Services
         public BracketInfo GetBracketByID(int bracketID)
         {
             return _tournamentBracketDataAccess.GetBracketByID(bracketID);
+        }
+
+        public BracketPlayer InsertGamerToBracket(Gamer gamer, int bracketID)
+        {
+            return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
         }
     }
 }

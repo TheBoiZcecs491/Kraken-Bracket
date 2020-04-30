@@ -12,7 +12,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
     {
         const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
         private MySqlConnection conn;
-        public bool CheckBracketIDExistence(int bracketID)
+        public bool CheckBracketExistenceByID(int bracketID)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         public BracketInfo GetBracketByID(int bracketID)
         {
-            bool bracketStatus = CheckBracketIDExistence(bracketID);
+            bool bracketStatus = CheckBracketExistenceByID(bracketID);
             if (!bracketStatus) return null;
             else
             {
@@ -76,9 +76,14 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             DatabaseQuery databaseQuery = new DatabaseQuery();
             TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
             User user = databaseQuery.GetUserInfo(email);
-            string hashedUserID = databaseQuery.GetHashedUserID(user.SystemID);
-            List<BracketPlayer> bracketPlayers = tournamentBracketDatabaseQuery.GetBracketPlayerInfo(hashedUserID);
-            return bracketPlayers;            
+            if(user != null)
+            {
+                string hashedUserID = databaseQuery.GetHashedUserID(user.SystemID);
+                List<BracketPlayer> bracketPlayers = tournamentBracketDatabaseQuery.GetBracketPlayerInfo(hashedUserID);
+                return bracketPlayers;
+            }
+            return null;
+                  
         }
 
         public BracketPlayer InsertGamerToBracket(Gamer gamer, int bracketID)

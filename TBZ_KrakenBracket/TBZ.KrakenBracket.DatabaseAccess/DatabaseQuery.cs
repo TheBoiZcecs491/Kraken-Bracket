@@ -243,32 +243,40 @@ namespace TBZ.DatabaseQueryService
       
         public User GetUserInfo(string email)
         {
-            var DB = new Database();
-
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            try
             {
-                using (MySqlCommand comm = conn.CreateCommand())
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
                 {
-                    comm.CommandText = "SELECT * FROM user_information WHERE email=@Email";
-                    comm.Parameters.AddWithValue("@Email", email);
-                    conn.Open();
-                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    using (MySqlCommand comm = conn.CreateCommand())
                     {
-                        User user = new User();
-                        reader.Read();
-                        user.SystemID = reader.GetInt32("userID");
-                        user.Email = reader.GetString("email");
-                        user.FirstName = reader.GetString("fname");
-                        user.LastName = reader.GetString("lname");
-                        user.Password = reader.GetString("hashed_password");
-                        user.Salt = reader.GetString("salt");
-                        user.AccountType = reader.GetString("account_type");
-                        user.AccountStatus = reader.GetBoolean("account_status");
-                        conn.Close();
-                        return user;
+                        comm.CommandText = "SELECT * FROM user_information WHERE email=@Email";
+                        comm.Parameters.AddWithValue("@Email", email);
+                        conn.Open();
+                        using (MySqlDataReader reader = comm.ExecuteReader())
+                        {
+                            User user = new User();
+                            reader.Read();
+                            user.SystemID = reader.GetInt32("userID");
+                            user.Email = reader.GetString("email");
+                            user.FirstName = reader.GetString("fname");
+                            user.LastName = reader.GetString("lname");
+                            user.Password = reader.GetString("hashed_password");
+                            user.Salt = reader.GetString("salt");
+                            user.AccountType = reader.GetString("account_type");
+                            user.AccountStatus = reader.GetBoolean("account_status");
+                            conn.Close();
+                            return user;
+                        }
                     }
                 }
             }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
         public string GetHashedUserID(int systemID)
         {

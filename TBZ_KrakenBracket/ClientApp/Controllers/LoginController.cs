@@ -17,7 +17,21 @@ namespace ClientApp.Controllers
         [HttpPost]
         public IActionResult Login(User user)
         {
-            return Ok(_authenticationManager.Login(user.Email, user.Password));
+            try
+            {
+                if (_authenticationManager.Login(user.Email, user.Password) != null)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }
