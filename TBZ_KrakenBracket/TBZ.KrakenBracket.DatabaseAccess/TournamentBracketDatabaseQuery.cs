@@ -9,6 +9,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 {
     public class TournamentBracketDatabaseQuery
     {
+        //TODO: make increment and decrement in one function
         public void IncrementBracketPlayerCount(BracketInfo bracket)
         {
             var DB = new Database();

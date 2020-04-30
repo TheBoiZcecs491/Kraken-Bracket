@@ -24,34 +24,89 @@ namespace ClientApp.Controllers
         [Produces("application/json")]
         public IActionResult GetBracketByID(int bracketID)
         {
-            return Ok(_tournamentBracketManager.GetBracketByID(bracketID));
+            try
+            {
+                return Ok(_tournamentBracketManager.GetBracketByID(bracketID));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetAllBrackets()
         {
-            return Ok(_tournamentBracketManager.GetAllBrackets());
+            try
+            {
+                return Ok(_tournamentBracketManager.GetAllBrackets());
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpPost("{bracketID}/register/{gamer}")]
         [Produces("application/json")]
         public IActionResult RegisterGamerIntoBracket(int bracketID, Gamer gamer)
         {
-            return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
+            try
+            {
+                return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
         [HttpDelete("{bracketID}/unregister/{systemID}")]
         [Produces("application/json")]
         public IActionResult UnregisterGamerFromBracket(int bracketID, int systemID)
         {
-            return Ok(_tournamentBracketManager.UnregisterGamerFromBracket(systemID, bracketID));
+            try
+            {
+                return Ok(_tournamentBracketManager.UnregisterGamerFromBracket(systemID, bracketID));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet("{email}/bracketPlayerInfo")]
         [Produces("application/json")]
         public IActionResult GetBracketPlayerInfo(string email)
         {
-            return Ok(_tournamentBracketManager.GetBracketPlayerInfo(email));
+            try
+            {
+                return Ok(_tournamentBracketManager.GetBracketPlayerInfo(email));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

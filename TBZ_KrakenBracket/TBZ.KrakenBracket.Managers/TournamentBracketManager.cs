@@ -71,33 +71,41 @@ namespace TBZ.KrakenBracket.Managers
 
         public List<BracketPlayer> GetBracketPlayerInfo(string email)
         {
-            return _tournamentBracketDataAccess.GetBracketPlayerInfo(email);
+            var result = _tournamentBracketDataAccess.GetBracketPlayerInfo(email);
+            if (result != null) return result;
+            else throw new ArgumentException();
         }
 
         public BracketPlayer RegisterGamerIntoBracket(Gamer gamer, int bracketID)
         {
             bool checkGamerExistence = _tournamentBracketService.CheckGamerExistence(gamer);
             bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
-            if(checkGamerExistence && checkBracketExistence)
+            if (checkGamerExistence && checkBracketExistence)
             {
                 return _tournamentBracketService.InsertGamerToBracket(gamer, bracketID);
             }
-            return null;
+            else throw new ArgumentException();
             
         }
         public bool UnregisterGamerFromBracket(int systemID, int bracketID)
         {
-            return _tournamentBracketDataAccess.RemoveGamerFromBracket(systemID, bracketID);
+            var result =  _tournamentBracketDataAccess.RemoveGamerFromBracket(systemID, bracketID);
+            if (result) return result;
+            else throw new ArgumentException();
         }
 
         public List<BracketInfo> GetAllBrackets()
         {
-            return _tournamentBracketService.GetAllBrackets();
+            var result =  _tournamentBracketService.GetAllBrackets();
+            if (result != null) return result;
+            else throw new ArgumentException();
         }
 
         public BracketInfo GetBracketByID(int bracketID)
         {
-            return _tournamentBracketService.GetBracketByID(bracketID);
+            var result = _tournamentBracketService.GetBracketByID(bracketID);
+            if (result != null) return result;
+            else throw new ArgumentException();
         }
     }
 }
