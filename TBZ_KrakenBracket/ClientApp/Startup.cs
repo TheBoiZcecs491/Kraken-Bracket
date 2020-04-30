@@ -39,6 +39,8 @@ namespace ClientApp
             services.AddSingleton<TournamentBracketManager>();
             services.AddSingleton<TournamentBracketService>();
             services.AddSingleton<TournamentBracketDataAccess>();
+            services.AddSingleton<SearchManager>();
+            services.AddSingleton<SearchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
