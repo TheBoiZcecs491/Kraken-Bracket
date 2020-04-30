@@ -7,12 +7,16 @@
       <!-- "$router.go(-1)" -->
       <v-btn @click="$router.go(-1)">&lt; BACK</v-btn>
       <h1>Signup for {{ bracket.bracketName }}</h1>
-      <v-form @submit.prevent="formSubmit" ref="signUpForm" v-model="formValidity">
+      <v-form
+        @submit.prevent="formSubmit"
+        ref="signUpForm"
+        v-model="formValidity"
+      >
         <v-container fluid>
           <v-row>
             <v-col cols="4"></v-col>
             <v-col cols="12" sm="4">
-            <v-text-field
+              <v-text-field
                 class="email-input"
                 v-model="email"
                 label="Email"
@@ -39,17 +43,32 @@
                 :rules="gamerTagIDRules"
                 required
               ></v-text-field>
-                 <router-link
-                :to="{
-                  name: 'bracket-view',
-                  params: { id: bracket.bracketID }
-                }"
-              >
-                <v-btn @click="formSubmit" type="submit" color="primary"
-                  >Register!</v-btn
-                >
-              </router-link>
-                <v-btn class="mr-4" color="error" @click="resetForm">Reset Form</v-btn>
+              <v-row>
+                <v-col cols="12" lg="4"></v-col>
+                <v-col cols="12" lg="4">
+                  <router-link
+                    v-show="formValidity"
+                    :to="{ name: 'bracket-view', params: bracket.bracketID }"
+                    class="submit-btn"
+                  >
+                    <v-btn @click="formSubmit" color="primary">Register!</v-btn>
+                  </router-link>
+                  <v-btn
+                    class="mr-4"
+                    v-if="!formValidity"
+                    :disabled="!formValidity"
+                    >Register!</v-btn
+                  >
+                </v-col>
+                <v-col cols="12" lg="4">
+                  <v-btn class="mr-4" color="error" @click="resetForm"
+                    >Reset Form</v-btn
+                  >
+                </v-col>
+                <!-- <v-col cols="12" lg="4">
+                  <v-btn class="mr-4" color="warning" @click="validateForm">Validate Form</v-btn>
+                </v-col> -->
+              </v-row>
             </v-col>
           </v-row>
         </v-container>
@@ -74,10 +93,10 @@ export default {
       bracket: {},
       gamerTag: "",
       gamerTagID: "",
-        gamer: {
-          gamerTag: this.gamerTag,
-          gamerTagID: this.gamerTagID
-        },
+      gamer: {
+        gamerTag: this.gamerTag,
+        gamerTagID: this.gamerTagID
+      },
       email: "",
       emailRules: [
         email => !!email || "Email is required",
@@ -96,9 +115,10 @@ export default {
           (gamerTag.length >= 2 && gamerTag.length <= 20) ||
           "Invalid GamerTag length. Must be between 2 and 20 characters"
       ],
-      gamerTagIDRules:[
+      gamerTagIDRules: [
         gamerTagID => !!gamerTagID || "GamerTagID is required",
-        gamerTagID => (gamerTagID.length === 4) || "Length of the ID must be 4 characters",
+        gamerTagID =>
+          gamerTagID.length === 4 || "Length of the ID must be 4 characters"
         // gamerTagID => (gamerTagID === parseInt(gamerTagID, 10)) || "ID must be a number"
       ],
       formValidity: false
@@ -115,24 +135,24 @@ export default {
   },
   methods: {
     formSubmit() {
-      if(this.$refs.signUpForm.validate()){
+      if (this.$refs.signUpForm.validate()) {
         axios.post(
-        `https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`,
-        {
-          bracketID: this.bracket.bracketID,
+          `https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`,
+          {
+            bracketID: this.bracket.bracketID,
             gamerTag: this.gamerTag,
             gamerTagID: this.gamerTagID
-        }
-      );
-      setTimeout(() => {
-        this.$store.dispatch("bracketPlayerInfo", this.email);
-      }, 500);
+          }
+        );
+        setTimeout(() => {
+          this.$store.dispatch("bracketPlayerInfo", this.email);
+        }, 500);
       }
     },
-    resetForm(){
+    resetForm() {
       this.$refs.signUpForm.reset();
     },
-    validateForm(){
+    validateForm() {
       this.$refs.signUpForm.validate();
     }
   },
@@ -141,3 +161,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.submit-btn {
+  text-decoration: none;
+}
+</style>
