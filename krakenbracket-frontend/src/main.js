@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
 import store from "./store";
+import Vuelidate from 'vuelidate'
+
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false;
 

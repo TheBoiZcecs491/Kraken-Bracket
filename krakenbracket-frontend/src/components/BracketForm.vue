@@ -1,9 +1,13 @@
 <template>
     <div class="new-bracket">
         <v-app id="inspire">
-        
         <h1>Create a new bracket</h1>
+        <v-form
+                ref="form"
+                v-model="valid"
+        >
         <v-row justify="space-around">
+            
                 <v-col class="px-4" cols="12" sm="3">
                 <v-text-field
                     v-model="BracketName"
@@ -40,6 +44,7 @@
                         label="Game played"
                         :rules="gamePlayedRules"
                         target="#dropdown_gamePlayed"
+                        required
                     ></v-overflow-btn>
                 </v-container>
                 <v-container id="GamePlatform">
@@ -52,6 +57,7 @@
                         label="Platform"
                         target="#dropdown_gamePlatform"
                         :rules="platformRules"
+                        required
                     ></v-overflow-btn>
                 </v-container>
 
@@ -85,6 +91,7 @@
                                     :rules="[value => !!value || 'Required']"
                                     readonly
                                     v-on="on"
+                                    required
                                 ></v-text-field>
                                 </template>
                                 <v-date-picker
@@ -112,6 +119,7 @@
                                     label="Start Time"
                                     :rules="[value => !!value || 'Required']"
                                     v-on="on"
+                                    required
                                 ></v-text-field>
                                 </template>
                                 <v-time-picker
@@ -141,6 +149,7 @@
                                     :rules="[value => !!value || 'Required']"
                                     readonly
                                     v-on="on"
+                                    required
                                 ></v-text-field>
                                 </template>
                                 <v-date-picker v-model="endDate" @input="menu3 = false"></v-date-picker>
@@ -166,6 +175,7 @@
                                     :rules="[value => !!value || 'Required']"
                                     readonly
                                     v-on="on"
+                                    required
                                 ></v-text-field>
                                 </template>
                                 <v-time-picker
@@ -177,11 +187,16 @@
                         </v-col>
                     </v-row>
                 </v-container>
-
-                <v-btn x-large @click="Submit">Create Bracket</v-btn>
-                
+                <v-btn
+                    :disabled="!valid"
+                    x-large
+                    @click="Submit"
+                    >
+                    Create Bracket
+                </v-btn>
                 </v-col>
         </v-row>
+        </v-form>
         </v-app>
     </div>
 </template>
@@ -197,6 +212,7 @@ export default {
     'Mortal Kombat 11', 'Injustice 2', 'Killer Instinct'],
     dropdown_gamePlatform: ['Playstation 3', 'Playstation 4', 'Xbox 360', 'Xbox One', 'Wii', 'Wii U', "Switch"],
     currentDate: new Date().toISOString().substr(0, 10),
+    valid: true,
     topMenu: null,
     time: null,
     menu1: false,
@@ -222,24 +238,12 @@ export default {
     [value => !!value || 'Game required'],
     platformRules:
     [value => !!value || 'Platform required'],
+    confirmRules:
+    [value => !!value || 'Platform required']
     }),
-//   data() {
-//     return {
-//         bracketInfo: {
-//             BracketName: "",
-//             CompetorCount: "",
-//             GamePlayed: "",
-//             GamePlatform: "",
-//             Rules: "",
-//             StartDate: "",
-//             StartTime: "",
-//             EndDate: "",
-//             EndTime: ""
-//         }
-//     }
-//     },
     methods: {
         Submit() {
+            this.$refs.form.validate()
             const bracketInfo = {
                 BracketName: this.BracketName,
                 CompetitorCount: this.CompetitorCount,
@@ -252,8 +256,8 @@ export default {
                 EndTime: this.endTime 
             }
             console.log(bracketInfo)
-        }
-
+            this.$refs.form.reset()
+        },
     },
   }
 </script>
