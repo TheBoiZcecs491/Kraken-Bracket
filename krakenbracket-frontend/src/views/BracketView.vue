@@ -2,6 +2,10 @@
   <v-app>
     <v-container id="page-layout-fix">
       <v-btn @click="$router.go(-1)">&lt; BACK</v-btn>
+      <div v-if="error" class="red--text">
+        <p>404: The bracket you have been looking for is not found</p>
+      </div>
+      <div v-else>
       <h1 id="title">{{ bracket.bracketName }}</h1>
       <div style="text-align: left">
         <v-row>
@@ -47,6 +51,7 @@
           <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
         </div>
       </div>
+      </div>
     </v-container>
   </v-app>
 </template>
@@ -65,6 +70,7 @@ export default {
   data() {
     return {
       dialog: false,
+      error: null,
       bracket: {}
     };
   },
@@ -73,8 +79,9 @@ export default {
       .then(response => {
         this.bracket = response.data;
       })
-      .catch(error => {
-        console.log("Error: " + error.response);
+      .catch(err => {
+        // console.log(err);
+        this.error = err
       });
   },
   computed: {
@@ -85,10 +92,9 @@ export default {
       for (let index = 0; index < bracketPlayerInfo.length; index++) {
         if (bracketPlayerInfo[index].bracketID === bracket.bracketID) {
           return true;
-        }
-        else return false;
+        } 
       }
-    },
+    }
   }
 };
 </script>
