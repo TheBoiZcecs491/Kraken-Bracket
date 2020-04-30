@@ -136,11 +136,11 @@ namespace TBZ.KrakenBracket.Managers
             User user = _databaseAccess.GetUserByEmail(email);
             if (user == null)
             {
-                return null;
+                throw new ArgumentException();
             }
             bool passwordCheck = _authenticationService.ComparePasswords(email, password);
             if (passwordCheck) return user;
-            return null;
+            else throw new ArgumentException();
         }
     }
 }

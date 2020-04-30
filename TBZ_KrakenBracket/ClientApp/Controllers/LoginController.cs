@@ -19,18 +19,12 @@ namespace ClientApp.Controllers
         {
             try
             {
-                if (_authenticationManager.Login(user.Email, user.Password) != null)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
-                }
+               return Ok(_authenticationManager.Login(user.Email, user.Password));
+
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status401Unauthorized);
             }
         }
     }

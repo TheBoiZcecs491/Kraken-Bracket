@@ -22,6 +22,7 @@
                 required
               ></v-text-field>
               <v-btn @click="login">Login</v-btn>
+              <p v-if="error">Login failed. Please try again</p>
             </v-col>
             <v-col cols="4"></v-col>
           </v-row>
@@ -43,7 +44,8 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      error: null
     };
   },
   methods: {
@@ -52,13 +54,18 @@ export default {
       this.$store.dispatch("login", {
         email: this.email,
         password: this.password
+      }).then(() =>{
+        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
+        this.$router.go(-1);
+      });
+      })
+      .catch(err =>{
+        // console.log("****ERROR:" + err)
+        this.error = err
       });
       // }).then(() => {
       //   this.$router.push({name: "Home"})
       // });
-      this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
-        this.$router.go(-1);
-      });
     }
   },
   created() {}
