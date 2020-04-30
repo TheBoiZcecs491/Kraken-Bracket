@@ -129,5 +129,37 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 return listOfBrackets;
             }
         }
+        
+        public List<BracketInfo> ReadBrackets(string bracketRequest, int pageNum, int skipPage)
+        {
+            var listOfBrackets = new List<BracketInfo>();
+            var negativeSkipPage = skipPage < 0;
+            using (conn = new MySqlConnection(CONNECTION_STRING))
+            {
+                string selectQuery = string.Format("SELECT * FROM bracket_info WHERE bracket_name LIKE \'%{0}%\'", bracketRequest);
+                Console.WriteLine(selectQuery);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        BracketInfo bracket = new BracketInfo();
+                        bracket.BracketID = reader.GetInt32("bracketID");
+                        bracket.BracketName = reader.GetString("bracket_name");
+                        bracket.BracketTypeID = reader.GetInt32("bracketTypeID");
+                        bracket.PlayerCount = reader.GetInt32("number_player");
+                        bracket.GamePlayed = reader.GetString("game_played");
+                        bracket.GamingPlatform = reader.GetString("gaming_platform");
+                        bracket.Rules = reader.GetString("rules");
+                        bracket.StartDate = reader.GetDateTime("start_date");
+                        bracket.EndDate = reader.GetDateTime("end_date");
+                        bracket.StatusCode = reader.GetInt32("status_code");
+                        listOfBrackets.Add(bracket);
+                    }
+                }
+            }
+            return listOfBrackets;
+        }
     }
 }
