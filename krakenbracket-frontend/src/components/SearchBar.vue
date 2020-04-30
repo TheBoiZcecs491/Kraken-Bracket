@@ -3,8 +3,8 @@
         <v-container fluid>
             <v-row>
                 <v-col cols="12" sm="1">
-                <select class="search-options" v-model="keyword">
-                    <option v-for="option in options" v-bind:key="option.value">
+                <select class="primary" v-model="keyword">
+                    <option v-for="option in options" v-bind:key="option.text" v-bind:value="option.value">
                         {{ option.text }}
                     </option>
                 </select>
@@ -22,7 +22,7 @@
                 </v-col>
                 <v-col cols="12" sm="1">
                 <router-link
-                    :to="{ name: 'search-view', params: {search: search, keyword: keyword} }"
+                    :to="{ name:'search-view', params: {search: search, keyword: keyword} }"
                 >
                     <v-btn class="primary" color="#2196F3">Search</v-btn>
                 </router-link>
@@ -37,7 +37,7 @@ export default {
     name: "SearchBar",
     data() {
         return {
-            keyword: 'brackets',
+            keyword: 'bracket',
             search: '',
             options: [
                 {text: 'Brackets', value: 'bracket'},
@@ -48,13 +48,3 @@ export default {
     },
 }
 </script>
-
-<style>
-.search-options {
-    background: #dfe5fb;
-    border: none;
-    color: #394066;
-    text-transform: lowercase;
-    font-variant: small-caps;
-}
-</style>
