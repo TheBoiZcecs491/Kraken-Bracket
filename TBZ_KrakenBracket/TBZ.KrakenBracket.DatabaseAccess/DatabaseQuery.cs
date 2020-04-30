@@ -46,7 +46,7 @@ namespace TBZ.DatabaseQueryService
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
                     MessageSalt msalt = new MessageSalt(tempUser.Password, tempUser.Salt);
-                    msalt.GenerateHash(msalt);
+                    msalt.GenerateHash();
                     tempUser.Password = msalt.message;
                     tempUser.Salt = msalt.salt;
                     comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname, account_type) " +

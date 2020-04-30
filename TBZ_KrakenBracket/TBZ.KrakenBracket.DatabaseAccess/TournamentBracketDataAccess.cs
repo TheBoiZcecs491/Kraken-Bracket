@@ -128,7 +128,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     user.Password = reader.GetString("hashed_password");
                     user.Salt = reader.GetString("salt");
                     MessageSalt msalt = new MessageSalt(password, user.Salt);
-                    msalt.GenerateHash(msalt);
+                    msalt.GenerateHash();
                     
                     if (msalt.message == user.Password)
                     {
