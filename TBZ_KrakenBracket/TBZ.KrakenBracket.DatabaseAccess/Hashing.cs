@@ -10,7 +10,7 @@ namespace TBZ.HashingService
         public string salt { get; set; }
 
         public MessageSalt() { }
-        public MessageSalt(string msg, string slt)
+        public MessageSalt(string msg , string slt)
         {
             message = msg;
             salt = slt;

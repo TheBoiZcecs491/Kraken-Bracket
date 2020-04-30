@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
+
   baseURL: `https://localhost:5001`,
   withCredentials: false,
   headers: {
@@ -16,6 +17,12 @@ export default {
   },
   getBracketByID(bracketID) {
     return apiClient.get("api/brackets/" + bracketID);
+  },
+  getEvents() {
+    return apiClient.get("/events");
+  },
+  getEventByID(eventID) {
+    return apiClient.get("api/events/" + eventID);
   },
   getBracketPlayerInfo(email) {
     return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`);
