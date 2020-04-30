@@ -22,7 +22,7 @@
                 required
               ></v-text-field>
               <v-btn @click="login">Login</v-btn>
-              <p v-if="error">Login failed. Please try again</p>
+              <p v-if="error" class="red--text">Login failed. Please try again</p>
             </v-col>
             <v-col cols="4"></v-col>
           </v-row>
