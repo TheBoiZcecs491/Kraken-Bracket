@@ -42,102 +42,43 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public int GetNumberOfCompetitors(int bracketID)
-        {
-            try
-            {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
-                {
-                    string selectQuery = string.Format("SELECT number_player FROM bracket_info WHERE bracketID={0}", bracketID);
-                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                    conn.Open();
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                    {
-                        return reader.Read() ?  reader.GetInt32(0) : -1;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
-        }
-
-        public int GetBracketStatusCode(int bracketID)
-        {
-            bool bracketStatus = CheckBracketIDExistence(bracketID);
-            if (!bracketStatus) return -1;
-            else
-            {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
-                {
-                    string selectQuery = string.Format("SELECT status_code FROM bracket_info WHERE bracketID={0}", bracketID);
-                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                    conn.Open();
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                    {
-                        return reader.Read() ? reader.GetInt32(0) : -1;
-                    }
-                }
-            }
-        }
-
         public BracketInfo GetBracketByID(int bracketID)
         {
             bool bracketStatus = CheckBracketIDExistence(bracketID);
             if (!bracketStatus) return null;
             else
             {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
-                {
-                    string selectQuery = string.Format("SELECT * FROM bracket_info WHERE bracketID={0}", bracketID);
-                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                    conn.Open();
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                    {
-                        BracketInfo bracket = new BracketInfo();
-                        reader.Read();
-                        bracket.BracketID = reader.GetInt32("bracketID");
-                        bracket.BracketName = reader.GetString("bracket_name");
-                        bracket.BracketTypeID = reader.GetInt32("bracketTypeID");
-                        bracket.PlayerCount = reader.GetInt32("number_player");
-                        bracket.GamePlayed = reader.GetString("game_played");
-                        bracket.GamingPlatform = reader.GetString("gaming_platform");
-                        bracket.Rules = reader.GetString("rules");
-                        bracket.StartDate = reader.GetDateTime("start_date");
-                        bracket.EndDate = reader.GetDateTime("end_date");
-                        bracket.StatusCode = reader.GetInt32("status_code");
-                        conn.Close();
-                        return bracket;
-                    }
-                }
+                TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
+                BracketInfo bracket = tournamentBracketDatabaseQuery.GetBracketInfo(bracketID);
+                return bracket;
             }
         }
 
-        public User GetUser(string email, string password)
+        public bool RemoveGamerFromBracket(int systemID, int bracketID)
         {
-            using (conn = new MySqlConnection(CONNECTION_STRING))
+            try
             {
-                string selectQuery = string.Format("SELECT * FROM user_information WHERE email='{0}'", email);
-                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                conn.Open();
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                {
-                    User user = new User();
-                    reader.Read();
-                    user.Password = reader.GetString("hashed_password");
-                    user.Salt = reader.GetString("salt");
-                    MessageSalt msalt = new MessageSalt(password, user.Salt);
-                    msalt.GenerateHash(msalt);
-                    
-                    if (msalt.message == user.Password)
-                    {
-                        return user;
-                    }
-                    
-                }
+                DatabaseQuery databaseQuery = new DatabaseQuery();
+                TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
+                string hashedUserID = databaseQuery.GetHashedUserID(systemID);
+                databaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
+                tournamentBracketDatabaseQuery.DecrementBracketPlayerCount(bracketID);
+                return true;
             }
-            return null;
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public List<BracketPlayer> GetBracketPlayerInfo(string email)
+        {
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            string hashedUserID = databaseQuery.GetHashedUserID(user.SystemID);
+            List<BracketPlayer> bracketPlayers = tournamentBracketDatabaseQuery.GetBracketPlayerInfo(hashedUserID);
+            return bracketPlayers;            
         }
 
         public BracketPlayer InsertGamerToBracket(Gamer gamer, int bracketID)
@@ -152,12 +93,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 else
                 {
                     DatabaseQuery databaseQuery = new DatabaseQuery();
+                    TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
                     Gamer tempGamer = databaseQuery.GetGamerInfo(gamer);
                     BracketPlayer bracketPlayer = new BracketPlayer();
                     bracketPlayer.BracketID = bracket.BracketID;
                     bracketPlayer.HashedUserID = tempGamer.HashedUserID;
                     databaseQuery.InsertBracketPlayer(bracketPlayer);
-                    databaseQuery.IncrementBracketPlayerCount(bracket);
+                    tournamentBracketDatabaseQuery.IncrementBracketPlayerCount(bracket);
                     return bracketPlayer;
                 }
             }
@@ -170,33 +112,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         public List<BracketInfo> GetAllBrackets()
         {
-            using (conn = new MySqlConnection(CONNECTION_STRING))
-            {
-                string selectQuery = string.Format("SELECT * FROM bracket_info");
-                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                conn.Open();
-                List<BracketInfo> listOfBrackets = new List<BracketInfo>();
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        BracketInfo bracket = new BracketInfo();
-                        bracket.BracketID = reader.GetInt32("bracketID");
-                        bracket.BracketName = reader.GetString("bracket_name");
-                        bracket.BracketTypeID = reader.GetInt32("bracketTypeID");
-                        bracket.PlayerCount = reader.GetInt32("number_player");
-                        bracket.GamePlayed = reader.GetString("game_played");
-                        bracket.GamingPlatform = reader.GetString("gaming_platform");
-                        bracket.Rules = reader.GetString("rules");
-                        bracket.StartDate = reader.GetDateTime("start_date");
-                        bracket.EndDate = reader.GetDateTime("end_date");
-                        bracket.StatusCode = reader.GetInt32("status_code");
-                        listOfBrackets.Add(bracket);
-                    }
-                }
-                return listOfBrackets;
-            }
-            
+            TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
+            return tournamentBracketDatabaseQuery.GetAllBrackets();
         }
     }
 }

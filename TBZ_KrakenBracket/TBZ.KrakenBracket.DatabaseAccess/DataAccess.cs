@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using TBZ.DatabaseQueryService;
+using TBZ.HashingService;
 using TBZ.KrakenBracket.DataHelpers;
 using TBZ.StringChecker;
 
@@ -130,6 +132,13 @@ namespace TBZ.DatabaseAccess
             }
         }
 
+        public User GetUserByEmail(string email)
+        {
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            return user;
+        }
+
         public bool CheckIDExistence(int sysID)
         {
             try
@@ -158,6 +167,19 @@ namespace TBZ.DatabaseAccess
             {
                 return false;
             }
+        }
+
+        public bool ComparePasswords(string email, string password)
+        {
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            MessageSalt messageSalt = new MessageSalt(password, user.Salt);
+            messageSalt.GenerateHash(messageSalt);
+            if (messageSalt.message == user.Password)
+            {
+                return true;
+            }
+            return false;
         }
 
         /// <summary>

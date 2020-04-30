@@ -19,26 +19,6 @@ namespace ClientApp.Controllers
             _tournamentBracketManager = tournamentBracketManager;
         }
 
-        [Produces("application/json")]
-        public IActionResult GetBracketStatusCode(int bracketID)
-        {
-            return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
-        }
-
-        [HttpGet("competitors/{bracketID}")]
-        [Produces("application/json")]
-        public IActionResult GetBracketNumberOfCompetitors(int bracketID)
-        {
-            var result = _tournamentBracketManager.GetBracketStatusCode(bracketID);
-            if (result == 0)
-            {
-                return Ok(_tournamentBracketManager.GetNumberOfCompetitors(bracketID));
-            }
-            else
-            {
-                return StatusCode(StatusCodes.Status204NoContent);
-            }
-        }
 
         [HttpGet("{bracketID}")]
         [Produces("application/json")]
@@ -60,10 +40,18 @@ namespace ClientApp.Controllers
         {
             return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
         }
-        [HttpPost("login")]
-        public IActionResult LoginUser(User user)
+        [HttpDelete("{bracketID}/unregister/{systemID}")]
+        [Produces("application/json")]
+        public IActionResult UnregisterGamerFromBracket(int bracketID, int systemID)
         {
-            return Ok(_tournamentBracketManager.GetUser(user.Email, user.Password));
+            return Ok(_tournamentBracketManager.UnregisterGamerFromBracket(systemID, bracketID));
+        }
+
+        [HttpGet("{email}/bracketPlayerInfo")]
+        [Produces("application/json")]
+        public IActionResult GetBracketPlayerInfo(string email)
+        {
+            return Ok(_tournamentBracketManager.GetBracketPlayerInfo(email));
         }
     }
 }
