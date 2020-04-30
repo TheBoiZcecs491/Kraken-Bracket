@@ -39,20 +39,18 @@
                 :rules="gamerTagIDRules"
                 required
               ></v-text-field>
-              <v-row>
-                <v-col cols="12" lg="4"></v-col>
-                <v-col cols="12" lg="4">
-                  <v-btn class="mr-4" v-show="!formValidity" :disabled="!formValidity">Register!</v-btn>
-                </v-col>
-                <v-col cols="12" lg="4">
-                  <v-btn class="mr-4" color="error" @click="resetForm">Reset Form</v-btn>
-                </v-col>
-                <!-- <v-col cols="12" lg="4">
-                  <v-btn class="mr-4" color="warning" @click="validateForm">Validate Form</v-btn>
-                </v-col> -->
-              </v-row>
+                 <router-link
+                :to="{
+                  name: 'bracket-view',
+                  params: { id: bracket.bracketID }
+                }"
+              >
+                <v-btn @click="formSubmit" type="submit" color="primary"
+                  >Register!</v-btn
+                >
+              </router-link>
+                <v-btn class="mr-4" color="error" @click="resetForm">Reset Form</v-btn>
             </v-col>
-          <v-col cols="4"></v-col>
           </v-row>
         </v-container>
       </v-form>
