@@ -5,6 +5,7 @@ import BracketList from "../views/BracketListView.vue";
 import BracketView from "../views/BracketView.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
 import LoginView from "../views/LoginView.vue";
+import SearchView from "../views/SearchView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -43,6 +44,11 @@ const routes = [
     path: "/login",
     name: "login-view",
     component: LoginView
+  },
+  {
+    path: "/search-results/:search",
+    name: "search-view",
+    component: SearchView
   }
 ];
 
