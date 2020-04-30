@@ -11,7 +11,13 @@ const apiClient = axios.create({
 });
 
 export default {
-    getSearchBrackets(search) {   //, pageNum, skipPage) {
-        return apiClient.get("api/search/" + search);
-    }
+  searchBrackets(search) {   //, pageNum, skipPage) {
+    return apiClient.get("api/search/brackets/" + search);
+  },
+  searchEvents(search) {   //, pageNum, skipPage) {
+    return apiClient.get("api/search/events/" + search);
+  },
+  searchGamers(search) {   //, pageNum, skipPage) {
+    return apiClient.get("api/search/gamers/" + search);
+  }
 };
