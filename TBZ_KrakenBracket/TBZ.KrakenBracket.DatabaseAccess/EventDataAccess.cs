@@ -21,7 +21,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             return eventObj;
         }
 
-        public bool checkEventExistByID(int eventID)
+        public bool CheckEventExistByID(int eventID)
         {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -48,9 +48,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public EventInfo getEventByID(int eventID)
+        public EventInfo GetEventByID(int eventID)
         {
-            bool eventExist = checkEventExistByID(eventID);
+            bool eventExist = CheckEventExistByID(eventID);
             if (!eventExist) return null;
             else
             {
@@ -78,7 +78,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public List<EventInfo> getAllEvents()
+        public List<EventInfo> GetAllEvents()
         {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -106,9 +106,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public 
+        public EventBracketList AddBracketToEvent(EventBracketList eventBracket)
+        {
+            databaseQuery.InsertEventBracket(eventBracket);
+            return eventBracket;
+        }
 
-        public List<int> getAllBracktsInEvent(int eventID)
+        public List<int> GetAllBracktsInEvent(int eventID)
         {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {

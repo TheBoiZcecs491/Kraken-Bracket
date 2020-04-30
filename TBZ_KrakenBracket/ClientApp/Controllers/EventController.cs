@@ -24,16 +24,29 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.CreateEvent(eventObj));
         }
 
+        [HttpGet("Events")]
+        [Produces("application/json")]
         public IActionResult GetAllEvent()
         {
             return Ok(_eventManager.GetAllEvents());
         }
 
+        [HttpGet("Events/{eventID}")]
+        [Produces("application/json")]
         public IActionResult GetEventByID(int eventID)
         {
             return Ok(_eventManager.GetEventByID(eventID));
         }
 
+        [HttpPost("createEventBracket")]
+        [Produces("application/json")]
+        public IActionResult CreateEventBracket(EventBracketList eventBracket)
+        {
+            return Ok(_eventManager.AddBracketToEvent(eventBracket));
+        }
+
+        [HttpGet("GetBracketEvent/{eventID}")]
+        [Produces("application/json")]
         public IActionResult GetBracketsInEvent(int eventID)
         {
             return Ok(_eventManager.GetBracketsInEvent(eventID));

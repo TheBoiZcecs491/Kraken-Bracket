@@ -154,6 +154,25 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
+        public void InsertEventBracket(EventBracketList eventBracket)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO event_bracket_list(eventID, bracketID) VALUES(@eventID, @bracketID)";
+
+                    comm.Parameters.AddWithValue("@eventID", eventBracket.EventID);
+                    comm.Parameters.AddWithValue("@bracketID", eventBracket.BracketID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
         public void DeleteUser(int deleteValue)
         {
 
