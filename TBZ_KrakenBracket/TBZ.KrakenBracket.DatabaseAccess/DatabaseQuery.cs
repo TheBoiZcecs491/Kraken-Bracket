@@ -27,6 +27,8 @@ namespace TBZ.DatabaseQueryService
             {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
         };
 
+        
+
         public bool TableExist(string tableName)
         {
             if (!tables.ContainsKey(tableName))
@@ -113,6 +115,23 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
+        public void RemoveGamerFromBracket(string hashedUserID, int bracketID)
+        {
+            var DB = new Database();
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "DELETE FROM bracket_player_info WHERE hashedUserID=@HashedUserID AND bracketID=@BracketID";
+                    comm.Parameters.AddWithValue("@HashedUserID", hashedUserID);
+                    comm.Parameters.AddWithValue("@BracketID", bracketID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
         public void InsertBracketPlayer(BracketPlayer bracketPlayer)
         {
             var DB = new Database();
@@ -134,6 +153,7 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
+        
 
         public void InsertEvent(EventInfo Event)
         {
@@ -201,58 +221,93 @@ namespace TBZ.DatabaseQueryService
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
                     comm.CommandText = "UPDATE " + tableName + " SET " + columnName + " = '" + updateValue + "'" + " WHERE " + variable + " = " + value;
-                    //comm.Parameters.AddWithValue("@value", value);
-                    //comm.Parameters.AddWithValue("@updateValue", updateValue);
-                    conn.Open();//ya bongus u needed to open the connection
-                    comm.ExecuteNonQuery();
-                    //TODO: okay b/c I was having trubbs with trying to get this to work. ONLY TO REALIZE THAT BOIO FORGOT TO PUT IN comm.Open()
-                    //now, this is not the kosher way to handle these update sql commands, so I will need to come back and fix that.
-                    //I should use those comm.Parameters which I commented out due to string format paranoia.
-                    conn.Close();
-                }
-            }
-        }
-        public void IncrementBracketPlayerCount(BracketInfo bracket)
-        {
-            var DB = new Database();
-
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
-            {
-                using (MySqlCommand comm = conn.CreateCommand())
-                {
-                    //string updateQuery = string.Format("UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID={0}", bracket.BracketID);
-                    comm.CommandText = "UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID=@BracketID";
-                    comm.Parameters.AddWithValue("@BracketID", bracket.BracketID);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
                 }
             }
         }
+       
         public Gamer GetGamerInfo(Gamer gamer)
         {
-            var DB = new Database();
-
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            try
             {
-                using (MySqlCommand comm = conn.CreateCommand())
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
                 {
-                    comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag AND gamerTagID=@GamerTagID";
-                    comm.Parameters.AddWithValue("@GamerTag", gamer.GamerTag);
-                    comm.Parameters.AddWithValue("@GamerTagID", gamer.GamerTagID);
-                    conn.Open();
-                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    using (MySqlCommand comm = conn.CreateCommand())
                     {
-                        reader.Read();
-                        gamer.GamerTag = reader.GetString("gamerTag");
-                        gamer.GamerTagID = reader.GetInt32("gamerTagID");
-                        gamer.HashedUserID = reader.GetString("hashedUserID");
-                        conn.Close();
-                        return gamer;
+                        comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag AND gamerTagID=@GamerTagID";
+                        comm.Parameters.AddWithValue("@GamerTag", gamer.GamerTag);
+                        comm.Parameters.AddWithValue("@GamerTagID", gamer.GamerTagID);
+                        conn.Open();
+                        using (MySqlDataReader reader = comm.ExecuteReader())
+                        {
+                            reader.Read();
+                            gamer.GamerTag = reader.GetString("gamerTag");
+                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
+                            gamer.HashedUserID = reader.GetString("hashedUserID");
+                            conn.Close();
+                            return gamer;
+                        }
                     }
                 }
             }
-            
+            catch (Exception)
+            {
+                return null;
+            }
         }
+      
+        public User GetUserInfo(string email)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "SELECT * FROM user_information WHERE email=@Email";
+                    comm.Parameters.AddWithValue("@Email", email);
+                    conn.Open();
+                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    {
+                        User user = new User();
+                        reader.Read();
+                        user.SystemID = reader.GetInt32("userID");
+                        user.Email = reader.GetString("email");
+                        user.FirstName = reader.GetString("fname");
+                        user.LastName = reader.GetString("lname");
+                        user.Password = reader.GetString("hashed_password");
+                        user.Salt = reader.GetString("salt");
+                        user.AccountType = reader.GetString("account_type");
+                        user.AccountStatus = reader.GetBoolean("account_status");
+                        conn.Close();
+                        return user;
+                    }
+                }
+            }
+        }
+        public string GetHashedUserID(int systemID)
+        {
+            var DB = new Database();
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                // Retrieve the system ID
+                string selectQuery0 = string.Format("SELECT * FROM userid WHERE userID={0}", systemID);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery0, conn);
+                conn.Open();
+                using (MySqlDataReader reader0 = selectCmd.ExecuteReader())
+                {
+                    reader0.Read();
+                    string hashedUserID = reader0.GetString("hashed_userID");
+                    conn.Close();
+                    return hashedUserID;
+                }
+            }
+        }
+
+      
     }
 }

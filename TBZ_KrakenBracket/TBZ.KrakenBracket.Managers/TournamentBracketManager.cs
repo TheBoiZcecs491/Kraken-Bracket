@@ -69,39 +69,35 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
-        public User GetUser(string email, string password)
+        public List<BracketPlayer> GetBracketPlayerInfo(string email)
         {
-            return _tournamentBracketDataAccess.GetUser(email, password);
+            return _tournamentBracketDataAccess.GetBracketPlayerInfo(email);
         }
 
         public BracketPlayer RegisterGamerIntoBracket(Gamer gamer, int bracketID)
         {
-            return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
+            bool checkGamerExistence = _tournamentBracketService.CheckGamerExistence(gamer);
+            bool checkBracketExistence = _tournamentBracketService.CheckBracketExistence(bracketID);
+            if(checkGamerExistence && checkBracketExistence)
+            {
+                return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
+            }
+            return null;
+            
+        }
+        public bool UnregisterGamerFromBracket(int systemID, int bracketID)
+        {
+            return _tournamentBracketDataAccess.RemoveGamerFromBracket(systemID, bracketID);
         }
 
         public List<BracketInfo> GetAllBrackets()
         {
-            List<BracketInfo> brackets = _tournamentBracketDataAccess.GetAllBrackets();
-            return brackets;
+            return _tournamentBracketService.GetAllBrackets();
         }
 
         public BracketInfo GetBracketByID(int bracketID)
         {
-            return _tournamentBracketDataAccess.GetBracketByID(bracketID);
-        }
-
-        public int GetBracketStatusCode(int bracketID)
-        {
-            int result = _tournamentBracketService.CheckBracketStatusCode(bracketID);
-            return result;
-
-        }
-
-        public int GetNumberOfCompetitors(int bracketID)
-        {
-            int result = _tournamentBracketService.GetNumberOfCompetitors(bracketID);
-            return result;
-
+            return _tournamentBracketService.GetBracketByID(bracketID);
         }
     }
 }
