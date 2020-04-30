@@ -15,9 +15,27 @@ namespace ClientApp.Controllers
             _searchManager = searchManager;
         }
 
-        [HttpGet("{search}")]//, pageNum, skipPage}")]
+        [HttpGet("brackets/{search}")] //, pageNum, skipPage}")]
         [Produces("application/json")]
-        public IActionResult GetSearchBrackets(string search)//, int pageNum, int skipPage)
+        public IActionResult SearchBrackets(string search) //, int pageNum, int skipPage)
+        {
+            //logger
+            int pageNum = 0;
+            int skipPage = 0;
+            return Ok(_searchManager.GetBrackets(search, pageNum, skipPage));
+        }
+        [HttpGet("events/{search}")] //, pageNum, skipPage}")]
+        [Produces("application/json")]
+        public IActionResult SearchEvents(string search) //, int pageNum, int skipPage)
+        {
+            //logger
+            int pageNum = 0;
+            int skipPage = 0;
+            return Ok(_searchManager.GetBrackets(search, pageNum, skipPage));
+        }
+        [HttpGet("gamers/{search}")] //, pageNum, skipPage}")]
+        [Produces("application/json")]
+        public IActionResult SearchGamers(string search) //, int pageNum, int skipPage)
         {
             //logger
             int pageNum = 0;
