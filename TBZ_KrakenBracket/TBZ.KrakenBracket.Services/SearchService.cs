@@ -8,7 +8,7 @@ namespace TBZ.KrakenBracket.Services
     public class SearchService
     {
 
-        TournamentBracketDataQuery _bracketDAO = new TournamentBracketDataQuery();
+        TournamentBracketDatabaseQuery _bracketDAO = new TournamentBracketDatabaseQuery();
         // EventDataAccess _eventDAO = new EventDataAccess();
         // GamerDataAccess _gamerDAO = new GamerDataAccess();
 
