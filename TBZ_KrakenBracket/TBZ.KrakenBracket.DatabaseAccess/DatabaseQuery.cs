@@ -135,7 +135,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void InsertEvent(EventInfo tempEvent)
+        public void InsertEvent(EventInfo Event)
         {
             var DB = new Database();
 
@@ -145,8 +145,8 @@ namespace TBZ.DatabaseQueryService
                 {
                     comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
 
-                    comm.Parameters.AddWithValue("@eventID", tempEvent.EventID);
-                    comm.Parameters.AddWithValue("@event_Name", tempEvent.EventName);
+                    comm.Parameters.AddWithValue("@eventID", Event.EventID);
+                    comm.Parameters.AddWithValue("@event_Name", Event.EventName);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
