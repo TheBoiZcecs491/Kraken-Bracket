@@ -61,7 +61,8 @@ const routes = [
   {
     path: "/search-results/:search",
     name: "search-view",
-    component: SearchView
+    component: SearchView,
+    props: true
   }
 ];
 
