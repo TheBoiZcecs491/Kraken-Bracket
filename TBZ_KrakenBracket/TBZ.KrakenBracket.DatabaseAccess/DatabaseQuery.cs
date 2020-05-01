@@ -12,32 +12,6 @@ namespace TBZ.DatabaseQueryService
 {
     public class DatabaseQuery
     {
-        Dictionary<string, string> tables = new Dictionary<string, string>()
-        {
-            {"bracket_info","bracket_info(bracketID, bracket_name, bracketTypeID, number_player) VALUES(@bracketID, @bracket_name, @bracketTypeID, @number_player)"},
-            {"bracket_player_info","bracket_player_info(bracketID, hashedUserID, roleID) VALUES(@bracketID, @hashedUserID, @roleID)"},
-            {"bracket_type","bracket_type(bracketTypeID, bracket_type) VALUES(@bracketTypeID, @bracket_type)"},
-            {"event_bracket_list","event_bracket_list(eventID, bracketID) VALUES(@eventID, @bracketID)"},
-            {"event_info","event_info(eventID, event_name) VALUES(@eventID, @event_name)"},
-            {"role_type","role_type(roleID, role_type) VALUES(@roleID, @role_type)"},
-            {"team_info","team_info(teamID, team_name) VALUES(@teamID, @team_name)" },
-            {"team_list", "team_list(teamID, hashedUserID) VALUES(@teamID, @hashedUserID)"},
-            {"gamer_info", "gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)" },
-            {"user_information", "user_information(userID, email, hashed_password, salt, fname, lname) VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname" },
-            {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
-        };
-
-        
-
-        public bool TableExist(string tableName)
-        {
-            if (!tables.ContainsKey(tableName))
-            {
-                throw new ArgumentException("Table does not exist");
-            }
-            return true;
-        }
-
         public void InsertUserAcc(User tempUser)
         {
 
@@ -48,12 +22,11 @@ namespace TBZ.DatabaseQueryService
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
                     MessageSalt msalt = new MessageSalt(tempUser.Password, tempUser.Salt);
-                    msalt.GenerateHash(msalt);
+                    msalt.GenerateHash();
                     tempUser.Password = msalt.message;
                     tempUser.Salt = msalt.salt;
                     comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname, account_type) " +
                     "VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname, @account_type)";
-
                     comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
                     comm.Parameters.AddWithValue("@email", tempUser.Email);
                     comm.Parameters.AddWithValue("@hashed_password", tempUser.Password);
@@ -62,14 +35,18 @@ namespace TBZ.DatabaseQueryService
                     comm.Parameters.AddWithValue("@lname", tempUser.LastName);
                     comm.Parameters.AddWithValue("@account_type", tempUser.AccountType);
 
-                    //comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
-                    //comm.Parameters.AddWithValue("@hashed_userID", tempUser.SystemID);
                     conn.Open();
                     comm.ExecuteNonQuery();
+                    comm.Parameters.Clear();
+
+
+                    comm.CommandText = "INSERT INTO userid(userID, hashed_userID) " +
+                    "VALUES(@userID, @hashed_userID)";
+                    comm.ExecuteNonQuery();
+                    comm.Parameters.Clear();
                     conn.Close();
                 }
             }
-
         }
 
         public void InsertGamerInfo(Gamer tempGamer)
@@ -153,9 +130,8 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
-        
 
-        public void InsertEvent(EventInfo tempEvent)
+        public void InsertEvent(EventInfo Event)
         {
             var DB = new Database();
 
@@ -165,8 +141,27 @@ namespace TBZ.DatabaseQueryService
                 {
                     comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
 
-                    comm.Parameters.AddWithValue("@eventID", tempEvent.EventID);
-                    comm.Parameters.AddWithValue("@event_Name", tempEvent.EventName);
+                    comm.Parameters.AddWithValue("@eventID", Event.EventID);
+                    comm.Parameters.AddWithValue("@event_Name", Event.EventName);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void InsertEventBracket(EventBracketList eventBracket)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO event_bracket_list(eventID, bracketID) VALUES(@eventID, @bracketID)";
+
+                    comm.Parameters.AddWithValue("@eventID", eventBracket.EventID);
+                    comm.Parameters.AddWithValue("@bracketID", eventBracket.BracketID);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
@@ -208,7 +203,24 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
-       
+
+        public void IncrementBracketPlayerCount(BracketInfo bracket)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID=@BracketID";
+                    comm.Parameters.AddWithValue("@BracketID", bracket.BracketID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
         public Gamer GetGamerInfo(Gamer gamer)
         {
             try
@@ -240,7 +252,7 @@ namespace TBZ.DatabaseQueryService
                 return null;
             }
         }
-      
+
         public User GetUserInfo(string email)
         {
             try
@@ -276,8 +288,8 @@ namespace TBZ.DatabaseQueryService
             {
                 return null;
             }
-            
         }
+
         public string GetHashedUserID(int systemID)
         {
             var DB = new Database();
@@ -296,7 +308,5 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
-
-      
     }
 }

@@ -10,7 +10,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 {
     public class TournamentBracketDataAccess
     {
-        const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
+        const string CONNECTION_STRING = @"server=localhost; userid=root; password=password; database=tbz_krackenbracket";
         private MySqlConnection conn;
         public bool CheckBracketExistenceByID(int bracketID)
         {
