@@ -74,6 +74,33 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
             }
         }
+
+        public bool DisqualifyGamerFromBracket(int bracketID, string hashedUserID)
+        {
+            try
+            {
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+                {
+                    using (MySqlCommand comm = conn.CreateCommand())
+                    {
+                        comm.CommandText = "UPDATE bracket_info SET status_code=0 WHERE bracketID=@BracketID AND hashedUserID=@HashedUserID";
+                        comm.Parameters.AddWithValue("@BracketID", bracketID);
+                        comm.Parameters.AddWithValue("@HashedUserID", hashedUserID);
+                        conn.Open();
+                        comm.ExecuteNonQuery();
+                        conn.Close();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public List<BracketPlayer> GetBracketPlayerInfo(string hashedUserID)
         {
             var DB = new Database();

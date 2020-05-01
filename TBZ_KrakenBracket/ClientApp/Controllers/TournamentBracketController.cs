@@ -108,5 +108,23 @@ namespace ClientApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet("{email}/gamerInfo")]
+        [Produces("application/json")]
+        public IActionResult GetGamerInfo(string email)
+        {
+            try
+            {
+                return Ok(_tournamentBracketManager.GetGamerInfoByEmail(email));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
-}
+    }

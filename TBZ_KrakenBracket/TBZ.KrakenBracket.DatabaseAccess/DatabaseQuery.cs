@@ -27,7 +27,37 @@ namespace TBZ.DatabaseQueryService
             {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
         };
 
-        
+        internal Gamer GetGamerInfoByHashedID(string hashedUserID)
+        {
+            try
+            {
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+                {
+                    using (MySqlCommand comm = conn.CreateCommand())
+                    {
+                        comm.CommandText = "SELECT * FROM gamer_info WHERE hashedUserID=@HashedUserID";
+                        comm.Parameters.AddWithValue("@HashedUserID", hashedUserID);
+                        conn.Open();
+                        using (MySqlDataReader reader = comm.ExecuteReader())
+                        {
+                            Gamer gamer = new Gamer();
+                            reader.Read();
+                            gamer.GamerTag = reader.GetString("gamerTag");
+                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
+                            gamer.HashedUserID = reader.GetString("hashedUserID");
+                            conn.Close();
+                            return gamer;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         public bool TableExist(string tableName)
         {
@@ -140,13 +170,14 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score)";
+                    comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score, @status_code)";
 
                     comm.Parameters.AddWithValue("@bracketID", bracketPlayer.BracketID);
                     comm.Parameters.AddWithValue("@hashedUserID", bracketPlayer.HashedUserID);
                     comm.Parameters.AddWithValue("@roleID", bracketPlayer.RoleID);
                     comm.Parameters.AddWithValue("@placement", bracketPlayer.Placement);
                     comm.Parameters.AddWithValue("@score", bracketPlayer.Score);
+                    comm.Parameters.AddWithValue("@status_code", bracketPlayer.StatusCode);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
@@ -219,9 +250,8 @@ namespace TBZ.DatabaseQueryService
                 {
                     using (MySqlCommand comm = conn.CreateCommand())
                     {
-                        comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag AND gamerTagID=@GamerTagID";
+                        comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag";
                         comm.Parameters.AddWithValue("@GamerTag", gamer.GamerTag);
-                        comm.Parameters.AddWithValue("@GamerTagID", gamer.GamerTagID);
                         conn.Open();
                         using (MySqlDataReader reader = comm.ExecuteReader())
                         {

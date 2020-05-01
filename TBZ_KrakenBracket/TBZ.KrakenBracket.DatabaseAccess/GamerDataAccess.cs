@@ -13,5 +13,20 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             DatabaseQuery databaseQuery = new DatabaseQuery();
             return databaseQuery.GetGamerInfo(gamer);
         }
+
+        public Gamer GetGamerInfoByEmail(string email)
+        {
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            if (user != null)
+            {
+
+                string hashedUserID = databaseQuery.GetHashedUserID(user.SystemID);
+                Gamer gamer = databaseQuery.GetGamerInfoByHashedID(hashedUserID);
+                return gamer;
+            }
+            else throw new ArgumentException();
+        }
     }
 }

@@ -56,16 +56,33 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         public bool RemoveGamerFromBracket(int systemID, int bracketID)
         {
+            /*
+             Status codes
+
+            2 - bracket is in progress
+            1 - bracket not in progress and has already completed
+            0 - bracket not in progress and has not begun
+             */
             try
             {
                 DatabaseQuery databaseQuery = new DatabaseQuery();
                 TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
                 string hashedUserID = databaseQuery.GetHashedUserID(systemID);
-                databaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
-                tournamentBracketDatabaseQuery.DecrementBracketPlayerCount(bracketID);
-                return true;
+                BracketInfo bracket = tournamentBracketDatabaseQuery.GetBracketInfo(bracketID);
+                if(bracket.StatusCode == 2)
+                {
+                    return tournamentBracketDatabaseQuery.DisqualifyGamerFromBracket(bracketID, hashedUserID);
+                }
+                else if(bracket.StatusCode == 0)
+                {
+                    databaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
+                    tournamentBracketDatabaseQuery.DecrementBracketPlayerCount(bracketID);
+                    return true;
+                }
+                return false;
+                
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
@@ -103,6 +120,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     BracketPlayer bracketPlayer = new BracketPlayer();
                     bracketPlayer.BracketID = bracket.BracketID;
                     bracketPlayer.HashedUserID = tempGamer.HashedUserID;
+                    bracketPlayer.StatusCode = 1;
                     databaseQuery.InsertBracketPlayer(bracketPlayer);
                     tournamentBracketDatabaseQuery.IncrementBracketPlayerCount(bracket);
                     return bracketPlayer;

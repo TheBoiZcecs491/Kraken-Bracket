@@ -87,6 +87,14 @@ namespace TBZ.KrakenBracket.Managers
             else throw new ArgumentException();
             
         }
+
+        public Gamer GetGamerInfoByEmail(string email)
+        {
+            var result =  _tournamentBracketService.GetGamerInfoByEmail(email);
+            if (result != null) return result;
+            else throw new ArgumentException();
+        }
+
         public bool UnregisterGamerFromBracket(int systemID, int bracketID)
         {
             var result =  _tournamentBracketDataAccess.RemoveGamerFromBracket(systemID, bracketID);

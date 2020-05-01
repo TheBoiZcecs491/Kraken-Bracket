@@ -42,5 +42,10 @@ namespace TBZ.KrakenBracket.Services
         {
             return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
         }
+
+        public Gamer GetGamerInfoByEmail(string email)
+        {
+            return _gamerDataAccess.GetGamerInfoByEmail(email);
+        }
     }
 }
