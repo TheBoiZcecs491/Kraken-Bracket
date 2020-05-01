@@ -76,7 +76,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 else if(bracket.StatusCode == 0)
                 {
                     tournamentBracketDatabaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
-                    tournamentBracketDatabaseQuery.DecrementBracketPlayerCount(bracketID);
+                    tournamentBracketDatabaseQuery.UpdateBracketPlayerCount(bracketID, 0);
                     return true;
                 }
                 return false;
@@ -122,7 +122,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     bracketPlayer.HashedUserID = tempGamer.HashedUserID;
                     bracketPlayer.StatusCode = 1;
                     tournamentBracketDatabaseQuery.InsertBracketPlayer(bracketPlayer);
-                    tournamentBracketDatabaseQuery.IncrementBracketPlayerCount(bracket.BracketID);
+                    tournamentBracketDatabaseQuery.UpdateBracketPlayerCount(bracket.BracketID, 1);
                     return bracketPlayer;
                 }
             }
