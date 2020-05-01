@@ -1,7 +1,7 @@
 <template>
         <v-card>
             <v-card-title>
-                {{ keyword }}
+                Search Results
                 <v-spacer></v-spacer>
                 <v-text-field
                     v-model="filter"
@@ -15,6 +15,7 @@
                     :headers="headers"
                     :items="rows"
                     :search="filter"
+                    :items-per-page="10"
             ></v-data-table>
         </v-card>  
 </template>
@@ -24,7 +25,6 @@ export default {
     props: {
         headers: [],
         rows: [],
-        keyword: String
     },
     data() {
         return{

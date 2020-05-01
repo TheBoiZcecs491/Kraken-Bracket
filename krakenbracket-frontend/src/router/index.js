@@ -59,7 +59,7 @@ const routes = [
     props: true
   },
   {
-    path: "/search-results/:search",
+    path: "/search/:search",
     name: "search-view",
     component: SearchView,
     props: true

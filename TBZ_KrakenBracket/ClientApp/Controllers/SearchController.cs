@@ -31,7 +31,7 @@ namespace ClientApp.Controllers
             //logger
             int pageNum = 0;
             int skipPage = 0;
-            return Ok(_searchManager.GetBrackets(search, pageNum, skipPage));
+            return Ok(_searchManager.GetEvents(search, pageNum, skipPage));
         }
         [HttpGet("gamers/{search}")] //, pageNum, skipPage}")]
         [Produces("application/json")]
@@ -40,7 +40,7 @@ namespace ClientApp.Controllers
             //logger
             int pageNum = 0;
             int skipPage = 0;
-            return Ok(_searchManager.GetBrackets(search, pageNum, skipPage));
+            return Ok(_searchManager.GetGamers(search, pageNum, skipPage));
         }
     }
 }

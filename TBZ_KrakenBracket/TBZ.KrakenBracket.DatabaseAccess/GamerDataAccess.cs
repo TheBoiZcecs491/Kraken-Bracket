@@ -32,7 +32,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     {
                         GamerInfo gamerObj = new GamerInfo();
                         gamerObj.GamerTag = reader.GetString("gamerTag");
-                        gamerObj.GamerTagID = reader.GetInt32("gamerTagID");
                         listOfGamers.Add(gamerObj);
                     }
                 }

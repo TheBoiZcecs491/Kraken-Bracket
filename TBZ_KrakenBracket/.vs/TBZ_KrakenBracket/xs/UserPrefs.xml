@@ -1,26 +1,26 @@
 ﻿<Properties StartupConfiguration="{6F31DEBD-112F-4EFA-A42D-67FF30121354}|Default">
   <MonoDevelop.Ide.ItemProperties.ClientApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ClientApp/Controllers/SearchController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TBZ.KrakenBracket.DatabaseAccess/EventDataAccess.cs">
     <Files>
-      <File FileName="ClientApp/Controllers/SearchController.cs" Line="1" Column="1" />
+      <File FileName="ClientApp/Controllers/SearchController.cs" Line="33" Column="30" />
+      <File FileName="TBZ.KrakenBracket.Managers/SearchManager.cs" Line="2" Column="34" />
+      <File FileName="TBZ.KrakenBracket.DatabaseAccess/DatabaseQuery.cs" Line="283" Column="38" />
+      <File FileName="TBZ.KrakenBracket.DatabaseAccess/TournamentBracketDatabaseQuery.cs" Line="146" Column="65" />
+      <File FileName="TBZ.KrakenBracket.DatabaseAccess/GamerDataAccess.cs" Line="33" Column="62" />
+      <File FileName="TBZ.KrakenBracket.DatabaseAccess/EventDataAccess.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TBZ_KrakenBracket" expanded="True">
             <Node name="ClientApp" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="SearchController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
+            </Node>
+            <Node name="TBZ.KrakenBracket.DatabaseAccess" expanded="True">
+              <Node name="EventDataAccess.cs" selected="True" />
             </Node>
             <Node name="TBZ.KrakenBracket.Managers" expanded="True" />
-            <Node name="TBZ.KrakenBracket.Services" expanded="True" />
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="TBZ_KrakenBracket" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
@@ -29,7 +29,6 @@
   <MonoDevelop.Ide.ItemProperties.TBZ.LoggingTest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.UserManagementManager FirstBuild="True" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.TBZ.KrakenBracket.Tests PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

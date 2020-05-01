@@ -91,13 +91,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     {
                         EventInfo eventObj = new EventInfo();
                         eventObj.EventID = reader.GetInt32("eventID");
-                        eventObj.HashedUserID = reader.GetString("hashedUserID");
                         eventObj.EventName = reader.GetString("event_name");
                         eventObj.Address = reader.GetString("address");
-                        eventObj.Description = reader.GetString("description");
+                        //eventObj.Description = reader.GetString("description");
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
-                        eventObj.Reason = reader.GetString("reason");
+                        //eventObj.Reason = reader.GetString("reason");
                         listOfEvents.Add(eventObj);
                     }
                 }
@@ -148,13 +147,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     {
                         EventInfo eventObj = new EventInfo();
                         eventObj.EventID = reader.GetInt32("eventID");
-                        eventObj.HashedUserID = reader.GetString("hashedUserID");
                         eventObj.EventName = reader.GetString("event_name");
                         eventObj.Address = reader.GetString("address");
-                        eventObj.Description = reader.GetString("description");
+                        //eventObj.Description = reader.GetString("description");
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
-                        eventObj.Reason = reader.GetString("reason");
+                        //eventObj.Reason = reader.GetString("reason");
                         listOfEvents.Add(eventObj);
                     }
                 }
