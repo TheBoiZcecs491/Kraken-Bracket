@@ -19,8 +19,8 @@ namespace ClientApp.Controllers
         {
             try
             {
-               return Ok(_authenticationManager.Login(user.Email, user.Password));
-
+                var resultDis = Ok(_authenticationManager.Login(user.Email, user.Password));
+                return resultDis;
             }
             catch (ArgumentException)
             {

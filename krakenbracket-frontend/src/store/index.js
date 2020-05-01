@@ -32,6 +32,13 @@ export default new Vuex.Store({
           commit("SET_USER_DATA", data);
         });
     },
+    registerUser({ commit }, formFill) {
+      return axios
+        .post("https://localhost:44352/api/register", formFill)
+        .then(({ data }) => {
+          commit("SET_USER_DATA", data);
+        });
+    },
     bracketPlayerInfo({ commit }, email) {
       BracketService.getBracketPlayerInfo(email).then(({ data }) => {
         commit("SET_USER_BRACKET_INFO", data);

@@ -7,6 +7,9 @@
         <router-link to="/login">Log in</router-link> to access bracket and
         event registration
       </p>
+      <p>
+        or <router-link to="/register">register</router-link> a new account.
+      </p>
     </div>
   </div>
 </template>

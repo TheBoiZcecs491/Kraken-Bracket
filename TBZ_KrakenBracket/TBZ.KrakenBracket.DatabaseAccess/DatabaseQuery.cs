@@ -242,13 +242,15 @@ namespace TBZ.DatabaseQueryService
         }
       
         public User GetUserInfo(string email)
+            //BUG: this seems to be returning NULL, maybe... we dono...
         {
             try
             {
                 var DB = new Database();
-
+                
                 using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
                 {
+                    
                     using (MySqlCommand comm = conn.CreateCommand())
                     {
                         comm.CommandText = "SELECT * FROM user_information WHERE email=@Email";
@@ -265,7 +267,7 @@ namespace TBZ.DatabaseQueryService
                             user.Password = reader.GetString("hashed_password");
                             user.Salt = reader.GetString("salt");
                             user.AccountType = reader.GetString("account_type");
-                            user.AccountStatus = reader.GetBoolean("account_status");
+                            user.AccountStatus = (reader.GetInt32("account_status"))>0;
                             conn.Close();
                             return user;
                         }

@@ -140,7 +140,10 @@ namespace TBZ.KrakenBracket.Managers
             }
             bool passwordCheck = _authenticationService.ComparePasswords(email, password);
             if (passwordCheck) return user;
-            else throw new ArgumentException();
+            else
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }

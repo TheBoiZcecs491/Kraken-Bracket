@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <div>
+      <h1>User login</h1>
       <v-container>
         <form @submit.prevent="login">
           <v-row>
@@ -23,6 +24,9 @@
               ></v-text-field>
               <v-btn @click="login">Login</v-btn>
               <p v-if="error" class="red--text">Login failed. Please try again</p>
+              <p>
+              <router-link to="/register">register</router-link> a new account.
+              </p>
             </v-col>
             <v-col cols="4"></v-col>
           </v-row>

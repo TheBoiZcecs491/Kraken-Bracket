@@ -1,0 +1,94 @@
+<template>
+  <v-app>
+    <div>
+      <h1>Register new user</h1>
+      <v-container>
+        <form @submit.prevent="registerUser">
+          <v-row>
+            <v-col cols="4"></v-col>
+            <v-col cols="12" sm="4">
+              <v-text-field
+                class="email-input"
+                label="Email"
+                type="email"
+                placeholder="name@example.com"
+                v-model="email"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="password-input"
+                label="Password"
+                type="password"
+                v-model="password"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="firstName-input"
+                label="First Name"
+                type="firstName"
+                placeholder="first name"
+                v-model="firstName"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="lastName-input"
+                label="Last Name"
+                type="lastName"
+                placeholder="last name"
+                v-model="lastName"
+                required
+              ></v-text-field>
+              <v-btn @click="registerUser">Register</v-btn>
+              <p v-if="error" class="red--text">Registration failed. Please try again</p>
+              <p>
+              <router-link to="/login">Login</router-link> instead.
+              </p>
+            </v-col>
+            <v-col cols="4"></v-col>
+          </v-row>
+        </form>
+      </v-container>
+      <!-- <v-btn
+        v-if="$store.state.user.isLoggedIn === false"
+        @click="logInUser"
+        color="success"
+        >Log In</v-btn
+      >
+      <v-btn v-else @click="logInUser" color="red text--lighten">Log out</v-btn> -->
+    </div>
+  </v-app>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      error: null
+    };
+  },
+  methods: {
+    registerUser() {
+      // this.$store.commit("CHANGE_LOGGED_IN_STATUS");
+      //note: insertuseracc, will automatically make the salt and hash
+      this.$store.dispatch("registerUser", {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password
+      })
+      .catch(err =>{
+        // console.log("****ERROR:" + err)
+        this.error = err
+      });
+      // }).then(() => {
+      //   this.$router.push({name: "Home"})
+      // });
+    }
+  },
+  created() {}
+};
+</script>
