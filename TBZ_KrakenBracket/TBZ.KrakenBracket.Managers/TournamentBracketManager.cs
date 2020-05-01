@@ -97,7 +97,7 @@ namespace TBZ.KrakenBracket.Managers
 
         public bool UnregisterGamerFromBracket(int systemID, int bracketID)
         {
-            var result =  _tournamentBracketDataAccess.RemoveGamerFromBracket(systemID, bracketID);
+            var result =  _tournamentBracketService.UnregisterGamerFromBracket(systemID, bracketID);
             if (result) return result;
             else throw new ArgumentException();
         }

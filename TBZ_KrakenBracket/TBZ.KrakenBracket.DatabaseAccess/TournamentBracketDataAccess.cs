@@ -54,7 +54,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public bool RemoveGamerFromBracket(int systemID, int bracketID)
+        public bool UnregisterGamerFromBracket(int systemID, int bracketID)
         {
             /*
              Status codes
@@ -75,9 +75,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
                 else if(bracket.StatusCode == 0)
                 {
-                    tournamentBracketDatabaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
-                    tournamentBracketDatabaseQuery.UpdateBracketPlayerCount(bracketID, 0);
-                    return true;
+                    bool removeResult = tournamentBracketDatabaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
+                    bool updateResult = tournamentBracketDatabaseQuery.UpdateBracketPlayerCount(bracketID, 0);
+                    if (removeResult && updateResult) return true;
                 }
                 return false;
                 
