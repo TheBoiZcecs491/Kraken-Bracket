@@ -1,0 +1,28 @@
+{
+    "brackets":[
+        {
+            "id": 1,
+            "bracket_name": "EVO 2020 - MK11",
+            "bracketTypeID": 1,
+            "number_player": 127,
+            "game_played": "Mortal Kombat 11",
+            "gaming_platform": "Xbox One",
+            "rules": "No rules atm",
+            "start_date": "1000-01-01 00:00:00",
+            "end_date": "9999-12-31 23:59:59",
+            "status_code": 0
+        },
+        {
+            "id": 2,
+            "bracket_name": "EVO 2020 - SFV AE",
+            "bracketTypeID": 2,
+            "number_player": 43,
+            "game_played": "Street Fighter V: AE",
+            "gaming_platform": "PS4",
+            "rules": "No rules again",
+            "start_date": "1000-01-01 00:00:00",
+            "end_date": "9999-12-31 23:59:59",
+            "status_code": 2
+        }
+    ]
+}

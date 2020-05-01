@@ -8,10 +8,9 @@ namespace TBZ.AuthorizationManager
     {
         public bool UserPermission(string email, string action, bool isLoggedIn)
         {
-            Regex rgx = new Regex(action);
             var dataAccess = new DataAccess();
             bool permission = false;
-            string claim = (string)dataAccess.DSGetClaim(email);
+            string claim = dataAccess.DSGetClaim(email);
             // If user is non-registered
             if ((string.IsNullOrEmpty(email)) && (isLoggedIn == false) && claim.Contains(action))
             {

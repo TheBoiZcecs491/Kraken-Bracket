@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using TBZ.DatabaseQueryService;
+using TBZ.HashingService;
+using TBZ.KrakenBracket.DataHelpers;
 using TBZ.StringChecker;
 
 namespace TBZ.DatabaseAccess
@@ -129,7 +132,14 @@ namespace TBZ.DatabaseAccess
             }
         }
 
-        public bool CheckIDExistence(uint sysID)
+        public User GetUserByEmail(string email)
+        {
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            return user;
+        }
+
+        public bool CheckIDExistence(int sysID)
         {
             try
             {
@@ -159,6 +169,19 @@ namespace TBZ.DatabaseAccess
             }
         }
 
+        public bool ComparePasswords(string email, string password)
+        {
+            DatabaseQuery databaseQuery = new DatabaseQuery();
+            User user = databaseQuery.GetUserInfo(email);
+            MessageSalt messageSalt = new MessageSalt(password, user.Salt);
+            messageSalt.GenerateHash(messageSalt);
+            if (messageSalt.message == user.Password)
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Method to insert user into database
         /// </summary>
@@ -176,52 +199,32 @@ namespace TBZ.DatabaseAccess
         /// </returns>
         public bool CreateUser(User user, bool passwordCheck)
         {
-            try
+
+            bool idFound = CheckIDExistence(user.SystemID);
+            if (idFound) { user.ErrorMessage = "ID already exists"; return false; }
+            else
             {
-                bool result = CheckIDExistence(user.SystemID);
-
-                // ID is not found, so it is safe to proceed
-                if (result == false)
+                if (passwordCheck)
                 {
-                    // Password check is enabled
-                    if (passwordCheck == true)
-                    {
-                        StringCheckerService sc = new StringCheckerService(user.Password);
-
-                        // Password is secured
-                        if (sc.isSecurePassword())
-                        {
-                            DatabaseQuery dq = new DatabaseQuery();
-                            dq.InsertUserAcc(user);
-                            return true;
-                        }
-
-                        // Password is not secured
-                        else
-                        {
-                            user.ErrorMessage = "Password is not secured";
-                            return false;
-                        }
-                    }
-
-                    // Password check is disabled
-                    else
+                    StringCheckerService sc = new StringCheckerService(user.Password);
+                    if (sc.isSecurePassword())
                     {
                         DatabaseQuery dq = new DatabaseQuery();
                         dq.InsertUserAcc(user);
                         return true;
                     }
+                    else
+                    {
+                        user.ErrorMessage = "Password is not secured";
+                        return false;
+                    }
                 }
                 else
                 {
-                    user.ErrorMessage = "System ID already exists";
-                    return false;
+                    DatabaseQuery dq = new DatabaseQuery();
+                    dq.InsertUserAcc(user);
+                    return true;
                 }
-            }
-            catch (Exception e)
-            {
-                user.ErrorMessage = e.ToString();
-                return false;
             }
         }
 
@@ -236,29 +239,17 @@ namespace TBZ.DatabaseAccess
         /// <returns></returns>
         public bool DeleteUser(User user)
         {
-            try
+            bool idFound = CheckIDExistence(user.SystemID);
+            if (!idFound)
             {
-                bool result = CheckIDExistence(user.SystemID);
-
-                // System ID is found
-                if (result == true)
-                {
-                    DatabaseQuery dq = new DatabaseQuery();
-                    dq.DeleteUser(user.SystemID);
-                    return true;
-                }
-
-                // System ID is not found
-                else
-                {
-                    user.ErrorMessage = "System ID not found";
-                    return false;
-                }
-            }
-            catch (Exception e)
-            {
-                user.ErrorMessage = e.ToString();
+                user.ErrorMessage = "System ID not found";
                 return false;
+            }
+            else
+            {
+                DatabaseQuery dq = new DatabaseQuery();
+                dq.DeleteUser(user.SystemID);
+                return true;
             }
         }
 
@@ -285,54 +276,44 @@ namespace TBZ.DatabaseAccess
         {
             //TODO: ideally this method should not have to need those two strings specified.
             // it should update any changes dynamically. maybe i dono.
-            try
+
+            bool idFound = CheckIDExistence(user.SystemID);
+            if (!idFound)
             {
-                bool result = CheckIDExistence(user.SystemID);
-
-                // System ID is found
-                if (result == true)
-                {
-                    DatabaseQuery dq = new DatabaseQuery();
-                    switch (attrName)
-                    {
-                        case "FirstName":
-                            dq.UpdateQuery("user_information", "fName", user.FirstName, "userID", user.SystemID.ToString());
-                            return true;
-                        case "LastName":
-                            dq.UpdateQuery("user_information", "lName", user.LastName, "userID", user.SystemID.ToString());
-                            return true;
-                        case "Email":
-                            dq.UpdateQuery("user_information", "email", user.Email, "userID", user.SystemID.ToString());
-                            return true;
-                        case "AccountType":
-                            dq.UpdateQuery("user_information", "account_type", user.AccountType, "userID", user.SystemID.ToString());
-                            return true;
-                        case "AccountStatus":
-                            if (user.AccountStatus) dq.UpdateQuery("user_information", "account_status", "1", "userID", user.SystemID.ToString());
-                            else dq.UpdateQuery("user_information", "account_status", "0", "userID", user.SystemID.ToString());
-                            //so the DB uses tinyInts, they can be from -128 to 128, yes even when set to (1)
-                            //ima just interpret this as a value from 0 or 1 for boolena stuffs.
-                            return true;
-                            //you can add other defonitions, how they relate to the DB
-                            //DO NOT UPDATE THE PASSWORD IN THIS METHOD.
-                    }
-                    user.ErrorMessage = "unknown attribute";
-                    return false; //something did not work
-                }
-
-                // System ID is not found
-                else
-                {
-                    user.ErrorMessage = "System ID not found";
-                    return false;
-                }
+                user.ErrorMessage = "System ID not found";
+                return false;
             }
-            catch (Exception e)
+            else
             {
-                user.ErrorMessage = e.ToString();
+                DatabaseQuery dq = new DatabaseQuery();
+                switch (attrName)
+                {
+                    case "FirstName":
+                        dq.UpdateQuery("user_information", "fName", user.FirstName, "userID", user.SystemID.ToString());
+                        return true;
+                    case "LastName":
+                        dq.UpdateQuery("user_information", "lName", user.LastName, "userID", user.SystemID.ToString());
+                        return true;
+                    case "Email":
+                        dq.UpdateQuery("user_information", "email", user.Email, "userID", user.SystemID.ToString());
+                        return true;
+                    case "AccountType":
+                        dq.UpdateQuery("user_information", "account_type", user.AccountType, "userID", user.SystemID.ToString());
+                        return true;
+                    case "AccountStatus":
+                        if (user.AccountStatus) dq.UpdateQuery("user_information", "account_status", "1", "userID", user.SystemID.ToString());
+                        else dq.UpdateQuery("user_information", "account_status", "0", "userID", user.SystemID.ToString());
+                        //so the DB uses tinyInts, they can be from -128 to 128, yes even when set to (1)
+                        //ima just interpret this as a value from 0 or 1 for boolena stuffs.
+                        return true;
+                        //you can add other defonitions, how they relate to the DB
+                        //DO NOT UPDATE THE PASSWORD IN THIS METHOD.
+                }
                 return false;
             }
         }
+    
+
 
         /// <summary>
         /// used to update user table values
@@ -350,35 +331,20 @@ namespace TBZ.DatabaseAccess
         public bool UpdateUserPass(User user, bool passwordCheck)
         {
             //TODO: for this the authentication module's GetHashedPassword() method needs to be fixed for this to work.
-            try
+
+            bool idFound = CheckIDExistence(user.SystemID);
+            if (!idFound) 
             {
-                bool result = CheckIDExistence(user.SystemID);
-                // System ID is found
-                if (result == true)
+                user.ErrorMessage = "System ID not found";
+                return false;
+            }
+            else
+            {
+                if (passwordCheck)
                 {
-                    if (passwordCheck == true)
-                    {
-                        StringCheckerService sc = new StringCheckerService(user.Password);
-                        // Password is secured
-                        if (sc.isSecurePassword())
-                        {
-
-                            DatabaseQuery dq = new DatabaseQuery();
-                            string concat = user.Password + user.Salt;
-                            //TODO: generate a Salt and concatinate it with the password. then store the hash
-                            dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
-                            dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
-                            return true;
-                        }
-
-                        // Password is not secured
-                        else
-                        {
-                            user.ErrorMessage = "Password is not secured";
-                            return false;
-                        }
-                    }
-                    else
+                    StringCheckerService sc = new StringCheckerService(user.Password);
+                    // Password is secured
+                    if (sc.isSecurePassword())
                     {
 
                         DatabaseQuery dq = new DatabaseQuery();
@@ -388,18 +354,21 @@ namespace TBZ.DatabaseAccess
                         dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
                         return true;
                     }
+                    else
+                    {
+                        user.ErrorMessage = "Password is not secured";
+                        return false;
+                    }
                 }
-                // System ID is not found
                 else
                 {
-                    user.ErrorMessage = "System ID not found";
-                    return false;
+                    DatabaseQuery dq = new DatabaseQuery();
+                    string concat = user.Password + user.Salt;
+                    //TODO: generate a Salt and concatinate it with the password. then store the hash
+                    dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
+                    dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
+                    return true;
                 }
-            }
-            catch (Exception e)
-            {
-                user.ErrorMessage = e.ToString();
-                return false;
             }
         }
     }
