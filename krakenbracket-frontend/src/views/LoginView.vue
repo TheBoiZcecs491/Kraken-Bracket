@@ -54,11 +54,17 @@ export default {
       this.$store.dispatch("login", {
         email: this.email,
         password: this.password
-      }).then(() =>{
-        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
-        this.$router.go(-1);
-      });
       })
+      .then(() =>{
+        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
+        this.$store.dispatch("gamerInfo", this.email)
+      })
+      }).then(() => {
+        this.$router.go(-1);
+    })
+      
+      
+      
       .catch(err =>{
         // console.log("****ERROR:" + err)
         this.error = err

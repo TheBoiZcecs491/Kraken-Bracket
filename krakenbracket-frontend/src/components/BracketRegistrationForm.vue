@@ -34,40 +34,33 @@
                 :rules="gamerTagRules"
                 required
               ></v-text-field>
-              <v-text-field
-                class="gamertag-id-input"
-                v-model="gamerTagID"
-                label="GamerTag ID"
-                type="number"
-                placeholder="9999"
-                :rules="gamerTagIDRules"
-                required
-              ></v-text-field>
               <v-row>
                 <v-col cols="12" lg="4"></v-col>
                 <v-col cols="12" lg="4">
-                  <router-link
+                  <!-- <router-link
                     v-show="formValidity"
                     :to="{ name: 'bracket-view', params: bracket.bracketID }"
                     class="submit-btn"
                   >
                     <v-btn @click="formSubmit" color="primary">Register!</v-btn>
-                  </router-link>
+                  </router-link> -->
+                  
+                  <v-btn v-show="formValidity" @click="formSubmit" color="primary">Register!</v-btn>
                   <v-btn
                     class="mr-4"
                     v-if="!formValidity"
                     :disabled="!formValidity"
                     >Register!</v-btn
                   >
+                  <div v-if="error">
+                    <p class="red--text">{{error}}</p>
+                  </div>
                 </v-col>
                 <v-col cols="12" lg="4">
-                  <v-btn class="mr-4" color="error" @click="resetForm"
+                  <!-- <v-btn class="mr-4" color="error" @click="resetForm"
                     >Reset Form</v-btn
-                  >
+                  > -->
                 </v-col>
-                <!-- <v-col cols="12" lg="4">
-                  <v-btn class="mr-4" color="warning" @click="validateForm">Validate Form</v-btn>
-                </v-col> -->
               </v-row>
             </v-col>
           </v-row>
@@ -92,20 +85,21 @@ export default {
     return {
       bracket: {},
       gamerTag: "",
-      gamerTagID: "",
+      // gamerTagID: "",
       gamer: {
         gamerTag: this.gamerTag,
-        gamerTagID: this.gamerTagID
+        // gamerTagID: this.gamerTagID
       },
+      error: null,
       email: "",
       emailRules: [
         email => !!email || "Email is required",
         email =>
           email.indexOf("@") !== 0 || "Email should have a name before it",
         email => email.includes("@") || "Email should include @ symbol",
-        // email =>
-        //   email.indexOf(".") - email.indexOf("@") > 1 ||
-        //   "Email should contain a valid domain name",
+        email =>
+          email.indexOf(".com") - email.indexOf("@") > 1 ||
+          "Email should contain a valid domain name",
         email =>
           (email.length > 5 && email.length <= 200) || "Invalid email length"
       ],
@@ -114,12 +108,6 @@ export default {
         gamerTag =>
           (gamerTag.length >= 2 && gamerTag.length <= 20) ||
           "Invalid GamerTag length. Must be between 2 and 20 characters"
-      ],
-      gamerTagIDRules: [
-        gamerTagID => !!gamerTagID || "GamerTagID is required",
-        gamerTagID =>
-          gamerTagID.length === 4 || "Length of the ID must be 4 characters"
-        // gamerTagID => (gamerTagID === parseInt(gamerTagID, 10)) || "ID must be a number"
       ],
       formValidity: false
     };
@@ -136,17 +124,26 @@ export default {
   methods: {
     formSubmit() {
       if (this.$refs.signUpForm.validate()) {
-        axios.post(
+        if((this.email == this.$store.state.user.email) && this.gamerTag == this.$store.state.gamerInfo.gamerTag){
+           axios.post(
           `https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`,
           {
             bracketID: this.bracket.bracketID,
             gamerTag: this.gamerTag,
-            gamerTagID: this.gamerTagID
+            // gamerTagID: this.gamerTagID
           }
-        );
-        setTimeout(() => {
+        ).then(() =>{
+          setTimeout(() => {
           this.$store.dispatch("bracketPlayerInfo", this.email);
         }, 500);
+        })
+        .then(() =>{
+          this.$router.go(-1)
+        });
+        }
+        else{
+          this.error = "Either one or both of your inputs does not match your email or gamertag"
+        }
       }
     },
     resetForm() {
