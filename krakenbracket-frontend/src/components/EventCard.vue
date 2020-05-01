@@ -1,19 +1,18 @@
 <template>
-  <router-link :to="{ name: 'event-view', params: { id: event.eventID } }">
-    <div class="event-card">
-      <h2>{{ event.eventName }}</h2>
-      <h3>Start Date: {{ event.start_date }}</h3>
-      <h3>End Date: {{ event.end_date }}</h3>
-
-      <br />
-      <router-link
-        class="event-link"
-        :to="{ name: 'event-view', params: { id: event.eventID } }"
-      >
-        <v-btn class="primary" color="#2196F3">View Event</v-btn>
-      </router-link>
-    </div>
-  </router-link>
+  <div class="event-card">
+    <h2 class="event-name">{{ event.eventName }}</h2>
+    <h3>Start Date: {{ event.start_date }}</h3>
+    <h3>End Date: {{ event.end_date }}</h3>
+    <h4>Address: {{event.address}}</h4>
+    <h4>Event Description: {{event.description}}</h4>
+    <br />
+    <router-link
+      class="event-link"
+      :to="{ name: 'event-view', params: { id: event.eventID } }"
+    >
+      <v-btn class="primary" color="#2196F3">View Event</v-btn>
+    </router-link>
+  </div>
 </template>
 
 <script>

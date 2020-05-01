@@ -11,10 +11,10 @@ const apiClient = axios.create({
 });
 
 export default {
+  getEvents(){
+    return apiClient.get("api/events");
+  },
   getEventByID(eventID) {
     return apiClient.get("api/events/" + eventID);
-  },
-  getBracketPlayerInfo(email) {
-    return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`);
   }
 };
