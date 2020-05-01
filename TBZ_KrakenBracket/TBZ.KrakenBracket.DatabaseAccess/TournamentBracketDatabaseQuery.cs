@@ -9,6 +9,64 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 {
     public class TournamentBracketDatabaseQuery
     {
+        /// <summary>
+        /// Inserts bracket player into bracket_player_info table
+        /// </summary>
+        /// 
+        /// <param name="bracketPlayer">
+        /// Bracket player object to be inserted
+        /// </param>
+        /// 
+        /// <returns>
+        /// Boolean indicating success or fail
+        /// </returns>
+        public bool InsertBracketPlayer(BracketPlayer bracketPlayer)
+        {
+            try
+            {
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+                {
+                    using (MySqlCommand comm = conn.CreateCommand())
+                    {
+                        comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score, @status_code)";
+                        comm.Parameters.AddWithValue("@bracketID", bracketPlayer.BracketID);
+                        comm.Parameters.AddWithValue("@hashedUserID", bracketPlayer.HashedUserID);
+                        comm.Parameters.AddWithValue("@roleID", bracketPlayer.RoleID);
+                        comm.Parameters.AddWithValue("@placement", bracketPlayer.Placement);
+                        comm.Parameters.AddWithValue("@score", bracketPlayer.Score);
+                        comm.Parameters.AddWithValue("@status_code", bracketPlayer.StatusCode);
+                        conn.Open();
+                        comm.ExecuteNonQuery();
+                        conn.Close();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+           
+        }
+
+        /// <summary>
+        /// Deletes gamer from bracket
+        /// </summary>
+        /// 
+        /// <param name="hashedUserID">
+        /// Hashed user ID associated with user
+        /// </param>
+        /// 
+        /// <param name="bracketID">
+        /// Bracket ID associated with bracket, where the gamer will
+        /// be removed from
+        /// </param>
+        /// 
+        /// <returns>
+        /// Boolean indicating success or fail
+        /// </returns>
         public bool RemoveGamerFromBracket(string hashedUserID, int bracketID)
         {
             try
@@ -32,31 +90,25 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 return false;
             }
-            
+
         }
 
-        public void InsertBracketPlayer(BracketPlayer bracketPlayer)
-        {
-            var DB = new Database();
-
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
-            {
-                using (MySqlCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score, @status_code)";
-                    comm.Parameters.AddWithValue("@bracketID", bracketPlayer.BracketID);
-                    comm.Parameters.AddWithValue("@hashedUserID", bracketPlayer.HashedUserID);
-                    comm.Parameters.AddWithValue("@roleID", bracketPlayer.RoleID);
-                    comm.Parameters.AddWithValue("@placement", bracketPlayer.Placement);
-                    comm.Parameters.AddWithValue("@score", bracketPlayer.Score);
-                    comm.Parameters.AddWithValue("@status_code", bracketPlayer.StatusCode);
-                    conn.Open();
-                    comm.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
-        }
-
+        /// <summary>
+        /// Update player count for a bracket
+        /// </summary>
+        /// 
+        /// <param name="bracketID">
+        /// Bracket ID associated with bracket
+        /// </param>
+        /// 
+        /// <param name="updateCode">
+        /// 1 - player count will be incremented
+        /// 0 - player count will be decremented
+        /// </param>
+        /// 
+        /// <returns>
+        /// Boolean indicating success or fail
+        /// </returns>
         public bool UpdateBracketPlayerCount(int bracketID, int updateCode)
         {
             try
@@ -90,6 +142,17 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Gets bracket info associated with bracketID
+        /// </summary>
+        /// 
+        /// <param name="bracketID">
+        /// BracketID associated with bracket
+        /// </param>
+        /// 
+        /// <returns>
+        /// BracketInfo object if operation was successful;
+        /// </returns>
         public BracketInfo GetBracketInfo(int bracketID)
         {
             var DB = new Database();
@@ -123,6 +186,22 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Disqualifies gamer from bracket instead of removing them completely
+        /// from it
+        /// </summary>
+        /// 
+        /// <param name="bracketID">
+        /// BracketID associated with bracket
+        /// </param>
+        /// 
+        /// <param name="hashedUserID">
+        /// Hashed user ID associated with user
+        /// </param>
+        /// 
+        /// <returns>
+        /// Boolean indicating success or fail
+        /// </returns>
         public bool DisqualifyGamerFromBracket(int bracketID, string hashedUserID)
         {
             try
@@ -149,6 +228,17 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Gets list of user's bracket player info
+        /// </summary>
+        /// 
+        /// <param name="hashedUserID">
+        /// Hashed user ID associated with user
+        /// </param>
+        /// 
+        /// <returns>
+        /// List of user's bracket player info
+        /// </returns>
         public List<BracketPlayer> GetBracketPlayerInfo(string hashedUserID)
         {
             var DB = new Database();
@@ -175,6 +265,14 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
             }
         }
+
+        /// <summary>
+        /// Gets all brackets in the database
+        /// </summary>
+        /// 
+        /// <returns>
+        /// All brackets in the database
+        /// </returns>
         public List<BracketInfo> GetAllBrackets()
         {
             var DB = new Database();

@@ -30,10 +30,12 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
+                // Bracket was not found
                 return StatusCode(StatusCodes.Status404NotFound);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -48,10 +50,12 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
+                // Brackets not found
                 return StatusCode(StatusCodes.Status404NotFound);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -66,10 +70,12 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
+                // Registering unsuccessful
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -83,10 +89,12 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
+                /// Unregistering unsuccessful
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -101,10 +109,12 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
+                // Bracket player info not found
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -119,10 +129,12 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
-                return StatusCode(StatusCodes.Status400BadRequest);
+                // Gamer not found
+                return StatusCode(StatusCodes.Status404NotFound);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
