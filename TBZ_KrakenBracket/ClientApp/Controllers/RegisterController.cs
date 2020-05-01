@@ -20,23 +20,16 @@ namespace ClientApp.Controllers
         private readonly UserManagementManager _userManagementManager = new UserManagementManager();
         private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider(); //for the salt
         // PUT api/<controller>
-        [HttpPost]
+        [HttpPut]
         public IActionResult Login(User user)
         {
-            //so because of the way this method works
-            //we should have some kind of "user" to check
-            //perms for first time, self started, user creation
-            //it wouldnt have to be anything fancy, just to prevent
-            //erronious admin creation.
+            //temp system admin to make new users
             User gateAdmin = new User(0, null, null, null, null, null, "System Admin", false, null);
-
-            //also also this would be a great place to fill in the rest of the needed values.
             user.AccountStatus = true;
             user.AccountType = "User";
-            //byte[] randomNumber = new byte[16];
-            //rngCsp.GetBytes(randomNumber);
-            //user.Salt = System.Text.Encoding.Default.GetString(randomNumber);
-            user.Salt = "cork";
+            byte[] randomNumber = new byte[16];
+            rngCsp.GetBytes(randomNumber);
+            user.Salt = System.Text.Encoding.Default.GetString(randomNumber);
             //HACK: this is fixed in another branch, so for now this will HOPEFULLY
             // keep away any possible collisions. when that happend comment out the next 2 lines.
             Random rnd = new Random();
@@ -44,20 +37,31 @@ namespace ClientApp.Controllers
             try
             {
                 var resultStat = Ok(_userManagementManager.SingleCreateUsers(gateAdmin, user));
-                using (System.IO.StreamWriter file =
-                    new System.IO.StreamWriter(@"C:\Users\Snerp\Downloads\shit.txt", true))
+                //using (System.IO.StreamWriter file =
+                //    new System.IO.StreamWriter(@"C:\Users\Snerp\Downloads\shit.txt", true))
+                //{
+                //    file.WriteLine(user.Email);
+                //    file.WriteLine(user.Password);
+                //    file.WriteLine(user.FirstName);
+                //    file.WriteLine(user.LastName);
+                //    file.WriteLine(user.ErrorMessage);
+                //}
+                if(user.ErrorMessage != "")
                 {
-                    file.WriteLine(user.Email);
-                    file.WriteLine(user.Password);
-                    file.WriteLine(user.FirstName);
-                    file.WriteLine(user.LastName);
-                    file.WriteLine(user.ErrorMessage);
+                    //print the error to their screen.
+                    return StatusCode(StatusCodes.Status400BadRequest);
                 }
-                return resultStat;
+                else
+                {
+                    return resultStat;
+                    //also log the user in, why not?
+                    //var resultDis = Ok(_authenticationManager.Login(user.Email, user.Password));
+                    //return resultDis;
+                }
             }
             catch (ArgumentException)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized);
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
         }
     }

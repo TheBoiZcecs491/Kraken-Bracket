@@ -79,6 +79,8 @@ export default {
         lastName: this.lastName,
         email: this.email,
         password: this.password
+      }).then(() =>{
+        this.$router.go(-1);
       })
       .catch(err =>{
         // console.log("****ERROR:" + err)
