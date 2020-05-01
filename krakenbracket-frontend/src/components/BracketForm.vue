@@ -1,10 +1,10 @@
 <template>
     <div class="new-bracket">
         <v-app id="inspire">
-        <h1>Create a new bracket</h1>
         <v-form
                 ref="form"
                 v-model="valid"
+                @submit.prevent="createBracket"
         >
         <v-row justify="space-around">
             
@@ -18,13 +18,13 @@
                 ></v-text-field>
 
                 <v-slider
-                    v-model="CompetitorCount"
+                    v-model="PlayerCount"
                     min="2"
                     max="128"
                     label="Competitors"
                 ><template v-slot:append>
                         <v-text-field
-                            v-model="CompetitorCount"
+                            v-model="PlayerCount"
                             class="mt-0 pt-0"
                             hide-details
                             single-line
@@ -47,15 +47,15 @@
                         required
                     ></v-overflow-btn>
                 </v-container>
-                <v-container id="GamePlatform">
+                <v-container id="GamingPlatform">
                     <v-overflow-btn
-                        v-model="GamePlatform"
+                        v-model="GamingPlatform"
                         class="my-2"
-                        :items="dropdown_gamePlatform"
+                        :items="dropdown_gamingPlatform"
                         :editable= true
                         :menu-props="topMenu ? 'top' : ''"
                         label="Platform"
-                        target="#dropdown_gamePlatform"
+                        target="#dropdown_gamingPlatform"
                         :rules="platformRules"
                         required
                     ></v-overflow-btn>
@@ -202,6 +202,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     props: ["id"],
     components: {
@@ -210,7 +211,7 @@ export default {
     dropdown_gamePlayed:['Street Fighter V - Arcade Edition', 'The King of Fighters XIV',
     'Tekken 7', 'Super Smash Bros. Ultimate', 'Samurai Shodown', "Soul Calibur VI", 
     'Mortal Kombat 11', 'Injustice 2', 'Killer Instinct'],
-    dropdown_gamePlatform: ['Playstation 3', 'Playstation 4', 'Xbox 360', 'Xbox One', 'Wii', 'Wii U', "Switch"],
+    dropdown_gamingPlatform: ['Playstation 3', 'Playstation 4', 'Xbox 360', 'Xbox One', 'Wii', 'Wii U', "Switch"],
     currentDate: new Date().toISOString().substr(0, 10),
     valid: true,
     topMenu: null,
@@ -220,20 +221,20 @@ export default {
     menu3: false,
     menu4: false,
     BracketName: "",
-    CompetitorCount: "",
+    PlayerCount: "",
     GamePlayed: "",
-    GamePlatform: "",
+    GamingPlatform: "",
     ruleSet: "",
     startDate: null,
     startTime: null,
     endDate: null,
     endTime: null,
     rulesMaxChars: 
-    [value => (value || '').length <= 700 || 'Max 700 characters',],
+    [value => (value || '').length < 700 || 'Max 700 characters',],
     bracketNameRules: 
     [value => !!value || 'Bracket name required',
-    value => (value || '').length >= 5 || 'Min 5 characters', 
-    value => (value || '').length <= 75 || 'Max 75 characters'],
+    value => (value || '').length > 5 || 'Min 5 characters', 
+    value => (value || '').length < 75 || 'Max 75 characters'],
     gamePlayedRules:
     [value => !!value || 'Game required'],
     platformRules:
@@ -244,20 +245,21 @@ export default {
     methods: {
         Submit() {
             this.$refs.form.validate()
-            const bracketInfo = {
+            axios.post(`https://localhost:44352/api/brackets/createBracket/${this.BracketName}`,{
                 BracketName: this.BracketName,
-                CompetitorCount: this.CompetitorCount,
+                PlayerCount: this.PlayerCount,
                 GamePlayed: this.GamePlayed,
-                GamePlatform: this.GamePlatform,
+                GamingPlatform: this.GamingPlatform,
                 Rules: this.ruleSet,
                 StartDate: this.startDate,
                 StartTime: this.startTime,
                 EndDate: this.endDate,
                 EndTime: this.endTime 
-            }
-            console.log(bracketInfo)
+            });
+            //console.log(bracketInfo)
+            setTimeout((this.$store.dispatch('createBracket', this.BracketInfo), 500))
             this.$refs.form.reset()
-        },
+        }
     },
   }
 </script>

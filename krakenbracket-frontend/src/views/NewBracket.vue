@@ -1,6 +1,7 @@
 <template>
         <div>
-            <bracketForm />
+          <h1>Create a new bracket</h1>
+          <bracketForm />
         </div>
 </template>
 
@@ -14,7 +15,7 @@ export default {
       return {
           BracketInfo: {
               BracketName: "",
-              CompetitorCount: "",
+              PlayerCount: "",
               GamePlayed: "",
               GamePlatform: "",
               Rules: "",
@@ -24,6 +25,6 @@ export default {
               EndTime: ""
           }
       }
-    },
+    }
   };
 </script>

@@ -30,7 +30,7 @@ export default new Vuex.Store({
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${data.token}`;
-    }
+    },
   },
   actions: {
     login({ commit }, credentials) {
@@ -45,7 +45,7 @@ export default new Vuex.Store({
       BracketService.getBracketPlayerInfo(email).then(({data}) =>{
         commit("SET_USER_BRACKET_INFO", data);
       })
-    }
+    },
   },
   getters: {
     loggedIn(state) {

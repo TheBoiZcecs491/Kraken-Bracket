@@ -20,5 +20,8 @@ export default {
   },
   getBracketPlayerInfo(email){
     return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`)
+  },
+  postBracket(bracketInfo){
+    return apiClient.post('/brackets', bracketInfo)
   }
 };

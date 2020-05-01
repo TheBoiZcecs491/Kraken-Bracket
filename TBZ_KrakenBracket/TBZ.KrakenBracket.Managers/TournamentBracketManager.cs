@@ -51,22 +51,30 @@ namespace TBZ.KrakenBracket.Managers
             {
                 throw new ArgumentException("Gaming platform cannot be larger than 50 characters");
             }
-            else if (bracketFields.Rules.Length > 700)
+            else if (bracketFields.Rules != null && bracketFields.Rules.Length > 700)
             {
                 throw new ArgumentException("Ruleset cannot exceed 700 characters");
             }
-            else if (bracketFields.StartDate < DateTime.UtcNow)
-            {
-                throw new ArgumentException("Start date cannot be before current date");
-            }
-            else if (bracketFields.EndDate < DateTime.UtcNow)
-            {
-                throw new ArgumentException("Game title cannot be larger than 50 characters");
-            }
+            //else if (bracketFields.StartDate < DateTime.UtcNow)
+            //{
+            //    throw new ArgumentException("Start date cannot be before current date");
+            //}
+            //else if (bracketFields.EndDate < DateTime.UtcNow)
+            //{
+            //    throw new ArgumentException("Game title cannot be larger than 50 characters");
+            //}
             else
             {
                 return true;
             }
+        }
+
+        public bool ValidCreateBracket(BracketInfo bracketInfo)
+        {
+            if (ValidateFields(bracketInfo))
+                return _tournamentBracketService.CreateTournamentBracket(bracketInfo);
+            else
+                return false;
         }
 
         public List<BracketPlayer> GetBracketPlayerInfo(string email)
