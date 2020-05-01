@@ -75,7 +75,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
                 else if(bracket.StatusCode == 0)
                 {
-                    databaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
+                    tournamentBracketDatabaseQuery.RemoveGamerFromBracket(hashedUserID, bracketID);
                     tournamentBracketDatabaseQuery.DecrementBracketPlayerCount(bracketID);
                     return true;
                 }
@@ -121,8 +121,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     bracketPlayer.BracketID = bracket.BracketID;
                     bracketPlayer.HashedUserID = tempGamer.HashedUserID;
                     bracketPlayer.StatusCode = 1;
-                    databaseQuery.InsertBracketPlayer(bracketPlayer);
-                    tournamentBracketDatabaseQuery.IncrementBracketPlayerCount(bracket);
+                    tournamentBracketDatabaseQuery.InsertBracketPlayer(bracketPlayer);
+                    tournamentBracketDatabaseQuery.IncrementBracketPlayerCount(bracket.BracketID);
                     return bracketPlayer;
                 }
             }

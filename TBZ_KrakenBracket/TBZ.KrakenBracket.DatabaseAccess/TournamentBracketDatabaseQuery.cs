@@ -10,7 +10,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
     public class TournamentBracketDatabaseQuery
     {
         //TODO: make increment and decrement in one function
-        public void IncrementBracketPlayerCount(BracketInfo bracket)
+        public void IncrementBracketPlayerCount(int bracketID)
         {
             var DB = new Database();
 
@@ -19,7 +19,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
                     comm.CommandText = "UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID=@BracketID";
-                    comm.Parameters.AddWithValue("@BracketID", bracket.BracketID);
+                    comm.Parameters.AddWithValue("@BracketID", bracketID);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
@@ -36,6 +36,45 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     comm.CommandText = "UPDATE bracket_info SET number_player = number_player - 1 WHERE bracketID=@BracketID";
                     comm.Parameters.AddWithValue("@BracketID", bracketID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+        public void RemoveGamerFromBracket(string hashedUserID, int bracketID)
+        {
+            var DB = new Database();
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "DELETE FROM bracket_player_info WHERE hashedUserID=@HashedUserID AND bracketID=@BracketID";
+                    comm.Parameters.AddWithValue("@HashedUserID", hashedUserID);
+                    comm.Parameters.AddWithValue("@BracketID", bracketID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void InsertBracketPlayer(BracketPlayer bracketPlayer)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score, @status_code)";
+
+                    comm.Parameters.AddWithValue("@bracketID", bracketPlayer.BracketID);
+                    comm.Parameters.AddWithValue("@hashedUserID", bracketPlayer.HashedUserID);
+                    comm.Parameters.AddWithValue("@roleID", bracketPlayer.RoleID);
+                    comm.Parameters.AddWithValue("@placement", bracketPlayer.Placement);
+                    comm.Parameters.AddWithValue("@score", bracketPlayer.Score);
+                    comm.Parameters.AddWithValue("@status_code", bracketPlayer.StatusCode);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
