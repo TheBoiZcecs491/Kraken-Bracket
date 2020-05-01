@@ -22,33 +22,88 @@ namespace ClientApp.Controllers
         [Produces("application/json")]
         public IActionResult GetBracketStatusCode(int bracketID)
         {
-            return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
+            try
+            {
+                return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
         
         [HttpGet("competitors/{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracketByID(int bracketID)
         {
-            return Ok(_tournamentBracketManager.GetBracketByID(bracketID));
+            try
+            {
+                return Ok(_tournamentBracketManager.GetBracketByID(bracketID));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetAllBrackets()
         {
-            return Ok(_tournamentBracketManager.GetAllBrackets());
+            try
+            {
+                return Ok(_tournamentBracketManager.GetAllBrackets());
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpPost("{bracketID}/register/{gamer}")]
         [Produces("application/json")]
         public IActionResult RegisterGamerIntoBracket(int bracketID, Gamer gamer)
         {
-            return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
+            try
+            {
+                return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
         [HttpPost("login")]
         public IActionResult LoginUser(User user)
         {
-            return Ok(_tournamentBracketManager.GetUser(user.Email, user.Password));
+            try
+            {
+                return Ok(_tournamentBracketManager.GetUser(user.Email, user.Password));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpPost("createBracket/{bracketInfo}")]
@@ -68,10 +123,5 @@ namespace ClientApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        /*
-         [Route("api/create")]
-         [HttpPost]
-         public 
-         */
     }
 }

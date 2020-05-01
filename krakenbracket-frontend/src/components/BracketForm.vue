@@ -10,6 +10,7 @@
             
                 <v-col class="px-4" cols="12" sm="3">
                 <v-text-field
+                    class="BracketName-input"
                     v-model="BracketName"
                     label="Bracket Name"
                     :rules="bracketNameRules"
@@ -24,8 +25,8 @@
                     label="Competitors"
                 ><template v-slot:append>
                         <v-text-field
+                            class="PlayerCount-input"
                             v-model="PlayerCount"
-                            class="mt-0 pt-0"
                             hide-details
                             single-line
                             type="number"
@@ -37,7 +38,7 @@
                 <v-container id="GamePlayed">
                     <v-overflow-btn
                         v-model="GamePlayed"
-                        class="my-2"
+                        class="GamePlayed-input"
                         :items="dropdown_gamePlayed"
                         :editable= true
                         :menu-props="topMenu ? 'top' : ''"
@@ -50,7 +51,7 @@
                 <v-container id="GamingPlatform">
                     <v-overflow-btn
                         v-model="GamingPlatform"
-                        class="my-2"
+                        class="GamingPlatform-input"
                         :items="dropdown_gamingPlatform"
                         :editable= true
                         :menu-props="topMenu ? 'top' : ''"
@@ -64,6 +65,7 @@
                 <v-row>
                     <v-col cols="12" md="15">
                         <v-textarea
+                        class="ruleSet-input"
                         v-model="ruleSet"
                         :rules="rulesMaxChars"
                         name="Rules"
@@ -86,6 +88,7 @@
                             >
                                 <template v-slot:activator="{ on }">
                                 <v-text-field
+                                    class="startDate-input"
                                     v-model="startDate"
                                     label="Start Date"
                                     :rules="[value => !!value || 'Required']"
@@ -115,6 +118,7 @@
                             >
                                 <template v-slot:activator="{ on }">
                                 <v-text-field
+                                    class="startTime-input"
                                     v-model="startTime"
                                     label="Start Time"
                                     :rules="[value => !!value || 'Required']"
@@ -144,6 +148,7 @@
                             >
                                 <template v-slot:activator="{ on }">
                                 <v-text-field
+                                    class="endDate-input"
                                     v-model="endDate"
                                     label="End Date"
                                     :rules="[value => !!value || 'Required']"
@@ -152,7 +157,10 @@
                                     required
                                 ></v-text-field>
                                 </template>
-                                <v-date-picker v-model="endDate" @input="menu3 = false"></v-date-picker>
+                                <v-date-picker
+                                v-model="endDate"
+                                @input="menu3 = false"
+                                ></v-date-picker>
                             </v-menu>
                         </v-col>
                         <v-spacer></v-spacer>
@@ -170,6 +178,7 @@
                             >
                                 <template v-slot:activator="{ on }">
                                 <v-text-field
+                                    class="endTime-input"
                                     v-model="endTime"
                                     label="End Time"
                                     :rules="[value => !!value || 'Required']"
@@ -208,10 +217,24 @@ export default {
     components: {
   },
   data: () => ({
-    dropdown_gamePlayed:['Street Fighter V - Arcade Edition', 'The King of Fighters XIV',
-    'Tekken 7', 'Super Smash Bros. Ultimate', 'Samurai Shodown', "Soul Calibur VI", 
-    'Mortal Kombat 11', 'Injustice 2', 'Killer Instinct'],
-    dropdown_gamingPlatform: ['Playstation 3', 'Playstation 4', 'Xbox 360', 'Xbox One', 'Wii', 'Wii U', "Switch"],
+    dropdown_gamePlayed:[
+        'Street Fighter V - Arcade Edition', 
+        'The King of Fighters XIV', 
+        'Tekken 7', 
+        'Super Smash Bros. Ultimate', 
+        'Samurai Shodown', 
+        "Soul Calibur VI", 
+        'Mortal Kombat 11', 
+        'Injustice 2', 
+        'Killer Instinct'],
+    dropdown_gamingPlatform: [
+        'Playstation 3', 
+        'Playstation 4', 
+        'Xbox 360', 
+        'Xbox One', 
+        'Wii', 
+        'Wii U', 
+        "Switch"],
     currentDate: new Date().toISOString().substr(0, 10),
     valid: true,
     topMenu: null,
@@ -238,8 +261,6 @@ export default {
     gamePlayedRules:
     [value => !!value || 'Game required'],
     platformRules:
-    [value => !!value || 'Platform required'],
-    confirmRules:
     [value => !!value || 'Platform required']
     }),
     methods: {
@@ -251,10 +272,8 @@ export default {
                 GamePlayed: this.GamePlayed,
                 GamingPlatform: this.GamingPlatform,
                 Rules: this.ruleSet,
-                StartDate: this.startDate,
-                StartTime: this.startTime,
-                EndDate: this.endDate,
-                EndTime: this.endTime 
+                StartDate: this.startDate + " " + this.startTime,
+                EndDate: this.endDate + " " + this.endTime
             });
             //console.log(bracketInfo)
             setTimeout((this.$store.dispatch('createBracket', this.BracketInfo), 500))

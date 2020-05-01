@@ -4,8 +4,10 @@ import router from "./router";
 import vuetify from "./plugins/vuetify";
 import store from "./store";
 import Vuelidate from 'vuelidate'
+import DatetimePicker from 'vuetify-datetime-picker';
 
 Vue.use(Vuelidate)
+Vue.use(DatetimePicker)
 
 Vue.config.productionTip = false;
 
