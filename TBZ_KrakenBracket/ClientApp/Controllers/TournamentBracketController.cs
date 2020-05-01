@@ -19,7 +19,6 @@ namespace ClientApp.Controllers
             _tournamentBracketManager = tournamentBracketManager;
         }
 
-
         [HttpGet("{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracketByID(int bracketID)
@@ -36,7 +35,7 @@ namespace ClientApp.Controllers
 
         [HttpPost("{bracketID}/register/{gamer}")]
         [Produces("application/json")]
-        public IActionResult RegisterGamerIntoBracket(int bracketID, Gamer gamer)
+        public IActionResult RegisterGamerIntoBracket(int bracketID, GamerInfo gamer)
         {
             return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
         }

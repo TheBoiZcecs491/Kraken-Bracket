@@ -20,7 +20,7 @@ namespace TBZ.KrakenBracket.Services
             bool result = true;
             return result;
         }
-        public bool CheckGamerExistence(Gamer gamer)
+        public bool CheckGamerExistence(GamerInfo gamer)
         {
             var gamerResult = _gamerDataAccess.GetGamerInfo(gamer);
             if (gamerResult == null) return false;

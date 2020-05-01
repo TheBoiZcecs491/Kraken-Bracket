@@ -72,7 +72,7 @@ namespace TBZ.DatabaseQueryService
 
         }
 
-        public void InsertGamerInfo(Gamer tempGamer)
+        public void InsertGamerInfo(GamerInfo tempGamer)
         {
             var DB = new Database();
 
@@ -228,7 +228,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
        
-        public Gamer GetGamerInfo(Gamer gamer)
+        public GamerInfo GetGamerInfo(GamerInfo gamer)
         {
             try
             {

@@ -74,7 +74,7 @@ namespace TBZ.KrakenBracket.Managers
             return _tournamentBracketDataAccess.GetBracketPlayerInfo(email);
         }
 
-        public BracketPlayer RegisterGamerIntoBracket(Gamer gamer, int bracketID)
+        public BracketPlayer RegisterGamerIntoBracket(GamerInfo gamer, int bracketID)
         {
             bool checkGamerExistence = _tournamentBracketService.CheckGamerExistence(gamer);
             bool checkBracketExistence = _tournamentBracketService.CheckBracketExistence(bracketID);

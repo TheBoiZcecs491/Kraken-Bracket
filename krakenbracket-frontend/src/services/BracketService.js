@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-
   baseURL: `https://localhost:5001`,
   withCredentials: false,
   headers: {
@@ -19,7 +18,7 @@ export default {
     return apiClient.get("api/brackets/" + bracketID);
   },
   getEvents() {
-    return apiClient.get("/events");
+    return apiClient.get("api/events");
   },
   getEventByID(eventID) {
     return apiClient.get("api/events/" + eventID);

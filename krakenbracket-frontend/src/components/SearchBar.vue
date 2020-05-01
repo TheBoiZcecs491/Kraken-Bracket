@@ -1,15 +1,21 @@
 <template>
     <div>
         <v-container fluid>
-            <v-row>
-                <v-col cols="12" sm="1">
+            <v-row
+            align="start"
+            justify="center">
+                <v-col cols="12" sm="2">
                 <select class="primary" v-model="keyword">
-                    <option v-for="option in options" v-bind:key="option.text" v-bind:value="option.value">
+                    <option 
+                        v-for="option in options" 
+                        v-bind:key="option.text" 
+                        v-bind:value="option.value"
+                    >
                         {{ option.text }}
                     </option>
                 </select>
                 </v-col>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" sm="8">
                     <v-text-field
                         class="search-input"
                         v-model="search"
@@ -20,7 +26,7 @@
                     >
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="1">
+                <v-col cols="12" sm="2">
                 <router-link
                     :to="{ name:'search-view', params: {search: search, keyword: keyword} }"
                 >

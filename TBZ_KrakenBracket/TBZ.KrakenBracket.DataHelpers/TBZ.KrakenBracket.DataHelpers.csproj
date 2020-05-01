@@ -9,7 +9,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.App" Version="2.2.8" />
+    <PackageReference Include="Microsoft.NETCore.App" Version="$(RuntimeFrameworkVersion)"><AllowExplicitVersion>true</AllowExplicitVersion>
+</PackageReference>
     <PackageReference Include="MySql.Data" Version="8.0.19" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
   </ItemGroup>

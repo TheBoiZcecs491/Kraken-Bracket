@@ -1,7 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using TBZ.DatabaseConnectionService;
 using TBZ.DatabaseQueryService;
 using TBZ.KrakenBracket.DataHelpers;
@@ -130,6 +129,37 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
                 return listOfBracketsInEvent;
             }
+        }
+
+        public List<EventInfo> ReadEvents(string eventRequest, int pageNum, int skipPage)
+        {
+            var DB = new Database();
+            var listOfEvents = new List<EventInfo>();
+            var negativeSkipPage = skipPage < 0;
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string selectQuery = string.Format("SELECT * FROM event_info WHERE event_name LIKE \'%{0}%\'", eventRequest);
+                Console.WriteLine(selectQuery);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        EventInfo eventObj = new EventInfo();
+                        eventObj.EventID = reader.GetInt32("eventID");
+                        eventObj.HashedUserID = reader.GetString("hashedUserID");
+                        eventObj.EventName = reader.GetString("event_name");
+                        eventObj.Address = reader.GetString("address");
+                        eventObj.Description = reader.GetString("description");
+                        eventObj.StartDate = reader.GetDateTime("start_date");
+                        eventObj.EndDate = reader.GetDateTime("end_date");
+                        eventObj.Reason = reader.GetString("reason");
+                        listOfEvents.Add(eventObj);
+                    }
+                }
+            }
+            return listOfEvents;
         }
 
     }

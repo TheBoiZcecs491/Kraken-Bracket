@@ -81,7 +81,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             return bracketPlayers;            
         }
 
-        public BracketPlayer InsertGamerToBracket(Gamer gamer, int bracketID)
+        public BracketPlayer InsertGamerToBracket(GamerInfo gamer, int bracketID)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     DatabaseQuery databaseQuery = new DatabaseQuery();
                     TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
-                    Gamer tempGamer = databaseQuery.GetGamerInfo(gamer);
+                    GamerInfo tempGamer = databaseQuery.GetGamerInfo(gamer);
                     BracketPlayer bracketPlayer = new BracketPlayer();
                     bracketPlayer.BracketID = bracket.BracketID;
                     bracketPlayer.HashedUserID = tempGamer.HashedUserID;

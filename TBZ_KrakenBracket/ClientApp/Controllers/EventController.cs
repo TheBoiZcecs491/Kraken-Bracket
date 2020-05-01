@@ -24,7 +24,7 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.CreateEvent(eventObj));
         }
 
-        [HttpGet("Events")]
+        [HttpGet]
         [Produces("application/json")]
         public IActionResult GetAllEvent()
         {
