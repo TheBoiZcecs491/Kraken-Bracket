@@ -19,24 +19,8 @@ namespace ClientApp.Controllers
             _tournamentBracketManager = tournamentBracketManager;
         }
 
-        [Produces("application/json")]
-        public IActionResult GetBracketStatusCode(int bracketID)
-        {
-            try
-            {
-                return Ok(_tournamentBracketManager.GetBracketStatusCode(bracketID));
-            }
-            catch (ArgumentException)
-            {
-                return StatusCode(StatusCodes.Status404NotFound);
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-        
-        [HttpGet("competitors/{bracketID}")]
+
+        [HttpGet("{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracketByID(int bracketID)
         {
@@ -46,10 +30,12 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
+                // Bracket was not found
                 return StatusCode(StatusCodes.Status404NotFound);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -64,10 +50,12 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
+                // Brackets not found
                 return StatusCode(StatusCodes.Status404NotFound);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -82,46 +70,73 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
-                return StatusCode(StatusCodes.Status404NotFound);
+                // Registering unsuccessful
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpPost("login")]
-        public IActionResult LoginUser(User user)
+        [HttpDelete("{bracketID}/unregister/{systemID}")]
+        [Produces("application/json")]
+        public IActionResult UnregisterGamerFromBracket(int bracketID, int systemID)
         {
             try
             {
-                return Ok(_tournamentBracketManager.GetUser(user.Email, user.Password));
+                return Ok(_tournamentBracketManager.UnregisterGamerFromBracket(systemID, bracketID));
             }
             catch (ArgumentException)
             {
-                return StatusCode(StatusCodes.Status404NotFound);
+                /// Unregistering unsuccessful
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
-        [HttpPost("createBracket/{bracketInfo}")]
+        [HttpGet("{email}/bracketPlayerInfo")]
         [Produces("application/json")]
-        public IActionResult CreateBracket(BracketInfo bracketInfo)
+        public IActionResult GetBracketPlayerInfo(string email)
         {
             try
             {
-                return Ok(_tournamentBracketManager.ValidCreateBracket(bracketInfo));
+                return Ok(_tournamentBracketManager.GetBracketPlayerInfo(email));
             }
             catch (ArgumentException)
             {
+                // Bracket player info not found
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+            catch
+            {
+                // Generic error
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("{email}/gamerInfo")]
+        [Produces("application/json")]
+        public IActionResult GetGamerInfo(string email)
+        {
+            try
+            {
+                return Ok(_tournamentBracketManager.GetGamerInfoByEmail(email));
+            }
+            catch (ArgumentException)
+            {
+                // Gamer not found
                 return StatusCode(StatusCodes.Status404NotFound);
             }
             catch
             {
+                // Generic error
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }
-}
+    }

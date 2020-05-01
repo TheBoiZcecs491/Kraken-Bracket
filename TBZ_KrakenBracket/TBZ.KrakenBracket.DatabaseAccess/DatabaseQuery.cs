@@ -27,6 +27,38 @@ namespace TBZ.DatabaseQueryService
             {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
         };
 
+        internal Gamer GetGamerInfoByHashedID(string hashedUserID)
+        {
+            try
+            {
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+                {
+                    using (MySqlCommand comm = conn.CreateCommand())
+                    {
+                        comm.CommandText = "SELECT * FROM gamer_info WHERE hashedUserID=@HashedUserID";
+                        comm.Parameters.AddWithValue("@HashedUserID", hashedUserID);
+                        conn.Open();
+                        using (MySqlDataReader reader = comm.ExecuteReader())
+                        {
+                            Gamer gamer = new Gamer();
+                            reader.Read();
+                            gamer.GamerTag = reader.GetString("gamerTag");
+                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
+                            gamer.HashedUserID = reader.GetString("hashedUserID");
+                            conn.Close();
+                            return gamer;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public bool TableExist(string tableName)
         {
             if (!tables.ContainsKey(tableName))
@@ -113,27 +145,8 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void InsertBracketPlayer(BracketPlayer bracketPlayer)
-        {
-            var DB = new Database();
 
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
-            {
-                using (MySqlCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score)";
 
-                    comm.Parameters.AddWithValue("@bracketID", bracketPlayer.BracketID);
-                    comm.Parameters.AddWithValue("@hashedUserID", bracketPlayer.HashedUserID);
-                    comm.Parameters.AddWithValue("@roleID", bracketPlayer.RoleID);
-                    comm.Parameters.AddWithValue("@placement", bracketPlayer.Placement);
-                    comm.Parameters.AddWithValue("@score", bracketPlayer.Score);
-                    conn.Open();
-                    comm.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
-        }
 
         public void InsertEvent(EventInfo tempEvent)
         {
@@ -188,75 +201,74 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
-        public void IncrementBracketPlayerCount(BracketInfo bracket)
-        {
-            var DB = new Database();
 
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
-            {
-                using (MySqlCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "UPDATE bracket_info SET number_player = number_player + 1 WHERE bracketID=@BracketID";
-                    comm.Parameters.AddWithValue("@BracketID", bracket.BracketID);
-                    conn.Open();
-                    comm.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
-        }
         public Gamer GetGamerInfo(Gamer gamer)
         {
-            var DB = new Database();
-
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            try
             {
-                using (MySqlCommand comm = conn.CreateCommand())
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
                 {
-                    comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag AND gamerTagID=@GamerTagID";
-                    comm.Parameters.AddWithValue("@GamerTag", gamer.GamerTag);
-                    comm.Parameters.AddWithValue("@GamerTagID", gamer.GamerTagID);
-                    conn.Open();
-                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    using (MySqlCommand comm = conn.CreateCommand())
                     {
-                        reader.Read();
-                        gamer.GamerTag = reader.GetString("gamerTag");
-                        gamer.GamerTagID = reader.GetInt32("gamerTagID");
-                        gamer.HashedUserID = reader.GetString("hashedUserID");
-                        conn.Close();
-                        return gamer;
+                        comm.CommandText = "SELECT * FROM gamer_info WHERE gamerTag=@GamerTag";
+                        comm.Parameters.AddWithValue("@GamerTag", gamer.GamerTag);
+                        conn.Open();
+                        using (MySqlDataReader reader = comm.ExecuteReader())
+                        {
+                            reader.Read();
+                            gamer.GamerTag = reader.GetString("gamerTag");
+                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
+                            gamer.HashedUserID = reader.GetString("hashedUserID");
+                            conn.Close();
+                            return gamer;
+                        }
                     }
                 }
             }
-            
+            catch (Exception)
+            {
+                return null;
+            }
         }
+
         public User GetUserInfo(string email)
         {
-            var DB = new Database();
-
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            try
             {
-                using (MySqlCommand comm = conn.CreateCommand())
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
                 {
-                    comm.CommandText = "SELECT * FROM user_information WHERE email=@Email";
-                    comm.Parameters.AddWithValue("@Email", email);
-                    conn.Open();
-                    using (MySqlDataReader reader = comm.ExecuteReader())
+                    using (MySqlCommand comm = conn.CreateCommand())
                     {
-                        User user = new User();
-                        reader.Read();
-                        user.SystemID = reader.GetInt32("userID");
-                        user.Email = reader.GetString("email");
-                        user.FirstName = reader.GetString("fname");
-                        user.LastName = reader.GetString("lname");
-                        user.Password = reader.GetString("hashed_password");
-                        user.Salt = reader.GetString("salt");
-                        user.AccountType = reader.GetString("account_type");
-                        user.AccountStatus = reader.GetBoolean("account_status");
-                        conn.Close();
-                        return user;
+                        comm.CommandText = "SELECT * FROM user_information WHERE email=@Email";
+                        comm.Parameters.AddWithValue("@Email", email);
+                        conn.Open();
+                        using (MySqlDataReader reader = comm.ExecuteReader())
+                        {
+                            User user = new User();
+                            reader.Read();
+                            user.SystemID = reader.GetInt32("userID");
+                            user.Email = reader.GetString("email");
+                            user.FirstName = reader.GetString("fname");
+                            user.LastName = reader.GetString("lname");
+                            user.Password = reader.GetString("hashed_password");
+                            user.Salt = reader.GetString("salt");
+                            user.AccountType = reader.GetString("account_type");
+                            user.AccountStatus = reader.GetBoolean("account_status");
+                            conn.Close();
+                            return user;
+                        }
                     }
                 }
             }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
         public string GetHashedUserID(int systemID)
         {
@@ -273,34 +285,6 @@ namespace TBZ.DatabaseQueryService
                     string hashedUserID = reader0.GetString("hashed_userID");
                     conn.Close();
                     return hashedUserID;
-                }
-            }
-        }
-
-
-        public List<BracketPlayer> GetBracketPlayerInfo(string hashedUserID)
-        {
-            var DB = new Database();
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
-            {
-                string selectQuery2 = string.Format("SELECT * FROM bracket_player_info WHERE hashedUserID='{0}'", hashedUserID);
-                MySqlCommand selectCmd = new MySqlCommand(selectQuery2, conn);
-                conn.Open();
-                using (MySqlDataReader reader0 = selectCmd.ExecuteReader())
-                {
-                    List<BracketPlayer> bracketPlayers = new List<BracketPlayer>();
-                    while (reader0.Read())
-                    {
-                        BracketPlayer bracketPlayer = new BracketPlayer();
-                        bracketPlayer.BracketID = reader0.GetInt32("bracketID");
-                        bracketPlayer.HashedUserID = reader0.GetString("hashedUserID");
-                        bracketPlayer.RoleID = reader0.GetInt32("roleID");
-                        bracketPlayer.Placement = reader0.GetInt32("placement");
-                        bracketPlayer.Score = reader0.GetInt32("score");
-                        bracketPlayers.Add(bracketPlayer);
-                    }
-                    conn.Close();
-                    return bracketPlayers;
                 }
             }
         }

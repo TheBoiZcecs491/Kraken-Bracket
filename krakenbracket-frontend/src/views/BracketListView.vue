@@ -2,16 +2,20 @@
   <div>
     <h1>Bracket Listings</h1>
     <!-- the :event sends each prop to the Bracket component -->
-    <Bracket v-for="bracket in brackets" :key="bracket.id" :bracket="bracket" />
+    <BracketModel
+      v-for="bracket in brackets"
+      :key="bracket.id"
+      :bracket="bracket"
+    />
   </div>
 </template>
 
 <script>
-import Bracket from "@/components/Bracket.model.vue";
+import BracketModel from "@/components/BracketModel.vue";
 import BracketService from "@/services/BracketService.js";
 export default {
   components: {
-    Bracket
+    BracketModel
   },
   data() {
     return {

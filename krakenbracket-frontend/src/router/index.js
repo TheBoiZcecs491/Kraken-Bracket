@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import BracketList from "../views/BracketList.view.vue";
+import BracketList from "../views/BracketListView.vue";
 import BracketView from "../views/BracketView.vue";
 import NewBracket from "../views/NewBracket.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
@@ -53,7 +53,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: "history"
 });
 
 export default router;

@@ -77,44 +77,125 @@ namespace TBZ.KrakenBracket.Managers
                 return false;
         }
 
+
+        /// <summary>
+        /// Gets user's bracket player info
+        /// </summary>
+        ///
+        /// <param name="email">
+        /// User's email
+        /// </param>
+        ///
+        /// <returns>
+        /// List of their bracket player info.
+        /// This list tells what brackets the user has been registered to
+        /// </returns>
         public List<BracketPlayer> GetBracketPlayerInfo(string email)
         {
-            return _tournamentBracketDataAccess.GetBracketPlayerInfo(email);
+            var result = _tournamentBracketDataAccess.GetBracketPlayerInfo(email);
+            if (result != null) return result;
+            else throw new ArgumentException();
         }
 
-        public User GetUser(string email, string password)
-        {
-            return _tournamentBracketDataAccess.GetUser(email, password);
-        }
-
+        /// <summary>
+        /// Registers gamer into a bracket
+        /// </summary>
+        ///
+        /// <param name="gamer">
+        /// User's Gamer info
+        /// </param>
+        ///
+        /// <param name="bracketID">
+        /// The bracket ID to reference the bracket that the user is being
+        /// registered to
+        /// </param>
+        ///
+        /// <returns>
+        /// BracketPlayer object if registration is successful
+        /// </returns>
         public BracketPlayer RegisterGamerIntoBracket(Gamer gamer, int bracketID)
         {
-            return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
+            bool checkGamerExistence = _tournamentBracketService.CheckGamerExistence(gamer);
+            bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
+            if (checkGamerExistence && checkBracketExistence)
+            {
+                return _tournamentBracketService.InsertGamerToBracket(gamer, bracketID);
+            }
+            else throw new ArgumentException();
+
         }
 
+        /// <summary>
+        /// Gets gamer info by user's email
+        /// </summary>
+        ///
+        /// <param name="email">
+        /// User's email
+        /// </param>
+        ///
+        /// <returns>
+        /// Gamer object associated with user
+        /// </returns>
+        public Gamer GetGamerInfoByEmail(string email)
+        {
+            var result =  _tournamentBracketService.GetGamerInfoByEmail(email);
+            if (result != null) return result;
+            else throw new ArgumentException();
+        }
+
+        /// <summary>
+        /// Unregister gamer from bracket
+        /// </summary>
+        ///
+        /// <param name="systemID">
+        /// The user's system ID
+        /// </param>
+        ///
+        /// <param name="bracketID">
+        /// Bracket ID to reference the bracket that the user
+        /// is unregistering from
+        /// </param>
+        ///
+        /// <returns>
+        /// Boolean to indicate success or fail unregistration
+        /// </returns>
+        public bool UnregisterGamerFromBracket(int systemID, int bracketID)
+        {
+            var result =  _tournamentBracketService.UnregisterGamerFromBracket(systemID, bracketID);
+            if (result) return result;
+            else throw new ArgumentException();
+        }
+
+        /// <summary>
+        /// Returns all brackets stored in the database
+        /// </summary>
+        ///
+        /// <returns>
+        /// All brackets stored in the database
+        /// </returns>
         public List<BracketInfo> GetAllBrackets()
         {
-            List<BracketInfo> brackets = _tournamentBracketDataAccess.GetAllBrackets();
-            return brackets;
+            var result =  _tournamentBracketService.GetAllBrackets();
+            if (result != null) return result;
+            else throw new ArgumentException();
         }
 
+        /// <summary>
+        /// Gets a specific bracket by its ID
+        /// </summary>
+        ///
+        /// <param name="bracketID">
+        /// Bracket ID to be used to fetch bracket objectr
+        /// </param>
+        ///
+        /// <returns>
+        /// Bracket object associated with bracket ID
+        /// </returns>
         public BracketInfo GetBracketByID(int bracketID)
         {
-            return _tournamentBracketDataAccess.GetBracketByID(bracketID);
-        }
-
-        public int GetBracketStatusCode(int bracketID)
-        {
-            int result = _tournamentBracketService.CheckBracketStatusCode(bracketID);
-            return result;
-
-        }
-
-        public int GetNumberOfCompetitors(int bracketID)
-        {
-            int result = _tournamentBracketService.GetNumberOfCompetitors(bracketID);
-            return result;
-
+            var result = _tournamentBracketService.GetBracketByID(bracketID);
+            if (result != null) return result;
+            else throw new ArgumentException();
         }
     }
 }

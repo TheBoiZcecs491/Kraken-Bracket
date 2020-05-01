@@ -34,26 +34,7 @@ namespace TBZ.TournamentBracketTest
         }
 
         [TestMethod]
-        public void GetBracketStatusCode_Pass()
-        {
-            BracketInfo bracketInfo = new BracketInfo(1, "Test Name", 1, 127, "Mortal Kombat 11", "Xbox One", 
-                "No rules atm", new DateTime(2020, 5, 3), new DateTime(2020, 5, 3), 0);
-            var expected = bracketInfo.StatusCode;
-            var actual = _tournamentBracketManager.GetBracketStatusCode(bracketInfo.BracketID);
-            Assert.AreEqual(expected, actual);
-        }
-        [TestMethod]
-        public void GetNumberOfCompetitors_Pass()
-        {
-            BracketInfo bracketInfo = new BracketInfo(1, "Test Name", 1, 127, "Mortal Kombat 11", "Xbox One",
-                "No rules atm", new DateTime(2020, 5, 3), new DateTime(2020, 5, 3), 0);
-            var expected = bracketInfo.PlayerCount;
-            var actual = _tournamentBracketManager.GetNumberOfCompetitors(bracketInfo.BracketID);
-            Assert.AreEqual(expected, actual);
-        }
-        
-        [TestMethod]
-        public void GetUser()
+        public void GetBracket_Pass()
         {
             bool result = true;
             try
@@ -127,34 +108,6 @@ namespace TBZ.TournamentBracketTest
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestMethod]
-        //public void CreateTournamentBracket_Fail_PastCurrentDate()
-        //{
-        //    // Arrange
-        //    BracketInfo bracketFields = new BracketInfo(2, "SoCal Regionals 2020: SFVAE Pools - 1", 1, 32, "Street Fighter V - Arcade Edition", "PS4",
-        //        "N/A", new DateTime(2019, 11, 6), new DateTime(2019, 11, 8), 0);
-        //    var expected = false;
-        //    var actual = false;
-        //    Stopwatch timer = new Stopwatch();
-
-        //    try
-        //    {
-        //        timer.Start();
-        //        actual = _tournamentBracketManager.CreatePermission("brian@foomail.com", "Create Tournament Bracket", true);
-        //        actual = _tournamentBracketManager.ValidateFields(bracketFields);
-        //        actual = _tournamentBracketService.CreateTournamentBracket(bracketFields);
-        //        timer.Stop();
-        //    }
-        //    catch (ArgumentException e)
-        //    {
-        //        Console.WriteLine("Error message: ", e); 
-        //        actual = false;
-        //    }
-        //    catch (Exception) { actual = false; }
-        //    Console.WriteLine("Elasped = {0} ms", timer.ElapsedMilliseconds);
-        //    // Assert
-        //    Assert.AreEqual(expected, actual);
-        //}
 
         [TestMethod]
         public void CreateTournamentBracket_Fail_ExceededMaxCompetitors()

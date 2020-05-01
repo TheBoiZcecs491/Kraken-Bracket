@@ -1,6 +1,11 @@
 <template>
   <v-app>
     <v-container id="page-layout-fix">
+      <v-btn @click="$router.go(-1)">&lt; BACK</v-btn>
+      <div v-if="error" class="red--text">
+        <p>404: The bracket you have been looking for is not found</p>
+      </div>
+      <div v-else>
       <h1 id="title">{{ bracket.bracketName }}</h1>
       <div style="text-align: left">
         <v-row>
@@ -35,43 +40,17 @@
             <v-btn color="primary">Login</v-btn>
           </router-link>
         </div>
-        <div v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)">
+        <div
+          v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)"
+        >
           <p>You are already registered for this event</p>
-          <v-btn>Unregister</v-btn>
+          <UnregisterBracketModel :key="bracket.id" :bracket="bracket" />
         </div>
         <!-- State if the user is logged in -->
         <div v-else>
-          <router-link
-            :to="{
-              name: 'bracket-registration',
-              params: { id: bracket.bracketID }
-            }"
-            class="register-btn"
-          >
-            <v-btn
-              v-show="bracket.statusCode === 0 && bracket.playerCount < 128"
-              type="submit"
-              >Register!</v-btn
-            >
-          </router-link>
-          <div v-if="bracket.statusCode === 1">
-            <p>
-              <strong>NOTE:</strong> Registration is disabled; bracket has
-              already completed
-            </p>
-          </div>
-          <div v-else-if="bracket.statusCode === 2">
-            <p>
-              <strong>NOTE:</strong> Registration is disabled; bracket is in
-              progress
-            </p>
-          </div>
-          <v-btn
-            v-show="bracket.statusCode !== 0 || bracket.playerCount === 128"
-            disabled
-            >Register!</v-btn
-          >
+          <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
         </div>
+      </div>
       </div>
     </v-container>
   </v-app>
@@ -80,10 +59,18 @@
 <script>
 import BracketService from "@/services/BracketService.js";
 import { authComputed } from "../store/helpers.js";
+import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue";
+import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
 export default {
   props: ["id"],
+  components: {
+    UnregisterBracketModel,
+    RegisterBracketModel
+  },
   data() {
     return {
+      dialog: false,
+      error: null,
       bracket: {}
     };
   },
@@ -92,19 +79,20 @@ export default {
       .then(response => {
         this.bracket = response.data;
       })
-      .catch(error => {
-        console.log("Error: " + error.response);
+      .catch(err => {
+        // console.log(err);
+        this.error = err
       });
   },
   computed: {
-    ...authComputed
+    ...authComputed,
   },
-  methods:{
-    registeredStatus(bracketPlayerInfo, bracket){
+  methods: {
+    registeredStatus(bracketPlayerInfo, bracket) {
       for (let index = 0; index < bracketPlayerInfo.length; index++) {
-        if (bracketPlayerInfo[index].bracketID === bracket.bracketID){
-          return true
-        }
+        if (bracketPlayerInfo[index].bracketID === bracket.bracketID) {
+          return true;
+        } 
       }
     }
   }

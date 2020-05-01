@@ -18,10 +18,10 @@ export default {
   getBracketByID(bracketID) {
     return apiClient.get("api/brackets/" + bracketID);
   },
-  getBracketPlayerInfo(email){
-    return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`)
+  getBracketPlayerInfo(email) {
+    return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`);
   },
-  postBracket(bracketInfo){
-    return apiClient.post('/brackets', bracketInfo)
+  getGamerInfo(email){
+    return apiClient.get(`api/brackets/${email}/gamerInfo`);
   }
-};
+}

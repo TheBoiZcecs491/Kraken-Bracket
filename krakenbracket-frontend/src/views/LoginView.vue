@@ -22,6 +22,7 @@
                 required
               ></v-text-field>
               <v-btn @click="login">Login</v-btn>
+              <p v-if="error" class="red--text">Login failed. Please try again</p>
             </v-col>
             <v-col cols="4"></v-col>
           </v-row>
@@ -44,25 +45,35 @@ export default {
     return {
       email: "",
       password: "",
+      error: null
     };
   },
   methods: {
     login() {
       // this.$store.commit("CHANGE_LOGGED_IN_STATUS");
-      this.$store
-        .dispatch("login", {
-          email: this.email,
-          password: this.password})
-        // }).then(() => {
-        //   this.$router.push({name: "Home"})
-        // });
-      this.$store.dispatch("bracketPlayerInfo", this.email)
-        .then(() => {
-          this.$router.push({ name: "Home" });
-        });
+      this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password
+      })
+      .then(() =>{
+        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
+        this.$store.dispatch("gamerInfo", this.email)
+      })
+      }).then(() => {
+        this.$router.go(-1);
+    })
+
+
+
+      .catch(err =>{
+        // console.log("****ERROR:" + err)
+        this.error = err
+      });
+      // }).then(() => {
+      //   this.$router.push({name: "Home"})
+      // });
     }
   },
-  created(){
-  }
+  created() {}
 };
 </script>
