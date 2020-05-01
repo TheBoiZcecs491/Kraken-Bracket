@@ -12,7 +12,7 @@ namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
-        const string CONNECTION_STRING = @"server=localhost; userid=root; password=password; database=tbz_krackenbracket";
+        const string CONNECTION_STRING = @"server=localhost; userid=root; password=password; database=kraken_bracket";
         private MySqlConnection conn;
 
         // List of users and their passwords
