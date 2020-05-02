@@ -234,6 +234,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             return tournamentBracketDatabaseQuery.GetAllBrackets();
         }
 
+        /// <summary>
+        /// Retrieves latest bracket ID to increment and assign.
+        /// Performs MySQL query to insert bracket with provided fields
+        /// </summary>
+        /// <param name="bracketFields"></param> provided bracket fields
+        /// <returns> boolean to indicate a successful/unsuccessful insert to database </returns>
         public bool InsertNewBracket(BracketInfo bracketFields)
         {
             bracketFields.BracketID = GetLatestBracketID() + 1;
@@ -270,6 +276,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Updates the bracket using the provided bracket data,
+        /// bases the search on the bracket ID assigned for MySQL query
+        /// </summary>
+        /// <param name="bracketFields"></param> Updated field(s) to update the query
+        /// <returns> boolean to indicate successful/unsuccessful update to database </returns>
         public bool UpdateBracket(BracketInfo bracketFields)
         {
             if (!CheckBracketExistenceByID(bracketFields.BracketID))
@@ -313,6 +325,11 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Deletes bracket with provided bracket info for the MySQL query
+        /// </summary>
+        /// <param name="bracketFields"></param> Uses the bracket ID in the BracketField object
+        /// <returns> boolean to indicate successful/unsuccessful delete </returns>
         public bool DeleteBracket(BracketInfo bracketFields)
         {
             try

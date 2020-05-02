@@ -7,7 +7,7 @@
                 @submit.prevent="createBracket"
         >
         <v-row justify="space-around">
-            
+            <!-- Bracket name field -->
                 <v-col class="px-4" cols="12" sm="3">
                 <v-text-field
                     class="BracketName-input"
@@ -17,7 +17,7 @@
                     placeholder="EVO 2020 SFVAE Pools - 1"
                     required
                 ></v-text-field>
-
+            <!-- Player count slider -->
                 <v-slider
                     v-model="PlayerCount"
                     min="2"
@@ -34,7 +34,7 @@
                         ></v-text-field>
                     </template>
                 </v-slider>
-
+            <!-- Game played drop down bar (Fillable) -->
                 <v-container id="GamePlayed">
                     <v-overflow-btn
                         v-model="GamePlayed"
@@ -48,6 +48,7 @@
                         required
                     ></v-overflow-btn>
                 </v-container>
+            <!-- Gaming platform drop down bar (fillable) -->
                 <v-container id="GamingPlatform">
                     <v-overflow-btn
                         v-model="GamingPlatform"
@@ -61,7 +62,7 @@
                         required
                     ></v-overflow-btn>
                 </v-container>
-
+            <!-- Rule set text area (scalable) -->
                 <v-row>
                     <v-col cols="12" md="15">
                         <v-textarea
@@ -74,7 +75,7 @@
                         ></v-textarea>
                     </v-col>
                 </v-row>
-                
+            <!-- Start date picker -->
                 <v-container>
                     <v-row>
                         <v-col cols="12" lg="6">
@@ -103,6 +104,7 @@
                                  ></v-date-picker>
                             </v-menu>
                         </v-col>
+            <!-- Start time picker -->
                         <v-spacer></v-spacer>
                         <v-col cols="12" lg="6">
                             <v-menu
@@ -135,6 +137,7 @@
                         </v-col>
                     </v-row>
                 </v-container>
+            <!-- End date picker -->
                 <v-container>
                     <v-row>
                         <v-col cols="12" lg="6">
@@ -163,6 +166,7 @@
                                 ></v-date-picker>
                             </v-menu>
                         </v-col>
+            <!-- End time picker -->
                         <v-spacer></v-spacer>
                         <v-col cols="12" lg="6">
                             <v-menu
