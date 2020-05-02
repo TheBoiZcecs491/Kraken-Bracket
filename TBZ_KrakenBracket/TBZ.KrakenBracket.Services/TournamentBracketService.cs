@@ -11,7 +11,7 @@ namespace TBZ.KrakenBracket.Services
 
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
         private readonly GamerDataAccess _gamerDataAccess = new GamerDataAccess();
-        public bool CreateTournamentBracket(TournamentBracketDataAccess tournamentBracketDataAccess, BracketInfo bracketFields)
+        public bool CreateTournamentBracket(BracketInfo bracketFields)
         {
             return _tournamentBracketDataAccess.InsertNewBracket(bracketFields);
         }

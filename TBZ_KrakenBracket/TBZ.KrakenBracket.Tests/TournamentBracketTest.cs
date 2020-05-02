@@ -34,22 +34,6 @@ namespace TBZ.TournamentBracketTest
         }
 
         [TestMethod]
-        public void GetBracket_Pass()
-        {
-            bool result = true;
-            try
-            {
-                User user = _tournamentBracketManager.GetUser("user1@krakenbracket.com", "Pass1");
-                if (user == null) result = false;
-            }
-            catch(Exception e)
-            {
-                result = false;
-            }
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
         public void CreateTournamentBracket_Pass()
         {
             // Arrange

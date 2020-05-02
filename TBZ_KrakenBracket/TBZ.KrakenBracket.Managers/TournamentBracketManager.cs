@@ -78,21 +78,6 @@ namespace TBZ.KrakenBracket.Managers
                 return false;
         }
 
-
-        /// <summary>
-        /// Gets user's bracket player info
-        /// </summary>
-        ///
-        /// <param name="email">
-        /// User's email
-        /// </param>
-        ///
-        /// <returns>
-        /// List of their bracket player info.
-        /// This list tells what brackets the user has been registered to
-        /// </returns>
-        public List<BracketPlayer> GetBracketPlayerInfo(string email)
-        {
         /// <summary>
         /// Gets user's bracket player info
         /// </summary>
