@@ -12,7 +12,7 @@ namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
-        const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
+        const string CONNECTION_STRING = @"server=localhost; userid=root; password=password; database=kraken_bracket";
         private MySqlConnection conn;
 
         // List of users and their passwords
@@ -175,7 +175,7 @@ namespace TBZ.DatabaseAccess
             DatabaseQuery databaseQuery = new DatabaseQuery();
             User user = databaseQuery.GetUserInfo(email);
             MessageSalt messageSalt = new MessageSalt(password, user.Salt);
-            messageSalt.GenerateHash(messageSalt);
+            messageSalt.GenerateHash();
             if (messageSalt.message == user.Password)
             {
                 return true;
