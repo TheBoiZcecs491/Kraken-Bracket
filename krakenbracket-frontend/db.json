@@ -24,5 +24,28 @@
             "end_date": "9999-12-31 23:59:59",
             "status_code": 2
         }
+    ],
+
+    "events": [
+        {
+            "eventID": 3,
+            "hashedUserID": "user1",
+            "eventName": "CSULB Esport 2020 Summer",
+            "address": "Long Beach",
+            "eventDescription": "none atm",
+            "start_date": "2020-05-10 00:00:00",
+            "end_date": "2020-05-15 00:00:00",
+            "reason": null
+        },
+        {
+            "eventID": 5,
+            "hashedUserID": "user2",
+            "eventName": "CSULB Esport 2020 Fall",
+            "address": "Long Beach",
+            "eventDescription": "none atm",
+            "start_date": "2020-09-10 00:00:00",
+            "end_date": "2020-09-15 00:00:00",
+            "reason": null
+        }
     ]
 }
