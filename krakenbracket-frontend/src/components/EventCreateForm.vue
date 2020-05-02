@@ -176,8 +176,7 @@
 import axios from "axios";
 export default {
   props: ["id"],
-  components:{
-  },
+  components:{},
   data:() =>({
     currentDate: new Date().toISOString().substr(0,10),
     valid: true,
@@ -185,9 +184,29 @@ export default {
     menu1,menu2,menu3,menu4:false,
     EventName:"",
     EventDescription:"",
+    eventDescriptionRule: 
+    [value => (values ||'').length < 700 ||'max 700 characters'],
     startDate,startTime,endDate,endTime:null,
-    
-
-
-  })
+    eventNameRule:  
+    [value => !!value || 'Bracket name required',
+    value => (value || '').length > 5 || 'Min 5 characters', 
+    value => (value || '').length < 75 || 'Max 75 characters']
+  }),
+  methods: {
+    Submit(){
+      this.$refs.form.validate()
+      axios.post("https://localhost:44352/api/events/createEvent/${this.Event}",
+      {
+        EventName: this.EventName,
+        Address: this.eventAddress,
+        Description: this.EventDescription,
+        StartDate: this.startDate + this.startTime,
+        EndDate: this.endDate + this.endTime
+      }
+      );
+      setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
+      this.$refs.form.reset()
+    }
+  },
 }
+</script>
