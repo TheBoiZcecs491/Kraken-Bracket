@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBZ.KrakenBracket.Tests", "
 		{D7FEFA9F-16FC-428A-9A17-1490FD2838B5} = {D7FEFA9F-16FC-428A-9A17-1490FD2838B5}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "ClientApp\ClientApp.csproj", "{6F31DEBD-112F-4EFA-A42D-67FF30121354}"
+
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "ClientApp\ClientApp.csproj", "{6F31DEBD-112F-4EFA-A42D-67FF30121354}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,16 +79,16 @@ Global
 		{6440931E-CD92-42C6-AB84-ED2716404F8C}.Debug|x64.Build.0 = Debug|x64
 		{6440931E-CD92-42C6-AB84-ED2716404F8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6440931E-CD92-42C6-AB84-ED2716404F8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6440931E-CD92-42C6-AB84-ED2716404F8C}.Release|x64.ActiveCfg = Release|x64
-		{6440931E-CD92-42C6-AB84-ED2716404F8C}.Release|x64.Build.0 = Release|x64
+
+
 		{6F31DEBD-112F-4EFA-A42D-67FF30121354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6F31DEBD-112F-4EFA-A42D-67FF30121354}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F31DEBD-112F-4EFA-A42D-67FF30121354}.Debug|x64.ActiveCfg = Debug|x64
 		{6F31DEBD-112F-4EFA-A42D-67FF30121354}.Debug|x64.Build.0 = Debug|x64
 		{6F31DEBD-112F-4EFA-A42D-67FF30121354}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F31DEBD-112F-4EFA-A42D-67FF30121354}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F31DEBD-112F-4EFA-A42D-67FF30121354}.Release|x64.ActiveCfg = Release|x64
-		{6F31DEBD-112F-4EFA-A42D-67FF30121354}.Release|x64.Build.0 = Release|x64
+
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
