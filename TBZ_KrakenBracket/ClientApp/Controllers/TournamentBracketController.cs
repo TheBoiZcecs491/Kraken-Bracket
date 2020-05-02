@@ -138,5 +138,23 @@ namespace ClientApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPost("createBracket/{bracketInfo}")]
+        [Produces("application/json")]
+        public IActionResult CreateBracket(BracketInfo bracketInfo)
+        {
+            try
+            {
+                return Ok(_tournamentBracketManager.ValidCreateBracket(bracketInfo));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
-    }
+}
