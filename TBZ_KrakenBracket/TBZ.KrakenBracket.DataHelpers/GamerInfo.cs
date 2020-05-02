@@ -11,6 +11,10 @@ namespace TBZ.KrakenBracket.DataHelpers
         public int GamerTagID { get; set; }
         public int TeamID { get; set; }
         public GamerInfo() { }
+        public GamerInfo(string gamerTag)
+        {
+            GamerTag = gamerTag;
+        }
         public GamerInfo(string hashedUserID, string gamerTag, int gamerTagID, int teamID)
         {
             HashedUserID = hashedUserID;

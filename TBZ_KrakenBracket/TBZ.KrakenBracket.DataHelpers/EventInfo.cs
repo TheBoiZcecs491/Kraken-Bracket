@@ -6,6 +6,11 @@ namespace TBZ.KrakenBracket.DataHelpers
 {
     public class EventInfo
     {
+        public EventInfo() {}
+        public EventInfo(string eventName)
+        {
+            EventName = eventName;
+        }
         public int EventID { get; set; }
         public string HashedUserID { get; set; }
         public string EventName { get; set; }

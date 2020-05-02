@@ -7,12 +7,18 @@ using TBZ.KrakenBracket.Services;
 
 namespace TBZ.KrakenBracket.Managers
 {
-    public class SearchManager
+    interface ISearchManager
+    {
+        List<BracketInfo> GetBrackets(string bracketRequest);
+        List<EventInfo> GetEvents(string eventRequest);
+        List<GamerInfo> GetGamers(string gamerRequest);
+    }
+    public class SearchManager : ISearchManager
     {
         readonly TournamentBracketDatabaseQuery _tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
         readonly EventDataAccess _eventDataAccess = new EventDataAccess();
         readonly GamerDataAccess _gamerDataAccess = new GamerDataAccess();
-        private readonly SearchService _searchService;
+        readonly SearchService _searchService;
 
         /// <summary>
         /// A constructor for the search manager that initializes
@@ -53,4 +59,28 @@ namespace TBZ.KrakenBracket.Managers
             return _searchService.GetGamers(gamerRequest);
         }
     }
+
+    public class SearchManagerNoDB : ISearchManager
+    {
+        SearchServiceNoDB _searchServiceNoDB;
+        public SearchManagerNoDB(List<BracketInfo> mockBrackets, List<EventInfo> mockEvents, List<GamerInfo> mockGamers)
+        {
+            _searchServiceNoDB = new SearchServiceNoDB(mockBrackets, mockEvents, mockGamers);
+        }
+        public List<BracketInfo> GetBrackets(string bracketRequest)
+        {
+           return _searchServiceNoDB.GetBrackets(bracketRequest);
+        }
+
+        public List<EventInfo> GetEvents(string eventRequest)
+        {
+            return _searchServiceNoDB.GetEvents(eventRequest);
+        }
+
+        public List<GamerInfo> GetGamers(string gamerRequest)
+        {
+            return _searchServiceNoDB.GetGamers(gamerRequest);
+        }
+    }
+
 }

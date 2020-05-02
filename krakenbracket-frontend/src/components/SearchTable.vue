@@ -10,6 +10,8 @@
                     clearable
                     single-line
                     hide-details
+                    rounded
+                    solo
                 ></v-text-field>
             </v-card-title>
             <v-data-table

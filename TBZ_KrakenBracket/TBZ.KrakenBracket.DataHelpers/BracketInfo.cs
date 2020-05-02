@@ -19,6 +19,10 @@ namespace TBZ.KrakenBracket.DataHelpers
         public string Host { get; set; }
 
         public BracketInfo() { }
+        public BracketInfo(string bracketName)
+        {
+            BracketName = bracketName;
+        }
         public BracketInfo(int bracketID, string bracketName, int bracketTypeID, int playerCount, string gamePlayed, string gamingPlatform,
             string rules, DateTime startDate, DateTime endDate, int statusCode, string host)
         {

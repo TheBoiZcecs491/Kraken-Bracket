@@ -5,7 +5,13 @@ using TBZ.KrakenBracket.DataHelpers;
 
 namespace TBZ.KrakenBracket.Services
 {
-    public class SearchService
+    interface ISearchService {
+        List<BracketInfo> GetBrackets(string bracketRequest);
+        List<EventInfo> GetEvents(string eventRequest);
+        List<GamerInfo> GetGamers(string gamerRequest);
+    }
+
+    public class SearchService : ISearchService
     {
         TournamentBracketDatabaseQuery _bracketDAO = new TournamentBracketDatabaseQuery();
         EventDataAccess _eventDAO = new EventDataAccess();
@@ -54,4 +60,58 @@ namespace TBZ.KrakenBracket.Services
             return _gamerDAO.ReadGamers(gamerRequest);
         }
     }
+
+    public class SearchServiceNoDB : ISearchService
+    {
+        readonly List<BracketInfo> _mockBracketData;
+        readonly List<EventInfo> _mockEventData;
+        readonly List<GamerInfo> _mockGamerData;
+
+        public SearchServiceNoDB(List<BracketInfo> mockBracketData, List<EventInfo> mockEventData, List<GamerInfo> mockGamerData)
+        {
+            _mockBracketData = mockBracketData;
+            _mockEventData = mockEventData;
+            _mockGamerData = mockGamerData;
+        }
+
+        public List<BracketInfo> GetBrackets(string bracketRequest)
+        {
+            List<BracketInfo> brackets = new List<BracketInfo>();
+            foreach(BracketInfo bracketInfo in _mockBracketData)
+            {
+                if (bracketInfo.BracketName.Contains(bracketRequest))
+                {
+                    brackets.Add(bracketInfo);
+                }
+            }
+            return brackets;
+        }
+
+        public List<EventInfo> GetEvents(string eventRequest)
+        {
+            List<EventInfo> events = new List<EventInfo>();
+            foreach (EventInfo eventInfo in _mockEventData)
+            {
+                if (eventInfo.EventName.Contains(eventRequest))
+                {
+                    events.Add(eventInfo);
+                }
+            }
+            return events;
+        }
+
+        public List<GamerInfo> GetGamers(string gamerRequest)
+        {
+            List<GamerInfo> gamers = new List<GamerInfo>();
+            foreach (GamerInfo gamerInfo in _mockGamerData)
+            {
+                if (gamerInfo.GamerTag.Contains(gamerRequest))
+                {
+                    gamers.Add(gamerInfo);
+                }
+            }
+            return gamers;
+        }
+    }
+
 }
