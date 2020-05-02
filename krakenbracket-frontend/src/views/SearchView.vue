@@ -34,17 +34,17 @@
         <div v-if="keyword === 'bracket'">
             <SearchTable 
                 :headers="bracketHeaders" 
-                :rows="brackets"/>
+                :search_result="brackets"/>
         </div>
         <div v-if="keyword === 'event'">
             <SearchTable 
                 :headers="eventHeaders" 
-                :rows="events"/>
+                :search_result="events"/>
         </div>
         <div v-if="keyword === 'gamer'">
             <SearchTable 
                 :headers="gamerHeaders" 
-                :rows="gamers"/>
+                :search_result="gamers"/>
         </div>
     </div>
 </template>
@@ -92,7 +92,7 @@ export default {
         updateModel() {
             if(this.keyword === "bracket"){
                 console.log(true);
-                SearchService.searchBrackets(this.search) // this.pageNum, this.skipPage)
+                SearchService.searchBrackets(this.search)
                 .then(response => {
                     this.brackets = response.data;
                     //console.log(response.data)
@@ -102,7 +102,7 @@ export default {
                 });
             } else if(this.keyword === "event"){
                 console.log(true);            
-                SearchService.searchEvents(this.search) // this.pageNum, this.skipPage)
+                SearchService.searchEvents(this.search)
                 .then(response => {
                     this.events = response.data;
                     //console.log(response.data)
@@ -112,7 +112,7 @@ export default {
                 });
             } else if(this.keyword === "gamer"){
                 console.log(true);
-                SearchService.searchGamers(this.search) // this.pageNum, this.skipPage)
+                SearchService.searchGamers(this.search)
                 .then(response => {
                     this.gamers = response.data;
                     //console.log(response.data)

@@ -1,4 +1,5 @@
 <template>
+    <div>
         <v-card>
             <v-card-title>
                 Search Results
@@ -13,24 +14,26 @@
             </v-card-title>
             <v-data-table
                     :headers="headers"
-                    :items="rows"
+                    :items="search_result"
                     :search="filter"
                     :items-per-page="10"
             ></v-data-table>
-        </v-card>  
+        </v-card>
+    </div>
 </template>
 
 <script>
 export default {
     props: {
         headers: [],
-        rows: [],
+        search_result: [],
     },
     data() {
         return{
+            details: '',
             filter: '',
         }
-    }
+    },
 }
 </script>
 
