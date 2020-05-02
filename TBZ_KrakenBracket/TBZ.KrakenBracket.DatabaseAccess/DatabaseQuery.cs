@@ -95,7 +95,7 @@ namespace TBZ.DatabaseQueryService
                     comm.ExecuteNonQuery();
                     comm.Parameters.Clear();
 
-                    msalt.message = tempUser.SystemID.toString();
+                    msalt.message = tempUser.SystemID.ToString();
                     msalt.GenerateHash();
                     tempUser.Password = msalt.message;
 
@@ -146,20 +146,6 @@ namespace TBZ.DatabaseQueryService
                     comm.Parameters.AddWithValue("@bracket_name", tempBracket.BracketName);
                     comm.Parameters.AddWithValue("@bracketTypeID", tempBracket.BracketTypeID);
                     comm.Parameters.AddWithValue("@number_player", tempBracket.PlayerCount);
-                    conn.Open();
-                    comm.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
-        }
-
-
-
-                    comm.Parameters.AddWithValue("@bracketID", bracketPlayer.BracketID);
-                    comm.Parameters.AddWithValue("@hashedUserID", bracketPlayer.HashedUserID);
-                    comm.Parameters.AddWithValue("@roleID", bracketPlayer.RoleID);
-                    comm.Parameters.AddWithValue("@placement", bracketPlayer.Placement);
-                    comm.Parameters.AddWithValue("@score", bracketPlayer.Score);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();

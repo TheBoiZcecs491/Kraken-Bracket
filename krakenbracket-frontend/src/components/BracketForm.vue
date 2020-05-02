@@ -1,6 +1,7 @@
 <template>
     <div class="new-bracket">
         <v-app id="inspire">
+            <!-- Checking for completed fields to enable "Create Bracket" button -->
         <v-form
                 ref="form"
                 v-model="valid"
@@ -276,8 +277,8 @@ export default {
                 GamePlayed: this.GamePlayed,
                 GamingPlatform: this.GamingPlatform,
                 Rules: this.ruleSet,
-                StartDate: this.startDate + " " + this.startTime,
-                EndDate: this.endDate + " " + this.endTime
+                StartDate: this.startDate + " " + this.startTime, // Datetime concatenate
+                EndDate: this.endDate + " " + this.endTime // Datetime concatenate
             });
             //console.log(bracketInfo)
             setTimeout((this.$store.dispatch('createBracket', this.BracketInfo), 500))
