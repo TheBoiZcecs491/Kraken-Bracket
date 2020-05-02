@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/bracket-list">Bracket List</router-link>
+      <router-link to="/event-list">Event List</router-link>
       <!-- <router-link to="/login">Login</router-link> -->
       <h4 v-if="this.$store.state.gamerInfo">Welcome, {{this.$store.state.gamerInfo.gamerTag}}</h4>
     </div>
