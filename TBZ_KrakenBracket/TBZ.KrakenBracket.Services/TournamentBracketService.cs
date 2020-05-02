@@ -38,7 +38,7 @@ namespace TBZ.KrakenBracket.Services
         /// <returns>
         /// Boolean indicating success or fail in finding Gamer object
         /// </returns>
-        public bool CheckGamerExistence(Gamer gamer)
+        public bool CheckGamerExistence(GamerInfo gamer)
         {
             var gamerResult = _gamerDataAccess.GetGamerInfo(gamer);
             if (gamerResult == null) return false;

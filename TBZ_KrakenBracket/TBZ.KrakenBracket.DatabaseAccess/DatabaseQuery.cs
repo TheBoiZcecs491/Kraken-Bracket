@@ -110,7 +110,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void InsertGamerInfo(Gamer tempGamer)
+        public void InsertGamerInfo(GamerInfo tempGamer)
         {
             var DB = new Database();
 
@@ -191,17 +191,36 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void DeleteUser(int deleteValue)
+        public void InsertEvent(EventInfo Event)
         {
-
             var DB = new Database();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "DELETE FROM user_information WHERE userID= @Value";
-                    comm.Parameters.AddWithValue("@Value", deleteValue);
+                    comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
+                    comm.Parameters.AddWithValue("@eventID", Event.EventID);
+                    comm.Parameters.AddWithValue("@event_Name", Event.EventName);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public void InsertEventBracket(EventBracketList eventBracket)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO event_bracket_list(eventID, bracketID) VALUES(@eventID, @bracketID)";
+
+                    comm.Parameters.AddWithValue("@eventID", eventBracket.EventID);
+                    comm.Parameters.AddWithValue("@bracketID", eventBracket.BracketID);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
@@ -242,8 +261,8 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
-
-        public Gamer GetGamerInfo(Gamer gamer)
+       
+        public GamerInfo GetGamerInfo(GamerInfo gamer)
         {
             try
             {

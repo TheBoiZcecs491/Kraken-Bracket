@@ -9,6 +9,7 @@ import EventView from "../views/EventView.vue";
 import SearchView from "../views/SearchView.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
 import LoginView from "../views/LoginView.vue";
+import SearchView from "../views/SearchView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -65,9 +66,10 @@ const routes = [
     props: true
   },
   {
-    path: "/search-results/:search",
+    path: "/search",
     name: "search-view",
-    component: SearchView
+    component: SearchView,
+    props: true
   }
 ];
 

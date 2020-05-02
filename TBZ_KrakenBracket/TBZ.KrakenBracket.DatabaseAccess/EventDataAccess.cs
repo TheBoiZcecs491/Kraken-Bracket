@@ -92,7 +92,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     {
                         EventInfo eventObj = new EventInfo();
                         eventObj.EventID = reader.GetInt32("eventID");
-                        eventObj.HashedUserID = reader.GetString("hashedUserID");
                         eventObj.EventName = reader.GetString("event_name");
                         eventObj.Address = reader.GetString("address");
                         eventObj.Description = reader.GetString("description");
@@ -130,6 +129,53 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 }
                 return listOfBracketsInEvent;
             }
+        }
+
+        public List<EventInfo> ReadEvents(string eventRequest)
+        {
+            var DB = new Database();
+            var listOfEvents = new List<EventInfo>();
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string selectQuery = string.Format("SELECT * FROM event_info WHERE event_name LIKE \'%{0}%\'", eventRequest);
+                Console.WriteLine(selectQuery);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        EventInfo eventObj = new EventInfo();
+                        eventObj.EventID = reader.GetInt32("eventID");
+                        eventObj.EventName = reader.GetString("event_name");
+                        eventObj.Address = reader.GetString("address");
+                        //eventObj.Description = reader.GetString("description");
+                        eventObj.StartDate = reader.GetDateTime("start_date");
+                        eventObj.EndDate = reader.GetDateTime("end_date");
+                        //eventObj.Reason = reader.GetString("reason");
+                        //eventObj.Host = reader.GetString("gamerTag");
+                        //eventObj.NumOfBrackets = GetCount(eventObj.EventID);
+                        listOfEvents.Add(eventObj);
+                    }
+                }
+            }
+            return listOfEvents;
+        }
+
+        public int GetCount(int eventID)
+        {
+            int count;
+            string selectQuery = string.Format("SELECT COUNT(eventID) FROM event_bracket_list WHERE eventID = {0}", eventID);
+            Console.WriteLine(selectQuery);
+            MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+            conn.Open();
+            using (MySqlDataReader reader = selectCmd.ExecuteReader())
+            {
+                count = reader.GetInt16("COUNT(eventID)");
+                reader.Close();
+            }
+            conn.Close();
+            return count;
         }
 
     }

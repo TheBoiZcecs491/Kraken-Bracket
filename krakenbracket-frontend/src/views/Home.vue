@@ -24,7 +24,7 @@ import { authComputed } from "../store/helpers.js";
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    HelloWorld,
   },
   computed: {
     ...authComputed

@@ -1,21 +1,26 @@
-﻿<Properties StartupConfiguration="{0D876B26-08E7-4CA6-A35A-CD4375E9C90A}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TBZ.ArchiverTest/ArchiverTest.cs">
+﻿<Properties StartupConfiguration="{6440931E-CD92-42C6-AB84-ED2716404F8C}|Default">
+  <MonoDevelop.Ide.ItemProperties.ClientApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TBZ.KrakenBracket.DataHelpers/GamerInfo.cs">
     <Files>
-      <File FileName="TBZ.ArchiverService/Archiver.cs" Line="54" Column="108" />
-      <File FileName="TBZ.ArchiverTest/ArchiverTest.cs" Line="18" Column="22" />
+      <File FileName="TBZ.KrakenBracket.Managers/SearchManager.cs" Line="12" Column="25" />
+      <File FileName="TBZ.KrakenBracket.Services/SearchService.cs" Line="9" Column="25" />
+      <File FileName="TBZ.KrakenBracket.Tests/SearchTest.cs" Line="20" Column="51" />
+      <File FileName="TBZ.KrakenBracket.DataHelpers/BracketInfo.cs" Line="22" Column="47" />
+      <File FileName="TBZ.KrakenBracket.Tests/TournamentBracketTest.cs" Line="1" Column="1" />
+      <File FileName="TBZ.KrakenBracket.DataHelpers/EventInfo.cs" Line="9" Column="30" />
+      <File FileName="TBZ.KrakenBracket.DataHelpers/GamerInfo.cs" Line="14" Column="32" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TBZ_KrakenBracket" expanded="True">
-            <Node name="TBZ.ArchiverService" expanded="True" />
-            <Node name="TBZ.ArchiverTest" expanded="True" />
+            <Node name="TBZ.KrakenBracket.DataHelpers" expanded="True">
+              <Node name="GamerInfo.cs" selected="True" />
+            </Node>
+            <Node name="TBZ.KrakenBracket.Managers" expanded="True" />
+            <Node name="TBZ.KrakenBracket.Services" expanded="True" />
+            <Node name="TBZ.KrakenBracket.Tests" expanded="True" />
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="TBZ_KrakenBracket" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
@@ -24,6 +29,7 @@
   <MonoDevelop.Ide.ItemProperties.TBZ.LoggingTest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.UserManagementManager FirstBuild="True" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.TBZ.KrakenBracket.Tests PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

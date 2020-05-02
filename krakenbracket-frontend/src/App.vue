@@ -8,11 +8,19 @@
       <!-- <router-link to="/login">Login</router-link> -->
       <h4 v-if="this.$store.state.gamerInfo">Welcome, {{this.$store.state.gamerInfo.gamerTag}}</h4>
     </div>
+    <NavBar />
     <router-view />
   </div>
 </template>
 
 <script>
+import NavBar from "@/components/NavBar.vue";
+
+export default {
+  components: {
+    NavBar
+  }
+};
 </script>
 
 <style>
