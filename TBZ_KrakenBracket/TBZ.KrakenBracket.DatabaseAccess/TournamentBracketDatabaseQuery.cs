@@ -128,11 +128,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
         
-        public List<BracketInfo> ReadBrackets(string bracketRequest, int pageNum, int skipPage)
+        public List<BracketInfo> ReadBrackets(string bracketRequest)
         {
             var DB = new Database();
             var listOfBrackets = new List<BracketInfo>();
-            var negativeSkipPage = skipPage < 0;
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
                 string selectQuery = string.Format("SELECT * FROM bracket_info WHERE bracket_name LIKE \'%{0}%\'", bracketRequest);
@@ -152,6 +151,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         bracket.StartDate = reader.GetDateTime("start_date");
                         bracket.EndDate = reader.GetDateTime("end_date");
                         bracket.StatusCode = reader.GetInt32("status_code");
+                        //bracket.Host = reader.GetString("gamerTag");
                         listOfBrackets.Add(bracket);
                     }
                 }

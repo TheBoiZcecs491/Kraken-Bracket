@@ -14,6 +14,8 @@ namespace TBZ.KrakenBracket.DataHelpers
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Reason { get; set; }
+        public int NumOfBrackets { get; set; }
+        public string Host { get; set; }
     }
 
     public class EventBracketList

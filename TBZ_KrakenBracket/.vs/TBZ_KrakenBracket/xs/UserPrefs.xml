@@ -8,6 +8,11 @@
             <Node name="ClientApp" expanded="True">
               <Node name="Controllers" expanded="True" />
             </Node>
+            <Node name="TBZ.KrakenBracket.DatabaseAccess" expanded="True">
+              <Node name="EventDataAccess.cs" selected="True" />
+            </Node>
+            <Node name="TBZ.KrakenBracket.Managers" expanded="True" />
+            <Node name="TBZ.KrakenBracket.Services" expanded="True" />
           </Node>
         </State>
       </Pad>

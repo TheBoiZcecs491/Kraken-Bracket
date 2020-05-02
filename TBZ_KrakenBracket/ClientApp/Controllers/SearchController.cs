@@ -7,40 +7,52 @@ namespace ClientApp.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        //static SearchService _searchService = new SearchService();
         private readonly SearchManager _searchManager;
 
+        /// <summary>
+        /// A constructor for the search controller that sets the
+        /// global search manager to the search manager parameter.
+        /// </summary>
+        /// <param name="searchManager"> An instance of search manager </param>
         public SearchController(SearchManager searchManager)
         {
             _searchManager = searchManager;
         }
 
-        [HttpGet("brackets/{search}")] //, pageNum, skipPage}")]
+        /// <summary>
+        /// A method to recieve incoming search requests for Brackets
+        /// </summary>
+        /// <param name="search"> The search request for Brackets </param>
+        /// <returns> An OkObjectResult that is recieved by the front end search service </returns>
+        [HttpGet("brackets/{search}")]
         [Produces("application/json")]
-        public IActionResult SearchBrackets(string search) //, int pageNum, int skipPage)
+        public IActionResult SearchBrackets(string search)
         {
-            //logger
-            int pageNum = 0;
-            int skipPage = 0;
-            return Ok(_searchManager.GetBrackets(search, pageNum, skipPage));
+            return Ok(_searchManager.GetBrackets(search));
         }
-        [HttpGet("events/{search}")] //, pageNum, skipPage}")]
+
+        /// <summary>
+        /// A method to recieve incoming search requests for Events
+        /// </summary>
+        /// <param name="search"> The search request for Events </param>
+        /// <returns> An OkObjectResult that is recieved by the front end search service </returns>
+        [HttpGet("events/{search}")]
         [Produces("application/json")]
-        public IActionResult SearchEvents(string search) //, int pageNum, int skipPage)
+        public IActionResult SearchEvents(string search)
         {
-            //logger
-            int pageNum = 0;
-            int skipPage = 0;
-            return Ok(_searchManager.GetEvents(search, pageNum, skipPage));
+            return Ok(_searchManager.GetEvents(search));
         }
-        [HttpGet("gamers/{search}")] //, pageNum, skipPage}")]
+
+        /// <summary>
+        /// A method to recieve incoming search requests for Gamers
+        /// </summary>
+        /// <param name="search"> The search request for Gamers </param>
+        /// <returns> An OkObjectResult that is recieved by the front end search service </returns>
+        [HttpGet("gamers/{search}")]
         [Produces("application/json")]
-        public IActionResult SearchGamers(string search) //, int pageNum, int skipPage)
+        public IActionResult SearchGamers(string search)
         {
-            //logger
-            int pageNum = 0;
-            int skipPage = 0;
-            return Ok(_searchManager.GetGamers(search, pageNum, skipPage));
+            return Ok(_searchManager.GetGamers(search));
         }
     }
 }

@@ -16,10 +16,11 @@ namespace TBZ.KrakenBracket.DataHelpers
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int StatusCode { get; set; }
+        public string Host { get; set; }
 
         public BracketInfo() { }
         public BracketInfo(int bracketID, string bracketName, int bracketTypeID, int playerCount, string gamePlayed, string gamingPlatform,
-            string rules, DateTime startDate, DateTime endDate, int statusCode)
+            string rules, DateTime startDate, DateTime endDate, int statusCode, string host)
         {
             BracketID = bracketID;
             BracketName = bracketName;
@@ -31,6 +32,7 @@ namespace TBZ.KrakenBracket.DataHelpers
             StartDate = startDate;
             EndDate = endDate;
             StatusCode = statusCode;
+            Host = host;
         }
     }
 }

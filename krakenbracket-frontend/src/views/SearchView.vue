@@ -30,21 +30,22 @@
                 </v-col>
             </v-row>
         </v-container>
-        <!-- the :event sends each prop to the Bracket component -->
-        <div v-if="keyword === 'bracket'">
-            <SearchTable 
-                :headers="bracketHeaders" 
-                :search_result="brackets"/>
-        </div>
-        <div v-if="keyword === 'event'">
-            <SearchTable 
-                :headers="eventHeaders" 
-                :search_result="events"/>
-        </div>
-        <div v-if="keyword === 'gamer'">
-            <SearchTable 
-                :headers="gamerHeaders" 
-                :search_result="gamers"/>
+        <div v-if="!noSearch">
+            <div v-if="keyword === 'bracket'">
+                <SearchTable 
+                    :headers="bracketHeaders" 
+                    :search_result="brackets"/>
+            </div>
+            <div v-if="keyword === 'event'">
+                <SearchTable 
+                    :headers="eventHeaders" 
+                    :search_result="events"/>
+            </div>
+            <div v-if="keyword === 'gamer'">
+                <SearchTable 
+                    :headers="gamerHeaders" 
+                    :search_result="gamers"/>
+            </div>
         </div>
     </div>
 </template>
@@ -54,18 +55,23 @@ import SearchService from "@/services/SearchService.js";
 import SearchTable from "@/components/SearchTable.vue";
 
 export default {
+    // This component is used to display the results.
     components: {
         SearchTable
     },
     data() {
         return {
+            // Search data
+            noSearch: true,
             search: '',
+            // Search selector data
             keyword: 'bracket',
             options: [
                 {text: 'Brackets', value: 'bracket'},
                 {text: 'Events', value: 'event'},
                 {text: 'Gamers', value: 'gamer'}
             ],
+            // Search result data
             brackets: [],
             gamers: [],
             events: [],
@@ -89,37 +95,37 @@ export default {
         };
     },
     methods: {
+        // This method is used to fetch data and update the model
         updateModel() {
             if(this.keyword === "bracket"){
-                console.log(true);
                 SearchService.searchBrackets(this.search)
                 .then(response => {
                     this.brackets = response.data;
-                    //console.log(response.data)
                 })
                 .catch(error => {
                     console.log("There was an error: " + error);
                 });
-            } else if(this.keyword === "event"){
-                console.log(true);            
+            } else if(this.keyword === "event"){          
                 SearchService.searchEvents(this.search)
                 .then(response => {
                     this.events = response.data;
-                    //console.log(response.data)
                 })
                 .catch(error => {
                     console.log("There was an error: " + error);
                 });
             } else if(this.keyword === "gamer"){
-                console.log(true);
                 SearchService.searchGamers(this.search)
                 .then(response => {
                     this.gamers = response.data;
-                    //console.log(response.data)
                 })
                 .catch(error => {
                     console.log("There was an error: " + error);
                 });
+            }
+            if (this.search === ""){
+                this.noSearch = true;
+            } else{
+                this.noSearch = false;
             }
         },
     },

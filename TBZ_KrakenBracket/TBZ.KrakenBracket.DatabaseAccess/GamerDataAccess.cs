@@ -15,11 +15,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             return databaseQuery.GetGamerInfo(gamer);
         }
 
-        public List<GamerInfo> ReadGamers(string gamerRequest, int pageNum, int skipPage)
+        public List<GamerInfo> ReadGamers(string gamerRequest)
         {
             var DB = new Database();
             var listOfGamers = new List<GamerInfo>();
-            var negativeSkipPage = skipPage < 0;
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
                 string selectQuery = string.Format("SELECT * FROM gamer_info WHERE gamerTag LIKE \'%{0}%\'", gamerRequest);
