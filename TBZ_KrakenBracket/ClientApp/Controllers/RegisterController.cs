@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TBZ.KrakenBracket.DataHelpers;
-using TBZ.KrakenBracket.Managers;
-using TBZ.UM_Manager;
-using System.Security.Cryptography;
+using TBZ.RegistrationManager;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,51 +12,43 @@ namespace ClientApp.Controllers
     [ApiController]
     public class RegisterController : Controller
     {
-        private readonly UserManagementManager _userManagementManager = new UserManagementManager();
-        private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider(); //for the salt
         // PUT api/<controller>
         [HttpPut]
         public IActionResult Login(User user)
         {
-            //temp system admin to make new users
-            User gateAdmin = new User(0, null, null, null, null, null, "System Admin", false, null);
-            user.AccountStatus = true;
-            user.AccountType = "User";
-            byte[] randomNumber = new byte[16];
-            rngCsp.GetBytes(randomNumber);
-            user.Salt = System.Text.Encoding.Default.GetString(randomNumber);
-            //HACK: this is fixed in another branch, so for now this will HOPEFULLY
-            // keep away any possible collisions. when that happend comment out the next 2 lines.
-            Random rnd = new Random();
-            user.SystemID = rnd.Next(Int32.MinValue,Int32.MaxValue);
             try
             {
-                var resultStat = Ok(_userManagementManager.SingleCreateUsers(gateAdmin, user));
-                //using (System.IO.StreamWriter file =
-                //    new System.IO.StreamWriter(@"C:\Users\Snerp\Downloads\shit.txt", true))
-                //{
-                //    file.WriteLine(user.Email);
-                //    file.WriteLine(user.Password);
-                //    file.WriteLine(user.FirstName);
-                //    file.WriteLine(user.LastName);
-                //    file.WriteLine(user.ErrorMessage);
-                //}
-                if(user.ErrorMessage != "")
+                Registration registrationInstance = new Registration();
+                var resultStat = Ok(registrationInstance.selfRegister(user));
+                //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Snerp\Downloads\log.txt", true)){file.WriteLine(user.ErrorMessage);}
+                //I used this when I still had that confusing problem that prevented the debugger from starting.
+                //I fixed the problem but im keeping this here for reference.
+                switch (user.ErrorMessage)
                 {
-                    //print the error to their screen.
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    case "Invalid permissions":
+                        return StatusCode(StatusCodes.Status401Unauthorized);
+                    case "Password is not secured":
+                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                    case "ID already exists":
+                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                    case "email already registered":
+                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                    case "email malformed":
+                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                    case "name fields blank":
+                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                    case "email failed to register":
+                        return StatusCode(StatusCodes.Status500InternalServerError);
+                    default:
+                        return resultStat;
                 }
-                else
-                {
-                    return resultStat;
-                    //also log the user in, why not?
-                    //var resultDis = Ok(_authenticationManager.Login(user.Email, user.Password));
-                    //return resultDis;
-                }
+                //401: account wasnt made because they didnt have permission to
+                //406: the registration info was not done correctly.
+                //500: backend machine [B]roke
             }
             catch (ArgumentException)
             {
-                return StatusCode(StatusCodes.Status400BadRequest);
+                return StatusCode(StatusCodes.Status406NotAcceptable);
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div>
+    <div v-if="!loggedIn">
       <h1>Register new user</h1>
       <v-container>
         <form @submit.prevent="registerUser">
@@ -39,7 +39,10 @@
                 required
               ></v-text-field>
               <v-btn @click="registerUser">Register</v-btn>
-              <p v-if="error" class="red--text">Registration failed. Please try again</p>
+              <p v-if="error" class="red--text">
+                Registration failed. Please try again
+              </p>
+              <p v-if="error" class="red--text"><span>{{ this.error }}</span></p>
               <p>
               <router-link to="/login">Login</router-link> instead.
               </p>
@@ -55,6 +58,11 @@
         >Log In</v-btn
       >
       <v-btn v-else @click="logInUser" color="red text--lighten">Log out</v-btn> -->
+    </div>
+    <div v-if="loggedIn">
+      <p>
+      You are already logged in. please logout to register a new account.
+      </p>
     </div>
   </v-app>
 </template>
@@ -80,7 +88,7 @@ export default {
         email: this.email,
         password: this.password
       }).then(() =>{
-        this.$router.go(-1);
+        this.$router.go(-1);//return to prior view
       })
       .catch(err =>{
         // console.log("****ERROR:" + err)

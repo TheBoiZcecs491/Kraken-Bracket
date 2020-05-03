@@ -202,6 +202,8 @@ namespace TBZ.DatabaseAccess
 
             bool idFound = CheckIDExistence(user.SystemID);
             if (idFound) { user.ErrorMessage = "ID already exists"; return false; }
+            bool emailFound = (GetUserByEmail(user.Email)!=null);
+            if (emailFound) { user.ErrorMessage = "email already registered"; return false; }
             else
             {
                 if (passwordCheck)

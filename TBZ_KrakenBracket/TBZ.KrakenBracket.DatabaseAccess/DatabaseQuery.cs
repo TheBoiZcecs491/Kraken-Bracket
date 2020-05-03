@@ -242,7 +242,6 @@ namespace TBZ.DatabaseQueryService
         }
       
         public User GetUserInfo(string email)
-            //BUG: this seems to be returning NULL, maybe... we dono...
         {
             try
             {
