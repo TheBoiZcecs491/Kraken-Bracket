@@ -94,7 +94,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.EventID = reader.GetInt32("eventID");
                         eventObj.EventName = reader.GetString("event_name");
                         eventObj.Address = reader.GetString("address");
-                        eventObj.Description = reader.GetString("description");
+                        //eventObj.Description = reader.GetString("description");
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
                         eventObj.Reason = reader.GetString("reason");

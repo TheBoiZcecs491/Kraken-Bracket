@@ -1,22 +1,11 @@
 ﻿<Properties StartupConfiguration="{6F31DEBD-112F-4EFA-A42D-67FF30121354}|Default">
   <MonoDevelop.Ide.ItemProperties.ClientApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TBZ.KrakenBracket.DatabaseAccess/EventDataAccess.cs">
-    <Files>
-      <File FileName="ClientApp/Controllers/LoginController.cs" Line="23" Column="1" />
-      <File FileName="TBZ.KrakenBracket.DatabaseAccess/TournamentBracketDataAccess.cs" Line="1" Column="1" />
-      <File FileName="TBZ.KrakenBracket.DatabaseAccess/TournamentBracketDatabaseQuery.cs" Line="1" Column="1" />
-      <File FileName="TBZ.KrakenBracket.DatabaseAccess/EventDataAccess.cs" Line="97" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TBZ_KrakenBracket" expanded="True">
-            <Node name="ClientApp" expanded="True">
-              <Node name="Controllers" expanded="True" />
-            </Node>
-            <Node name="TBZ.KrakenBracket.DatabaseAccess" expanded="True">
-              <Node name="EventDataAccess.cs" selected="True" />
-            </Node>
+            <Node name="ClientApp" selected="True" />
           </Node>
         </State>
       </Pad>
