@@ -17,18 +17,18 @@ namespace ClientApp.Controllers
     {
         private readonly EventManager _eventManager = new EventManager();
 
-        [HttpPost("createEvent")]
-        [Produces("application/json")]
-        public IActionResult CreateEvent(EventInfo eventObj)
-        {
-            return Ok(_eventManager.CreateEvent(eventObj));
-        }
-
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetAllEvent()
         {
             return Ok(_eventManager.GetAllEvents());
+        }
+
+        [HttpPost("createEvent")]
+        [Produces("application/json")]
+        public IActionResult CreateEvent(EventInfo eventObj)
+        {
+            return Ok(_eventManager.CreateEvent(eventObj));
         }
 
         [HttpGet("Events/{eventID}")]

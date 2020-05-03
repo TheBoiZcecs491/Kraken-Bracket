@@ -26,6 +26,16 @@ namespace TBZ.KrakenBracket.Managers
             return _eventDataAccess.GetEventByID(eventID);
         }
 
+        public object GetEventHost(int eventID)
+        {
+            return _eventDataAccess.GetEventHost(eventID);
+        }
+
+        public object GetEventPlayerByID(int eventID, int playerID)
+        {
+            return _eventDataAccess.GetEventPlayerInfo(eventID, playerID);
+        }
+
         public EventBracketList AddBracketToEvent(EventBracketList eventBracket)
         {
             return _eventDataAccess.AddBracketToEvent(eventBracket);

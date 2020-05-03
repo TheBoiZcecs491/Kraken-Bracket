@@ -6,6 +6,7 @@ import BracketView from "../views/BracketView.vue";
 import NewBracket from "../views/NewBracket.vue";
 import EventList from "../views/EventList.vue";
 import EventView from "../views/EventView.vue";
+import EventCreate from "../views/EventCreate.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
 import LoginView from "../views/LoginView.vue";
 import SearchView from "../views/SearchView.vue";
@@ -63,6 +64,11 @@ const routes = [
     name: "event-view",
     component: EventView,
     props: true
+  },
+  {
+    path: "/event-create",
+    name: "event-create",
+    component: EventCreate
   },
   {
     path: "/search",

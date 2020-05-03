@@ -1,5 +1,5 @@
 <template>
-  <div class="new-event">
+  <div class="event-create">
     <v-app id="inspire">
       <v-form
         ref="form"
@@ -23,8 +23,9 @@
                 v-model="EventDescription"
                 label="Event Description"
                 :rules="eventDescriptionRule"
-                placeholder="Quick description of the Event"
-                hint="700 char max"
+                :placeholder="'Quick description of the Event \n (750 char max)'"
+                :hint= remainingCount.toString()
+                v-on:keyup="countdown"
                 >
                 </v-textarea>
               </v-col>
@@ -32,7 +33,7 @@
 
             <v-container>
               <v-row>
-                <v-col cols="12" lg"6">
+                <v-col cols="12" lg="6">
                   <v-menu
                     v-model="menu1"
                     :close-on-content-click="false"
@@ -45,8 +46,7 @@
                       <v-text-field
                         v-model="startDate"
                         label="Start Date"
-                        :rules="[values => !!value || 'Required' ]"
-                        readonly
+                        :rules="[value => !!value || 'Required' ]"
                         v-on="on"
                         required
                       >
@@ -62,7 +62,7 @@
 
                 <v-spacer></v-spacer>
                 
-                <v-col cols="12" lg"6">
+                <v-col cols="12" lg="6">
                   <v-menu
                     ref="menu2"
                     v-model="menu2"
@@ -78,7 +78,7 @@
                       <v-text-field
                         v-model="startTime"
                         label="Start Time"
-                        :rules="[values => !!value || 'Required' ]"
+                        :rules="[value => !!value || 'Required' ]"
                         v-on="on"
                         required
                       >
@@ -97,7 +97,7 @@
 
           <v-container>
               <v-row>
-                <v-col cols="12" lg"6">
+                <v-col cols="12" lg="6">
                   <v-menu
                     v-model="menu3"
                     :close-on-content-click="false"
@@ -110,8 +110,7 @@
                       <v-text-field
                         v-model="endDate"
                         label="End Date"
-                        :rules="[values => !!value || 'Required' ]"
-                        readonly
+                        :rules="[value => !!value || 'Required' ]"
                         v-on="on"
                         required
                       >
@@ -127,7 +126,7 @@
 
                 <v-spacer></v-spacer>
 
-                <v-col cols="12" lg"6">
+                <v-col cols="12" lg="6">
                     <v-menu
                       ref="menu4"
                       v-model="menu4"
@@ -143,7 +142,7 @@
                       <v-text-field
                         v-model="endTime"
                         label="End Time"
-                        :rules="[values => !!value || 'Required' ]"
+                        :rules="[value => !!value || 'Required' ]"
                         v-on="on"
                         required
                       >
@@ -180,17 +179,27 @@ export default {
   data:() =>({
     currentDate: new Date().toISOString().substr(0,10),
     valid: true,
-    topMenu,time:null,
-    menu1,menu2,menu3,menu4:false,
+    topMenu:null,
+    time:null,
+    menu1:false,
+    menu2:false,
+    menu3:false,
+    menu4:false,
     EventName:"",
     EventDescription:"",
     eventDescriptionRule: 
-    [value => (values ||'').length < 700 ||'max 700 characters'],
-    startDate,startTime,endDate,endTime:null,
+    [value => (value ||'').length < 700 ||'max 700 characters'],
+    startDate:null,
+    startTime:null,
+    endDate:null,
+    endTime:null,
     eventNameRule:  
     [value => !!value || 'Bracket name required',
     value => (value || '').length > 5 || 'Min 5 characters', 
-    value => (value || '').length < 75 || 'Max 75 characters']
+    value => (value || '').length < 75 || 'Max 75 characters'],
+    maxCount: 700,
+    remainingCount: 700,
+    hasError: false
   }),
   methods: {
     Submit(){
@@ -205,7 +214,11 @@ export default {
       }
       );
       setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
-      this.$refs.form.reset()
+      this.$refs.form.reset();
+    },
+    countdown: function() {
+      this.remainingCount = this.maxCount - this.EventDescription.length;
+      this.hasError = this.remainingCount < 0;
     }
   },
 }

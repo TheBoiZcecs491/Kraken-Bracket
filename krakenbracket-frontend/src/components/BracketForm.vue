@@ -125,6 +125,7 @@
                                     v-model="startTime"
                                     label="Start Time"
                                     :rules="[value => !!value || 'Required']"
+                                    readonly
                                     v-on="on"
                                     required
                                 ></v-text-field>
@@ -281,7 +282,7 @@ export default {
                 EndDate: this.endDate + " " + this.endTime // Datetime concatenate
             });
             //console.log(bracketInfo)
-            setTimeout((this.$store.dispatch('createBracket', this.BracketInfo), 500))
+            // setTimeout((this.$store.dispatch('createBracket', this.BracketInfo), 500))
             this.$refs.form.reset()
         }
     },

@@ -48,6 +48,29 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        public EventPlayerInfo GetEventHost(int eventID)
+        {
+            int roleID = 0; //change this when host roleID changes in the database
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string selectQuery = string.Format("SELECT * FROM event_player_info WHERE eventID={0} and roleID={1}", eventID, roleID);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    EventPlayerInfo eventObj = new EventPlayerInfo();
+                    reader.Read();
+                    eventObj.EventID = reader.GetInt32("eventID");
+                    eventObj.hashedUserID = reader.GetString("hashedUserID");
+                    eventObj.roleID = reader.GetInt32("roleID");
+                    eventObj.claim = reader.GetString("claim");
+                    eventObj.statusCode = reader.GetInt32("status_code");
+                    eventObj.reason = reader.GetString("reason");
+                    return eventObj;
+                }
+            }
+        }
+
         public EventInfo GetEventByID(int eventID)
         {
             bool eventExist = CheckEventExistByID(eventID);
@@ -64,16 +87,38 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         EventInfo eventObj = new EventInfo();
                         reader.Read();
                         eventObj.EventID = reader.GetInt32("eventID");
-                        eventObj.HashedUserID = reader.GetString("hashedUserID");
                         eventObj.EventName = reader.GetString("event_name");
                         eventObj.Address = reader.GetString("address");
-                        eventObj.Description = reader.GetString("description");
+                        eventObj.Description = reader.GetString("event_description");
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
+                        eventObj.StatusCode = reader.GetInt32("status_code");
                         eventObj.Reason = reader.GetString("reason");
                         conn.Close();
                         return eventObj;
                     }
+                }
+            }
+        }
+
+        public EventPlayerInfo GetEventPlayerInfo(int eventID, int userID)
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string selectQuery = string.Format("SELECT * FROM event_player_info WHERE eventID={0} and hashedUserID={1}", eventID, userID);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    EventPlayerInfo eventObj = new EventPlayerInfo();
+                    reader.Read();
+                    eventObj.EventID = reader.GetInt32("eventID");
+                    eventObj.hashedUserID = reader.GetString("hashedUserID");
+                    eventObj.roleID = reader.GetInt32("roleID");
+                    eventObj.claim = reader.GetString("claim");
+                    eventObj.statusCode = reader.GetInt32("status_code");
+                    eventObj.reason = reader.GetString("reason");
+                    return eventObj;
                 }
             }
         }
@@ -94,7 +139,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.EventID = reader.GetInt32("eventID");
                         eventObj.EventName = reader.GetString("event_name");
                         eventObj.Address = reader.GetString("address");
-                        eventObj.Description = reader.GetString("description");
+                        eventObj.Description = reader.GetString("event_description");
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
                         eventObj.Reason = reader.GetString("reason");

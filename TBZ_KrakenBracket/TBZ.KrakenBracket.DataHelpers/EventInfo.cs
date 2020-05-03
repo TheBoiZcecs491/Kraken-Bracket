@@ -18,6 +18,7 @@ namespace TBZ.KrakenBracket.DataHelpers
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int StatusCode { get; set; }
         public string Reason { get; set; }
         public int NumOfBrackets { get; set; }
         public string Host { get; set; }
@@ -27,5 +28,15 @@ namespace TBZ.KrakenBracket.DataHelpers
     {
         public int EventID { get; set; }
         public int BracketID { get; set; }
+    }
+
+    public class EventPlayerInfo
+    {
+        public int EventID { get; set; }
+        public string hashedUserID { get; set; }
+        public int roleID { get; set; }
+        public string claim { get; set; }
+        public int statusCode { get; set; }
+        public string reason { get; set; }
     }
 }
