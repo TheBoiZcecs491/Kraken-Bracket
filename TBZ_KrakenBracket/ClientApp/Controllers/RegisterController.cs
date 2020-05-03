@@ -14,7 +14,7 @@ namespace ClientApp.Controllers
     {
         // PUT api/<controller>
         [HttpPut]
-        public IActionResult Login(User user)
+        public IActionResult registerNewUser(User user)
         {
             try
             {
