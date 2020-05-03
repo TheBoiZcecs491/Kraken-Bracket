@@ -113,12 +113,19 @@ namespace TBZ.KrakenBracket.Managers
         {
             bool checkGamerExistence = _tournamentBracketService.CheckGamerExistence(gamer);
             bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
-            if (checkGamerExistence && checkBracketExistence)
+            if (!(checkGamerExistence && checkBracketExistence))
             {
-                return _tournamentBracketService.InsertGamerToBracket(gamer, bracketID);
+                throw new ArgumentException();
             }
-            else throw new ArgumentException();
-
+            else
+            {
+                var bracket = _tournamentBracketService.GetBracketByID(bracketID);
+                if (!(bracket.StatusCode == 0 && bracket.PlayerCount < 128))
+                {
+                    throw new ArgumentException();
+                }
+                return _tournamentBracketService.InsertGamerToBracket(gamer, bracket);
+            }
         }
 
         /// <summary>
