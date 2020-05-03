@@ -26,7 +26,6 @@
                 class="firstName-input"
                 label="First Name"
                 type="firstName"
-                placeholder="first name"
                 v-model="firstName"
                 required
               ></v-text-field>
@@ -34,13 +33,14 @@
                 class="lastName-input"
                 label="Last Name"
                 type="lastName"
-                placeholder="last name"
                 v-model="lastName"
                 required
               ></v-text-field>
-              <v-btn @click="registerUser">Register</v-btn>
+              <v-btn @click="registerUser">
+                Register User
+              </v-btn>
               <p v-if="error" class="red--text">
-                Registration failed. Please try again
+                Registration failed.<span>{{ this.errorMsg }}</span>. Please try again
               </p>
               <p v-if="error" class="red--text"><span>{{ this.error }}</span></p>
               <p>
@@ -75,7 +75,8 @@ export default {
       lastName: "",
       email: "",
       password: "",
-      error: null
+      error: null,
+      errorMsg: ""
     };
   },
   methods: {
@@ -92,6 +93,14 @@ export default {
       })
       .catch(err =>{
         // console.log("****ERROR:" + err)
+        if(err=="Error: Request failed with status code 406")
+          this.errorMsg = "The provided Registration info is not "+
+          "correct or the email is already in use. "+
+          "The password could also be not secure enough";
+        else if(err=="Error: Request failed with status code 500")
+          this.errorMsg = "The server failed to create the account.";
+        else if(err=="Error: Request failed with status code 401")
+          this.errorMsg = "The server did not have permission to make this account.";
         this.error = err
       });
       // }).then(() => {
