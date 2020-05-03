@@ -131,6 +131,11 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Reads the events whose name contains the search request.
+        /// </summary>
+        /// <param name="eventRequest"> String of event request </param>
+        /// <returns> A list of Events </returns>
         public List<EventInfo> ReadEvents(string eventRequest)
         {
             var DB = new Database();
@@ -149,34 +154,14 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.EventID = reader.GetInt32("eventID");
                         eventObj.EventName = reader.GetString("event_name");
                         eventObj.Address = reader.GetString("address");
-                        //eventObj.Description = reader.GetString("description");
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
-                        //eventObj.Reason = reader.GetString("reason");
-                        //eventObj.Host = reader.GetString("gamerTag");
-                        //eventObj.NumOfBrackets = GetCount(eventObj.EventID);
+
                         listOfEvents.Add(eventObj);
                     }
                 }
             }
             return listOfEvents;
         }
-
-        public int GetCount(int eventID)
-        {
-            int count;
-            string selectQuery = string.Format("SELECT COUNT(eventID) FROM event_bracket_list WHERE eventID = {0}", eventID);
-            Console.WriteLine(selectQuery);
-            MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-            conn.Open();
-            using (MySqlDataReader reader = selectCmd.ExecuteReader())
-            {
-                count = reader.GetInt16("COUNT(eventID)");
-                reader.Close();
-            }
-            conn.Close();
-            return count;
-        }
-
     }
 }

@@ -23,11 +23,11 @@ describe("Search For Brackets Containing 'EVO'", () => {
 });
 
 describe("Sort By End Date Descending", () => {
-    it("Visits the app root url", () => {
+    it("Sorts by end date ascending", () => {
         cy.get('[aria-label="End Date: Not sorted. Activate to sort ascending."]').click();
         cy.get(".active").click();
     });
-    it("Visits the app root url", () => {
+    it("Sorts by end date descending", () => {
         cy.get('tbody > :nth-child(1) > :nth-child(5)').contains("2022");
         //cy.pause();
         });

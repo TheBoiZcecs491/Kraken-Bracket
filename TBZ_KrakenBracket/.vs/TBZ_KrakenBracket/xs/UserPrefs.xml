@@ -4,9 +4,7 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="TBZ_KrakenBracket" expanded="True">
-            <Node name="ClientApp" selected="True" />
-          </Node>
+          <Node name="TBZ_KrakenBracket" expanded="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
