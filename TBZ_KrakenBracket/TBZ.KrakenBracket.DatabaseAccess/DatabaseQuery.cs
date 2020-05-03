@@ -27,7 +27,7 @@ namespace TBZ.DatabaseQueryService
             {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
         };
 
-        internal Gamer GetGamerInfoByHashedID(string hashedUserID)
+        internal GamerInfo GetGamerInfoByHashedID(string hashedUserID)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace TBZ.DatabaseQueryService
                         conn.Open();
                         using (MySqlDataReader reader = comm.ExecuteReader())
                         {
-                            Gamer gamer = new Gamer();
+                            GamerInfo gamer = new GamerInfo();
                             reader.Read();
                             gamer.GamerTag = reader.GetString("gamerTag");
                             gamer.GamerTagID = reader.GetInt32("gamerTagID");
@@ -191,7 +191,7 @@ namespace TBZ.DatabaseQueryService
             }
         }
 
-        public void InsertEvent(EventInfo Event)
+        public void DeleteUser(int deleteValue)
         {
             var DB = new Database();
 
@@ -199,28 +199,8 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
-                    comm.Parameters.AddWithValue("@eventID", Event.EventID);
-                    comm.Parameters.AddWithValue("@event_Name", Event.EventName);
-                    conn.Open();
-                    comm.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
-        }
-
-        public void InsertEventBracket(EventBracketList eventBracket)
-        {
-            var DB = new Database();
-
-            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
-            {
-                using (MySqlCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "INSERT INTO event_bracket_list(eventID, bracketID) VALUES(@eventID, @bracketID)";
-
-                    comm.Parameters.AddWithValue("@eventID", eventBracket.EventID);
-                    comm.Parameters.AddWithValue("@bracketID", eventBracket.BracketID);
+                    comm.CommandText = "DELETE FROM user_information WHERE userID= @Value";
+                    comm.Parameters.AddWithValue("@Value", deleteValue);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();

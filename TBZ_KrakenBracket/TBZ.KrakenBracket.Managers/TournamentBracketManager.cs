@@ -132,7 +132,7 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns>
         /// Gamer object associated with user
         /// </returns>
-        public Gamer GetGamerInfoByEmail(string email)
+        public GamerInfo GetGamerInfoByEmail(string email)
         {
             var result =  _tournamentBracketService.GetGamerInfoByEmail(email);
             if (result != null) return result;

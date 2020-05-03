@@ -105,7 +105,7 @@ describe("Search For Multiple Gamers", () => {
 describe("Filter For A Specific Gamer", () => {
     it("Types in filter text", () => {
         const filter = "gamer9";
-        cy.get('#input-23').type(filter);
+        cy.get('#input-22').type(filter);
     });
     it("Checks filter results", () => {
         cy.get('tbody > tr > .text-start').contains("gamer9");

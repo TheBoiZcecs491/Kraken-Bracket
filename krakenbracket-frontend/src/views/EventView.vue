@@ -26,7 +26,7 @@
 
 <script>
 import BracketSerive from "@/services/BracketService.js";
-import { authComputed } from "../store/helpers.js";
+// import { authComputed } from "../store/helpers.js";
 export default {
   props: ["id"],
   data() {

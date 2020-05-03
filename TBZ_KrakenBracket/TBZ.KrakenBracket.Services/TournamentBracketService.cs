@@ -105,7 +105,7 @@ namespace TBZ.KrakenBracket.Services
         /// <returns>
         /// BracketPlayer object if registration is successful
         /// </returns>
-        public BracketPlayer InsertGamerToBracket(Gamer gamer, int bracketID)
+        public BracketPlayer InsertGamerToBracket(GamerInfo gamer, int bracketID)
         {
             return _tournamentBracketDataAccess.InsertGamerToBracket(gamer, bracketID);
         }
@@ -121,7 +121,7 @@ namespace TBZ.KrakenBracket.Services
         /// <returns>
         /// Gamer object associated with user
         /// </returns>
-        public Gamer GetGamerInfoByEmail(string email)
+        public GamerInfo GetGamerInfoByEmail(string email)
         {
             return _gamerDataAccess.GetGamerInfoByEmail(email);
         }

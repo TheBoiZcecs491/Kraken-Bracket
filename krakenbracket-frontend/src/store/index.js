@@ -32,7 +32,7 @@ export default new Vuex.Store({
   actions: {
     login({ commit }, credentials) {
       return axios
-        .post("https://localhost:44352/api/brackets/login", credentials)
+        .post("https://localhost:5001/api/login", credentials)
         .then(({ data }) => {
           commit("SET_USER_DATA", data);
         });
