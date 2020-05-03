@@ -208,5 +208,113 @@ namespace TBZ.TournamentBracketTest
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void RegisterUserToBracket_Pass()
+        {
+            // Arrange
+            var gamerInfo = new GamerInfo();
+            var bracketID = 1;
+            gamerInfo.GamerTag = "GamerTag1";
+            var expected = new BracketPlayer(1, "LkKpHSN1+aOvzoj3ZrCXSIxasfWSZ5j1mJI5S3er3Vw=", 0, 0, 0, 1);
+            
+            // Act
+            var actual = _tournamentBracketManager.RegisterGamerIntoBracket(gamerInfo, bracketID);
+
+            // Assert
+            Assert.AreEqual(expected.BracketID, actual.BracketID);
+            Assert.AreEqual(expected.HashedUserID, actual.HashedUserID);
+        }
+
+        [TestMethod]
+        public void RegisterUserToBracket_Fail_UserAlreadyRegisteredToBracket()
+        {
+            // Arrange
+            var result = true;
+            var gamerInfo = new GamerInfo();
+            var bracketID = 1;
+            gamerInfo.GamerTag = "GamerTag1";
+
+            // Act
+            try
+            {
+                var actual = _tournamentBracketManager.RegisterGamerIntoBracket(gamerInfo, bracketID);
+                if (actual == null) result = false;
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void RegisterUserToBracket_Fail_BracketHasEnded()
+        {
+            // Assert
+            var result = true;
+            var gamerInfo = new GamerInfo();
+            var bracketID = 5;
+            gamerInfo.GamerTag = "GamerTag2";
+
+            // Act
+            try
+            {
+                var actual = _tournamentBracketManager.RegisterGamerIntoBracket(gamerInfo, bracketID);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void RegisterUserToBracket_Fail_BracketHasMaximumNumberOfCompetitors()
+        {
+            // Assert
+            var result = true;
+            var gamerInfo = new GamerInfo();
+            var bracketID = 6;
+            gamerInfo.GamerTag = "GamerTag2";
+
+            // Act
+            try
+            {
+                var actual = _tournamentBracketManager.RegisterGamerIntoBracket(gamerInfo, bracketID);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        public void RegisterUserToBracket_Fail_BracketIsInProgress()
+        {
+            // Assert
+            var result = true;
+            var gamerInfo = new GamerInfo();
+            var bracketID = 6;
+            gamerInfo.GamerTag = "GamerTag2";
+
+            // Act
+            try
+            {
+                var actual = _tournamentBracketManager.RegisterGamerIntoBracket(gamerInfo, bracketID);
+            }
+            catch (ArgumentException)
+            {
+                result = false;
+            }
+
+            // Assert
+            Assert.IsFalse(result);
+        }
     }
 }
