@@ -81,7 +81,32 @@ namespace TBZ.TournamentBracketTest
         }
 
         [TestMethod]
-        public void CreateTournamentBracket_Fail_ShortBracketTitle()
+        public void Validate_Pass()
+        {
+            // Arrange
+            var expected = true;
+            var actual = false;
+            Stopwatch timer = new Stopwatch();
+
+            try
+            {
+                timer.Start();
+                actual = _tournamentBracketManager.ValidateFields(testBracketFields1);
+                timer.Stop();
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine("Error message: ", e);
+                actual = false;
+            }
+            catch (Exception) { actual = false; }
+            Console.WriteLine("Elasped = {0} ms", timer.ElapsedMilliseconds);
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Validate_Fail_ShortBracketTitle()
         {
             // Arrange
             var expected = false;
@@ -91,9 +116,7 @@ namespace TBZ.TournamentBracketTest
             try
             {
                 timer.Start();
-                actual = _tournamentBracketManager.CreatePermission(testEmail1, testClaim1, isLoggedIn);
                 actual = _tournamentBracketManager.ValidateFields(testBracketFields3);
-                actual = _tournamentBracketService.CreateTournamentBracket(testBracketFields3);
                 timer.Stop();
             }
             catch (ArgumentException e)
@@ -109,7 +132,7 @@ namespace TBZ.TournamentBracketTest
 
 
         [TestMethod]
-        public void CreateTournamentBracket_Fail_ExceededMaxCompetitors()
+        public void Validate_Fail_ExceededMaxCompetitors()
         {
             // Arrange
             var expected = false;
@@ -119,9 +142,7 @@ namespace TBZ.TournamentBracketTest
             try
             {
                 timer.Start();
-                actual = _tournamentBracketManager.CreatePermission(testEmail1, testClaim1, isLoggedIn);
                 actual = _tournamentBracketManager.ValidateFields(testBracketFields4);
-                actual = _tournamentBracketService.CreateTournamentBracket(testBracketFields4);
                 timer.Stop();
             }
             catch (ArgumentException e)
