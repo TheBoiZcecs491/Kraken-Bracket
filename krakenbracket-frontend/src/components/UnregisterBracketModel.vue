@@ -40,6 +40,7 @@
           <v-btn color="primary" flat @click="unregisterSubmit">
             I Accept
           </v-btn>
+          <v-btn color="error" flat @click="dialog = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

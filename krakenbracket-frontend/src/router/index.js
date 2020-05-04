@@ -3,9 +3,13 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import BracketList from "../views/BracketListView.vue";
 import BracketView from "../views/BracketView.vue";
+import NewBracket from "../views/NewBracket.vue";
+import EventList from "../views/EventList.vue";
+import EventView from "../views/EventView.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
+import SearchView from "../views/SearchView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -49,6 +53,26 @@ const routes = [
     path: "/register",
     name: "register-view",
     component: RegisterView
+    path: "/new-bracket",
+    name: "new-bracket",
+    component: NewBracket
+  },
+  {
+    path: "/event-list",
+    name: "event-list",
+    component: EventList
+  },
+  {
+    path: "/event-view/:id",
+    name: "event-view",
+    component: EventView,
+    props: true
+  },
+  {
+    path: "/search",
+    name: "search-view",
+    component: SearchView,
+    props: true
   }
 ];
 

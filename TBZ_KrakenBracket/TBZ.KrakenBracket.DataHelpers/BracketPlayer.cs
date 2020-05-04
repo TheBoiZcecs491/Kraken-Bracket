@@ -11,14 +11,16 @@ namespace TBZ.KrakenBracket.DataHelpers
         public int RoleID { get; set; }
         public int Placement { get; set; }
         public int Score { get; set; }
+        public int StatusCode { get; set; }
         public BracketPlayer() { }
-        public BracketPlayer(int bracketID, string hashedUserID, int roleID, int placement, int score)
+        public BracketPlayer(int bracketID, string hashedUserID, int roleID, int placement, int score, int statusCode)
         {
             BracketID = bracketID;
             HashedUserID = hashedUserID;
             RoleID = roleID;
             Placement = placement;
             Score = score;
+            StatusCode = statusCode;
         }
     }
 }

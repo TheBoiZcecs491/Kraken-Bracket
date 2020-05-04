@@ -28,7 +28,7 @@ npm run test:e2e
 npx cypress run 
 ```
 ```
-npm cypress open
+npx cypress open
 ```
 
 ### Lints and fixes files

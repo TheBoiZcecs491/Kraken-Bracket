@@ -12,7 +12,7 @@ namespace TBZ.DatabaseAccess
 {
     public class DataAccess
     {
-        const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket";
+        const string CONNECTION_STRING = @"server=localhost; userid=root; password=Gray$cale917!!; database=kraken_bracket"; 
         private MySqlConnection conn;
 
         // List of users and their passwords
@@ -41,10 +41,11 @@ namespace TBZ.DatabaseAccess
         // Have these test users with actions assigned
         Dictionary<string, List<string>> userActions = new Dictionary<string, List<string>>()
         {
-            {"brian@foomail.com", new List<string>(){"Update Event Information",
-                                        "Update Tournament Bracket Information",
+            {"brian@foomail.com", new List<string>(){"Create Tournament Bracket",
+                                        "Update Event Information",
+                                        "Update Tournament Bracket",
                                         "Manage Tournament Bracket",
-                                        "Delete Tournament Bracket and Event",
+                                        "Delete Tournament Bracket",
                                         "Assign Other Registered Users To Be A Co-Host",
                                         "Search For Tournament Brackets",
                                         "Search For Event", "Search For Registered User"} },
@@ -174,7 +175,7 @@ namespace TBZ.DatabaseAccess
             DatabaseQuery databaseQuery = new DatabaseQuery();
             User user = databaseQuery.GetUserInfo(email);
             MessageSalt messageSalt = new MessageSalt(password, user.Salt);
-            messageSalt.GenerateHash(messageSalt);
+            messageSalt.GenerateHash();
             if (messageSalt.message == user.Password)
             {
                 return true;

@@ -14,6 +14,7 @@
     >
       <v-btn class="primary" color="#2196F3">View Bracket</v-btn>
     </router-link>
+
   </div>
 </template>
 

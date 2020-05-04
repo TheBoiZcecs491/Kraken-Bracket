@@ -9,7 +9,6 @@ namespace TBZ.HashingService
         public string message { get; set; }
         public string salt { get; set; }
 
-        public MessageSalt() { }
         public MessageSalt(string msg, string slt)
         {
             message = msg;
@@ -24,19 +23,17 @@ namespace TBZ.HashingService
             return Convert.ToBase64String(buff);
         }
 
-        public MessageSalt GenerateHash(MessageSalt msg)
+        public void GenerateHash()
         {
-            if (msg.salt == null)
+            if (salt == null)
             {
-                msg.salt = CreateSalt(32);
+                salt = CreateSalt(32);
             }
 
-            byte[] bytes = Encoding.UTF8.GetBytes(msg.message + msg.salt);
+            byte[] bytes = Encoding.UTF8.GetBytes(message + salt);
             SHA256Managed sHA256ManagedString = new SHA256Managed();
             byte[] hash = sHA256ManagedString.ComputeHash(bytes);
-            msg.message = Convert.ToBase64String(hash);
-
-            return msg;
+            message = Convert.ToBase64String(hash);
         }
     }
 }
