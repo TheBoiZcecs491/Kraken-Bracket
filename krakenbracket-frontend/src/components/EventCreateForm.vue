@@ -1,5 +1,5 @@
 <template>
-  <div class="event-create">
+  <!-- <div class="event-create"> -->
     <v-app id="inspire">
       <v-form
         ref="form"
@@ -9,7 +9,7 @@
         <v-row justify="space-around">
           <v-col class="px-4" cols="12" sm="3">
             <v-text-field
-              v-model="eventName"
+              v-model="EventName"
               label="Event Name"
               :rules="eventNameRule"
               placeholder="Event Name of your choice"
@@ -20,7 +20,7 @@
             <v-row>
               <v-col cols="12" md="15">
                 <v-textarea
-                v-model="eventDescription"
+                v-model="EventDescription"
                 label="Event Description"
                 :rules="eventDescriptionRule"
                 :placeholder="'Quick description of the Event \n (700 char max)'"
@@ -44,17 +44,20 @@
                   >
                     <template v-slot:activator="{on}">
                       <v-text-field
-                        v-model="startDate"
+                        v-model="StartDate"
                         label="Start Date"
                         :rules="[value => !!value || 'Required' ]"
                         v-on="on"
                         required
+                        readonly
                       >
                       </v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="startDate"
+                      v-model="StartDate"
                       @input="menu1 = false"
+                      :min="currentDate"
+                      :max="EndDate"
                     >
                     </v-date-picker>
                   </v-menu>
@@ -76,17 +79,18 @@
                   >
                     <template v-slot:activator="{on}">
                       <v-text-field
-                        v-model="startTime"
+                        v-model="StartTime"
                         label="Start Time"
                         :rules="[value => !!value || 'Required' ]"
                         v-on="on"
                         required
+                        readonly
                       >
                       </v-text-field>
                     </template>
                   <v-time-picker
                     v-if="menu2"
-                    v-model="startTime"
+                    v-model="StartTime"
                     full-width
                   >
                   </v-time-picker>
@@ -108,17 +112,19 @@
                   >
                     <template v-slot:activator="{on}">
                       <v-text-field
-                        v-model="endDate"
+                        v-model="EndDate"
                         label="End Date"
                         :rules="[value => !!value || 'Required' ]"
                         v-on="on"
                         required
+                        readonly
                       >
                       </v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="endDate"
+                      v-model="EndDate"
                       @input="menu3 = false"
+                      :min="StartDate"
                     >
                     </v-date-picker>
                   </v-menu>
@@ -140,17 +146,18 @@
                     >
                     <template v-slot:activator="{on}">
                       <v-text-field
-                        v-model="endTime"
+                        v-model="EndTime"
                         label="End Time"
                         :rules="[value => !!value || 'Required' ]"
                         v-on="on"
                         required
+                        readonly
                       >
                       </v-text-field>
                     </template>
                     <v-time-picker
                       v-if="menu4"
-                      v-model="endTime"
+                      v-model="EndTime"
                       full-width
                     ></v-time-picker>
                   </v-menu>
@@ -168,7 +175,7 @@
         </v-row>
       </v-form>
     </v-app>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -182,6 +189,8 @@ export default {
   },
   data:() =>({
     currentDate: new Date().toISOString().substr(0,10),
+    EventAddress: "1111",
+    Host:"1111",
     valid: true,
     topMenu:null,
     time:null,
@@ -189,14 +198,14 @@ export default {
     menu2:false,
     menu3:false,
     menu4:false,
-    eventName:"",
-    eventDescription:"",
+    EventName:"1111",
+    EventDescription:"1111",
     eventDescriptionRule: 
     [value => (value ||'').length <= 700 ||'max 700 characters'],
-    startDate:null,
-    startTime:null,
-    endDate:null,
-    endTime:null,
+    StartDate:null,
+    StartTime:null,
+    EndDate:null,
+    EndTime:null,
     eventNameRule:  
     [value => !!value || 'Event name required',
     value => (value || '').length >= 5 || 'Min 5 characters', 
@@ -207,22 +216,20 @@ export default {
   }),
   methods: {
     Submit(){
-      this.$refs.form.validate()
-      axios.post("https://localhost:44352/api/events/createEvent/${this.EventName}",
-      {
-        EventName: this.eventName,
-        Address: this.eventAddress,
-        Description: this.eventDescription,
-        StartDate: this.startDate + this.startTime,
-        EndDate: this.endDate + this.endTime,
-        Host:this.$store.state.user.systemID
+      // this.$refs.form.validate()
+      axios.post(`https://localhost:44352/api/events/createEvent/${this.EventName}`,{
+        EventName: this.EventName,
+        Address: this.EventAddress,
+        Description: this.EventDescription,
+        StartDate: this.StartDate + " " + this.StartTime,
+        EndDate: this.EndDate + " " + this.EndTime
+        // Host:this.$store.state.user.systemID.toISOString
       }
       );
       // setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
-      this.$refs.form.reset();
     },
     countdown: function() {
-      this.remainingCount = this.maxCount - this.eventDescription.length;
+      this.remainingCount = this.maxCount - this.EventDescription.length;
       this.hasError = this.remainingCount < 0;
     }
   },

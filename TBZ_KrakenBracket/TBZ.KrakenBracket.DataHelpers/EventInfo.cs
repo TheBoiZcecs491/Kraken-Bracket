@@ -11,6 +11,17 @@ namespace TBZ.KrakenBracket.DataHelpers
         {
             EventName = eventName;
         }
+        public EventInfo( int eventID, string eventName, String description, DateTime startDate, DateTime endDate, int statusCode, String reason, String host ) 
+        {
+            EventID = eventID;
+            EventName = eventName;
+            Description = description;
+            StartDate = startDate;
+            EndDate = endDate;
+            StatusCode = statusCode;
+            Reason = reason;
+            Host = host;
+        }
         public int EventID { get; set; }
         public string HashedUserID { get; set; }
         public string EventName { get; set; }

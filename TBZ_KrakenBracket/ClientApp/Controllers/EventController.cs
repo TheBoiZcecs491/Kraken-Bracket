@@ -26,9 +26,9 @@ namespace ClientApp.Controllers
 
         [HttpPost("createEvent/{eventInfo}")]
         [Produces("application/json")]
-        public IActionResult CreateEvent(EventInfo eventObj)
+        public IActionResult CreateEvent(EventInfo eventInfo)
         {
-            return Ok(_eventManager.CreateEvent(eventObj));
+            return Ok(_eventManager.CreateEvent(eventInfo));
         }
 
         [HttpGet("Events/{eventID}")]
