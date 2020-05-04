@@ -11,16 +11,33 @@ namespace TBZ.KrakenBracket.Services
 
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
         private readonly GamerDataAccess _gamerDataAccess = new GamerDataAccess();
+
+        /// <summary>
+        /// Creates a tournament bracket with provided fields from BracketInfo parameter.
+        /// </summary>
+        /// <param name="bracketFields"> BracketInfo object containing input fields. </param>
+        /// <returns> boolean of a successful/unsuccessful bracket creation. </returns>
         public bool CreateTournamentBracket(BracketInfo bracketFields)
         {
             return _tournamentBracketDataAccess.InsertNewBracket(bracketFields);
         }
 
+        /// <summary>
+        /// Updates a tournament bracket with provided fields from BracketInfo parameter.
+        /// Checks for matching bracket ID first.
+        /// </summary>
+        /// <param name="bracketFields"> BracketInfo object containing input fields. </param>
+        /// <returns> boolean of a successful/unsuccessful bracket update. </returns>
         public bool UpdateTournamentBracket(BracketInfo bracketFields)
         {
             return _tournamentBracketDataAccess.UpdateBracket(bracketFields);
         }
 
+        /// <summary>
+        /// Deletes a tournament bracket with provided fields from BracketInfo parameter.
+        /// </summary>
+        /// <param name="bracketFields"> BracketInfo object containing input fields. </param>
+        /// <returns> boolean of a successful/unsuccessful bracket deletion. </returns>
         public bool DeleteTournamentBracket(BracketInfo bracketFields)
         {
             return _tournamentBracketDataAccess.DeleteBracket(bracketFields);
