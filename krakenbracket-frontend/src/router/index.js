@@ -53,6 +53,8 @@ const routes = [
     path: "/register",
     name: "register-view",
     component: RegisterView
+  },
+  {
     path: "/new-bracket",
     name: "new-bracket",
     component: NewBracket
