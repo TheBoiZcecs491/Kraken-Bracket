@@ -1,6 +1,7 @@
 // https://docs.cypress.io/api/introduction/api.html
 
   describe("Create a new account", () => {
+    cy.defaultCommandTimeout=40000;
     it("Visits the app root url", () => {
       cy.visit("http://localhost:8080/#/");
       cy.contains("h1", "Welcome to Kraken Bracket");
@@ -29,6 +30,7 @@
   });
 
   describe("Create a new account, but the email already exists", () => {
+    cy.defaultCommandTimeout=40000;
     it("Visits the app root url", () => {
       cy.visit("http://localhost:8080/#/");
       cy.contains("h1", "Welcome to Kraken Bracket");
@@ -57,6 +59,7 @@
   });
 
   describe("Create a new account, but the password is insecure", () => {
+    cy.defaultCommandTimeout=40000;
     it("Visits the app root url", () => {
       cy.visit("http://localhost:8080/#/");
       cy.contains("h1", "Welcome to Kraken Bracket");
@@ -77,6 +80,7 @@
       cy.get('input[type="firstName"]').type("Johnson");
       cy.get('input[type="lastName"]').type("Daneeka");
       cy.contains("Register User").click();
+      
     });
     it("error 406 should be visable", () => {
       cy.contains("h1", "Register new user");
@@ -85,6 +89,7 @@
   });
 
   describe("Create a new account, but they didnt put the names in", () => {
+    cy.defaultCommandTimeout=40000;
     it("Visits the app root url", () => {
       cy.visit("http://localhost:8080/#/");
       cy.contains("h1", "Welcome to Kraken Bracket");
@@ -113,6 +118,7 @@
   });
 
   describe("Create a new account, but that isnt even a valid email", () => {
+    cy.defaultCommandTimeout=40000;
     it("Visits the app root url", () => {
       cy.visit("http://localhost:8080/#/");
       cy.contains("h1", "Welcome to Kraken Bracket");
@@ -141,6 +147,7 @@
   });
 
   describe("Create a new account, again after the first one", () => {
+    cy.defaultCommandTimeout=40000;
     it("Visits the app root url", () => {
       cy.visit("http://localhost:8080/#/");
       cy.contains("h1", "Welcome to Kraken Bracket");

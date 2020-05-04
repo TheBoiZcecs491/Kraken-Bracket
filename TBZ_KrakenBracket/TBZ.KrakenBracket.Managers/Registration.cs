@@ -34,7 +34,7 @@ namespace TBZ.RegistrationManager
                 else
                 {
                     _userManagementManager.SingleCreateUsers(gateAdmin, user);
-                    if (!isEmailAlreadyRegistered(user.Email)&&user.ErrorMessage.Equals("")) user.ErrorMessage = "email failed to register";
+                    if (!isEmailAlreadyRegistered(user.Email)&&(user.ErrorMessage==null)) user.ErrorMessage = "email failed to register";
                 }
             }
             else user.ErrorMessage = "email malformed";
