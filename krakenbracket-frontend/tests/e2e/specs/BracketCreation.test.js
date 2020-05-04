@@ -1,5 +1,39 @@
 // https://docs.cypress.io/api/introduction/api.html
 
+describe("Tests the start and end date range", () => {
+  it("Visits the app root url", () => {
+    cy.visit("http://localhost:8080/#/");
+    cy.contains("h1", "Welcome to Kraken Bracket");
+  });
+  it("Clicks on the 'login' button", () => {
+      cy.contains("Log in").click();
+    });
+  it("Logs the user in", () => {
+    const email = "user1@krakenbracket.com";
+    const password = "Pass1";
+    cy.get(".email-input").type(email);
+    cy.get(".password-input").type(password);
+    cy.contains("button", "Login").click();
+  });
+  it("Clicks on the 'Create a new bracket' button", () => {
+    cy.contains("button", "Create a new bracket").click();
+  });
+
+  it("Makes sure you are on the create bracket page", () => {
+    cy.contains("Create a new bracket");
+    cy.url().should("include", "/new-bracket");
+  });
+  it("Checks an end date before the start date", () => {
+    cy.get("#input-61").click();
+    cy.get('.menuable__content__active > .v-picker > .v-picker__body > :nth-child(1) > .v-date-picker-table > table > tbody > :nth-child(2) > :nth-child(3) > .v-btn').click();
+        
+    cy.get("#input-53").click();
+    cy.get('.menuable__content__active > .v-picker > .v-picker__body > :nth-child(1) > .v-date-picker-table > table > tbody > :nth-child(2) > :nth-child(4) > .v-btn').click();
+        
+  });
+});
+
+
 describe("Create a bracket", () => {
     it("Visits the app root url", () => {
       cy.visit("http://localhost:8080/#/");
@@ -76,3 +110,46 @@ describe("Create a bracket", () => {
           cy.contains(BracketName);
       })
   });
+
+  describe("Tests the ruleset text field for a 700 char limit", () => {
+    it("Visits the app root url", () => {
+      cy.visit("http://localhost:8080/#/");
+      cy.contains("h1", "Welcome to Kraken Bracket");
+    });
+    it("Clicks on the 'login' button", () => {
+        cy.contains("Log in").click();
+      });
+    it("Logs the user in", () => {
+      const email = "user1@krakenbracket.com";
+      const password = "Pass1";
+      cy.get(".email-input").type(email);
+      cy.get(".password-input").type(password);
+      cy.contains("button", "Login").click();
+    });
+    it("Clicks on the 'Create a new bracket' button", () => {
+      cy.contains("button", "Create a new bracket").click();
+    });
+  
+    it("Makes sure you are on the create bracket page", () => {
+      cy.contains("Create a new bracket");
+      cy.url().should("include", "/new-bracket");
+    });
+    it("Fills in the text field", () => {
+      const ruleSet = "This is a very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very very very very very very very " +
+       "very very very very very long description of the rule set";
+      cy.get(".ruleSet-input").type(ruleSet);
+    });
+  });
+
+  
