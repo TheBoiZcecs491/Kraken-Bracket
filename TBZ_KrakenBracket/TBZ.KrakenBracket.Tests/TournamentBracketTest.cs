@@ -25,7 +25,7 @@ namespace TBZ.TournamentBracketTest
         // Fail case (short bracket name)
         readonly BracketInfo testBracketFields3 = new BracketInfo(2, "SoCa", 1, 32, "Street Fighter V - Arcade Edition", "PS4",
                 "N/A", new DateTime(2019, 11, 6), new DateTime(2019, 11, 8), 0);
-        // Fail case (128+ competitors
+        // Fail case (128+ competitors)
         readonly BracketInfo testBracketFields4 = new BracketInfo(2, "SoCal Regionals 2020: SFVAE Pools - 1", 1, 129,
                 "Street Fighter V - Arcade Edition", "PS4", "N/A", new DateTime(2019, 11, 6), new DateTime(2019, 11, 8), 0);
         // Fail case (nonexistent bracket ID

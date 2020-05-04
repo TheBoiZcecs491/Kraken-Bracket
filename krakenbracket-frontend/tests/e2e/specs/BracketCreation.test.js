@@ -36,18 +36,29 @@ describe("Create a bracket", () => {
         cy.get(".BracketName-input").type(BracketName);
         cy.get(".PlayerCount-input").type(PlayerCount);
         cy.get(".GamePlayed-input").type(GamePlayed);
+        cy.get('#list-item-70-0 > .v-list-item__content > .v-list-item__title').click();
         cy.get(".GamingPlatform-input").type(GamingPlatform);
+        cy.get('#list-item-90-0').click();
         cy.get(".ruleSet-input").type(ruleSet);
-        
-        cy.contains("Start Date").click({force:true}).then(cy.get('tr').contains(6).click());
-        cy.contains("Start Time").click({force:true}).then(cy.contains("v-time-picker-clock__item", 5)
-        .click()).then(cy.contains("v-time-picker-clock__item", 00)
-        .click()).then(cy.contains("v-time-picker-clock__item", "PM")
-        .click());
-        cy.contains("").click();
-        cy.contains("End Date").click({force:true}).then(cy.get('tr').contains("6").click());
-        cy.contains("End Time").click({force:true}).then(cy.contains("tr", "8").click()).then(cy.contains("tr", "30").click()).then(cy.contains("tr", "PM").click());
-        cy.contains("").click();
+        // start date
+        cy.get("#input-53").click();
+        cy.get(':nth-child(2) > :nth-child(4) > .v-btn > .v-btn__content').click();
+        // start time
+        cy.pause();
+        //cy.get("#input-57").click();
+        //cy.get('[style="left: 75%; top: 93.3013%;"]').click();
+        //cy.contains("30").click();
+        //cy.get('[style="left: 75%; top: 93.3013%;"] > span').click({multiple:true});
+        //cy.get('.v-time-picker-title__ampm > :nth-child(2)').click();
+        // end date
+        cy.get("#input-61").click();
+        cy.get('.menuable__content__active > .v-picker > .v-picker__body > :nth-child(1) > .v-date-picker-table > table > tbody > :nth-child(2) > :nth-child(4) > .v-btn').click();
+        //.click()).then(cy.contains("v-time-picker-clock__item", 00)
+        //.click()).then(cy.contains("v-time-picker-clock__item", "PM")
+        //.click());
+        //cy.contains("End Date").click({force:true}).then(cy.get('tr').contains("6").click());
+        //cy.contains("End Time").click({force:true}).then(cy.contains("tr", "8").click()).then(cy.contains("tr", "30").click()).then(cy.contains("tr", "PM").click());
+        //cy.contains("").click();
         // cy.get('tr').contains("6").click()
         // cy.contains("End Date").click({force:true});
         // cy.contains("td", "6").click();
@@ -60,7 +71,8 @@ describe("Create a bracket", () => {
         cy.contains("button", "Create Bracket").click();
       });
       it("Checks if the bracket was successfully created", () => {
-          cy.visit("http://localhost:8080/#/bracket-list");
-          cy.contains("h1", BracketName);
+          const BracketName = "WNF SFVAE - Pools";
+          cy.contains("Bracket List").click();
+          cy.contains(BracketName);
       })
   });
