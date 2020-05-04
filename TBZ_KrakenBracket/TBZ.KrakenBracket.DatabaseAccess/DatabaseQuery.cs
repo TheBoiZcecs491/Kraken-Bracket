@@ -99,10 +99,10 @@ namespace TBZ.DatabaseQueryService
                     msalt.GenerateHash();
                     tempUser.Password = msalt.message;
 
-                    comm.CommandText = "INSERT INTO userid(userID, hashed_userID) " +
-                    "VALUES(@userID, @hashed_userID)";
+                    comm.CommandText = "INSERT INTO userid(userID, hashedUserID) " +
+                    "VALUES(@userID, @hashedUserID)";
                     comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
-                    comm.Parameters.AddWithValue("@hashed_userID", msalt.message);
+                    comm.Parameters.AddWithValue("@hashedUserID", msalt.message);
                     comm.ExecuteNonQuery();
                     comm.Parameters.Clear();
                     conn.Close();
