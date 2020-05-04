@@ -133,6 +133,8 @@
                                 v-if="menu2"
                                 v-model="startTime"
                                 full-width
+                                scrollable
+                                ampm-in-title
                                 ></v-time-picker>
                             </v-menu>
                         </v-col>
@@ -196,6 +198,8 @@
                                 v-if="menu4"
                                 v-model="endTime"
                                 full-width
+                                scrollable
+                                ampm-in-title
                                 ></v-time-picker>
                             </v-menu>
                         </v-col>

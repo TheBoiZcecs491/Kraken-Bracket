@@ -76,6 +76,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Retrieves latest bracket ID to assign to new bracket
+        /// </summary>
+        /// <returns> integer bracketID </returns>
         public int GetLatestBracketID()
         {
             try

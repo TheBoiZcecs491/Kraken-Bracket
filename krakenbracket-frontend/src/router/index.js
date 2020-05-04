@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import BracketList from "../views/BracketListView.vue";
 import BracketView from "../views/BracketView.vue";
-import NewBracket from "../views/NewBracket.vue";
+import NewBracketView from "../views/NewBracketView.vue";
 import EventList from "../views/EventList.vue";
 import EventView from "../views/EventView.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
@@ -51,7 +51,7 @@ const routes = [
   {
     path: "/new-bracket",
     name: "new-bracket",
-    component: NewBracket
+    component: NewBracketView
   },
   {
     path: "/event-list",
