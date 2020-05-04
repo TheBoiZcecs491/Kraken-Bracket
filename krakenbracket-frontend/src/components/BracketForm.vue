@@ -100,6 +100,7 @@
                                 </template>
                                 <v-date-picker
                                  v-model="startDate"
+                                 :max="endDate"
                                  @input="menu1 = false"
                                  ></v-date-picker>
                             </v-menu>
@@ -165,6 +166,7 @@
                                 </template>
                                 <v-date-picker
                                 v-model="endDate"
+                                :min="startDate"
                                 @input="menu3 = false"
                                 ></v-date-picker>
                             </v-menu>
