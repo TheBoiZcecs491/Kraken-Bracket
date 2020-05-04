@@ -301,7 +301,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 return listOfBrackets;
             }
         }
-        
+
+        /// <summary>
+        /// Reads all the brackets whose name contains the search request.
+        /// </summary>
+        /// <param name="bracketRequest"> String of search request </param>
+        /// <returns> A list of Brackets </returns>
         public List<BracketInfo> ReadBrackets(string bracketRequest)
         {
             var DB = new Database();
@@ -325,7 +330,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         bracket.StartDate = reader.GetDateTime("start_date");
                         bracket.EndDate = reader.GetDateTime("end_date");
                         bracket.StatusCode = reader.GetInt32("status_code");
-                        //bracket.Host = reader.GetString("gamerTag");
                         listOfBrackets.Add(bracket);
                     }
                 }

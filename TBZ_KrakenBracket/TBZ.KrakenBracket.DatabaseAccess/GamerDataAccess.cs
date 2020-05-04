@@ -50,6 +50,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             else throw new ArgumentException();
         }
 
+
+        /// <summary>
+        /// Reads all the gamers whose gamer tag contains the search request.
+        /// </summary>
+        /// <param name="gamerRequest"> String of gamer request </param>
+        /// <returns> A list of Gamers </returns>
         public List<GamerInfo> ReadGamers(string gamerRequest)
         {
             var DB = new Database();

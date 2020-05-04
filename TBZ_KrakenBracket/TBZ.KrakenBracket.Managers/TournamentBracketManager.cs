@@ -113,12 +113,19 @@ namespace TBZ.KrakenBracket.Managers
         {
             bool checkGamerExistence = _tournamentBracketService.CheckGamerExistence(gamer);
             bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
-            if (checkGamerExistence && checkBracketExistence)
+            if (!(checkGamerExistence && checkBracketExistence))
             {
-                return _tournamentBracketService.InsertGamerToBracket(gamer, bracketID);
+                throw new ArgumentException();
             }
-            else throw new ArgumentException();
-
+            else
+            {
+                var bracket = _tournamentBracketService.GetBracketByID(bracketID);
+                if (!(bracket.StatusCode == 0 && bracket.PlayerCount < 128))
+                {
+                    throw new ArgumentException();
+                }
+                return _tournamentBracketService.InsertGamerToBracket(gamer, bracket);
+            }
         }
 
         /// <summary>
@@ -157,9 +164,18 @@ namespace TBZ.KrakenBracket.Managers
         /// </returns>
         public bool UnregisterGamerFromBracket(int systemID, int bracketID)
         {
-            var result =  _tournamentBracketService.UnregisterGamerFromBracket(systemID, bracketID);
-            if (result) return result;
-            else throw new ArgumentException();
+            
+            bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
+            if (!checkBracketExistence)
+            {
+                throw new ArgumentException();
+            }
+            else
+            {
+                var result = _tournamentBracketService.UnregisterGamerFromBracket(systemID, bracketID);
+                if (!result) throw new ArgumentException();
+                return result;
+            }
         }
 
         /// <summary>

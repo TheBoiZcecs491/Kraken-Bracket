@@ -1,25 +1,15 @@
-describe("My First Test", () => {
-    it("Visits the app root url", () => {
-      cy.visit("http://localhost:8080/#/");
-      cy.contains("h1", "Welcome to Kraken Bracket");
-    });
-});
-
 describe("Search For Brackets Containing 'EVO'", () => {
     it("Visits the app root url", () => {
         cy.visit("http://localhost:8080/#/");
         cy.contains("h1", "Welcome to Kraken Bracket");
     });
     it("Clicks on the Search router link", () => {
-        //cy.pause();
         cy.contains("Search").click();
     });
     it("Makes sure you are on the search view", () => {
-        //cy.pause();
         cy.url().should("include", "/search");
     });
     it("Types in search", () => {
-        //cy.pause();
         const search = "EVO";
         cy.get(".search-input").type(search);
     });
@@ -28,17 +18,18 @@ describe("Search For Brackets Containing 'EVO'", () => {
     });
     it("Checks search results", () => {
         cy.get('tbody > :nth-child(1) > :nth-child(1)').contains("EVO")
+        //cy.pause();
     })
 });
 
 describe("Sort By End Date Descending", () => {
-    it("Visits the app root url", () => {
+    it("Sorts by end date ascending", () => {
         cy.get('[aria-label="End Date: Not sorted. Activate to sort ascending."]').click();
         cy.get(".active").click();
     });
-    it("Visits the app root url", () => {
+    it("Sorts by end date descending", () => {
         cy.get('tbody > :nth-child(1) > :nth-child(5)').contains("2022");
-        cy.pause();
+        //cy.pause();
         });
 });
 
@@ -48,6 +39,7 @@ describe("Clear Search Results", () => {
     });
     it("Updates search model",  () => {
         cy.contains("button", "Search").click();
+        //cy.pause();        
     });
 });
 
@@ -64,6 +56,7 @@ describe("Search For Events Containing 'EVO'", () => {
     });
     it("Checks search results", () => {
         cy.get('td').contains("No data available");
+        //cy.pause();
     });
 });
 
@@ -80,6 +73,7 @@ describe("Change Search Request To 'Year 2020'", () => {
     });
     it("Checks search results", () => {
         cy.get('tbody > :nth-child(1) > :nth-child(1)').contains("Year 2020")
+        //cy.pause();
     })
 });
 
@@ -99,7 +93,18 @@ describe("Search For Multiple Gamers", () => {
     });
     it("Checks search results", () => {
         cy.get('tbody > :nth-child(1) > :nth-child(1)').contains("gamer");
-    })
+        //cy.pause();
+    });
+});
+
+describe("Paginate Forward And Backwards", () => {
+    it("Paginates forward", () => {
+        cy.get('.v-data-footer__icons-after > .v-btn > .v-btn__content > .v-icon').click();
+    });
+    it("Paginates backward", () => {
+        cy.get('.v-data-footer__icons-before > .v-btn > .v-btn__content > .v-icon').click();
+        //cy.pause();
+    });
 });
 
 describe("Filter For A Specific Gamer", () => {
@@ -109,7 +114,20 @@ describe("Filter For A Specific Gamer", () => {
     });
     it("Checks filter results", () => {
         cy.get('tbody > tr > .text-start').contains("gamer9");
-        });
+        //cy.pause();
+    });
 });
 
-//pagination
+describe("Filter For A Invalid Gamer", () => {
+    it("Clears filter text", () => {
+        cy.get('.v-card__title > .v-input > .v-input__control > .v-input__slot > .v-input__append-inner > .v-input__icon > .v-icon').click();
+    });
+    it("Types in filter text", () => {
+        const filter = "invalid";
+        cy.get('#input-22').type(filter);
+    });
+    it("Checks filter results", () => {
+        cy.get('td').contains("No matching records found");
+        //cy.pause();
+    });
+});

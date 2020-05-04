@@ -18,6 +18,10 @@ export default new Vuex.Store({
         "Authorization"
       ] = `Bearer ${userData.token}`;
     },
+    CLEAR_USER_DATA(){
+      localStorage.removeItem("user")
+      location.reload();
+    },
     SET_USER_BRACKET_INFO(state, data) {
       state.bracketPlayerInfo = data;
       localStorage.setItem("bracketPlayerInfo", JSON.stringify(data));
@@ -36,6 +40,9 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit("SET_USER_DATA", data);
         });
+    },
+    logout({commit}){
+      commit('CLEAR_USER_DATA')
     },
     bracketPlayerInfo({ commit }, email) {
       BracketService.getBracketPlayerInfo(email).then(({ data }) => {

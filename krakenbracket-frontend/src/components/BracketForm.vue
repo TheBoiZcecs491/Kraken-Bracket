@@ -1,5 +1,4 @@
 <template>
-    <div class="new-bracket">
         <v-app id="inspire">
             <!-- Checking for completed fields to enable "Create Bracket" button -->
         <v-form
@@ -134,6 +133,8 @@
                                 v-if="menu2"
                                 v-model="startTime"
                                 full-width
+                                scrollable
+                                ampm-in-title
                                 ></v-time-picker>
                             </v-menu>
                         </v-col>
@@ -197,6 +198,8 @@
                                 v-if="menu4"
                                 v-model="endTime"
                                 full-width
+                                scrollable
+                                ampm-in-title
                                 ></v-time-picker>
                             </v-menu>
                         </v-col>
@@ -212,8 +215,7 @@
                 </v-col>
         </v-row>
         </v-form>
-        </v-app>
-    </div>
+    </v-app>
 </template>
 
 <script>
@@ -282,9 +284,9 @@ export default {
                 EndDate: this.endDate + " " + this.endTime // Datetime concatenate
             });
             //console.log(bracketInfo)
-            // setTimeout((this.$store.dispatch('createBracket', this.BracketInfo), 500))
+            //setTimeout((this.$store.dispatch('createBracket', this.BracketInfo), 500))
             this.$refs.form.reset()
         }
-    },
-  }
+    }
+  };
 </script>

@@ -76,6 +76,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Retrieves latest bracket ID to assign to new bracket
+        /// </summary>
+        /// <returns> integer bracketID </returns>
         public int GetLatestBracketID()
         {
             try
@@ -189,29 +193,24 @@ namespace TBZ.KrakenBracket.DatabaseAccess
         /// <returns>
         /// BracketPlayer object if insertion successful; null if not
         /// </returns>
-        public BracketPlayer InsertGamerToBracket(GamerInfo gamer, int bracketID)
+        public BracketPlayer InsertGamerToBracket(GamerInfo gamer, BracketInfo bracket)
         {
             try
             {
-                BracketInfo bracket = GetBracketByID(bracketID);
-
-                if(bracket.PlayerCount >= 128)
+                DatabaseQuery databaseQuery = new DatabaseQuery();
+                TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
+                GamerInfo tempGamer = databaseQuery.GetGamerInfo(gamer);
+                BracketPlayer bracketPlayer = new BracketPlayer();
+                bracketPlayer.BracketID = bracket.BracketID;
+                bracketPlayer.HashedUserID = tempGamer.HashedUserID;
+                bracketPlayer.StatusCode = 1;
+                bool insertionResult = tournamentBracketDatabaseQuery.InsertBracketPlayer(bracketPlayer);
+                if (insertionResult)
                 {
-                    return null;
-                }
-                else
-                {
-                    DatabaseQuery databaseQuery = new DatabaseQuery();
-                    TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
-                    GamerInfo tempGamer = databaseQuery.GetGamerInfo(gamer);
-                    BracketPlayer bracketPlayer = new BracketPlayer();
-                    bracketPlayer.BracketID = bracket.BracketID;
-                    bracketPlayer.HashedUserID = tempGamer.HashedUserID;
-                    bracketPlayer.StatusCode = 1;
-                    tournamentBracketDatabaseQuery.InsertBracketPlayer(bracketPlayer);
                     tournamentBracketDatabaseQuery.UpdateBracketPlayerCount(bracket.BracketID, 1);
                     return bracketPlayer;
                 }
+                return null;
             }
 
             catch (Exception e)

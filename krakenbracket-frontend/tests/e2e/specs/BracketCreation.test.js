@@ -39,17 +39,24 @@ describe("Create a bracket", () => {
         cy.get(".GamingPlatform-input").type(GamingPlatform);
         cy.get(".ruleSet-input").type(ruleSet);
         
-        cy.contains("Start Date").click({force:true});
-        cy.get('v-datepicker-table').contains(6).click();
-        cy.contains("End Date").click({force:true});
-        cy.contains("td", "6").click();
+        cy.contains("Start Date").click({force:true}).then(cy.get('tr').contains(6).click());
+        cy.contains("Start Time").click({force:true}).then(cy.contains("v-time-picker-clock__item", 5)
+        .click()).then(cy.contains("v-time-picker-clock__item", 00)
+        .click()).then(cy.contains("v-time-picker-clock__item", "PM")
+        .click());
+        cy.contains("").click();
+        cy.contains("End Date").click({force:true}).then(cy.get('tr').contains("6").click());
+        cy.contains("End Time").click({force:true}).then(cy.contains("tr", "8").click()).then(cy.contains("tr", "30").click()).then(cy.contains("tr", "PM").click());
+        cy.contains("").click();
+        // cy.get('tr').contains("6").click()
+        // cy.contains("End Date").click({force:true});
+        // cy.contains("td", "6").click();
 
-        cy.contains("Start Time").click({force:true});
-        cy.get(".startTime-input").type(startTime);
+        // cy.get(".startTime-input").type(startTime);
 
         
-        cy.contains("End Time").click({force:true});
-        cy.get(".endTime-input").type(endTime);
+        // cy.contains("End Time").click({force:true});
+        // cy.get(".endTime-input").type(endTime);
         cy.contains("button", "Create Bracket").click();
       });
       it("Checks if the bracket was successfully created", () => {
