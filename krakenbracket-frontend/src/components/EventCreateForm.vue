@@ -9,7 +9,7 @@
         <v-row justify="space-around">
           <v-col class="px-4" cols="12" sm="3">
             <v-text-field
-              v-model="EventName"
+              v-model="eventName"
               label="Event Name"
               :rules="eventNameRule"
               placeholder="Event Name of your choice"
@@ -20,10 +20,10 @@
             <v-row>
               <v-col cols="12" md="15">
                 <v-textarea
-                v-model="EventDescription"
+                v-model="eventDescription"
                 label="Event Description"
                 :rules="eventDescriptionRule"
-                :placeholder="'Quick description of the Event \n (750 char max)'"
+                :placeholder="'Quick description of the Event \n (700 char max)'"
                 :hint= remainingCount.toString()
                 v-on:keyup="countdown"
                 >
@@ -173,9 +173,13 @@
 
 <script>
 import axios from "axios";
+import { authComputed } from "../store/helpers.js";
 export default {
   props: ["id"],
   components:{},
+  computed: {
+    ...authComputed
+  },
   data:() =>({
     currentDate: new Date().toISOString().substr(0,10),
     valid: true,
@@ -185,18 +189,18 @@ export default {
     menu2:false,
     menu3:false,
     menu4:false,
-    EventName:"",
-    EventDescription:"",
+    eventName:"",
+    eventDescription:"",
     eventDescriptionRule: 
-    [value => (value ||'').length < 700 ||'max 700 characters'],
+    [value => (value ||'').length <= 700 ||'max 700 characters'],
     startDate:null,
     startTime:null,
     endDate:null,
     endTime:null,
     eventNameRule:  
-    [value => !!value || 'Bracket name required',
-    value => (value || '').length > 5 || 'Min 5 characters', 
-    value => (value || '').length < 75 || 'Max 75 characters'],
+    [value => !!value || 'Event name required',
+    value => (value || '').length >= 5 || 'Min 5 characters', 
+    value => (value || '').length <= 75 || 'Max 75 characters'],
     maxCount: 700,
     remainingCount: 700,
     hasError: false
@@ -204,20 +208,21 @@ export default {
   methods: {
     Submit(){
       this.$refs.form.validate()
-      axios.post("https://localhost:44352/api/events/createEvent/${this.Event}",
+      axios.post("https://localhost:44352/api/events/createEvent/${this.EventName}",
       {
-        EventName: this.EventName,
+        EventName: this.eventName,
         Address: this.eventAddress,
-        Description: this.EventDescription,
+        Description: this.eventDescription,
         StartDate: this.startDate + this.startTime,
-        EndDate: this.endDate + this.endTime
+        EndDate: this.endDate + this.endTime,
+        Host:this.$store.state.user.systemID
       }
       );
-      setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
+      // setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
       this.$refs.form.reset();
     },
     countdown: function() {
-      this.remainingCount = this.maxCount - this.EventDescription.length;
+      this.remainingCount = this.maxCount - this.eventDescription.length;
       this.hasError = this.remainingCount < 0;
     }
   },

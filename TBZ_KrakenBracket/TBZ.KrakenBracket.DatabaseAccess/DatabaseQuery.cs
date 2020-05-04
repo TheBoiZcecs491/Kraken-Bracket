@@ -161,10 +161,34 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "INSERT INTO event_info(eventID, event_name) VALUES(@eventID, @event_name)";
+                    comm.CommandText = "INSERT INTO event_info(eventID, event_name, address, event_description, start_date, end_date) VALUES(@eventID, @event_name, @address, @event_description, @start_date, @end_date)";
 
                     comm.Parameters.AddWithValue("@eventID", Event.EventID);
                     comm.Parameters.AddWithValue("@event_Name", Event.EventName);
+                    comm.Parameters.AddWithValue("@address", Event.Address);
+                    comm.Parameters.AddWithValue("@event_description", Event.Description);
+                    comm.Parameters.AddWithValue("@start_date", Event.StartDate);
+                    comm.Parameters.AddWithValue("@end_date", Event.EndDate);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+        public void InsertEventPalyer(EventPlayerInfo eventPlayer)
+        {
+            var DB = new Database();
+
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "INSERT INTO event_player_info(eventID, hasheduserID, roleID, claim) VALUES(@eventID, @hasheduserID, @roleID, @claim)";
+
+                    comm.Parameters.AddWithValue("@eventID", eventPlayer.EventID);
+                    comm.Parameters.AddWithValue("@hashedUserID", eventPlayer.hashedUserID);
+                    comm.Parameters.AddWithValue("@roleID", eventPlayer.roleID);
+                    comm.Parameters.AddWithValue("@claim", eventPlayer.claim);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();

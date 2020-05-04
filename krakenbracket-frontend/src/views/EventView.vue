@@ -3,7 +3,7 @@
     <v-container>
       <div>
         <h1>Event View {{ event.eventName }}</h1>
-        <!-- <h5>Hosted by {{ event.hashedUserID }}</h5> -->
+        <h5>Hosted by {{ event.host }}</h5>
         <h5>Location: {{ event.address }}</h5>
         <h2>Description: {{ event.eventDescription }}</h2>
       </div>

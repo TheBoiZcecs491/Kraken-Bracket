@@ -10,7 +10,6 @@
         <v-btn x-large>Create a new Event</v-btn>
       </router-link>
     </div>
-
     <div>
       <h1>Event List</h1>
       <EventCard v-for="event in events" :key="event.id" :event="event" />
@@ -42,7 +41,7 @@ export default {
         this.events = response.data;
       })
       .catch(error => {
-        console.log("There was an error: " + error.response);
+        console.log("Unable to get Events - error message" + error.response);
       });
   }
 };

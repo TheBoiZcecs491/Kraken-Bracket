@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TBZ.DatabaseQueryService;
 using TBZ.KrakenBracket.DatabaseAccess;
 using TBZ.KrakenBracket.DataHelpers;
 
@@ -10,10 +11,19 @@ namespace TBZ.KrakenBracket.Managers
     {
         private readonly EventDataAccess _eventDataAccess = new EventDataAccess();
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
+        private readonly DatabaseQuery databaseQuery = new DatabaseQuery();
 
         public EventInfo CreateEvent(EventInfo eventObj)
         {
-            return _eventDataAccess.insertEvent(eventObj);
+            EventPlayerInfo eventPlayer = new EventPlayerInfo();
+            //TODO: change to systemID to hash id
+            //eventPlayer.hashedUserID = databaseQuery.GetHashedUserID(Int32.Parse(eventObj.Host));
+
+            eventPlayer.EventID = eventObj.EventID;
+            eventPlayer.hashedUserID = eventObj.Host;
+            eventPlayer.roleID = 0;
+            _eventDataAccess.InsertEventPlayer(eventPlayer);
+            return _eventDataAccess.InsertEvent(eventObj);
         }
 
         public List<EventInfo> GetAllEvents()

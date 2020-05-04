@@ -3,6 +3,7 @@
     <h2 class="event-name">{{ event.eventName }}</h2>
     <h3>Start Date: {{ event.startDate }}</h3>
     <h3>End Date: {{ event.endDate }}</h3>
+    <h4>Hosted by: {{ event.host }}</h4>
     <h4>Address: {{event.address}}</h4>
     <h4>Event Description: {{event.description}}</h4>
     <br />
