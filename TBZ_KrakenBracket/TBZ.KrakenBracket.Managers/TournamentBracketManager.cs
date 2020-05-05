@@ -34,20 +34,24 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns> A boolean to confirm that fields align with business rules. </returns>
         public bool ValidateFields(BracketInfo bracketFields)
         {
-            if ((bracketFields.BracketName.Length < 5) ||
+            if ((bracketFields.BracketName == null) ||
+                (bracketFields.BracketName.Length < 5) ||
                     (bracketFields.BracketName.Length > 75))
             {
                 throw new ArgumentException("Bracket name must be between 5-75 characters");
             }
-            else if (bracketFields.PlayerCount > 128)
+            else if ((bracketFields.PlayerCount < 2) ||
+                    (bracketFields.PlayerCount > 128))
             {
-                throw new ArgumentException("No more than 128 competitors allowed");
+                throw new ArgumentException("Only 2-128 competitors allowed");
             }
-            else if(bracketFields.GamePlayed.Length > 50)
+            else if((bracketFields.GamePlayed == null) ||
+                    (bracketFields.GamePlayed.Length > 50))
             {
                 throw new ArgumentException("Game title cannot be larger than 50 characters");
             }
-            else if (bracketFields.GamingPlatform.Length > 50)
+            else if ((bracketFields.GamingPlatform == null) ||
+                    (bracketFields.GamingPlatform.Length > 50))
             {
                 throw new ArgumentException("Gaming platform cannot be larger than 50 characters");
             }

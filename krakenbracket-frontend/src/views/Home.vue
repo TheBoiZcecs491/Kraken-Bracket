@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img alt="Vue logo" src="../assets/kraken-bracket-logo.png" />
     <HelloWorld msg="Welcome to Kraken Bracket" />
     <div v-if="!loggedIn">
       <p>
