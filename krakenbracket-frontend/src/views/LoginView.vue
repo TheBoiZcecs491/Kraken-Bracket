@@ -71,11 +71,7 @@ export default {
       })
       }).then(() => {
         this.$router.go(-1);
-    })
-
-
-
-      .catch(err =>{
+    }).catch(err =>{
         // console.log("****ERROR:" + err)
         this.error = err
       });

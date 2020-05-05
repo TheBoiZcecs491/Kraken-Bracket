@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using TBZ.KrakenBracket.DatabaseAccess;
 using TBZ.KrakenBracket.DataHelpers;
 using TBZ.UM_Manager;
-TBZ.KrakenBracket.DatabaseAccess;
 
 namespace ClientApp.Controllers
 {
@@ -29,7 +28,7 @@ namespace ClientApp.Controllers
 
                 //HACK: due to time constraints, I realised that gamer tags need to be unique.
                 GamerInfo verifyGamer = _gamerDataAccess.GetGamerInfo(new GamerInfo(null,userInput.GamerTag,0,0));
-                if (verifyGamer != null)
+                if (verifyGamer == null)
                 {
                     _userManagementManager.SingleCreateUsers(doAsUser.systemAdmin(), user);
                 } else user.ErrorMessage="Gamer tag is already in use";

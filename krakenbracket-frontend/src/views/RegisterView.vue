@@ -102,7 +102,7 @@ export default {
         email: this.email,
         password: this.password
       }).then(() =>{
-        this.$router.go(-1);//return to prior view
+        this.$router.push("/registrationSuccess");
       });
       })
       .catch(err =>{
