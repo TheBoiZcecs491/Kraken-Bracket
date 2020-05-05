@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using TBZ.DatabaseQueryService;
@@ -373,6 +374,21 @@ namespace TBZ.DatabaseAccess
                     return true;
                 }
             }
+        }
+
+        public void AssignGamerTag(int userID, string newTag)
+        {
+            DatabaseQuery query = new DatabaseQuery();
+            string hashID = query.GetHashedUserID(userID);
+            GamerInfo newGamer = new GamerInfo(hashID, newTag, 0, 0);
+            GamerInfo verifyGamer = query.GetGamerInfoByHashedID(hashID);
+            if (verifyGamer != null)
+            {
+                //update entry
+                query.UpdateQuery("gamer_info", "gamerTag", newGamer.GamerTag, "hashedUserID", hashID);
+            }
+            query.InsertGamerInfo(newGamer);
+            //im guessing they cant have a gamertag some one else has.
         }
     }
 }

@@ -4,6 +4,8 @@ using TBZ.DatabaseAccess;
 using TBZ.KrakenBracket.DataHelpers;
 using TBZ.StringChecker;
 using TBZ.UM_Service;
+using TBZ.DatabaseQueryService;
+using System.Linq.Expressions;
 
 namespace TBZ.UM_Manager
 {
@@ -320,6 +322,10 @@ namespace TBZ.UM_Manager
                 throw new ArgumentException("List length is insufficient");
             }
         }
-    }
 
+        public void updateGamerTag(User user, string newTag)
+        {
+            _DataAccessService.AssignGamerTag(user.SystemID, newTag);
+        }
+    }
 }

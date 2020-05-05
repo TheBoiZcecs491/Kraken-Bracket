@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TBZ.KrakenBracket.DataHelpers;
 using TBZ.UM_Manager;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using TBZ.DatabaseAccess;
 
 namespace ClientApp.Controllers
 {
@@ -20,14 +19,12 @@ namespace ClientApp.Controllers
             try
             {
                 
-                User gateAdmin = new User(0, null, null, null, null, null, "System Admin", false, null);
                 User user = new User(userInput);
                 // HACK: this is fixed in another branch, so for now this will HOPEFULLY
                 // keep away any possible collisions. when that happend comment out the next 2 lines.
                 Random rnd = new Random();
                 user.SystemID = rnd.Next(Int32.MinValue, Int32.MaxValue);
-
-                var resultStat = Ok(_userManagementManager.SingleCreateUsers(gateAdmin, user));
+                var resultStat = Ok(_userManagementManager.SingleCreateUsers(doAsUser.systemAdmin(), user));
                 ContentResult serverReply = Content(user.ErrorMessage);
 
                 switch (user.ErrorMessage)
@@ -47,14 +44,11 @@ namespace ClientApp.Controllers
                     case "email failed to register":
                         serverReply.StatusCode = StatusCodes.Status500InternalServerError; break;
                     default:
-
+                        _userManagementManager.updateGamerTag(user, userInput.GamerTag);
                         serverReply.StatusCode = StatusCodes.Status200OK;
                         break;
                 }
                 return serverReply;
-                //401: account wasnt made because they didnt have permission to
-                //406: the registration info was not done correctly.
-                //500: backend machine [B]roke
             }
             catch (ArgumentException)
             {

@@ -48,4 +48,16 @@ namespace TBZ.KrakenBracket.DataHelpers
             AccountStatus = true;
         }
     }
+    
+    public static class doAsUser
+    {
+        public static User systemAdmin()
+        {
+            return new User(0, null, null, null, null, null, "System Admin", false, null);
+        }
+        public static User admin()
+        {
+            return new User(0, null, null, null, null, null, "Admin", false, null);
+        }
+    }
 }

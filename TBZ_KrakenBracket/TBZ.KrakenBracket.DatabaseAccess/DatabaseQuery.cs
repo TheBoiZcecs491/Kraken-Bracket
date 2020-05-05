@@ -1,8 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using TBZ.DatabaseAccess;
 using TBZ.DatabaseConnectionService;
 using TBZ.HashingService;
 using TBZ.KrakenBracket.DataHelpers;
@@ -118,12 +116,13 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)";
+                    //comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)";
+                    comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag) VALUES(@hashedUserID, @gamerTag)";
 
                     comm.Parameters.AddWithValue("@hashedUserID", tempGamer.HashedUserID);
                     comm.Parameters.AddWithValue("@gamerTag", tempGamer.GamerTag);
-                    comm.Parameters.AddWithValue("@gamerTagID", tempGamer.GamerTagID);
-                    comm.Parameters.AddWithValue("@teamID", tempGamer.TeamID);
+                    //comm.Parameters.AddWithValue("@gamerTagID", tempGamer.GamerTagID);
+                    //comm.Parameters.AddWithValue("@teamID", tempGamer.TeamID);
 
                     conn.Open();
                     comm.ExecuteNonQuery();
@@ -244,6 +243,9 @@ namespace TBZ.DatabaseQueryService
        
         public GamerInfo GetGamerInfo(GamerInfo gamer)
         {
+            //PROBLEM: exactly what is this trying to accomplish?
+            //more importatnly what if some particularly memey gamers all
+            //desided to have THE SAME GAMER TAG? can they even do that?
             try
             {
                 var DB = new Database();
@@ -259,7 +261,7 @@ namespace TBZ.DatabaseQueryService
                         {
                             reader.Read();
                             gamer.GamerTag = reader.GetString("gamerTag");
-                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
+                            //gamer.GamerTagID = reader.GetInt32("gamerTagID");
                             gamer.HashedUserID = reader.GetString("hashedUserID");
                             conn.Close();
                             return gamer;
