@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TBZ.KrakenBracket.DataHelpers;
-using TBZ.RegistrationManager;
+using TBZ.UM_Manager;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,36 +12,46 @@ namespace ClientApp.Controllers
     [ApiController]
     public class RegisterController : Controller
     {
+        private readonly UserManagementManager _userManagementManager = new UserManagementManager();
         // PUT api/<controller>
         [HttpPut]
-        public IActionResult registerNewUser(User user)
+        public IActionResult registerNewUser(RegistrationInput userInput)
         {
             try
             {
-                Registration registrationInstance = new Registration();
-                var resultStat = Ok(registrationInstance.selfRegister(user));
-                //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Snerp\Downloads\log.txt", true)){file.WriteLine(user.ErrorMessage);}
-                //I used this when I still had that confusing problem that prevented the debugger from starting.
-                //I fixed the problem but im keeping this here for reference.
+                
+                User gateAdmin = new User(0, null, null, null, null, null, "System Admin", false, null);
+                User user = new User(userInput);
+                // HACK: this is fixed in another branch, so for now this will HOPEFULLY
+                // keep away any possible collisions. when that happend comment out the next 2 lines.
+                Random rnd = new Random();
+                user.SystemID = rnd.Next(Int32.MinValue, Int32.MaxValue);
+
+                var resultStat = Ok(_userManagementManager.SingleCreateUsers(gateAdmin, user));
+                ContentResult serverReply = Content(user.ErrorMessage);
+
                 switch (user.ErrorMessage)
                 {
                     case "Invalid permissions":
-                        return StatusCode(StatusCodes.Status401Unauthorized);
+                        serverReply.StatusCode = StatusCodes.Status401Unauthorized; break;
                     case "Password is not secured":
-                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "ID already exists":
-                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "email already registered":
-                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "email malformed":
-                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "name fields blank":
-                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "email failed to register":
-                        return StatusCode(StatusCodes.Status500InternalServerError);
+                        serverReply.StatusCode = StatusCodes.Status500InternalServerError; break;
                     default:
-                        return resultStat;
+
+                        serverReply.StatusCode = StatusCodes.Status200OK;
+                        break;
                 }
+                return serverReply;
                 //401: account wasnt made because they didnt have permission to
                 //406: the registration info was not done correctly.
                 //500: backend machine [B]roke

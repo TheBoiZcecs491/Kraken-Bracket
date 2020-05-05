@@ -70,7 +70,7 @@ namespace TBZ.DatabaseQueryService
 
         public void InsertUserAcc(User tempUser)
         {
-
+            if(tempUser.Email!=null) tempUser.Email.ToLower();
             var DB = new Database();
 
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
@@ -275,6 +275,7 @@ namespace TBZ.DatabaseQueryService
 
         public User GetUserInfo(string email)
         {
+            if (email != null) email.ToLower();
             try
             {
                 var DB = new Database();
