@@ -98,7 +98,12 @@ export default {
         password: this.password,
         gamerTag: this.gamerTag
       }).then(() =>{
+        this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password
+      }).then(() =>{
         this.$router.go(-1);//return to prior view
+      });
       })
       .catch(err =>{
         // console.log("****ERROR:" + err)

@@ -148,7 +148,7 @@ namespace TBZ.StringChecker
                 lookPrior = look;
             }
             // check if the email is too long, and THEN return the status.
-            return (result & compRes.Length <= Constants.emailMaxLength);
+            return (foundAtSign & result & compRes.Length <= Constants.emailMaxLength);
         }
 
         public bool isValidName(bool allowNumbers = false)

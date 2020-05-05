@@ -21,6 +21,7 @@
       cy.get('input[type="password"]').type("wpAcWM&235xd");
       cy.get('input[type="firstName"]').type("Johnson");
       cy.get('input[type="lastName"]').type("Daneeka");
+      cy.get('input[type="gamerTag"]').type("dingot9001");
       cy.contains("Register User").click();
     });
     it("If it worked we should be back on the homepage without the login button", () => {
@@ -50,6 +51,7 @@
       cy.get('input[type="password"]').type("wpAcWM&235xd");
       cy.get('input[type="firstName"]').type("Johnson");
       cy.get('input[type="lastName"]').type("Daneeka");
+      cy.get('input[type="gamerTag"]').type("dingot9002");
       cy.contains("Register User").click();
     });
     it("error 406 should be visable", () => {
@@ -79,6 +81,7 @@
       cy.get('input[type="password"]').type("123love");
       cy.get('input[type="firstName"]').type("Johnson");
       cy.get('input[type="lastName"]').type("Daneeka");
+      cy.get('input[type="gamerTag"]').type("dingot9003");
       cy.contains("Register User").click();
       
     });
@@ -109,6 +112,7 @@
       cy.get('input[type="password"]').type("wpAcWM&235xd");
       //cy.get('input[type="firstName"]').type("");
       //cy.get('input[type="lastName"]').type("");
+      cy.get('input[type="gamerTag"]').type("dingot9004");
       cy.contains("Register User").click();
     });
     it("error 406 should be visable", () => {
@@ -138,6 +142,7 @@
       cy.get('input[type="password"]').type("wpAcWM&235xd");
       cy.get('input[type="firstName"]').type("Johnson");
       cy.get('input[type="lastName"]').type("Daneeka");
+      cy.get('input[type="gamerTag"]').type("dingot9005");
       cy.contains("Register User").click();
     });
     it("error 406 should be visable", () => {
@@ -167,6 +172,7 @@
       cy.get('input[type="password"]').type("wpAcWM&235xd");
       cy.get('input[type="firstName"]').type("Johnson");
       cy.get('input[type="lastName"]').type("Daneeka");
+      cy.get('input[type="gamerTag"]').type("dingot9006");
       cy.contains("Register User").click();
     });
     it("If it worked we should be back on the homepage without the login button", () => {

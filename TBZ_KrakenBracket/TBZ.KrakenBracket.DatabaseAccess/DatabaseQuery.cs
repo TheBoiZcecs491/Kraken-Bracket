@@ -125,7 +125,7 @@ namespace TBZ.DatabaseQueryService
                     //comm.Parameters.AddWithValue("@teamID", tempGamer.TeamID);
 
                     conn.Open();
-                    comm.ExecuteNonQuery();
+                    comm.ExecuteNonQuery();//BUG its actually possible for users to flood this with WAY to much data.
                     conn.Close();
                 }
             }

@@ -33,31 +33,14 @@ namespace TBZ.UM_Manager
         {
             // Check permissions for user performing operation
 
-            /*
-            StringCheckerService emailChecker = new StringCheckerService(operatedUser.Email);
-            StringCheckerService firstNameChecker = new StringCheckerService(operatedUser.FirstName);
-            StringCheckerService lastNameChecker = new StringCheckerService(operatedUser.LastName);
-            if (firstNameChecker.isValidName() | lastNameChecker.isValidName()) operatedUser.ErrorMessage = "name fields blank";
-            else if (emailChecker.isValidEmail())
-            {
-                if (_databaseAccess.GetUserByEmail(operatedUser.Email) != null) user.ErrorMessage = "email already registered";
-                else
-                {
-                    _DataAccessService.CreateUser(operatedUser, true);
-                    if ((_databaseAccess.GetUserByEmail(operatedUser.Email) == null)&&(operatedUser.ErrorMessage==null)) operatedUser.ErrorMessage = "email failed to register";
-                }
-            }
-            else operatedUser.ErrorMessage = "email malformed";
-             */
-
             bool permissionResult = _userManagementService.CheckPermission(invokingUser, operatedUser, "Create");
             if (permissionResult)
             {
                 StringCheckerService emailChecker = new StringCheckerService(operatedUser.Email);
                 StringCheckerService firstNameChecker = new StringCheckerService(operatedUser.FirstName);
                 StringCheckerService lastNameChecker = new StringCheckerService(operatedUser.LastName);
-                if (firstNameChecker.isValidName() | lastNameChecker.isValidName())
-                    operatedUser.ErrorMessage = "name fields blank";
+                if (firstNameChecker.isValidName() & lastNameChecker.isValidName())
+                    operatedUser.ErrorMessage = "Invalid names";
                 else if (emailChecker.isValidEmail())
                 {
                     if (_DataAccessService.GetUserByEmail(operatedUser.Email) != null)

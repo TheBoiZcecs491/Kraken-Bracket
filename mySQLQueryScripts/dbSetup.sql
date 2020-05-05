@@ -22,7 +22,7 @@ CREATE TABLE `userid` (
 
 CREATE TABLE `gamer_info` (
   `hashedUserID` varchar(45) NOT NULL,
-  `gamerTag` varchar(20) DEFAULT NULL,
+  `gamerTag` varchar(21) DEFAULT NULL,
   PRIMARY KEY (`hashedUserID`),
   CONSTRAINT `fk--gamer_info--userid` FOREIGN KEY (`hashedUserID`) REFERENCES `userid` (`hashedUserID`)
 );
