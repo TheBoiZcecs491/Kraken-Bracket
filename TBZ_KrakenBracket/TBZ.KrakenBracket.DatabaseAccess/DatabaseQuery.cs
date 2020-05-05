@@ -326,7 +326,7 @@ namespace TBZ.DatabaseQueryService
                 using (MySqlDataReader reader0 = selectCmd.ExecuteReader())
                 {
                     reader0.Read();
-                    string hashedUserID = reader0.GetString("hashed_userID");
+                    string hashedUserID = reader0.GetString("hashedUserID");
                     conn.Close();
                     return hashedUserID;
                 }
