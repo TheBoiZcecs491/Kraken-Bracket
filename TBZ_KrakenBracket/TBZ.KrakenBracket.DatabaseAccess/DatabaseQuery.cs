@@ -43,7 +43,6 @@ namespace TBZ.DatabaseQueryService
                             GamerInfo gamer = new GamerInfo();
                             reader.Read();
                             gamer.GamerTag = reader.GetString("gamerTag");
-                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
                             gamer.HashedUserID = reader.GetString("hashedUserID");
                             conn.Close();
                             return gamer;

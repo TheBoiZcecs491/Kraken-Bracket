@@ -204,6 +204,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 bracketPlayer.BracketID = bracket.BracketID;
                 bracketPlayer.HashedUserID = tempGamer.HashedUserID;
                 bracketPlayer.StatusCode = 1;
+                bracketPlayer.Claim = null;
+                bracketPlayer.Reason = null;
                 bool insertionResult = tournamentBracketDatabaseQuery.InsertBracketPlayer(bracketPlayer);
                 if (insertionResult)
                 {
