@@ -34,6 +34,9 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns> A boolean to confirm that fields align with business rules. </returns>
         public bool ValidateFields(BracketInfo bracketFields)
         {
+            if (bracketFields == null)
+                throw new ArgumentNullException();
+
             if ((bracketFields.BracketName == null) ||
                 (bracketFields.BracketName.Length < 5) ||
                     (bracketFields.BracketName.Length > 75))
@@ -70,7 +73,7 @@ namespace TBZ.KrakenBracket.Managers
         /// </summary>
         /// <param name="bracketInfo"></param> bracket fields to be validated and sent
         /// <returns></returns>
-        public bool ValidCreateBracket(BracketInfo bracketInfo)
+        public bool ValidateCreateBracket(BracketInfo bracketInfo)
         {
             if (ValidateFields(bracketInfo))
                 return _tournamentBracketService.CreateTournamentBracket(bracketInfo);

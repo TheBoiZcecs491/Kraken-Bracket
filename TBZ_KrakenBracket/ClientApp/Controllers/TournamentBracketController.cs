@@ -13,19 +13,21 @@ namespace ClientApp.Controllers
     [ApiController]
     public class TournamentBracketController : ControllerBase
     {
-        private readonly TournamentBracketManager _tournamentBracketManager;
+        private TournamentBracketManager TournamentBracketManager { get; } 
+
         public TournamentBracketController(TournamentBracketManager tournamentBracketManager)
         {
-            _tournamentBracketManager = tournamentBracketManager;
+            TournamentBracketManager = tournamentBracketManager;
         }
 
         [HttpGet("{bracketID}")]
         [Produces("application/json")]
         public IActionResult GetBracketByID(int bracketID)
         {
+
             try
             {
-                return Ok(_tournamentBracketManager.GetBracketByID(bracketID));
+                return Ok(TournamentBracketManager.GetBracketByID(bracketID));
             }
             catch (ArgumentException)
             {
@@ -45,7 +47,7 @@ namespace ClientApp.Controllers
         {
             try
             {
-                return Ok(_tournamentBracketManager.GetAllBrackets());
+                return Ok(TournamentBracketManager.GetAllBrackets());
             }
             catch (ArgumentException)
             {
@@ -65,7 +67,7 @@ namespace ClientApp.Controllers
         {
             try
             {
-                return Ok(_tournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
+                return Ok(TournamentBracketManager.RegisterGamerIntoBracket(gamer, bracketID));
             }
             catch (ArgumentException)
             {
@@ -84,7 +86,7 @@ namespace ClientApp.Controllers
         {
             try
             {
-                return Ok(_tournamentBracketManager.UnregisterGamerFromBracket(systemID, bracketID));
+                return Ok(TournamentBracketManager.UnregisterGamerFromBracket(systemID, bracketID));
             }
             catch (ArgumentException)
             {
@@ -104,7 +106,7 @@ namespace ClientApp.Controllers
         {
             try
             {
-                return Ok(_tournamentBracketManager.GetBracketPlayerInfo(email));
+                return Ok(TournamentBracketManager.GetBracketPlayerInfo(email));
             }
             catch (ArgumentException)
             {
@@ -124,7 +126,7 @@ namespace ClientApp.Controllers
         {
             try
             {
-                return Ok(_tournamentBracketManager.GetGamerInfoByEmail(email));
+                return Ok(TournamentBracketManager.GetGamerInfoByEmail(email));
             }
             catch (ArgumentException)
             {
@@ -138,13 +140,13 @@ namespace ClientApp.Controllers
             }
         }
 
-        [HttpPost("createBracket/{bracketInfo}")]
+        [HttpPost("createBracket/")]
         [Produces("application/json")]
         public IActionResult CreateBracket(BracketInfo bracketInfo)
         {
             try
             {
-                return Ok(_tournamentBracketManager.ValidCreateBracket(bracketInfo));
+                return Ok(TournamentBracketManager.ValidateCreateBracket(bracketInfo));
             }
             catch (ArgumentException)
             {

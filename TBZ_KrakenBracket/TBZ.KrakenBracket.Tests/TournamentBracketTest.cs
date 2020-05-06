@@ -35,7 +35,19 @@ namespace TBZ.TournamentBracketTest
         readonly string testEmail1 = "brian@foomail.com";
         readonly string testClaim1 = "Create Tournament Bracket";
         readonly bool isLoggedIn = true;
+        /*
+        [TestInitialize]
+        private void InitTestData()
+        {
 
+        }
+
+        [TestCleanup]
+        private void CleanUpData()
+        {
+
+        }
+        */
         [TestMethod]
         public void GetBracket_Pass()
         {
@@ -78,6 +90,7 @@ namespace TBZ.TournamentBracketTest
             _tournamentBracketService.DeleteTournamentBracket(testBracketFields1);
             // Assert
             Assert.AreEqual(expected, actual);
+            Assert.IsTrue(timer.ElapsedMilliseconds <= 3000);
         }
 
         [TestMethod]

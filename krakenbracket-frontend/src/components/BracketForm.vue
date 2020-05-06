@@ -276,7 +276,7 @@ export default {
     methods: {
         Submit() {
             this.$refs.form.validate()
-            axios.post(`https://localhost:44352/api/brackets/createBracket/${this.BracketName}`,{
+            axios.post(`https://localhost:44352/api/brackets/createBracket/`,{
                 BracketName: this.BracketName,
                 PlayerCount: this.PlayerCount,
                 GamePlayed: this.GamePlayed,
