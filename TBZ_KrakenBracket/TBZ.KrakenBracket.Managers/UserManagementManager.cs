@@ -39,21 +39,21 @@ namespace TBZ.UM_Manager
                 StringCheckerService emailChecker = new StringCheckerService(operatedUser.Email);
                 StringCheckerService firstNameChecker = new StringCheckerService(operatedUser.FirstName);
                 StringCheckerService lastNameChecker = new StringCheckerService(operatedUser.LastName);
-                if (firstNameChecker.isValidName() & lastNameChecker.isValidName())
+                if (!firstNameChecker.isValidName() & !lastNameChecker.isValidName())
                     operatedUser.ErrorMessage = "Invalid names";
                 else if (emailChecker.isValidEmail())
                 {
                     if (_DataAccessService.GetUserByEmail(operatedUser.Email) != null)
-                        operatedUser.ErrorMessage = "email already registered";
+                        operatedUser.ErrorMessage = "Email already registered";
                     else
                     {
                         _DataAccessService.CreateUser(operatedUser, true);
                         if ((_DataAccessService.GetUserByEmail(operatedUser.Email) == null) &&
                             (operatedUser.ErrorMessage == null))
-                            operatedUser.ErrorMessage = "email failed to register";
+                            operatedUser.ErrorMessage = "Email failed to register";
                     }
                 }
-                else operatedUser.ErrorMessage = "email malformed";
+                else operatedUser.ErrorMessage = "Email malformed";
             }
             else
             {

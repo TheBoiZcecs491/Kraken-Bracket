@@ -160,12 +160,17 @@ namespace TBZ.StringChecker
             {
                 if (allowNumbers) return true;
                 //check for only the letters.
+
                 foreach(char i in copied.ToLower())
                 {
+                    bool charCorrect = false;
                     foreach(char j in Constants.lowercaseChars)
                     {
-                        if (i != j) return false;
+                        if (i == j)
+                            charCorrect = true;
                     }
+                    if (!charCorrect)
+                        return false;
                 }
                 return true;
             }
