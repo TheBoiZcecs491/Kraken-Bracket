@@ -12,21 +12,6 @@ namespace TBZ.DatabaseQueryService
 {
     public class DatabaseQuery
     {
-        Dictionary<string, string> tables = new Dictionary<string, string>()
-        {
-            {"bracket_info","bracket_info(bracketID, bracket_name, bracketTypeID, number_player) VALUES(@bracketID, @bracket_name, @bracketTypeID, @number_player)"},
-            {"bracket_player_info","bracket_player_info(bracketID, hashedUserID, roleID) VALUES(@bracketID, @hashedUserID, @roleID)"},
-            {"bracket_type","bracket_type(bracketTypeID, bracket_type) VALUES(@bracketTypeID, @bracket_type)"},
-            {"event_bracket_list","event_bracket_list(eventID, bracketID) VALUES(@eventID, @bracketID)"},
-            {"event_info","event_info(eventID, event_name) VALUES(@eventID, @event_name)"},
-            {"role_type","role_type(roleID, role_type) VALUES(@roleID, @role_type)"},
-            {"team_info","team_info(teamID, team_name) VALUES(@teamID, @team_name)" },
-            {"team_list", "team_list(teamID, hashedUserID) VALUES(@teamID, @hashedUserID)"},
-            {"gamer_info", "gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)" },
-            {"user_information", "user_information(userID, email, hashed_password, salt, fname, lname) VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname" },
-            {"userid", "userid(userID, hashed_userID) VALUES(@userID, @hashed_userID"}
-        };
-
         internal GamerInfo GetGamerInfoByHashedID(string hashedUserID)
         {
             try
@@ -45,7 +30,6 @@ namespace TBZ.DatabaseQueryService
                             GamerInfo gamer = new GamerInfo();
                             reader.Read();
                             gamer.GamerTag = reader.GetString("gamerTag");
-                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
                             gamer.HashedUserID = reader.GetString("hashedUserID");
                             conn.Close();
                             return gamer;
@@ -57,15 +41,6 @@ namespace TBZ.DatabaseQueryService
             {
                 return null;
             }
-        }
-
-        public bool TableExist(string tableName)
-        {
-            if (!tables.ContainsKey(tableName))
-            {
-                throw new ArgumentException("Table does not exist");
-            }
-            return true;
         }
 
         public void InsertUserAcc(User tempUser)
@@ -99,10 +74,10 @@ namespace TBZ.DatabaseQueryService
                     msalt.GenerateHash();
                     tempUser.Password = msalt.message;
 
-                    comm.CommandText = "INSERT INTO userid(userID, hashed_userID) " +
-                    "VALUES(@userID, @hashed_userID)";
+                    comm.CommandText = "INSERT INTO userid(userID, hashedUserID) " +
+                    "VALUES(@userID, @hashedUserID)";
                     comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
-                    comm.Parameters.AddWithValue("@hashed_userID", msalt.message);
+                    comm.Parameters.AddWithValue("@hashedUserID", msalt.message);
                     comm.ExecuteNonQuery();
                     comm.Parameters.Clear();
                     conn.Close();
@@ -186,9 +161,9 @@ namespace TBZ.DatabaseQueryService
                     comm.CommandText = "INSERT INTO event_player_info(eventID, hasheduserID, roleID, claim) VALUES(@eventID, @hasheduserID, @roleID, @claim)";
 
                     comm.Parameters.AddWithValue("@eventID", eventPlayer.EventID);
-                    comm.Parameters.AddWithValue("@hashedUserID", eventPlayer.hashedUserID);
-                    comm.Parameters.AddWithValue("@roleID", eventPlayer.roleID);
-                    comm.Parameters.AddWithValue("@claim", eventPlayer.claim);
+                    comm.Parameters.AddWithValue("@hashedUserID", eventPlayer.HashedUserID);
+                    comm.Parameters.AddWithValue("@roleID", eventPlayer.RoleID);
+                    comm.Parameters.AddWithValue("@claim", eventPlayer.Claim);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
@@ -283,7 +258,6 @@ namespace TBZ.DatabaseQueryService
                         {
                             reader.Read();
                             gamer.GamerTag = reader.GetString("gamerTag");
-                            gamer.GamerTagID = reader.GetInt32("gamerTagID");
                             gamer.HashedUserID = reader.GetString("hashedUserID");
                             conn.Close();
                             return gamer;
@@ -346,7 +320,7 @@ namespace TBZ.DatabaseQueryService
                 using (MySqlDataReader reader0 = selectCmd.ExecuteReader())
                 {
                     reader0.Read();
-                    string hashedUserID = reader0.GetString("hashed_userID");
+                    string hashedUserID = reader0.GetString("hashedUserID");
                     conn.Close();
                     return hashedUserID;
                 }

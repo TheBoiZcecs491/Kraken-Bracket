@@ -12,8 +12,21 @@
               v-model="EventName"
               label="Event Name"
               :rules="eventNameRule"
-              placeholder="Event Name of your choice"
+              placeholder="Kraken Bracket Championship"
               required
+              class="EventName-input"
+            >
+            </v-text-field>
+
+            <v-text-field
+              v-model="EventAddress"
+              label="Event Address"
+              :rules="eventAddressRule"
+              placeholder="Ex. 1234 Street Name"
+              required
+              :hint= remainingAddressCount.toString()
+              v-on:keyup="countdownAddress"
+              class="EventAddress-input"
             >
             </v-text-field>
 
@@ -24,8 +37,9 @@
                 label="Event Description"
                 :rules="eventDescriptionRule"
                 :placeholder="'Quick description of the Event \n (700 char max)'"
-                :hint= remainingCount.toString()
-                v-on:keyup="countdown"
+                :hint= remainingDescriptionCount.toString()
+                v-on:keyup="countdownDescription"
+                class="EventDescription-input"
                 >
                 </v-textarea>
               </v-col>
@@ -35,7 +49,7 @@
               <v-row>
                 <v-col cols="12" lg="6">
                   <v-menu
-                    v-model="menu1"
+                    v-model="menuStartDate"
                     :close-on-content-click="false"
                     :nudge-left="-40"
                     translate="scale-transition"
@@ -50,12 +64,13 @@
                         v-on="on"
                         required
                         readonly
+                        class="StartDate-input"
                       >
                       </v-text-field>
                     </template>
                     <v-date-picker
                       v-model="StartDate"
-                      @input="menu1 = false"
+                      @input="menuStartDate = false"
                       :min="currentDate"
                       :max="EndDate"
                     >
@@ -67,8 +82,8 @@
                 
                 <v-col cols="12" lg="6">
                   <v-menu
-                    ref="menu2"
-                    v-model="menu2"
+                    ref="menuStartTime"
+                    v-model="menuStartTime"
                     :close-on-content-click="false"
                     :nudge-left="40"
                     :return-value.sync="time"
@@ -89,7 +104,7 @@
                       </v-text-field>
                     </template>
                   <v-time-picker
-                    v-if="menu2"
+                    v-if="menuStartTime"
                     v-model="StartTime"
                     full-width
                   >
@@ -103,7 +118,7 @@
               <v-row>
                 <v-col cols="12" lg="6">
                   <v-menu
-                    v-model="menu3"
+                    v-model="menuEndDate"
                     :close-on-content-click="false"
                     :nudge-left="-40"
                     translate="scale-transition"
@@ -123,7 +138,7 @@
                     </template>
                     <v-date-picker
                       v-model="EndDate"
-                      @input="menu3 = false"
+                      @input="menuEndDate = false"
                       :min="StartDate"
                     >
                     </v-date-picker>
@@ -134,8 +149,8 @@
 
                 <v-col cols="12" lg="6">
                     <v-menu
-                      ref="menu4"
-                      v-model="menu4"
+                      ref="menuEndTime"
+                      v-model="menuEndTime"
                       :close-on-content-click="false"
                       :nudge-left="40"
                       :return-value.sync="time"
@@ -156,7 +171,7 @@
                       </v-text-field>
                     </template>
                     <v-time-picker
-                      v-if="menu4"
+                      v-if="menuEndTime"
                       v-model="EndTime"
                       full-width
                     ></v-time-picker>
@@ -167,10 +182,19 @@
             <v-btn
               :disable="!valid"
               x-large
-              @click="Submit"
+              @click="SubmitCreate"
             >
             Create Event
             </v-btn>
+
+            <!-- <v-btn-if=this.$store.user.systemID
+              :disable="!valid"
+              x-large
+              @click="SubmitUpdate"
+            >
+            Create Event
+            </v-btn> -->
+
           </v-col>
         </v-row>
       </v-form>
@@ -181,57 +205,88 @@
 <script>
 import axios from "axios";
 import { authComputed } from "../store/helpers.js";
+
 export default {
   props: ["id"],
   components:{},
   computed: {
     ...authComputed
   },
+
   data:() =>({
     currentDate: new Date().toISOString().substr(0,10),
-    EventAddress: "1111",
-    Host:"1111",
+    Host:"",
     valid: true,
     topMenu:null,
     time:null,
-    menu1:false,
-    menu2:false,
-    menu3:false,
-    menu4:false,
-    EventName:"1111",
-    EventDescription:"1111",
+    menuStartDate:false,
+    menuStartTime:false,
+    menuEndDate:false,
+    menuEndTime:false,
+
+    EventName:"",
+    eventNameRule:  
+    [value => !!value || 'Event name required',
+    value => (value || '').length >= 5 || 'Min 5 characters', 
+    value => (value || '').length <= 75 || 'Max 75 characters'],
+    
+    EventAddress: "",
+    EventAddressRule:
+    [value => !!value || 'Event Address required',
+    value => (value || '').length >= 5 || 'Min 5 characters', 
+    value => (value || '').length <= 75 || 'Max 75 characters'],
+    
+    EventDescription:"",
     eventDescriptionRule: 
     [value => (value ||'').length <= 700 ||'max 700 characters'],
     StartDate:null,
     StartTime:null,
     EndDate:null,
     EndTime:null,
-    eventNameRule:  
-    [value => !!value || 'Event name required',
-    value => (value || '').length >= 5 || 'Min 5 characters', 
-    value => (value || '').length <= 75 || 'Max 75 characters'],
-    maxCount: 700,
-    remainingCount: 700,
+    
+    maxNameCount: 75,
+    remainingNameCount: 75,    
+
+    maxAddressCount: 75,
+    remainingAddressCount: 75,
+
+    maxDescriptionCount: 700,
+    remainingDescriptionCount: 700,
+
     hasError: false
   }),
   methods: {
-    Submit(){
+    checkIfHost(){},
+    SubmitUpdate(){
+      axios.post(`https://localhost:44352/api/events/`)
+    },
+    SubmitCreate(){
       // this.$refs.form.validate()
-      axios.post(`https://localhost:44352/api/events/createEvent/${this.EventName}`,{
+      let res = axios.post(`https://localhost:44352/api/events/createEvent`,{
         EventName: this.EventName,
         Address: this.EventAddress,
         Description: this.EventDescription,
         StartDate: this.StartDate + " " + this.StartTime,
-        EndDate: this.EndDate + " " + this.EndTime
-        // Host:this.$store.state.user.systemID.toISOString
-      }
-      );
+        EndDate: this.EndDate + " " + this.EndTime,
+        Host: this.$store.state.gamerInfo.hashedUserID
+      })
+      .then(function (response) {
+      console.log(response);
+      });
+      console.log(`Data: ${res.data}`);
+      // this.$refs.form.reset()
       // setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
     },
-    countdown: function() {
-      this.remainingCount = this.maxCount - this.EventDescription.length;
-      this.hasError = this.remainingCount < 0;
-    }
+
+    countdownDescription: function() {
+      this.remainingDescriptionCount = this.maxDescriptionCount - this.EventDescription.length;
+      this.hasError = this.remainingDescriptionCount < 0;
+    },
+    
+    countdownAddress: function() {
+      this.remainingAddressCount = this.maxAddressCount - this.EventAddress.length;
+      this.hasError = this.remainingAddressCount < 0;
+    },
   },
 }
 </script>

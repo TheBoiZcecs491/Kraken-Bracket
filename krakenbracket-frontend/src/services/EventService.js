@@ -17,4 +17,13 @@ export default {
   getEventByID(eventID) {
     return apiClient.get("api/events/" + eventID);
   },
+  getEventHost(eventID){
+    return apiClient.get("api/events/GetEventHost/" + eventID)
+  },
+  // checkHost(eventID, hashedUserID){
+  //   return apiClient.get("api/events/checkHost");
+  // },
+  // checkResgistration(eventID, hashedUserID){
+  //   return apiClient.get("api/events/checkRegistration");
+  // }
 };

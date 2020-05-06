@@ -54,6 +54,24 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        public int getLatestID()
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string selectQuery = "SELECT * FROM event_info ORDER BY eventID DESC LIMIT 1";
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
+                int eventID;
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    reader.Read();
+                    eventID = reader.GetInt32("eventID");
+                }
+                conn.Close();
+                return eventID;
+            }
+        }
+
         public String GetEventHost(int eventID)
         {
             int roleID = 0; //change this when host roleID changes in the database
@@ -65,13 +83,14 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     "WHERE event_info.eventID={0} and roleID={1}", eventID, roleID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                 conn.Open();
+                string gamerTag;
                 using (MySqlDataReader reader = selectCmd.ExecuteReader())
                 {
                     reader.Read();
-                    string gamerTag = reader.GetString("gamerTag");
-                    conn.Close();
-                    return gamerTag;
+                    gamerTag = reader.GetString("gamerTag");
                 }
+                conn.Close();
+                return gamerTag;
             }
         }
 
@@ -86,9 +105,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     string selectQuery = string.Format("SELECT * FROM event_info WHERE eventID={0}", eventID);
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                     conn.Open();
+                    EventInfo eventObj = new EventInfo();
                     using (MySqlDataReader reader = selectCmd.ExecuteReader())
                     {
-                        EventInfo eventObj = new EventInfo();
                         reader.Read();
                         eventObj.EventID = reader.GetInt32("eventID");
                         eventObj.EventName = reader.GetString("event_name");
@@ -98,10 +117,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.EndDate = reader.GetDateTime("end_date");
                         eventObj.StatusCode = reader.GetInt32("status_code");
                         eventObj.Reason = reader.GetString("reason");
-                        conn.Close();
-                        eventObj.Host = GetEventHost(eventID);
-                        return eventObj;
                     }
+                    conn.Close();
+                    eventObj.Host = GetEventHost(eventID);
+                    return eventObj;
                 }
             }
         }
@@ -113,19 +132,19 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 string selectQuery = string.Format("SELECT * FROM event_player_info WHERE eventID={0} and hashedUserID={1}", eventID, userID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                 conn.Open();
+                EventPlayerInfo eventObj = new EventPlayerInfo();
                 using (MySqlDataReader reader = selectCmd.ExecuteReader())
                 {
-                    EventPlayerInfo eventObj = new EventPlayerInfo();
                     reader.Read();
                     eventObj.EventID = reader.GetInt32("eventID");
-                    eventObj.hashedUserID = reader.GetString("hashedUserID");
-                    eventObj.roleID = reader.GetInt32("roleID");
-                    eventObj.claim = reader.GetString("claim");
-                    eventObj.statusCode = reader.GetInt32("status_code");
+                    eventObj.HashedUserID = reader.GetString("hashedUserID");
+                    eventObj.RoleID = reader.GetInt32("roleID");
+                    eventObj.Claim = reader.GetString("claim");
+                    eventObj.StatusCode = reader.GetInt32("status_code");
                     eventObj.reason = reader.GetString("reason");
-                    conn.Close();
-                    return eventObj;
                 }
+                conn.Close();
+                return eventObj;
             }
         }
 
@@ -153,6 +172,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         listOfEvents.Add(eventObj);
                     }
                 }
+                conn.Close();
                 return listOfEvents;
             }
         }
@@ -179,6 +199,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         listOfBracketsInEvent.Add(bracketID);
                     }
                 }
+                conn.Close();
                 return listOfBracketsInEvent;
             }
         }
@@ -212,6 +233,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         listOfEvents.Add(eventObj);
                     }
                 }
+                conn.Close();
             }
             return listOfEvents;
         }
