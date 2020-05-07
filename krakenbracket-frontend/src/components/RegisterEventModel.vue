@@ -2,10 +2,10 @@
   <v-app>
     <div style="text-align: left">
       <!-- <RegisterBracketModel :key="bracket.id" :bracket="bracket" /> -->
-      <router-link v-show="(bracket.statusCode === 0 && bracket.playerCount < 128)"
+      <router-link 
         :to="{
-          name: 'bracket-registration',
-          params: { id: bracket.bracketID }
+          name: 'event-registration',
+          params: { id: event.eventID }
         }"
         class="register-btn"
       >
@@ -17,18 +17,11 @@
       </router-link>
       <div v-if="bracket.statusCode === 1">
         <p>
-          <strong>NOTE:</strong> Registration is disabled; bracket has already
+          <strong>NOTE:</strong> Registration is disabled; Event has already
           completed
         </p>
       </div>
-      <div v-else-if="bracket.statusCode === 2">
-        <p>
-          <strong>NOTE:</strong> Registration is disabled; bracket is in
-          progress
-        </p>
-      </div>
       <v-btn
-        v-show="bracket.statusCode !== 0 || bracket.playerCount === 128"
         disabled
         >Register!</v-btn
       >
@@ -39,7 +32,7 @@
 <script>
 export default {
   props: {
-    bracket: Object
+    event: Object
   },
 };
 </script>

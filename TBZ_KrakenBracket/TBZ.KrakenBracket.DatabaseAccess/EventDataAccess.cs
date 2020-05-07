@@ -15,6 +15,34 @@ namespace TBZ.KrakenBracket.DatabaseAccess
         Database DB = new Database();
         private MySqlConnection conn;
 
+        public bool OpenConnection()
+        {
+            conn = new MySqlConnection(DB.GetConnString()));
+            try
+            {
+                conn.Open();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool CloseConnection()
+        {
+            conn = new MySqlConnection(DB.GetConnString()));
+            try
+            {
+                conn.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public EventInfo InsertEvent(EventInfo eventObj)
         {
             databaseQuery.InsertEvent(eventObj);
@@ -40,13 +68,11 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     if (reader.Read())
                     {
-                        reader.Close();
                         conn.Close();
                         return true;
                     }
                     else
                     {
-                        reader.Close();
                         conn.Close();
                         return false;
                     }

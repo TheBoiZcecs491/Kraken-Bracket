@@ -15,10 +15,12 @@
     <div v-else-if="statusRegistration">
       <!-- unregister -->
       <p>unregister</p>
+      <UnregisterEventModel :key="event.id" :event="event" />
     </div>
     <div v-else-if="loggedIn">
       <!-- register -->
       <p>register</p>
+      <RegisterEventModel :key="event.id" :event="event" />
     </div>
     <div v-else>
       <!-- log in -->
