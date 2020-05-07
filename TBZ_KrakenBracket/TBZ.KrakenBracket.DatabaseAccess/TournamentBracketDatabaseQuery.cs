@@ -30,13 +30,15 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     using (MySqlCommand comm = conn.CreateCommand())
                     {
-                        comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score, @status_code)";
+                        comm.CommandText = "INSERT INTO bracket_player_info VALUES(@bracketID, @hashedUserID, @roleID, @placement, @score, @claim, @status_code, @reason)";
                         comm.Parameters.AddWithValue("@bracketID", bracketPlayer.BracketID);
                         comm.Parameters.AddWithValue("@hashedUserID", bracketPlayer.HashedUserID);
                         comm.Parameters.AddWithValue("@roleID", bracketPlayer.RoleID);
                         comm.Parameters.AddWithValue("@placement", bracketPlayer.Placement);
                         comm.Parameters.AddWithValue("@score", bracketPlayer.Score);
+                        comm.Parameters.AddWithValue("@claim", bracketPlayer.Claim);
                         comm.Parameters.AddWithValue("@status_code", bracketPlayer.StatusCode);
+                        comm.Parameters.AddWithValue("@reason", bracketPlayer.Reason);
                         conn.Open();
                         comm.ExecuteNonQuery();
                         conn.Close();
@@ -44,7 +46,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     }
                 }
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }

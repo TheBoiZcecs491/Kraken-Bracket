@@ -100,6 +100,7 @@
                                 </template>
                                 <v-date-picker
                                  v-model="startDate"
+                                 :max="endDate"
                                  @input="menu1 = false"
                                  ></v-date-picker>
                             </v-menu>
@@ -165,6 +166,7 @@
                                 </template>
                                 <v-date-picker
                                 v-model="endDate"
+                                :min="startDate"
                                 @input="menu3 = false"
                                 ></v-date-picker>
                             </v-menu>
@@ -274,7 +276,7 @@ export default {
     methods: {
         Submit() {
             this.$refs.form.validate()
-            axios.post(`https://localhost:44352/api/brackets/createBracket/${this.BracketName}`,{
+            axios.post(`https://localhost:44352/api/brackets/createBracket/`,{
                 BracketName: this.BracketName,
                 PlayerCount: this.PlayerCount,
                 GamePlayed: this.GamePlayed,

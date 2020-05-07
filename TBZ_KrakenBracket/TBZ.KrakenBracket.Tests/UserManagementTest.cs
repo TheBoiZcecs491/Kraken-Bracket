@@ -2,14 +2,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using TBZ.DatabaseAccess;
 using TBZ.KrakenBracket.DataHelpers;
 using TBZ.UM_Manager;
 
 //these two are for my reset button
 using MySql.Data.MySqlClient;
 using TBZ.DatabaseConnectionService;
-using TBZ.KrakenBracket.DataHelpers;
 
 namespace TBZ.UserManagementTest
 {
@@ -35,7 +33,7 @@ namespace TBZ.UserManagementTest
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "TRUNCATE TABLE `user_information`";
+                    comm.CommandText = System.IO.File.ReadAllText(@"C:\Extra_Programs\VSCodeRepos\Kraken-Bracket\mySQLQueryScripts\dbSetup.sql");
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
@@ -146,7 +144,6 @@ namespace TBZ.UserManagementTest
             Assert.AreEqual(expected, actual);
 
             // Delete user to clean database
-            ResetDB();
         }
 
         /// <summary>
@@ -197,7 +194,6 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.AreEqual(expected, actual);
-            ResetDB();
         }
 
         /// <summary>
@@ -249,7 +245,6 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.AreEqual(expected, actual);
-            ResetDB();
         }
 
         /// <summary>
@@ -292,7 +287,6 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
 
-            ResetDB();
 
         }
 
@@ -344,7 +338,6 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            ResetDB();
         }
 
         [TestMethod]
@@ -384,7 +377,6 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            ResetDB();
         }
 
         /// <summary>
@@ -436,7 +428,6 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
 
             // Delete user to clean database
-            ResetDB();
         }
 
         /// <summary>
@@ -487,7 +478,6 @@ namespace TBZ.UserManagementTest
             CollectionAssert.AreEqual(expected[1], actual[1]);
 
             // Delete users to clean database
-            ResetDB();
         }
 
         /// <summary>
@@ -538,7 +528,6 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsTrue(result);
-            ResetDB();
         }
 
         /// <summary>
@@ -577,7 +566,6 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
-            ResetDB();
         }
 
         [TestMethod]
@@ -614,7 +602,6 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
-            ResetDB();
         }
 
         /// <summary>
@@ -661,7 +648,6 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            ResetDB();
         }
 
         /// <summary>
@@ -709,7 +695,6 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            ResetDB();
         }
 
         /// <summary>
@@ -760,7 +745,6 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            ResetDB();
         }
 
 
@@ -810,7 +794,6 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsTrue(result);
-            ResetDB();
         }
 
         [TestMethod]
@@ -848,7 +831,6 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
-            ResetDB();
         }
 
         /// <summary>
@@ -888,7 +870,6 @@ namespace TBZ.UserManagementTest
 
             // Assert
             Assert.IsFalse(result);
-            ResetDB();
         }
 
 
@@ -940,7 +921,6 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            ResetDB();
         }
 
         /// <summary>
@@ -994,7 +974,6 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            ResetDB();
         }
 
         /// <summary>
@@ -1050,7 +1029,6 @@ namespace TBZ.UserManagementTest
             // Assert
             CollectionAssert.AreEqual(expected[0], actual[0]);
             CollectionAssert.AreEqual(expected[1], actual[1]);
-            ResetDB();
         }
 
 

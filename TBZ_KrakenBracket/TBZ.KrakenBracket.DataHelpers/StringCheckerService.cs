@@ -20,13 +20,20 @@ namespace TBZ.StringChecker
         public const char emailDelim = '@';
         public const int emailMaxLength = 200;
         public const int passwdMaxLength = 2000;
+        public const int passwdMinLength = 12;
+        public const int nameMaxLength = 20;
+        public const int nameMinLength = 2;
 
         //regex stuffs
+        public const int timeoutMilliseconds = 300;
+        /*
         public const string DomainNormalizer = @"(@)(.+)$";
         public const string emailPattern =
             @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
             @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$"
             ;
+        */
+        //public const string namePattern = @"^\w*$";
     }
     public class StringCheckerService
     {
@@ -57,6 +64,50 @@ namespace TBZ.StringChecker
 
         //anyway ima just copy pasta the methods I had in Registration service.
         //for now, but at some point I wana make this extra shiny.
+        
+        public bool isSecurePassword()
+        {
+            // okay here is the thing
+            // trying to create an algorithm that checks for a secure password a bit too complex.
+            // it can be cone but for now im using a simple character requierment.
+            //HACK: im just going to check if the password can meet the 4 criteria.
+            string compRes = this.theString;
+
+            //status bools
+            bool hasLower = false;
+            bool hasUpper = false;
+            bool hasNumber = false;
+            bool hasSpecial = false;
+
+            // do we have a lowerCase character?
+            foreach (char i in Constants.lowercaseChars)
+            {
+                if (compRes.Contains(i)) { hasLower = true; break; }
+            }
+            // do we have an UPPERCASE character?
+            foreach (char i in Constants.uppercaseChars)
+            {
+                if (compRes.Contains(i)) { hasUpper = true; break; }
+            }
+            // do we have a number?
+            foreach (char i in Constants.numberChars)
+            {
+                if (compRes.Contains(i)) { hasNumber = true; break; }
+            }
+            // do we have a special printable character?
+            foreach (char i in Constants.specialChars)
+            {
+                if (compRes.Contains(i)) { hasSpecial = true; break; }
+            }
+            // check if the password is too long, and return the status
+            return (hasLower & 
+                hasUpper & 
+                hasNumber & 
+                hasSpecial & 
+                (compRes.Length >= Constants.passwdMinLength & compRes.Length <= Constants.passwdMaxLength)
+                );
+        }
+
         public bool isValidEmail()
         {
             // checks if the email is legit.
@@ -97,92 +148,33 @@ namespace TBZ.StringChecker
                 lookPrior = look;
             }
             // check if the email is too long, and THEN return the status.
-            return (result & compRes.Length <= Constants.emailMaxLength);
+            return (foundAtSign & result & compRes.Length <= Constants.emailMaxLength);
         }
 
-        public bool isSecurePassword()
+        public bool isValidName(bool allowNumbers = false)
         {
-            // okay here is the thing
-            // trying to create an algorithm that checks for a secure password a bit too complex.
-            // it can be cone but for now im using a simple character requierment.
-            //HACK: im just going to check if the password can meet the 4 criteria.
-            string compRes = this.theString;
-
-            //status bools
-            bool hasLower = false;
-            bool hasUpper = false;
-            bool hasNumber = false;
-            bool hasSpecial = false;
-
-            // do we have a lowerCase character?
-            foreach (char i in Constants.lowercaseChars)
-            {
-                if (compRes.Contains(i)) { hasLower = true; break; }
-            }
-            // do we have an UPPERCASE character?
-            foreach (char i in Constants.uppercaseChars)
-            {
-                if (compRes.Contains(i)) { hasUpper = true; break; }
-            }
-            // do we have a number?
-            foreach (char i in Constants.numberChars)
-            {
-                if (compRes.Contains(i)) { hasNumber = true; break; }
-            }
-            // do we have a special printable character?
-            foreach (char i in Constants.specialChars)
-            {
-                if (compRes.Contains(i)) { hasSpecial = true; break; }
-            }
-            // check if the password is too long, and return the status
-            return (hasLower & hasUpper & hasNumber & hasSpecial & (compRes.Length >= 8 & compRes.Length <= Constants.passwdMaxLength));
-        }
-
-        public bool isValidEmail2()
-        {
-            //me writing the email checker, part 2 electric boogalo.
-            //also I MAY have nicked this from https://docs.microsoft.com/en-us/dotnet/standard/base-types/how-to-verify-that-strings-are-in-valid-email-format
-            //dont worry ima make it look like I did NOT copy it enterly.
             string copied = this.theString;
-            //is it NOT empty?
-            if (!string.IsNullOrWhiteSpace(copied) & !(copied.Length > Constants.emailMaxLength))
+
+            if (!string.IsNullOrWhiteSpace(copied) &
+                (copied.Length >= Constants.nameMinLength & copied.Length <= Constants.nameMaxLength))
             {
-                try
-                {
-                    copied = Regex.Replace(
-                        copied,
-                        Constants.DomainNormalizer,
-                        this.DomainMapper,
-                        RegexOptions.None,
-                        TimeSpan.FromMilliseconds(200)
-                        );
-                }
-                catch (RegexMatchTimeoutException e) { return false; }
-                catch (ArgumentException e) { return false; }
-                try
-                {
-                    return Regex.IsMatch(
-                        copied,
-                        Constants.emailPattern,
-                        RegexOptions.IgnoreCase,
-                        TimeSpan.FromMilliseconds(250)
-                        );
-                }
-                catch (RegexMatchTimeoutException) { return false; }
+                if (allowNumbers) return true;
+                //check for only the letters.
 
+                foreach(char i in copied.ToLower())
+                {
+                    bool charCorrect = false;
+                    foreach(char j in Constants.lowercaseChars)
+                    {
+                        if (i == j)
+                            charCorrect = true;
+                    }
+                    if (!charCorrect)
+                        return false;
+                }
+                return true;
             }
-            else { return false; }
-
-        }
-        private string DomainMapper(Match match)
-        {
-            // Use IdnMapping class to convert Unicode domain names.
-            var idn = new IdnMapping();
-
-            // Pull out and process domain name (throws ArgumentException on invalid)
-            var domainName = idn.GetAscii(match.Groups[2].Value);
-
-            return match.Groups[1].Value + domainName;
+            return false;
         }
     }
 }
