@@ -1,0 +1,38 @@
+<template>
+        <div>
+          <h1>Create a new Event</h1>
+          <eventForm />
+        </div>
+</template>
+
+<script>
+import eventForm from "@/components/EventCreateForm.vue"
+import { authComputed } from "../store/helpers.js";
+// import NotLoggedIn from "../components/NotLoggedIn.vue";
+export default {
+    props: ["id"],
+    components: {
+      eventForm,
+      // NotLoggedIn
+  },
+    computed: {
+    ...authComputed,
+  },
+  data() {
+      return {
+          EventInfo: {
+              EventName:"",
+              Address:"",
+              EventDescription:"",
+              StartDate:"",
+              StartTime:"",
+              Host:"",
+          }
+      }
+    }
+    // methods:{
+    //   checkRegistration(){},
+    //   checkHost(){}
+    // }
+  };
+</script>
