@@ -254,6 +254,7 @@ export default {
     menu3: false,
     menu4: false,
     BracketName: "",
+    Host: "",
     PlayerCount: "",
     GamePlayed: "",
     GamingPlatform: "",
@@ -278,6 +279,7 @@ export default {
             this.$refs.form.validate()
             axios.post(`https://localhost:44352/api/brackets/createBracket/`,{
                 BracketName: this.BracketName,
+                Host: this.$store.state.gamerInfo.gamerTag,
                 PlayerCount: this.PlayerCount,
                 GamePlayed: this.GamePlayed,
                 GamingPlatform: this.GamingPlatform,

@@ -250,12 +250,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     using (MySqlCommand insertCmd = conn.CreateCommand())
                     {
-                        insertCmd.CommandText = "INSERT INTO bracket_info(bracketID, bracket_name, bracketTypeID, " +
+                        insertCmd.CommandText = "INSERT INTO bracket_info(bracketID, bracket_name, host, bracketTypeID, " +
                             "number_player, game_played, gaming_platform, rules, start_date, end_date, status_code )" +
-                            "VALUES(@bracketID, @bracket_name, @bracketTypeID, @number_player, @game_played, " +
+                            "VALUES(@bracketID, @bracket_name, @host, @bracketTypeID, @number_player, @game_played, " +
                             "@gaming_platform, @rules, @start_date, @end_date, @status_code)";
                         insertCmd.Parameters.AddWithValue("@bracketID", bracketFields.BracketID);
                         insertCmd.Parameters.AddWithValue("@bracket_name", bracketFields.BracketName);
+                        insertCmd.Parameters.AddWithValue("@host", bracketFields.Host);
                         insertCmd.Parameters.AddWithValue("@bracketTypeID", bracketFields.BracketTypeID);
                         insertCmd.Parameters.AddWithValue("@number_player", bracketFields.PlayerCount);
                         insertCmd.Parameters.AddWithValue("@game_played", bracketFields.GamePlayed);
