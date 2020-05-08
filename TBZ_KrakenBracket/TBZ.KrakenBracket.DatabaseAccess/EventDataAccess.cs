@@ -15,32 +15,16 @@ namespace TBZ.KrakenBracket.DatabaseAccess
         Database DB = new Database();
         private MySqlConnection conn;
 
-        public bool OpenConnection()
+        public void OpenConnection()
         {
-            conn = new MySqlConnection(DB.GetConnString()));
-            try
-            {
-                conn.Open();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            conn = new MySqlConnection(DB.GetConnString());
+            conn.Open();
         }
 
-        public bool CloseConnection()
+        public void CloseConnection()
         {
-            conn = new MySqlConnection(DB.GetConnString()));
-            try
-            {
-                conn.Close();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            conn = new MySqlConnection(DB.GetConnString());
+            conn.Close();
         }
 
         public EventInfo InsertEvent(EventInfo eventObj)
@@ -68,12 +52,11 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     if (reader.Read())
                     {
-                        conn.Close();
+                        reader.Close();
                         return true;
                     }
                     else
                     {
-                        conn.Close();
                         return false;
                     }
                 }
@@ -92,8 +75,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     reader.Read();
                     eventID = reader.GetInt32("eventID");
+                    reader.Close();
                 }
-                conn.Close();
                 return eventID;
             }
         }
@@ -103,19 +86,19 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             int roleID = 0; //change this when host roleID changes in the database
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
+                conn.Open();
                 string selectQuery = string.Format("SELECT gamerTag FROM event_info " +
                     "inner join event_player_info on event_info.eventID=event_player_info.eventID " +
                     "inner join gamer_info on event_player_info.hashedUserID=gamer_Info.hashedUserID " +
                     "WHERE event_info.eventID={0} and roleID={1}", eventID, roleID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                conn.Open();
                 string gamerTag;
                 using (MySqlDataReader reader = selectCmd.ExecuteReader())
                 {
                     reader.Read();
                     gamerTag = reader.GetString("gamerTag");
+                    reader.Close();
                 }
-                conn.Close();
                 return gamerTag;
             }
         }
@@ -128,9 +111,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 using (conn = new MySqlConnection(DB.GetConnString()))
                 {
+                    conn.Open();
                     string selectQuery = string.Format("SELECT * FROM event_info WHERE eventID={0}", eventID);
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                    conn.Open();
                     EventInfo eventObj = new EventInfo();
                     using (MySqlDataReader reader = selectCmd.ExecuteReader())
                     {
@@ -143,8 +126,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.EndDate = reader.GetDateTime("end_date");
                         eventObj.StatusCode = reader.GetInt32("status_code");
                         eventObj.Reason = reader.GetString("reason");
+                        reader.Close();
                     }
-                    conn.Close();
                     eventObj.Host = GetEventHost(eventID);
                     return eventObj;
                 }
@@ -168,8 +151,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     eventObj.Claim = reader.GetString("claim");
                     eventObj.StatusCode = reader.GetInt32("status_code");
                     eventObj.reason = reader.GetString("reason");
+                    reader.Close();
                 }
-                conn.Close();
                 return eventObj;
             }
         }
@@ -197,8 +180,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.Host = GetEventHost(eventObj.EventID);
                         listOfEvents.Add(eventObj);
                     }
+                    reader.Close();
                 }
-                conn.Close();
                 return listOfEvents;
             }
         }
@@ -224,8 +207,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         int bracketID = reader.GetInt32("bracketID");
                         listOfBracketsInEvent.Add(bracketID);
                     }
+                    reader.Close();
                 }
-                conn.Close();
                 return listOfBracketsInEvent;
             }
         }
@@ -258,8 +241,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
                         listOfEvents.Add(eventObj);
                     }
+                    reader.Close();
                 }
-                conn.Close();
             }
             return listOfEvents;
         }

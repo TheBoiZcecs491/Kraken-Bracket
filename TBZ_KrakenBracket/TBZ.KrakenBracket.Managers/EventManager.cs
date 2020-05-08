@@ -38,7 +38,8 @@ namespace TBZ.KrakenBracket.Managers
 
         public object GetEventByID(int eventID)
         {
-            return _eventDataAccess.GetEventByID(eventID);
+            var EventByID = _eventDataAccess.GetEventByID(eventID);
+            return EventByID;
         }
 
         public object GetEventHost(int eventID)
