@@ -188,6 +188,45 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        public List<BracketCompetitor> GetCompetitorListByBracketID(int bracketID)
+        {
+            try
+            {
+                var DB = new Database();
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+                {
+                    string selectQuery2 = string.Format("SELECT " +
+                        "bracket_player_info.bracketID, " +
+                        "bracket_player_info.score, " +
+                        "bracket_player_info.placement, " +
+                        "gamer_info.gamerTag " +
+                        "FROM " +
+                        "((bracket_player_info INNER JOIN gamer_info ON bracket_player_info.hashedUserID = gamer_info.hashedUserID)) " +
+                        "WHERE bracket_player_info.bracketID='{0}'", bracketID);
+
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery2, conn);
+                    conn.Open();
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        List<BracketCompetitor> listBracketCompetitors = new List<BracketCompetitor>();
+                        while (reader.Read())
+                        {
+                            BracketCompetitor bracketPlayer = new BracketCompetitor(bracketID,
+                                reader.GetInt32("score"), reader.GetInt32("placement"), reader.GetString("gamerTag"));
+                            listBracketCompetitors.Add(bracketPlayer);
+                        }
+                        conn.Close();
+                        return listBracketCompetitors;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+           
+        }
+
         /// <summary>
         /// Disqualifies gamer from bracket instead of removing them completely
         /// from it

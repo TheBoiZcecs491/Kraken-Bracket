@@ -178,6 +178,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         }
 
+        public List<BracketCompetitor> GetCompetitorListByBracketID(int bracketID)
+        {
+            TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
+            var listOfCompetitors = tournamentBracketDatabaseQuery.GetCompetitorListByBracketID(bracketID);
+            return listOfCompetitors;
+        }
+
         /// <summary>
         /// Inserts gamer into bracket
         /// </summary>

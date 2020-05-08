@@ -157,5 +157,23 @@ namespace ClientApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet("{bracketID}/competitorInfo")]
+        [Produces("application/json")]
+        public IActionResult GetCompetitorListByBracketID(int bracketID)
+        {
+            try
+            {
+                return Ok(TournamentBracketManager.GetCompetitorListByBracketID(bracketID));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

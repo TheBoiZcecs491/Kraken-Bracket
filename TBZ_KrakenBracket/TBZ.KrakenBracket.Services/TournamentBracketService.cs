@@ -162,5 +162,10 @@ namespace TBZ.KrakenBracket.Services
         {
             return _tournamentBracketDataAccess.UnregisterGamerFromBracket(systemID, bracketID);
         }
+
+        public List<BracketCompetitor> GetCompetitorListByBracketID(int bracketID)
+        {
+            return _tournamentBracketDataAccess.GetCompetitorListByBracketID(bracketID);
+        }
     }
 }
