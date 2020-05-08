@@ -70,5 +70,10 @@ namespace TBZ.KrakenBracket.Managers
             return listOfBrackts;
         }
 
+        public object CheckGamerInEvent(int eventID, string gamer)
+        {
+            bool isUserInEvent = _eventDataAccess.UserInEvent(eventID, gamer);
+            return isUserInEvent;
+        }
     }
 }

@@ -6,51 +6,52 @@
         <p>404: The bracket you have been looking for is not found</p>
       </div>
       <div v-else>
-      <h1 id="title">{{ bracket.bracketName }}</h1>
-      <div style="text-align: left">
-        <v-row>
-          <v-col cols="12" lg="6">
-            <h3 class="dates">Start Date: {{ bracket.startDate }}</h3>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <h3 class="dates">End Date: {{ bracket.endDate }}</h3>
-          </v-col>
-        </v-row>
-        <h4>
-          Number of players: {{ bracket.playerCount ? bracket.playerCount : 0 }}
-          <span v-show="bracket.playerCount === 128">(MAX)</span>
-        </h4>
-        <h4>Game: {{ bracket.gamePlayed }}</h4>
-        <h4>Gaming platform: {{ bracket.gamingPlatform }}</h4>
-        <div>
-          <h4>Rules:</h4>
-          <p>{{ bracket.rules }}</p>
-        </div>
-        <!-- State if the user is not logged in -->
-        <div v-if="!loggedIn">
-          <p>
-            <strong>NOTE:</strong> You are not currently logged in. Please login
-            to register for this bracket
-          </p>
-          <router-link
-            :to="{
-              name: 'login-view'
-            }"
+        <h1 id="title">{{ bracket.bracketName }}</h1>
+        <div style="text-align: left">
+          <v-row>
+            <v-col cols="12" lg="6">
+              <h3 class="dates">Start Date: {{ bracket.startDate }}</h3>
+            </v-col>
+            <v-col cols="12" lg="6">
+              <h3 class="dates">End Date: {{ bracket.endDate }}</h3>
+            </v-col>
+          </v-row>
+          <h4>
+            Number of players:
+            {{ bracket.playerCount ? bracket.playerCount : 0 }}
+            <span v-show="bracket.playerCount === 128">(MAX)</span>
+          </h4>
+          <h4>Game: {{ bracket.gamePlayed }}</h4>
+          <h4>Gaming platform: {{ bracket.gamingPlatform }}</h4>
+          <div>
+            <h4>Rules:</h4>
+            <p>{{ bracket.rules }}</p>
+          </div>
+          <!-- State if the user is not logged in -->
+          <div v-if="!loggedIn">
+            <p>
+              <strong>NOTE:</strong> You are not currently logged in. Please
+              login to register for this bracket
+            </p>
+            <router-link
+              :to="{
+                name: 'login-view'
+              }"
+            >
+              <v-btn color="primary">Login</v-btn>
+            </router-link>
+          </div>
+          <div
+            v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)"
           >
-            <v-btn color="primary">Login</v-btn>
-          </router-link>
+            <p>You are already registered for this event</p>
+            <UnregisterBracketModel :key="bracket.id" :bracket="bracket" />
+          </div>
+          <!-- State if the user is logged in -->
+          <div v-else>
+            <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
+          </div>
         </div>
-        <div
-          v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)"
-        >
-          <p>You are already registered for this event</p>
-          <UnregisterBracketModel :key="bracket.id" :bracket="bracket" />
-        </div>
-        <!-- State if the user is logged in -->
-        <div v-else>
-          <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
-        </div>
-      </div>
       </div>
     </v-container>
   </v-app>
@@ -81,18 +82,18 @@ export default {
       })
       .catch(err => {
         // console.log(err);
-        this.error = err
+        this.error = err;
       });
   },
   computed: {
-    ...authComputed,
+    ...authComputed
   },
   methods: {
     registeredStatus(bracketPlayerInfo, bracket) {
       for (let index = 0; index < bracketPlayerInfo.length; index++) {
         if (bracketPlayerInfo[index].bracketID === bracket.bracketID) {
           return true;
-        } 
+        }
       }
     }
   }

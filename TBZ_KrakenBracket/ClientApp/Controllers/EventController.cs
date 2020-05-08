@@ -62,5 +62,12 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.GetEventHost(eventID));
         }
 
+        [HttpGet("{eventID}/statusRegistration/{gamer}")]
+        [Produces("application/json")]
+        public IActionResult CheckGamerInEvent(int eventID, string gamer)
+        {
+            return Ok(_eventManager.CheckGamerInEvent(eventID, gamer));
+        }
+
     }
 }

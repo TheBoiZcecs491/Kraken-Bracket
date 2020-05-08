@@ -1,30 +1,23 @@
 <template>
   <v-app>
-    <div style="text-align: left">
+    <div>
       <!-- <RegisterBracketModel :key="bracket.id" :bracket="bracket" /> -->
-      <router-link 
+      <router-link
         :to="{
           name: 'event-registration',
           params: { id: event.eventID }
         }"
         class="register-btn"
       >
-        <v-btn
-          color="primary"
-          type="submit"
-          >Register!</v-btn
-        >
+        <v-btn color="primary" type="submit">Register!</v-btn>
       </router-link>
-      <div v-if="bracket.statusCode === 1">
+      <div v-if="false">
         <p>
           <strong>NOTE:</strong> Registration is disabled; Event has already
           completed
         </p>
+        <v-btn disabled>Register!</v-btn>
       </div>
-      <v-btn
-        disabled
-        >Register!</v-btn
-      >
     </div>
   </v-app>
 </template>
@@ -33,7 +26,7 @@
 export default {
   props: {
     event: Object
-  },
+  }
 };
 </script>
 

@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <p>
       Your one stop organizer for tournaments
-    </p>    
+    </p>
   </div>
 </template>
 

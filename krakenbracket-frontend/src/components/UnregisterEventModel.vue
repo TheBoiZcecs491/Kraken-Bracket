@@ -75,7 +75,7 @@ export default {
       axios.delete(
         `https://localhost:44352/api/events/${this.event.eventID}/unregister/${this.$store.state.user.systemID}`,
         {
-         eventID: this.event.eventID,
+          eventID: this.event.eventID,
           systemID: this.$store.state.user.systemID
         }
       );

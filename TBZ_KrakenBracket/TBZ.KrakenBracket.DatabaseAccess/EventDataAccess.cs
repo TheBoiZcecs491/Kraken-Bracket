@@ -103,6 +103,32 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        public bool UserInEvent(int eventID, string gamer)
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                conn.Open();
+                string selectQuery = string.Format("SELECT gamerTag FROM event_info " +
+                    "inner join event_player_info on event_info.eventID=event_player_info.eventID " +
+                    "inner join gamer_info on event_player_info.hashedUserID=gamer_Info.hashedUserID " +
+                    "WHERE event_info.eventID={0} and gamerTag='{1}'", eventID, gamer);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        return true;
+                    }
+                    else
+                    {
+                        reader.Close();
+                        return false;
+                    }
+                }
+            }
+        }
+
         public EventInfo GetEventByID(int eventID)
         {
             bool eventExist = CheckEventExistByID(eventID);
