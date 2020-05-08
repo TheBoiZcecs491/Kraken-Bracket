@@ -7,6 +7,7 @@
       </div>
       <div v-else>
       <h1 id="title">{{ bracket.bracketName }}</h1>
+      <h2>Host: {{bracket.host}}</h2>
       <div style="text-align: left">
         <v-row>
           <v-col cols="12" lg="6">

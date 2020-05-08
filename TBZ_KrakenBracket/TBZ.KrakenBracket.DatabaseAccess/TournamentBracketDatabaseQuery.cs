@@ -173,6 +173,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         reader.Read();
                         bracket.BracketID = reader.GetInt32("bracketID");
                         bracket.BracketName = reader.GetString("bracket_name");
+                        bracket.Host = reader.GetString("host");
                         bracket.BracketTypeID = reader.GetInt32("bracketTypeID");
                         bracket.PlayerCount = reader.GetInt32("number_player");
                         bracket.GamePlayed = reader.GetString("game_played");
@@ -291,6 +292,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         BracketInfo bracket = new BracketInfo();
                         bracket.BracketID = reader.GetInt32("bracketID");
                         bracket.BracketName = reader.GetString("bracket_name");
+                        bracket.Host = reader.GetString("host");
                         bracket.PlayerCount = reader.GetInt32("number_player");
                         bracket.GamePlayed = reader.GetString("game_played");
                         bracket.GamingPlatform = reader.GetString("gaming_platform");
