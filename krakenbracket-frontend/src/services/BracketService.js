@@ -21,7 +21,7 @@ export default {
   getBracketPlayerInfo(email) {
     return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`);
   },
-  getGamerInfo(email){
+  getGamerInfo(email) {
     return apiClient.get(`api/brackets/${email}/gamerInfo`);
   }
-}
+};

@@ -24,7 +24,7 @@ import { authComputed } from "../store/helpers.js";
 // import NotLoggedIn from "../components/NotLoggedIn.vue";
 export default {
   components: {
-    EventCard,
+    EventCard
     // NotLoggedIn
   },
   computed: {
