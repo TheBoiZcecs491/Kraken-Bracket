@@ -10,6 +10,7 @@ namespace TBZ.KrakenBracket.DataHelpers
         public string BracketName { get; set; }
         public int BracketTypeID { get; set; }
         public int PlayerCount { get; set; }
+        public int MaxCapacity { get; set; }
         public string GamePlayed { get; set; }
         public string GamingPlatform { get; set; }
         public string Rules { get; set; }
@@ -23,13 +24,14 @@ namespace TBZ.KrakenBracket.DataHelpers
         {
             BracketName = bracketName;
         }
-        public BracketInfo(int bracketID, string bracketName, int bracketTypeID, int playerCount, string gamePlayed, string gamingPlatform,
+        public BracketInfo(int bracketID, string bracketName, int bracketTypeID, int playerCount,  string gamePlayed, string gamingPlatform,
             string rules, DateTime startDate, DateTime endDate, int statusCode)
         {
             BracketID = bracketID;
             BracketName = bracketName;
             BracketTypeID = bracketTypeID; // 1: Single Elimination, 2: Double Elimination, 3: Round Robin
             PlayerCount = playerCount;
+            
             GamePlayed = gamePlayed;
             GamingPlatform = gamingPlatform;
             Rules = rules;
@@ -37,13 +39,14 @@ namespace TBZ.KrakenBracket.DataHelpers
             EndDate = endDate;
             StatusCode = statusCode;
         }
-        public BracketInfo(int bracketID, string bracketName, int bracketTypeID, int playerCount, string gamePlayed, string gamingPlatform,
+        public BracketInfo(int bracketID, string bracketName, int bracketTypeID, int playerCount, int maxCapacity, string gamePlayed, string gamingPlatform,
             string rules, DateTime startDate, DateTime endDate, int statusCode, string host)
         {
             BracketID = bracketID;
             BracketName = bracketName;
             BracketTypeID = bracketTypeID; // 1: Single Elimination, 2: Double Elimination, 3: Round Robin
             PlayerCount = playerCount;
+            MaxCapacity = maxCapacity;
             GamePlayed = gamePlayed;
             GamingPlatform = gamingPlatform;
             Rules = rules;
