@@ -12,6 +12,7 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import SearchView from "../views/SearchView.vue";
 import RegistrationSuccess from "../views/RegistrationSuccess.vue";
+// import FourPlayerBracketModel from "../components/bracket-components/FourPlayerBracketModel.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -88,7 +89,8 @@ const routes = [
     name: "registrationSuccess-view",
     component: RegistrationSuccess,
     props: true
-  }
+  },
+
 ];
 
 const router = new VueRouter({

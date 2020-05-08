@@ -9,14 +9,14 @@
         :key="competitor.bracketID" 
         :competitor="competitor">{{competitor.gamerTag}}</p> -->
         <p>{{competitors}}</p>
-        <p>{{bracket.bracketID}}</p>
+        <!-- <p>{{bracket}}</p> -->
     </div>
   
 </template>
 
 <script>
 import Bracket from "@/components/bracket-components/Bracket.vue";
-import BracketService from "@/services/BracketService.js";
+// import BracketService from "@/services/BracketService.js";
 
 // var competitorList = this.competitors;
 // console.log(competitorList);
@@ -43,26 +43,37 @@ const rounds = [
   }
 ];
 export default {
-    props: ["id"],
+  props:{
+    competitors: Array
+  },
   components: {
     Bracket
   },
   data() {
     return {
       rounds: rounds,
-      competitors: []
     };
   },
-  created(){
-      BracketService.getBracketCompetitorInfo(this.id)
-    .then(response => {
-        this.competitors = response.data;
-        console.log(response);
-      })
-      .catch(err => {
-        // console.log(err);
-        this.error = err;
-      });
-  }
+
+  // .then(() => {
+  //             setTimeout(() => {
+  //               this.$store.dispatch("bracketPlayerInfo", this.email);
+  //             }, 500);
+  // created(){
+  //   var bracketID = this.bracket.bracketID;
+  //   console.log(bracketID);
+  //   BracketService.getBracketCompetitorInfo(bracketID)
+  //   .then(() =>{ setTimeout(() =>{
+      
+  //   })}
+  //     // response => {
+  //     //   this.competitors = response.data;
+  //     //   console.log(response);
+  //     // })
+  //     // .catch(err => {
+  //     //   // console.log(err);
+  //     //   this.error = err;
+  //     // });
+  
 };
 </script>
