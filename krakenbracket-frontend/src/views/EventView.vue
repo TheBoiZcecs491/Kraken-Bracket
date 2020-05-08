@@ -8,11 +8,19 @@
         <h2>Description: {{ event.eventDescription }}</h2>
       </div>
     </v-container>
-    <div v-if="statusHost">
+    <div v-if="false">
+      <router-link
+        :to="{
+          name: 'login-view'
+        }"
+      >
+        <v-btn color="primary">Update</v-btn>
+      </router-link>
       <!-- manage event -->
       <p>host update</p>
+      <RegisterEventModel :key="event.id" :event="event" />
     </div>
-    <div v-else-if="statusRegistration">
+    <div v-else-if="true">
       <!-- unregister -->
       <p>unregister</p>
       <UnregisterEventModel :key="event.id" :event="event" />
@@ -25,13 +33,6 @@
     <div v-else>
       <!-- log in -->
       <p>4</p>
-      <router-link
-            :to="{
-              name: 'login-view'
-            }"
-          >
-            <v-btn color="primary">Login</v-btn>
-          </router-link>
     </div>
   </v-app>
 </template>
@@ -39,10 +40,16 @@
 <script>
 import EventService from "@/services/EventService.js";
 import { authComputed } from "../store/helpers.js";
+import UnregisterEventModel from "@/components/UnregisterEventModel.vue";
+import RegisterEventModel from "@/components/RegisterEventModel.vue";
 import axios from "axios";
 // import NotLoggedIn from "../components/NotLoggedIn.vue";
 export default {
   props: ["id"],
+  components:{
+    UnregisterEventModel,
+    RegisterEventModel
+  },
   computed: {
     ...authComputed
   },

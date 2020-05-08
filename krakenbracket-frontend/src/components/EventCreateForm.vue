@@ -226,7 +226,7 @@ export default {
     menuEndDate:false,
     menuEndTime:false,
 
-    EventName:"",
+    EventName:"testevent name",
     eventNameRule:  
     [value => !!value || 'Event name required',
     value => (value || '').length >= 5 || 'Min 5 characters', 
@@ -257,6 +257,10 @@ export default {
 
     hasError: false
   }),
+  created(){
+    this.EventAddress = this.$store.state.user.errorMessage
+
+  },
   methods: {
     checkIfHost(){},
     SubmitUpdate(){

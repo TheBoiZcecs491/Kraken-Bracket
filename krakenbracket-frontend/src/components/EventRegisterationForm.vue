@@ -125,10 +125,10 @@ export default {
       if (this.$refs.signUpForm.validate()) {
         if((this.email == this.$store.state.user.email) && this.gamerTag == this.$store.state.gamerInfo.gamerTag){
            axios.post(
-          `https://localhost:44352/api/events/${this.event.eventID}/register/${this.gamer}`,
+          `https://localhost:44352/api/events/${this.event.eventID}/register/${this.$store.state.gamerInfo.hashedUserId}`,
           {
             eventID: this.event.eventID,
-            gamerTag: this.gamerTag,
+            hashedUserID: this.$store.state.gamerInfo.hashedUserId
           }
         ).then(() =>{
           setTimeout(() => {
