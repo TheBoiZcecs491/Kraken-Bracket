@@ -1,6 +1,9 @@
 <template>
   <v-app>
     <v-container id="page-layout-fix">
+      <!-- <p v-for="competitor in competitors" 
+      :key="competitor.bracketID" 
+      :competitor="competitor">{{competitor.gamerTag}}</p> -->
       <v-btn @click="$router.go(-1)">&lt; BACK</v-btn>
       <div v-if="error" class="red--text">
         <p>404: The bracket you have been looking for is not found</p>
@@ -52,8 +55,14 @@
             <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
           </div>
         </div>
-        <TwoPlayerBracketModel/>
-        <FourPlayerBracketModel/>
+        <div v-if="false">
+          <TwoPlayerBracketModel/>
+        </div>
+        
+        <FourPlayerBracketModel
+          :key="bracket.id"
+          :bracket="bracket"
+        />
       </div>
     </v-container>
   </v-app>
@@ -79,13 +88,22 @@ export default {
     return {
       dialog: false,
       error: null,
-      bracket: {}
+      bracket: {},
+      competitors: []
     };
   },
   created() {
     BracketService.getBracketByID(this.id)
       .then(response => {
         this.bracket = response.data;
+      })
+      .catch(err => {
+        // console.log(err);
+        this.error = err;
+      });
+    BracketService.getBracketCompetitorInfo(this.id)
+    .then(response => {
+        this.competitors = response.data;
       })
       .catch(err => {
         // console.log(err);
