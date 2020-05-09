@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="updatePlayer1BracketPlacements">Update players</button>
+        <button @click="updatePlayerBracketPlacements">Update players</button>
         <bracket :rounds="rounds">
             <template #player="{ player }">
                 {{ player.name }}
@@ -13,6 +13,8 @@
 
 <script>
 import Bracket from "@/components/bracket-components/Bracket.vue";
+import BracketService from "@/services/BracketService.js";
+
 export default {
   props:{
     competitors: Array
@@ -69,7 +71,8 @@ export default {
     }
   },
   created(){
-      var competitorList = new Array(8);
+      setTimeout(() => {
+           var competitorList = new Array(8);
     //   console.log(competitorList);
     for (let index = 0; index < this.competitors.length; index++) {
         competitorList[index] = this.competitors[index].gamerTag;
@@ -86,7 +89,6 @@ export default {
     // this.rounds[0].games[2].player2.name = competitorList[5];
     // this.rounds[0].games[3].player1.name = competitorList[6];
     // this.rounds[0].games[3].player2.name = competitorList[7];
-  
     // Algorithm used to populate the bracket display
     var j = 0;
     for (let i = 0; i < 6; i++) {
@@ -95,14 +97,37 @@ export default {
         this.rounds[0].games[j].player2.name = competitorList[i + 1];
         j++;
     }
-    // this.rounds[1].games[0].player1.name = competitorList[0];
+
+      }, 100);
   },
   methods:{
-      updatePlayer1BracketPlacements(){
+      updatePlayerBracketPlacements(){
           var bracketLayer = prompt("Enter the bracket layer number");
           var matchNumber = prompt("Enter the match number");
           var gamerTag = prompt("Enter the gamerTag");
+          var playerPlacement = prompt("Player 1 or 2?");
           console.log(gamerTag + " <-----");
+          console.log(this.rounds[bracketLayer].games[matchNumber].player1.name);
+          if(playerPlacement == 1){
+              this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
+              for (let i = 0; i < this.competitors.length; i++) {
+                  if (this.competitors[i] == gamerTag){
+                      BracketService.updateBracketStandings(this.competitors[0].bracketID, this.competitors[i])
+                  }
+              }
+          }
+          else if (playerPlacement == 2){
+              this.rounds[bracketLayer].games[matchNumber].player2.name = gamerTag;
+              for (let i = 0; i < this.competitors.length; i++) {
+                  if (this.competitors[i] == gamerTag){
+                      BracketService.updateBracketStandings(this.competitors[0].bracketID, this.competitors[i])
+                  }
+              }
+          }
+          else {
+              console.log("BAD. THAT'S A NO NO");
+          }
+          
         //   if(matchNumber % 2 == 0 ){
         //       if(bracketLayer == (this.rounds.length - 1)){
         //         if(this.rounds[bracketLayer].games[matchNumber].player1.name == gamerTag){
@@ -114,8 +139,7 @@ export default {
         //       this.rounds[bracketLayer].games[matchNumber+1];
         //     }
         //   }
-        console.log(this.rounds[bracketLayer].games[matchNumber].player1.name);
-        this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
+       
         
         // if(bracketLayer === (this.rounds.length - 1)){ // for grand finals
         	
