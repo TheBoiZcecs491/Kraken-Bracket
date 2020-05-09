@@ -27,6 +27,24 @@
             <h4>Rules:</h4>
             <p>{{ bracket.rules }}</p>
           </div>
+
+          <div>
+          <div v-if="bracket.maxCapacity === 2">
+            <TwoPlayerBracketModel/>
+          </div>
+          <div v-else-if="bracket.maxCapacity === 4">
+            <FourPlayerBracketModel
+            :key="competitors.id"
+            :competitors="competitors"
+          />
+          </div>
+          <div v-else-if="bracket.maxCapacity === 8">
+            <EightPlayerBracketModel
+            :key="competitors.id"
+            :competitors="competitors"
+          />
+          </div>
+        </div>
           <!-- State if the user is not logged in -->
           <div v-if="!loggedIn">
             <p>
@@ -52,16 +70,6 @@
             <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
           </div>
         </div>
-        <div v-if="false">
-          <TwoPlayerBracketModel/>
-        </div>
-        <div v-if="competitors">
-          <FourPlayerBracketModel
-          :key="competitors.id"
-          :competitors="competitors"
-        />
-        </div>
-        
       </div>
     </v-container>
   </v-app>
@@ -74,6 +82,7 @@ import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue";
 import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
 import TwoPlayerBracketModel from "@/components/bracket-components/TwoPlayerBracketModel.vue";
 import FourPlayerBracketModel from "@/components/bracket-components/FourPlayerBracketModel.vue";
+import EightPlayerBracketModel from "@/components/bracket-components/EightPlayerBracketModel.vue";
 
 export default {
   props: ["id"],
@@ -81,7 +90,8 @@ export default {
     UnregisterBracketModel,
     RegisterBracketModel,
     TwoPlayerBracketModel,
-    FourPlayerBracketModel
+    FourPlayerBracketModel,
+    EightPlayerBracketModel
   },
   data() {
     return {
