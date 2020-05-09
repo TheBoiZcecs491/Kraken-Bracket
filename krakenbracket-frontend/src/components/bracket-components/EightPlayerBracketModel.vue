@@ -28,6 +28,7 @@ export default {
     return {
       rounds: [
           {
+              // Quarter finals
             games: [
                 {
                     player1: { name: "?", winner: false },
@@ -47,7 +48,7 @@ export default {
                 }
             ]
         },
-        //Semi
+        //Semi finals
         {
             games: [
                 {
@@ -60,7 +61,7 @@ export default {
                 }
             ]
         },
-        //Final
+        //Finals
         {
             games: [
                 {
@@ -82,6 +83,24 @@ export default {
         competitorList[index] = "?";
     }
     console.log(competitorList)
+    console.log(this.rounds[0].games[0].player1.name)
+
+    for (let i = 0; i < this.competitors.length; i++) {
+        for (let j = 0; j < 2; j++) {
+            if(j % 2 === 0){
+                this.rounds[0].games[i].player1.name = competitorList[i + j];
+            }
+            else{
+                this.rounds[0].games[i].player2.name = competitorList[i + j];
+            }
+        }
+        
+        // else {
+        //     // this.rounds[0].games[index].player1.name = competitorList[index];
+        //     this.rounds[0].games[index].player2.name = competitorList[index];
+        // }
+        
+    }
   }
 }
 </script>
