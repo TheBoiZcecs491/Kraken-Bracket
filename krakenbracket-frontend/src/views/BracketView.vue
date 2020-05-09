@@ -110,14 +110,15 @@ export default {
         // console.log(err);
         this.error = err;
       });
-    BracketService.getBracketCompetitorInfo(this.id)
+    setTimeout(BracketService.getBracketCompetitorInfo(this.id)
     .then(response => {
         this.competitors = response.data;
       })
       .catch(err => {
         // console.log(err);
         this.error = err;
-      });
+      }), 1000);
+    
   },
   computed: {
     ...authComputed
