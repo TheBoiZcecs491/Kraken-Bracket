@@ -16,11 +16,16 @@
 
 <script>
 import Bracket from "@/components/bracket-components/Bracket.vue";
-// import BracketService from "@/services/BracketService.js";
-
-// var competitorList = this.competitors;
-// console.log(competitorList);
-const rounds = [
+export default {
+  props:{
+    competitors: Array
+  },
+  components: {
+    Bracket
+  },
+  data() {
+    return {
+      rounds: [
   {
     games: [
       {
@@ -41,39 +46,9 @@ const rounds = [
       }
     ] 
   }
-];
-export default {
-  props:{
-    competitors: Array
-  },
-  components: {
-    Bracket
-  },
-  data() {
-    return {
-      rounds: rounds,
+]
     };
   },
 
-  // .then(() => {
-  //             setTimeout(() => {
-  //               this.$store.dispatch("bracketPlayerInfo", this.email);
-  //             }, 500);
-  // created(){
-  //   var bracketID = this.bracket.bracketID;
-  //   console.log(bracketID);
-  //   BracketService.getBracketCompetitorInfo(bracketID)
-  //   .then(() =>{ setTimeout(() =>{
-      
-  //   })}
-  //     // response => {
-  //     //   this.competitors = response.data;
-  //     //   console.log(response);
-  //     // })
-  //     // .catch(err => {
-  //     //   // console.log(err);
-  //     //   this.error = err;
-  //     // });
-  
 };
 </script>
