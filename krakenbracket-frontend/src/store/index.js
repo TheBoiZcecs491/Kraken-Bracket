@@ -2,13 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import BracketService from "@/services/BracketService.js";
+import EventService from "../services/EventService";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     user: null,
     bracketPlayerInfo: [],
-    gamerInfo: null
+    gamerInfo: null,
+    eventPlayerInfo: [],
   },
   mutations: {
     SET_USER_DATA(state, userData) {
@@ -31,6 +33,14 @@ export default new Vuex.Store({
       state.gamerInfo = data;
       localStorage.setItem("gamerInfo", JSON.stringify(data));
       axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+    },
+    SET_EVENT_PLAYER_INFO(state, data){
+      state.eventPlayerInfo = data;
+      localStorage.setItem("eventPlayerInfo", JSON.stringify(data));
+      axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+    },
+    CLEAR_EVENT_PLAYER_INFO(){
+      localStorage.removeItem("eventPlayerInfo");
     }
   },
   actions: {
@@ -60,6 +70,14 @@ export default new Vuex.Store({
       BracketService.getGamerInfo(email).then(({ data }) => {
         commit("SET_USER_GAMER_INFO", data);
       });
+    },
+    eventPlayerInfo({ commit}, eventID){
+      EventService.getEventInfo(eventID).then(({data }) => {
+      commit("SET_EVENT_PLAYER_INFO", data);
+      });
+    },
+    removeEventPlayerInfo({commit}){
+      commit("CLEAR_EVENT_PLAYER_INFO");
     }
   },
   getters: {
@@ -74,6 +92,9 @@ export default new Vuex.Store({
     },
     gamerInfo(state) {
       return state.gamerInfo;
+    },
+    eventPlayerInfo(state){
+      return state.eventPlayerInfo;
     }
   },
   modules: {}

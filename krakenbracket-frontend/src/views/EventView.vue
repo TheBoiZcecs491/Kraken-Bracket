@@ -2,10 +2,10 @@
   <v-app>
     <v-container>
       <div>
-        <h1>Event View {{ event.EventName }}</h1>
+        <h1>Event View {{ event.eventName }}</h1>
         <h5>Hosted by {{ event.host }}</h5>
         <h5>Location: {{ event.address }}</h5>
-        <h2>Description: {{ event.eventDescription }}</h2>
+        <h2>Description: {{ event.description }}</h2>
       </div>
       <v-row>
         <v-col cols="12" lg="12"></v-col>
@@ -27,7 +27,7 @@
             <p>unregister</p>
             <UnregisterEventModel :key="event.id" :event="event" />
           </div>
-          <div v-else-if="loggedIn && statusRegistration()">
+          <div v-else-if="loggedIn && !statusRegistration()">
             <!-- register -->
             <p>register</p>
             <RegisterEventModel :key="event.id" :event="event" />
@@ -49,7 +49,7 @@ import EventService from "@/services/EventService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterEventModel from "@/components/UnregisterEventModel.vue";
 import RegisterEventModel from "@/components/RegisterEventModel.vue";
-import axios from "axios";
+// import axios from "axios";
 // import NotLoggedIn from "../components/NotLoggedIn.vue";
 export default {
   props: ["id"],
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       event: {},
-      HostGamerTag: null
+      HostGamerTag: event.host,
     };
   },
   created() {
@@ -77,19 +77,23 @@ export default {
       EventService.getEventHost(this.id).then(response => {
         this.HostGamerTag = response;
       });
+    this.$store
+      .dispatch("eventPlayerInfo", this.id);
+  },
+  beforeDestroy() {
+    this.$store.dispatch("removeEventPlayerInfo");
   },
   methods: {
     statusRegistration() {
       if (!this.loggedIn) {
         return false;
-      } else {
-        axios.get(
-          `https://localhost:44352/api/events/${this.event.eventID}/statusRegistration/${this.$store.state.gamerInfo.gamerTag}`,
-          {
-            eventID: this.event.eventID,
-            gamerTag: this.$store.state.gamerInfo.gamerTag
+      } 
+      else {
+        for (let index = 0; index < this.$store.state.eventPlayerInfo.length; index++) {
+          if (this.$store.state.eventPlayerInfo[index].hasheduserID === this.$store.state.gamerInfo.hasheduserID) {
+            return true;
           }
-        );
+        }
       }
     },
     statusHost() {

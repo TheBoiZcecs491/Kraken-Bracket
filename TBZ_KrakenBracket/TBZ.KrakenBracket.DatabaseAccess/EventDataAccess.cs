@@ -63,7 +63,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public int getLatestID()
+        public int GetLatestID()
         {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -86,46 +86,50 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             int roleID = 0; //change this when host roleID changes in the database
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
-                conn.Open();
                 string selectQuery = string.Format("SELECT gamerTag FROM event_info " +
                     "inner join event_player_info on event_info.eventID=event_player_info.eventID " +
                     "inner join gamer_info on event_player_info.hashedUserID=gamer_Info.hashedUserID " +
                     "WHERE event_info.eventID={0} and roleID={1}", eventID, roleID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
                 string gamerTag;
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                using (MySqlDataReader reader1 = selectCmd.ExecuteReader())
                 {
-                    reader.Read();
-                    gamerTag = reader.GetString("gamerTag");
-                    reader.Close();
+                    reader1.Read();
+                    gamerTag = reader1.GetString("gamerTag");
+                    reader1.Close();
                 }
+                conn.Close();
                 return gamerTag;
             }
         }
 
-        public bool UserInEvent(int eventID, string gamer)
+        public List<EventPlayerInfo> GetAllEventInfoByID(int eventID)
         {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
-                conn.Open();
-                string selectQuery = string.Format("SELECT gamerTag FROM event_info " +
-                    "inner join event_player_info on event_info.eventID=event_player_info.eventID " +
-                    "inner join gamer_info on event_player_info.hashedUserID=gamer_Info.hashedUserID " +
-                    "WHERE event_info.eventID={0} and gamerTag='{1}'", eventID, gamer);
+                string selectQuery = string.Format("SELECT * FROM event_player_info WHERE eventID={0}", eventID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                conn.Open();
+
+                List<EventPlayerInfo> eventPlayerInfos = new List<EventPlayerInfo>();
+                using (MySqlDataReader reader2 = selectCmd.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader2.Read())
                     {
-                        reader.Close();
-                        return true;
+                        EventPlayerInfo eventPlayer = new EventPlayerInfo();
+                        eventPlayer.EventID = reader2.GetInt32("eventID");
+                        eventPlayer.HashedUserID = reader2.GetString("hashedUserID");
+                        eventPlayer.RoleID = reader2.GetInt32("roleID");
+                        eventPlayer.StatusCode = reader2.GetInt32("status_code");
+                        eventPlayer.Claim = reader2.GetString("claim");
+                        eventPlayerInfos.Add(eventPlayer);
                     }
-                    else
-                    {
-                        reader.Close();
-                        return false;
-                    }
+                    reader2.Close();
+
                 }
+                conn.Close();
+                return eventPlayerInfos;
             }
         }
 
@@ -137,24 +141,25 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 using (conn = new MySqlConnection(DB.GetConnString()))
                 {
-                    conn.Open();
                     string selectQuery = string.Format("SELECT * FROM event_info WHERE eventID={0}", eventID);
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                    conn.Open();
                     EventInfo eventObj = new EventInfo();
-                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    using (MySqlDataReader reader3 = selectCmd.ExecuteReader())
                     {
-                        reader.Read();
-                        eventObj.EventID = reader.GetInt32("eventID");
-                        eventObj.EventName = reader.GetString("event_name");
-                        eventObj.Address = reader.GetString("address");
-                        eventObj.Description = reader.GetString("event_description");
-                        eventObj.StartDate = reader.GetDateTime("start_date");
-                        eventObj.EndDate = reader.GetDateTime("end_date");
-                        eventObj.StatusCode = reader.GetInt32("status_code");
-                        eventObj.Reason = reader.GetString("reason");
-                        reader.Close();
+                        reader3.Read();
+                        eventObj.EventID = reader3.GetInt32("eventID");
+                        eventObj.EventName = reader3.GetString("event_name");
+                        eventObj.Address = reader3.GetString("address");
+                        eventObj.Description = reader3.GetString("event_description");
+                        eventObj.StartDate = reader3.GetDateTime("start_date");
+                        eventObj.EndDate = reader3.GetDateTime("end_date");
+                        eventObj.StatusCode = reader3.GetInt32("status_code");
+                        eventObj.Reason = reader3.GetString("reason");
+                        reader3.Close();
                     }
                     eventObj.Host = GetEventHost(eventID);
+                    conn.Close();
                     return eventObj;
                 }
             }

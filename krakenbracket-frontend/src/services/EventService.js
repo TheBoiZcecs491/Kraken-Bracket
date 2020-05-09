@@ -19,7 +19,10 @@ export default {
   },
   getEventHost(eventID) {
     return apiClient.get("api/events/GetEventHost/" + eventID);
-  }
+  },
+  getEventInfo(eventID){
+    return apiClient.get("api/events/GetEventInfo/" + eventID);
+  },
   // checkHost(eventID, hashedUserID){
   //   return apiClient.get("api/events/checkHost");
   // },

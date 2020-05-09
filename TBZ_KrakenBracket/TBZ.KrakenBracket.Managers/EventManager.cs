@@ -12,19 +12,18 @@ namespace TBZ.KrakenBracket.Managers
         private readonly EventDataAccess _eventDataAccess = new EventDataAccess();
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
 
-
-
         public EventInfo CreateEvent(EventInfo eventObj)
         {
             EventPlayerInfo eventPlayer = new EventPlayerInfo();
             //TODO: change to systemID to hash id
             //eventPlayer.hashedUserID = databaseQuery.GetHashedUserID(Int32.Parse(eventObj.Host));
             _eventDataAccess.InsertEvent(eventObj);
-            eventObj.EventID = _eventDataAccess.getLatestID();
+            eventObj.EventID = _eventDataAccess.GetLatestID();
 
             eventPlayer.EventID = eventObj.EventID;
             eventPlayer.HashedUserID = eventObj.Host;
             eventPlayer.RoleID = 0;
+            eventPlayer.Claim = "";
 
             _eventDataAccess.InsertEventPlayer(eventPlayer);
             
@@ -70,10 +69,11 @@ namespace TBZ.KrakenBracket.Managers
             return listOfBrackts;
         }
 
-        public object CheckGamerInEvent(int eventID, string gamer)
+        public List<EventPlayerInfo> GetEventInfo(int eventID)
         {
-            bool isUserInEvent = _eventDataAccess.UserInEvent(eventID, gamer);
-            return isUserInEvent;
+            var listOfEventPlayerInfo = _eventDataAccess.GetAllEventInfoByID(eventID);
+
+            return listOfEventPlayerInfo;
         }
     }
 }
