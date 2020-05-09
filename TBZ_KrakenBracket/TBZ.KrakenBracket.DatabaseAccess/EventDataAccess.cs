@@ -93,13 +93,12 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                 conn.Open();
                 string gamerTag;
-                using (MySqlDataReader reader1 = selectCmd.ExecuteReader())
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
                 {
-                    reader1.Read();
-                    gamerTag = reader1.GetString("gamerTag");
-                    reader1.Close();
+                    reader.Read();
+                    gamerTag = reader.GetString("gamerTag");
+                    reader.Close();
                 }
-                conn.Close();
                 return gamerTag;
             }
         }
@@ -113,22 +112,21 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 conn.Open();
 
                 List<EventPlayerInfo> eventPlayerInfos = new List<EventPlayerInfo>();
-                using (MySqlDataReader reader2 = selectCmd.ExecuteReader())
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
                 {
-                    while (reader2.Read())
+                    while (reader.Read())
                     {
                         EventPlayerInfo eventPlayer = new EventPlayerInfo();
-                        eventPlayer.EventID = reader2.GetInt32("eventID");
-                        eventPlayer.HashedUserID = reader2.GetString("hashedUserID");
-                        eventPlayer.RoleID = reader2.GetInt32("roleID");
-                        eventPlayer.StatusCode = reader2.GetInt32("status_code");
-                        eventPlayer.Claim = reader2.GetString("claim");
+                        eventPlayer.EventID = reader.GetInt32("eventID");
+                        eventPlayer.HashedUserID = reader.GetString("hashedUserID");
+                        eventPlayer.RoleID = reader.GetInt32("roleID");
+                        eventPlayer.StatusCode = reader.GetInt32("status_code");
+                        eventPlayer.Claim = reader.GetString("claim");
                         eventPlayerInfos.Add(eventPlayer);
                     }
-                    reader2.Close();
+                    reader.Close();
 
                 }
-                conn.Close();
                 return eventPlayerInfos;
             }
         }
@@ -145,21 +143,20 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                     conn.Open();
                     EventInfo eventObj = new EventInfo();
-                    using (MySqlDataReader reader3 = selectCmd.ExecuteReader())
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
                     {
-                        reader3.Read();
-                        eventObj.EventID = reader3.GetInt32("eventID");
-                        eventObj.EventName = reader3.GetString("event_name");
-                        eventObj.Address = reader3.GetString("address");
-                        eventObj.Description = reader3.GetString("event_description");
-                        eventObj.StartDate = reader3.GetDateTime("start_date");
-                        eventObj.EndDate = reader3.GetDateTime("end_date");
-                        eventObj.StatusCode = reader3.GetInt32("status_code");
-                        eventObj.Reason = reader3.GetString("reason");
-                        reader3.Close();
+                        reader.Read();
+                        eventObj.EventID = reader.GetInt32("eventID");
+                        eventObj.EventName = reader.GetString("event_name");
+                        eventObj.Address = reader.GetString("address");
+                        eventObj.Description = reader.GetString("event_description");
+                        eventObj.StartDate = reader.GetDateTime("start_date");
+                        eventObj.EndDate = reader.GetDateTime("end_date");
+                        eventObj.StatusCode = reader.GetInt32("status_code");
+                        eventObj.Reason = reader.GetString("reason");
+                        reader.Close();
                     }
                     eventObj.Host = GetEventHost(eventID);
-                    conn.Close();
                     return eventObj;
                 }
             }
@@ -208,7 +205,6 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
                         eventObj.Reason = reader.GetString("reason");
-                        eventObj.Host = GetEventHost(eventObj.EventID);
                         listOfEvents.Add(eventObj);
                     }
                     reader.Close();

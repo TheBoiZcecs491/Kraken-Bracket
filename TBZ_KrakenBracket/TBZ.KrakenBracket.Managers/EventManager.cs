@@ -32,7 +32,13 @@ namespace TBZ.KrakenBracket.Managers
 
         public List<EventInfo> GetAllEvents()
         {
-            return _eventDataAccess.GetAllEvents();
+            List<EventInfo> events = new List<EventInfo>();
+            events = _eventDataAccess.GetAllEvents();
+            foreach( EventInfo eventObj in events)
+            {
+                eventObj.Host = _eventDataAccess.GetEventHost(eventObj.EventID);
+            }
+            return events;
         }
 
         public object GetEventByID(int eventID)

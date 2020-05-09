@@ -22,12 +22,12 @@
             <p>host update</p>
             <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
           </div>
-          <div v-else-if="loggedIn && statusRegistration()">
+          <div v-else-if="statusRegistration()">
             <!-- unregister -->
             <p>unregister</p>
             <UnregisterEventModel :key="event.id" :event="event" />
           </div>
-          <div v-else-if="loggedIn && !statusRegistration()">
+          <div v-else-if="loggedIn">
             <!-- register -->
             <p>register</p>
             <RegisterEventModel :key="event.id" :event="event" />
@@ -90,7 +90,7 @@ export default {
       } 
       else {
         for (let index = 0; index < this.$store.state.eventPlayerInfo.length; index++) {
-          if (this.$store.state.eventPlayerInfo[index].hasheduserID === this.$store.state.gamerInfo.hasheduserID) {
+          if (this.$store.state.eventPlayerInfo[index].hashedUserID === this.$store.state.gamerInfo.hashedUserID) {
             return true;
           }
         }
