@@ -5,12 +5,7 @@
                 {{ player.name }}
             </template>
         </bracket>
-        <!-- <p v-for="competitor in competitors" 
-        :key="competitor.bracketID" 
-        :competitor="competitor">{{competitor.gamerTag}}</p> -->
         <p>{{competitors}}</p>
-        <!-- <button @click="test">Test</button> -->
-        <!-- <p>{{bracket}}</p> -->
     </div>
   
 </template>
@@ -82,29 +77,21 @@ export default {
             index < competitorList.length; index++) {
         competitorList[index] = "?";
     }
-    console.log(competitorList)
-    console.log(this.rounds[0].games[0].player1.name)
-
-    for (let i = 0; i < this.competitors.length; i++) {
-        if(i === 0) {
-            this.rounds[0].games[i].player1.name = competitorList[0];
-            this.rounds[0].games[i].player2.name = competitorList[1];
-            continue;
-        }
-        for (let j = 0; j < 2; j++) {
-            if(j % 2 === 0){
-                this.rounds[0].games[i].player1.name = competitorList[i + j];
-            }
-            else{
-                this.rounds[0].games[i].player2.name = competitorList[i + j];
-            }
-        }
-        
-        // else {
-        //     // this.rounds[0].games[index].player1.name = competitorList[index];
-        //     this.rounds[0].games[index].player2.name = competitorList[index];
-        // }
-        
+    // this.rounds[0].games[0].player1.name = competitorList[0];
+    // this.rounds[0].games[0].player2.name = competitorList[1];
+    // this.rounds[0].games[1].player1.name = competitorList[2];
+    // this.rounds[0].games[1].player2.name = competitorList[3];
+    // this.rounds[0].games[2].player1.name = competitorList[4];
+    // this.rounds[0].games[2].player2.name = competitorList[5];
+    // this.rounds[0].games[3].player1.name = competitorList[6];
+    // this.rounds[0].games[3].player2.name = competitorList[7];
+  
+    var j = 0;
+    for (let i = 0; i < 6; i++) {
+        if(i !== 0) i++;
+        this.rounds[0].games[j].player1.name = competitorList[i];
+        this.rounds[0].games[j].player2.name = competitorList[i + 1];
+        j++;
     }
   }
 }
