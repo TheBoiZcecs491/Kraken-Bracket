@@ -1,5 +1,6 @@
 <template>
     <div>
+        <button @click="updatePlayer1BracketPlacements">Update players</button>
         <bracket :rounds="rounds">
             <template #player="{ player }">
                 {{ player.name }}
@@ -26,7 +27,7 @@ export default {
               // Quarter finals
             games: [
                 {
-                    player1: { name: "?", winner: false },
+                    player1: { id: "1", name: "?", winner: true },
                     player2: {  name: "?", winner: false }
                 },
                 {
@@ -47,7 +48,7 @@ export default {
         {
             games: [
                 {
-                    player1: {  name: "?", winner: false },
+                    player1: { id: "1", name: "?", winner: false },
                     player2: {  name: "?", winner: false }
                 },
                 {
@@ -86,6 +87,7 @@ export default {
     // this.rounds[0].games[3].player1.name = competitorList[6];
     // this.rounds[0].games[3].player2.name = competitorList[7];
   
+    // Algorithm used to populate the bracket display
     var j = 0;
     for (let i = 0; i < 6; i++) {
         if(i !== 0) i++;
@@ -93,6 +95,49 @@ export default {
         this.rounds[0].games[j].player2.name = competitorList[i + 1];
         j++;
     }
+    // this.rounds[1].games[0].player1.name = competitorList[0];
+  },
+  methods:{
+      updatePlayer1BracketPlacements(){
+          var bracketLayer = prompt("Enter the bracket layer number");
+          var matchNumber = prompt("Enter the match number");
+          var gamerTag = prompt("Enter the gamerTag");
+          console.log(gamerTag + " <-----");
+        //   if(matchNumber % 2 == 0 ){
+        //       if(bracketLayer == (this.rounds.length - 1)){
+        //         if(this.rounds[bracketLayer].games[matchNumber].player1.name == gamerTag){
+        //         this.rounds[bracketLayer].games[matchNumber];
+        //     }
+        //   } 
+        //   else{
+        //       if(this.rounds[bracketLayer].games[matchNumber].player1.name == gamerTag){
+        //       this.rounds[bracketLayer].games[matchNumber+1];
+        //     }
+        //   }
+        console.log(this.rounds[bracketLayer].games[matchNumber].player1.name);
+        this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
+        
+        // if(bracketLayer === (this.rounds.length - 1)){ // for grand finals
+        	
+        // }
+        
+        // else if(matchNumber % 2 === 0 ){ // if odd match, progress into next round's player1
+        //     if(this.rounds[bracketLayer].games[matchNumber].player1.name === gamerTag){
+        //       this.rounds[bracketLayer].games[matchNumber + 1].player1.name = gamerTag;
+        //     }
+        //     else{
+        //       this.rounds[bracketLayer].games[matchNumber + 1].player2.name = gamerTag;
+        //     }
+        //   } 
+        // else{ // if even match, progress into next round as player2
+        //     if(this.rounds[bracketLayer].games[matchNumber].player1.name === gamerTag){
+        //       this.rounds[bracketLayer].games[matchNumber + 1].player1.name = gamerTag;
+        //     }
+        //     else{
+        //       this.rounds[bracketLayer].games[matchNumber + 1].player2.name = gamerTag;
+        //     }
+        // }
+      }
   }
 }
 </script>
