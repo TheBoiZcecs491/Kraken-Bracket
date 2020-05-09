@@ -86,6 +86,11 @@ export default {
     console.log(this.rounds[0].games[0].player1.name)
 
     for (let i = 0; i < this.competitors.length; i++) {
+        if(i === 0) {
+            this.rounds[0].games[i].player1.name = competitorList[0];
+            this.rounds[0].games[i].player2.name = competitorList[1];
+            continue;
+        }
         for (let j = 0; j < 2; j++) {
             if(j % 2 === 0){
                 this.rounds[0].games[i].player1.name = competitorList[i + j];
