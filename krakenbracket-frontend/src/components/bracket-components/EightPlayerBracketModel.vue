@@ -9,7 +9,7 @@
         :key="competitor.bracketID" 
         :competitor="competitor">{{competitor.gamerTag}}</p> -->
         <p>{{competitors}}</p>
-        <button @click="test">Test</button>
+        <!-- <button @click="test">Test</button> -->
         <!-- <p>{{bracket}}</p> -->
     </div>
   
@@ -26,7 +26,8 @@ export default {
   },
   data() {
     return {
-      rounds: [{
+      rounds: [
+          {
             games: [
                 {
                     player1: { name: "?", winner: false },
@@ -71,7 +72,16 @@ export default {
     }
   },
   created(){
-      
+      var competitorList = new Array(8);
+    //   console.log(competitorList);
+    for (let index = 0; index < this.competitors.length; index++) {
+        competitorList[index] = this.competitors[index].gamerTag;
+    }
+     for (let index = this.competitors.length; 
+            index < competitorList.length; index++) {
+        competitorList[index] = "?";
+    }
+    console.log(competitorList)
   }
 }
 </script>
