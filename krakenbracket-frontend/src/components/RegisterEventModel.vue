@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div>
-      <!-- <RegisterBracketModel :key="bracket.id" :bracket="bracket" /> -->
+      <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
       <router-link
         :to="{
           name: 'event-registration',
@@ -13,8 +13,7 @@
       </router-link>
       <div v-if="false">
         <p>
-          <strong>NOTE:</strong> Registration is disabled; Event has already
-          completed
+          <strong>NOTE:</strong> Registration is disabled; Event has ended
         </p>
         <v-btn disabled>Register!</v-btn>
       </div>

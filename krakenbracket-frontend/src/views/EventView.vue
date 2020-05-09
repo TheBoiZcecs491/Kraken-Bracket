@@ -34,8 +34,13 @@
           </div>
           <div v-else>
             <!-- log in -->
-            <p>4</p>
-            <v-btn>Login</v-btn>
+            <router-link
+              :to="{
+                name: 'login-view'
+              }"
+            >
+              <v-btn color="primary">Login</v-btn>
+            </router-link>
           </div>
         </v-col>
         <v-col cols="12" lg="6"></v-col>

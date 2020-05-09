@@ -37,19 +37,11 @@
               <v-row>
                 <v-col cols="12" lg="4"></v-col>
                 <v-col cols="12" lg="4">
-                  <!-- <router-link
-                    v-show="formValidity"
-                    :to="{ name: 'bracket-view', params: bracket.bracketID }"
-                    class="submit-btn"
-                  >
-                    <v-btn @click="submitForm" color="primary">Register!</v-btn>
-                  </router-link> -->
-
                   <v-btn
                     v-show="formValidity"
                     @click="submitForm"
                     color="primary"
-                    >Register!</v-btn
+                    >Confirm</v-btn
                   >
                   <v-btn
                     class="mr-4"
@@ -62,9 +54,6 @@
                   </div>
                 </v-col>
                 <v-col cols="12" lg="4">
-                  <!-- <v-btn class="mr-4" color="error" @click="resetForm"
-                    >Reset Form</v-btn
-                  > -->
                 </v-col>
               </v-row>
             </v-col>
@@ -76,7 +65,7 @@
 </template>
 
 <script>
-import BracketService from "@/services/BracketService.js";
+import EventService from "@/services/EventService.js";
 import axios from "axios";
 import { authComputed } from "../store/helpers.js";
 import NotLoggedIn from "../components/NotLoggedIn.vue";
@@ -89,23 +78,12 @@ export default {
     return {
       bracket: {},
       gamerTag: this.$store.state.gamerInfo.gamerTag,
-      // gamerTagID: "",
       gamer: {
         gamerTag: this.gamerTag
-        // gamerTagID: this.gamerTagID
       },
       error: null,
       email: this.$store.state.user.email,
       emailRules: [
-        // email => !!email || "Email is required",
-        // email =>
-        // email.indexOf("@") !== 0 || "Email should have a name before it",
-        // email => email.includes("@") || "Email should include @ symbol",
-        // email =>
-        //   email.indexOf(".com") - email.indexOf("@") > 1 ||
-        //   "Email should contain a valid domain name",
-        // email =>
-        //   (email.length > 5 && email.length <= 200) || "Invalid email length"
       ],
       gamerTagRules: [
         gamerTag => !!gamerTag || "GamerTag is required",
@@ -124,6 +102,8 @@ export default {
       .catch(error => {
         console.log("Error: " + error.response);
       });
+    this.email = this.$store.state.user.email;
+    this.gamerTag = this.$store.state.gamerInfo.gamerTag;
   },
   methods: {
     submitForm() {
