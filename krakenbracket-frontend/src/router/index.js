@@ -12,6 +12,7 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import SearchView from "../views/SearchView.vue";
 import RegistrationSuccess from "../views/RegistrationSuccess.vue";
+import UserProfileView from "../views/UserProfileView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -88,6 +89,11 @@ const routes = [
     name: "registrationSuccess-view",
     component: RegistrationSuccess,
     props: true
+  },
+  {
+    path: "/user-profile",
+    name: "user-profile-view",
+    component: UserProfileView
   }
 ];
 
