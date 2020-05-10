@@ -89,8 +89,7 @@ const routes = [
     name: "registrationSuccess-view",
     component: RegistrationSuccess,
     props: true
-  },
-
+  }
 ];
 
 const router = new VueRouter({
