@@ -53,7 +53,13 @@
           </div>
           <div v-if="loggedIn">
             <div v-if="bracket.host === this.$store.state.gamerInfo.gamerTag">
-              <v-btn>Update Bracket</v-btn>
+               <router-link
+              :to="{
+                name: 'bracket-update', params: {bracket: this.bracket}
+              }"
+            >
+              <v-btn color="primary">Update Bracket</v-btn>
+            </router-link>
             </div>
           </div>
         </div>
@@ -67,11 +73,13 @@ import BracketService from "@/services/BracketService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue";
 import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
+
 export default {
   props: ["id"],
   components: {
     UnregisterBracketModel,
-    RegisterBracketModel
+    RegisterBracketModel,
+    // UpdateBracketView
   },
   data() {
     return {
