@@ -308,9 +308,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                             "gaming_platform = @gaming_platform, " +
                             "rules = @rules, " +
                             "start_date = @start_date, " +
-                            "end_date = @end_date " +
+                            "end_date = @end_date ," +
                             "reason = @reason" +
-                            "WHERE bracketID = @bracketID";
+                            " WHERE bracketID = @bracketID";
                         updateCmd.Parameters.AddWithValue("@bracketID", bracketFields.BracketID);
                         updateCmd.Parameters.AddWithValue("@bracket_name", bracketFields.BracketName);
                         updateCmd.Parameters.AddWithValue("@bracketTypeID", bracketFields.BracketTypeID);
@@ -328,7 +328,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false; // unsuccessful update
             }
