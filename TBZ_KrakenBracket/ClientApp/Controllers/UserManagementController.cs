@@ -27,5 +27,11 @@ namespace ClientApp.Controllers
             var result = _userManagementManager.SingleCreateUsers(invokingUser, operatedUser);
             return result;
         }
+        [HttpPost]
+        [Route("updateprofile")]
+        public IActionResult RegisterNewUser(RegistrationInput userInput)
+        {
+            return StatusCode(StatusCodes.Status200OK);
+        }
     }
 }

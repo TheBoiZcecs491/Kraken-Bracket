@@ -48,12 +48,12 @@ export default new Vuex.Store({
           commit("SET_USER_DATA", data);
         });
     },
-    updateUser({ commit }, formFill) {
+    updateUser( formFill ) { //{ commit },
       return axios
-        .post("https://localhost:44352/api/updateProfile", formFill)
-        .then(({ data }) => {
-          commit("SET_USER_DATA", data);
-        });
+        .post("https://localhost:44352/usermanagement/updateprofile", formFill)
+        //.then(({ data }) => {
+        //  commit("SET_USER_DATA", data);
+        //});
     },
     logout({commit}){
       commit('CLEAR_USER_DATA')

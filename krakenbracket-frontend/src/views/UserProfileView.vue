@@ -40,10 +40,10 @@
                 required
               ></v-text-field>
               <v-text-field
-                class="password-input"
+                class="current-password-input"
                 label="Password"
                 type="password"
-                v-model="password"
+                v-model="currentPassword"
                 required
               ></v-text-field>
               <v-btn @click="updateUser">
@@ -71,7 +71,7 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
-      password: "",
+      currentPassword: "",
       newPassword: null,
       retypePassword: null,
       error: null,
@@ -88,9 +88,6 @@ export default {
                 this.successMsg = null;
                 this.firstName = this.$store.state.user.firstName;
                 this.lastName = this.$store.state.user.lastName;
-                this.password = "";
-                this.newPassword = null;
-                this.retypePassword = null;
             }
             else{
                 this.errorMsg = null;
@@ -98,19 +95,18 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
-        password: this.password,
+        currentPassword: this.currentPassword,
         newPassword: this.newPassword
       }).then(() =>{
         this.successMsg = "update success";
+        this.$store.state.user.firstName = this.firstName;
+        this.$store.state.user.lastName = this.lastName;
       })
       .catch(err =>{
         this.error = err;
         this.successMsg = null;
         this.firstName = this.$store.state.user.firstName;
         this.lastName = this.$store.state.user.lastName;
-        this.password = "";
-        this.newPassword = null;
-        this.retypePassword = null;
       });
             }
         }
@@ -119,21 +115,23 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
-        password: this.password,
+        currentPassword: this.currentPassword,
         newPassword: null
       }).then(() =>{
         this.successMsg = "update success";
+        this.$store.state.user.firstName = this.firstName;
+        this.$store.state.user.lastName = this.lastName;
       })
       .catch(err =>{
         this.error = err;
         this.successMsg = null;
         this.firstName = this.$store.state.user.firstName;
         this.lastName = this.$store.state.user.lastName;
-        this.password = "";
-        this.newPassword = null;
-        this.retypePassword = null;
       });
         }
+        this.currentPassword = "";
+        this.newPassword = null;
+        this.retypePassword = null;
     }
   },
   computed: {
