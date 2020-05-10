@@ -11,12 +11,6 @@
         <v-card-title class="headline grey lighten-2" primary-title>
           Confirm Unregistration
         </v-card-title>
-        <!-- 
-        Status codes:
-        2 - bracket is in progress
-        1 - bracket not in progress and has already completed
-        0 - bracket not in progress and has not begun
-                 -->
         <div style="text-align: center;">
           <v-card-text v-if="true">
             <p>
@@ -79,9 +73,6 @@ export default {
           systemID: this.$store.state.user.systemID
         }
       );
-      setTimeout(() => {
-        this.$store.dispatch("bracketPlayerInfo", email);
-      }, 500);
     }
   }
 };
