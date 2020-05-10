@@ -110,7 +110,12 @@ export default {
                 this.$store.dispatch("login", {
                     email: this.email,
                     password: this.newPassword
-                });
+                })
+      .then(() =>{
+        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
+        this.$store.dispatch("gamerInfo", this.email)
+      })
+      });
                 this.successMsg = "update success";
                 this.password = "";
                 this.newPassword = null;
@@ -140,7 +145,12 @@ export default {
                 this.$store.dispatch("login", {
                     email: this.email,
                     password: this.password
-                });
+                })
+      .then(() =>{
+        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
+        this.$store.dispatch("gamerInfo", this.email)
+      })
+      });
                 this.successMsg = "update success";
                 this.password = "";
                 this.newPassword = null;
