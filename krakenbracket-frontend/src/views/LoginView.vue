@@ -23,10 +23,15 @@
                 required
               ></v-text-field>
               <v-btn @click="login">Login</v-btn>
-              <p v-if="error" class="red--text">Login failed. Please try again</p>
-              <p v-if="error" class="red--text"><span>{{ this.error }}</span></p>
+              <p v-if="error" class="red--text">
+                Login failed. Please try again
+              </p>
+              <p v-if="error" class="red--text">
+                <span>{{ this.error }}</span>
+              </p>
               <p>
-              <router-link to="/register">register</router-link> a new account.
+                <router-link to="/register">register</router-link> a new
+                account.
               </p>
             </v-col>
             <v-col cols="4"></v-col>
@@ -43,7 +48,7 @@
     </div>
     <div v-if="loggedIn">
       <p>
-      You are already logged in. please logout to register a new account.
+        You are already logged in. please logout to register a new account.
       </p>
     </div>
   </v-app>
@@ -61,20 +66,23 @@ export default {
   methods: {
     login() {
       // this.$store.commit("CHANGE_LOGGED_IN_STATUS");
-      this.$store.dispatch("login", {
-        email: this.email,
-        password: this.password
-      })
-      .then(() =>{
-        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
-        this.$store.dispatch("gamerInfo", this.email)
-      })
-      }).then(() => {
-        this.$router.go(-1);
-    }).catch(err =>{
-        // console.log("****ERROR:" + err)
-        this.error = err
-      });
+      this.$store
+        .dispatch("login", {
+          email: this.email,
+          password: this.password
+        })
+        .then(() => {
+          this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
+            this.$store.dispatch("gamerInfo", this.email);
+          });
+        })
+        .then(() => {
+          this.$router.go(-1);
+        })
+        .catch(err => {
+          // console.log("****ERROR:" + err)
+          this.error = err;
+        });
       // }).then(() => {
       //   this.$router.push({name: "Home"})
       // });

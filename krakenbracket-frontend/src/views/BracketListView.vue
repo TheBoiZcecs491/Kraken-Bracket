@@ -15,7 +15,7 @@ import BracketModel from "@/components/BracketModel.vue";
 import BracketService from "@/services/BracketService.js";
 export default {
   components: {
-    BracketModel,
+    BracketModel
   },
   data() {
     return {

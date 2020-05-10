@@ -47,12 +47,13 @@
                 Register User
               </v-btn>
               <p v-if="error" class="red--text">
-                Registration failed.<span>{{ this.errorMsg }}</span>. Please try again
+                Registration failed.<span>{{ this.errorMsg }}</span
+                >. Please try again
               </p>
-              <p v-if="error" class="red--text"><span>{{ this.error }}</span></p>
-              <p>
-              <router-link to="/login">Login</router-link> instead.
+              <p v-if="error" class="red--text">
+                <span>{{ this.error }}</span>
               </p>
+              <p><router-link to="/login">Login</router-link> instead.</p>
             </v-col>
             <v-col cols="4"></v-col>
           </v-row>
@@ -68,7 +69,7 @@
     </div>
     <div v-if="loggedIn">
       <p>
-      You are already logged in. please logout to register a new account.
+        You are already logged in. please logout to register a new account.
       </p>
     </div>
   </v-app>
@@ -91,32 +92,36 @@ export default {
     registerUser() {
       // this.$store.commit("CHANGE_LOGGED_IN_STATUS");
       //note: insertuseracc, will automatically make the salt and hash
-      this.$store.dispatch("registerUser", {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
-        gamerTag: this.gamerTag
-      }).then(() =>{
-        this.$store.dispatch("login", {
-        email: this.email,
-        password: this.password
-      }).then(() =>{
-        this.$router.push("/registrationSuccess");
-      });
-      })
-      .catch(err =>{
-        // console.log("****ERROR:" + err)
-        //if(err=="Error: Request failed with status code 406")
-        //  this.errorMsg = "The provided Registration info is not "+
-        //  "correct or the email is already in use. "+
-        //  "The password could also be not secure enough";
-        //else if(err=="Error: Request failed with status code 500")
-        //  this.errorMsg = "The server failed to create the account.";
-        //else if(err=="Error: Request failed with status code 401")
-        //  this.errorMsg = "The server did not have permission to make this account.";
-        this.error = err
-      });
+      this.$store
+        .dispatch("registerUser", {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password,
+          gamerTag: this.gamerTag
+        })
+        .then(() => {
+          this.$store
+            .dispatch("login", {
+              email: this.email,
+              password: this.password
+            })
+            .then(() => {
+              this.$router.push("/registrationSuccess");
+            });
+        })
+        .catch(err => {
+          // console.log("****ERROR:" + err)
+          //if(err=="Error: Request failed with status code 406")
+          //  this.errorMsg = "The provided Registration info is not "+
+          //  "correct or the email is already in use. "+
+          //  "The password could also be not secure enough";
+          //else if(err=="Error: Request failed with status code 500")
+          //  this.errorMsg = "The server failed to create the account.";
+          //else if(err=="Error: Request failed with status code 401")
+          //  this.errorMsg = "The server did not have permission to make this account.";
+          this.error = err;
+        });
       // }).then(() => {
       //   this.$router.push({name: "Home"})
       // });

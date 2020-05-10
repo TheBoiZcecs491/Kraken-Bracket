@@ -24,12 +24,12 @@
       <!-- log in -->
       <p>4</p>
       <router-link
-            :to="{
-              name: 'login-view'
-            }"
-          >
-            <v-btn color="primary">Login</v-btn>
-          </router-link>
+        :to="{
+          name: 'login-view'
+        }"
+      >
+        <v-btn color="primary">Login</v-btn>
+      </router-link>
     </div>
   </v-app>
 </template>
@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       event: {},
-      HostGamerTag: null,
+      HostGamerTag: null
     };
   },
   created() {
@@ -58,31 +58,29 @@ export default {
       .catch(error => {
         console.log("There was an error: ", error.response);
       }),
-    EventService.getEventHost(this.id)
-      .then(response => {
+      EventService.getEventHost(this.id).then(response => {
         this.HostGamerTag = response;
-      })
-    
+      });
   },
-  methods:{
-    statusRegistration(){
-      if(!this.loggedIn){
+  methods: {
+    statusRegistration() {
+      if (!this.loggedIn) {
         return false;
-      }else{
+      } else {
         axios.get(
-        `https://localhost:44352/api/events/${this.event.eventID}/statusRegistration/${this.$store.state.gamerInfo.gamerTag}`,
-        {
-          eventID: this.event.eventID,
-          gamerTag: this.$store.state.gamerInfo.gamerTag
-        }
-      );
+          `https://localhost:44352/api/events/${this.event.eventID}/statusRegistration/${this.$store.state.gamerInfo.gamerTag}`,
+          {
+            eventID: this.event.eventID,
+            gamerTag: this.$store.state.gamerInfo.gamerTag
+          }
+        );
       }
     },
-    statusHost(){
-      if(!this.loggedIn){
+    statusHost() {
+      if (!this.loggedIn) {
         return false;
-      }else{
-        if(this.$store.state.gamerInfo.gamerTag == this.event.host){
+      } else {
+        if (this.$store.state.gamerInfo.gamerTag == this.event.host) {
           return true;
         } else {
           return false;

@@ -21,10 +21,10 @@ export default {
   getBracketPlayerInfo(email) {
     return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`);
   },
-  getGamerInfo(email){
+  getGamerInfo(email) {
     return apiClient.get(`api/brackets/${email}/gamerInfo`);
   },
-  deleteBracket(bracket){
+  deleteBracket(bracket) {
     return apiClient.delete(`api/brackets/deleteBracket`, {
       BracketID: bracket.bracketID,
       BracketName: bracket.bracketName,
@@ -39,4 +39,4 @@ export default {
       Reason: bracket.Reason
     });
   }
-}
+};

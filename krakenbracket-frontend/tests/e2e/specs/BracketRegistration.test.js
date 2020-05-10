@@ -74,7 +74,7 @@ describe("Unregister from a bracket", () => {
   });
 });
 
-describe("Register to bracket FAIL: Invalid input information", () =>{
+describe("Register to bracket FAIL: Invalid input information", () => {
   // it("Visits the app root url", () => {
   //   cy.visit("http://localhost:8080/#/");
   //   cy.contains("h1", "Welcome to Kraken Bracket");
@@ -121,7 +121,10 @@ describe("Register to bracket FAIL: Invalid input information", () =>{
     cy.get(".gamertag-input").type(gamerTag);
     cy.contains("button", "Register!").click();
   });
-  it("Fails to register the user", () =>{
-    cy.contains("p", "Either one or both of your inputs does not match your email or gamertag")
-  })
-})
+  it("Fails to register the user", () => {
+    cy.contains(
+      "p",
+      "Either one or both of your inputs does not match your email or gamertag"
+    );
+  });
+});

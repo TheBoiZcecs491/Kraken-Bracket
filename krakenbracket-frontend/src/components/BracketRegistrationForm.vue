@@ -45,7 +45,12 @@
                     <v-btn @click="formSubmit" color="primary">Register!</v-btn>
                   </router-link> -->
 
-                  <v-btn v-show="formValidity" @click="formSubmit" color="primary">Register!</v-btn>
+                  <v-btn
+                    v-show="formValidity"
+                    @click="formSubmit"
+                    color="primary"
+                    >Register!</v-btn
+                  >
                   <v-btn
                     class="mr-4"
                     v-if="!formValidity"
@@ -53,7 +58,7 @@
                     >Register!</v-btn
                   >
                   <div v-if="error">
-                    <p class="red--text">{{error}}</p>
+                    <p class="red--text">{{ error }}</p>
                   </div>
                 </v-col>
                 <v-col cols="12" lg="4">
@@ -86,7 +91,7 @@ export default {
       gamerTag: "",
       // gamerTagID: "",
       gamer: {
-        gamerTag: this.gamerTag,
+        gamerTag: this.gamerTag
         // gamerTagID: this.gamerTagID
       },
       error: null,
@@ -123,25 +128,30 @@ export default {
   methods: {
     formSubmit() {
       if (this.$refs.signUpForm.validate()) {
-        if((this.email == this.$store.state.user.email) && this.gamerTag == this.$store.state.gamerInfo.gamerTag){
-           axios.post(
-          `https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`,
-          {
-            bracketID: this.bracket.bracketID,
-            gamerTag: this.gamerTag,
-            // gamerTagID: this.gamerTagID
-          }
-        ).then(() =>{
-          setTimeout(() => {
-          this.$store.dispatch("bracketPlayerInfo", this.email);
-        }, 500);
-        })
-        .then(() =>{
-          this.$router.go(-1)
-        });
-        }
-        else{
-          this.error = "Either one or both of your inputs does not match your email or gamertag"
+        if (
+          this.email == this.$store.state.user.email &&
+          this.gamerTag == this.$store.state.gamerInfo.gamerTag
+        ) {
+          axios
+            .post(
+              `https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.gamer}`,
+              {
+                bracketID: this.bracket.bracketID,
+                gamerTag: this.gamerTag
+                // gamerTagID: this.gamerTagID
+              }
+            )
+            .then(() => {
+              setTimeout(() => {
+                this.$store.dispatch("bracketPlayerInfo", this.email);
+              }, 500);
+            })
+            .then(() => {
+              this.$router.go(-1);
+            });
+        } else {
+          this.error =
+            "Either one or both of your inputs does not match your email or gamertag";
         }
       }
     },
