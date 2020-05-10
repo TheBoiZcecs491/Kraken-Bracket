@@ -2,7 +2,7 @@
   <v-app>
     <v-container>
       <div>
-        <h1>Event View {{ event.eventName }}</h1>
+        <h1>Event name: {{ event.eventName }}</h1>
         <h5>Hosted by {{ event.host }}</h5>
         <h5>Location: {{ event.address }}</h5>
         <h2>Description: {{ event.description }}</h2>
@@ -10,10 +10,12 @@
       <v-row>
         <v-col cols="12" lg="12"></v-col>
         <v-col cols="12" lg="12">
+
           <div v-if="statusHost()">
             <router-link
               :to="{
-                name: 'login-view'
+                name: 'event-update', //'update-view'
+                params: { id: event.eventID}
               }"
             >
               <v-btn color="primary">Update</v-btn>
@@ -22,16 +24,19 @@
             <p>host update</p>
             <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
           </div>
+
           <div v-else-if="statusRegistration()">
             <!-- unregister -->
             <p>unregister</p>
             <UnregisterEventModel :key="event.id" :event="event" />
           </div>
+
           <div v-else-if="loggedIn">
             <!-- register -->
             <p>register</p>
             <RegisterEventModel :key="event.id" :event="event" />
           </div>
+
           <div v-else>
             <!-- log in -->
             <router-link
@@ -54,8 +59,6 @@ import EventService from "@/services/EventService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterEventModel from "@/components/UnregisterEventModel.vue";
 import RegisterEventModel from "@/components/RegisterEventModel.vue";
-// import axios from "axios";
-// import NotLoggedIn from "../components/NotLoggedIn.vue";
 export default {
   props: ["id"],
   components: {

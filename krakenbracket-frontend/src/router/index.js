@@ -79,6 +79,11 @@ const routes = [
     component: EventCreate
   },
   {
+    path: "/event-update",
+    name: "event-update",
+    component: EventCreate
+  },
+  {
     path: "/event-view/:id/signup",
     name: "event-registration",
     component: EventRegistrationForm,

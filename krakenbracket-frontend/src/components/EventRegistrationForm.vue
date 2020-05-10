@@ -4,8 +4,6 @@
       <NotLoggedIn />
     </div>
     <div v-else>
-      <!-- "$router.go(-1)" -->
-      <v-btn @click="$router.go(-1)">&lt; BACK</v-btn>
       <h1>Signup for {{ event.eventName }}</h1>
       <v-form
         @submit.prevent="submitForm"
@@ -76,7 +74,7 @@ export default {
   },
   data() {
     return {
-      bracket: {},
+      event: {},
       gamerTag: this.$store.state.gamerInfo.gamerTag,
       gamer: {
         gamerTag: this.gamerTag
@@ -117,13 +115,14 @@ export default {
               `https://localhost:44352/api/events/${this.event.eventID}/register/${this.$store.state.gamerInfo.hashedUserId}`,
               {
                 eventID: this.event.eventID,
-                hashedUserID: this.$store.state.gamerInfo.hashedUserId
+                hashedUserID: this.$store.state.gamerInfo.hashedUserID
               }
             )
             .then(() => {
               setTimeout(() => {
-                this.$store.dispatch("eventPlayerInfo", this.email);
+                this.$store.dispatch("eventPlayerInfo", this.id);
               }, 500);
+              
             })
             .then(() => {
               this.$router.go(-1);
