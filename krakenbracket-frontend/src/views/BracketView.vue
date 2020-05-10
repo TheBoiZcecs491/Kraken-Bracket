@@ -29,22 +29,37 @@
           </div>
 
           <div>
-          <div v-if="bracket.maxCapacity === 2">
-            <TwoPlayerBracketModel/>
+            <div v-if="bracket.maxCapacity === 4">
+              <FourPlayerBracketModel
+                :competitors="competitors"
+                :bracket="bracket"
+              />
+            </div>
+            <div v-else-if="bracket.maxCapacity === 8">
+              <EightPlayerBracketModel
+                :competitors="competitors"
+                :bracket="bracket"
+              />
+            </div>
+            <div v-else-if="bracket.maxCapacity === 16">
+              <SixteenPlayerBracketModel
+                :competitors="competitors"
+                :bracket="bracket"
+              />
+            </div>
+             <div v-else-if="bracket.maxCapacity === 32">
+              <ThirtyTwoPlayerBracketModel
+                :competitors="competitors"
+                :bracket="bracket"
+              />
+            </div>
+            <div v-else-if="bracket.maxCapacity === 64">
+              <SixtyFourPlayerBracketModel
+                :competitors="competitors"
+                :bracket="bracket"
+              />
+            </div>
           </div>
-          <div v-else-if="bracket.maxCapacity === 4">
-            <FourPlayerBracketModel
-            :key="competitors.id"
-            :competitors="competitors"
-          />
-          </div>
-          <div v-else-if="bracket.maxCapacity === 8">
-            <EightPlayerBracketModel
-            :key="competitors.id"
-            :competitors="competitors"
-          />
-          </div>
-        </div>
           <!-- State if the user is not logged in -->
           <div v-if="!loggedIn">
             <p>
@@ -80,18 +95,21 @@ import BracketService from "@/services/BracketService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue";
 import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
-import TwoPlayerBracketModel from "@/components/bracket-components/TwoPlayerBracketModel.vue";
 import FourPlayerBracketModel from "@/components/bracket-components/FourPlayerBracketModel.vue";
 import EightPlayerBracketModel from "@/components/bracket-components/EightPlayerBracketModel.vue";
-
+import SixteenPlayerBracketModel from "@/components/bracket-components/SixteenPlayerBracketModel.vue";
+import ThirtyTwoPlayerBracketModel from "@/components/bracket-components/ThirtyTwoPlayerBracketModel.vue";
+import SixtyFourPlayerBracketModel from "@/components/bracket-components/SixtyFourPlayerBracketModel.vue";
 export default {
   props: ["id"],
   components: {
     UnregisterBracketModel,
     RegisterBracketModel,
-    TwoPlayerBracketModel,
     FourPlayerBracketModel,
-    EightPlayerBracketModel
+    EightPlayerBracketModel,
+    SixteenPlayerBracketModel,
+    ThirtyTwoPlayerBracketModel,
+    SixtyFourPlayerBracketModel
   },
   data() {
     return {
@@ -110,15 +128,17 @@ export default {
         // console.log(err);
         this.error = err;
       });
-    setTimeout(BracketService.getBracketCompetitorInfo(this.id)
-    .then(response => {
-        this.competitors = response.data;
-      })
-      .catch(err => {
-        // console.log(err);
-        this.error = err;
-      }), 1000);
-    
+    setTimeout(
+      BracketService.getBracketCompetitorInfo(this.id)
+        .then(response => {
+          this.competitors = response.data;
+        })
+        .catch(err => {
+          // console.log(err);
+          this.error = err;
+        }),
+      1000
+    );
   },
   computed: {
     ...authComputed
