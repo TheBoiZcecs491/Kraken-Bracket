@@ -17,23 +17,39 @@
                     placeholder="EVO 2020 SFVAE Pools - 1"
                     required
                 ></v-text-field>
+
             <!-- Player count slider -->
                 <v-slider
-                    v-model="PlayerCount"
+                    v-model="MaxCapacity"
                     min="2"
                     max="128"
-                    label="Competitors"
+                    label="Competitor Cap"
+                    readonly
                 ><template v-slot:append>
                         <v-text-field
                             class="PlayerCount-input"
-                            v-model="PlayerCount"
+                            v-model="MaxCapacity"
                             hide-details
                             single-line
                             type="number"
                             style="width: 60px"
+                            readonly
                         ></v-text-field>
                     </template>
                 </v-slider>
+
+            <!-- Player count radio buttons -->
+            <v-container fluid>
+                <v-radio-group v-model="MaxCapacity" row>
+                    <v-radio label="4" value=4></v-radio>
+                    <v-radio label="8" value=8></v-radio>
+                    <v-radio label="16" value=16></v-radio>
+                    <v-radio label="32" value=32></v-radio>
+                    <v-radio label="64" value=64></v-radio>
+                    <v-radio label="128" value=128></v-radio>
+                </v-radio-group>
+            </v-container>
+
             <!-- Game played drop down bar (Fillable) -->
                 <v-container id="GamePlayed">
                     <v-overflow-btn
@@ -255,7 +271,7 @@ export default {
     menu4: false,
     BracketName: "",
     Host: "",
-    PlayerCount: "",
+    MaxCapacity: "",
     GamePlayed: "",
     GamingPlatform: "",
     ruleSet: "",
@@ -280,7 +296,7 @@ export default {
             axios.post(`https://localhost:44352/api/brackets/createBracket/`,{
                 BracketName: this.BracketName,
                 Host: this.$store.state.gamerInfo.gamerTag,
-                PlayerCount: this.PlayerCount,
+                MaxCapacity: this.MaxCapacity,
                 GamePlayed: this.GamePlayed,
                 GamingPlatform: this.GamingPlatform,
                 Rules: this.ruleSet,

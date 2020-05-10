@@ -17,6 +17,7 @@ namespace TBZ.KrakenBracket.DataHelpers
         public DateTime EndDate { get; set; }
         public int StatusCode { get; set; }
         public string Host { get; set; }
+        public int MaxCapacity { get; set; }
 
         public BracketInfo() { }
         public BracketInfo(string bracketName)
@@ -37,13 +38,14 @@ namespace TBZ.KrakenBracket.DataHelpers
             EndDate = endDate;
             StatusCode = statusCode;
         }
-        public BracketInfo(int bracketID, string bracketName, int bracketTypeID, int playerCount, string gamePlayed, string gamingPlatform,
+        public BracketInfo(int bracketID, string bracketName, int bracketTypeID, int playerCount, int maxCapacity, string gamePlayed, string gamingPlatform,
             string rules, DateTime startDate, DateTime endDate, int statusCode, string host)
         {
             BracketID = bracketID;
             BracketName = bracketName;
             BracketTypeID = bracketTypeID; // 1: Single Elimination, 2: Double Elimination, 3: Round Robin
             PlayerCount = playerCount;
+            MaxCapacity = maxCapacity;
             GamePlayed = gamePlayed;
             GamingPlatform = gamingPlatform;
             Rules = rules;

@@ -18,8 +18,8 @@
           </v-col>
         </v-row>
         <h4>
-          Number of players: {{ bracket.playerCount ? bracket.playerCount : 0 }}
-          <span v-show="bracket.playerCount === 128">(MAX)</span>
+          Player Capacity: {{ bracket.maxCapacity ? bracket.maxCapacity : 0 }}
+          <span v-show="bracket.maxCapacity === 128">(MAX)</span>
         </h4>
         <h4>Game: {{ bracket.gamePlayed }}</h4>
         <h4>Gaming platform: {{ bracket.gamingPlatform }}</h4>
