@@ -352,9 +352,11 @@ namespace TBZ.DatabaseAccess
                     {
 
                         DatabaseQuery dq = new DatabaseQuery();
-                        string concat = user.Password + user.Salt;
-                        //TODO: generate a Salt and concatinate it with the password. then store the hash
-                        dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
+                        MessageSalt msalt = new MessageSalt(user.Password, user.Salt);
+                        msalt.GenerateHash();
+                        user.Password = msalt.message;
+                        user.Salt = msalt.salt;
+                        dq.UpdateQuery("user_information", "hashed_password", user.Password, "userID", user.SystemID.ToString());
                         dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
                         return true;
                     }
@@ -367,9 +369,11 @@ namespace TBZ.DatabaseAccess
                 else
                 {
                     DatabaseQuery dq = new DatabaseQuery();
-                    string concat = user.Password + user.Salt;
-                    //TODO: generate a Salt and concatinate it with the password. then store the hash
-                    dq.UpdateQuery("user_information", "hashed_password", concat, "userID", user.SystemID.ToString());
+                    MessageSalt msalt = new MessageSalt(user.Password, user.Salt);
+                    msalt.GenerateHash();
+                    user.Password = msalt.message;
+                    user.Salt = msalt.salt;
+                    dq.UpdateQuery("user_information", "hashed_password", user.Password, "userID", user.SystemID.ToString());
                     dq.UpdateQuery("user_information", "salt", user.Salt, "userID", user.SystemID.ToString());
                     return true;
                 }

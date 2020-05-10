@@ -17,6 +17,9 @@ export default new Vuex.Store({
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${userData.token}`;
+      //protip: save this value to a file and read from it.
+      // that way you can refresh or open/close the browser and stay loggedin.
+      // I noticed refreshing or surfing to other pages on the front end resets this.
     },
     CLEAR_USER_DATA(){
       localStorage.removeItem("user")
@@ -35,6 +38,7 @@ export default new Vuex.Store({
   },
   actions: {
     login({ commit }, credentials) {
+      console.log(credentials)
       return axios
         .post("https://localhost:44352/api/login", credentials)
         .then(({ data }) => {
@@ -48,12 +52,12 @@ export default new Vuex.Store({
           commit("SET_USER_DATA", data);
         });
     },
-    updateUser( formFill ) { //{ commit },
+    updateUser({ commit }, formFill ) {
       return axios
         .post("https://localhost:44352/usermanagement/updateprofile", formFill)
-        //.then(({ data }) => {
-        //  commit("SET_USER_DATA", data);
-        //});
+        .then(({ data }) => {
+          commit("SET_USER_DATA", data);
+        });
     },
     logout({commit}){
       commit('CLEAR_USER_DATA')

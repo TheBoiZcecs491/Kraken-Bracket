@@ -24,8 +24,8 @@ namespace ClientApp.Controllers
                 User user = new User(userInput);
                 // HACK: this is fixed in another branch, so for now this will HOPEFULLY
                 // keep away any possible collisions. when that happend comment out the next 2 lines.
-                Random rnd = new Random();
-                user.SystemID = rnd.Next(Int32.MinValue, Int32.MaxValue);
+                //Random rnd = new Random();
+                //user.SystemID = rnd.Next(Int32.MinValue, Int32.MaxValue);
 
                 //HACK: due to time constraints, I realised that gamer tags need to be unique.
                 GamerInfo verifyGamer = _gamerDataAccess.GetGamerInfo(new GamerInfo(null,userInput.GamerTag,0,0));

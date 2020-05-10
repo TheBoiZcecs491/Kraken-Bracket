@@ -4,8 +4,7 @@
       <p>You must be logged in to edit profile information</p>
     </div>
     <div v-else>
-      <h1>user profile</h1>
-      <p>this page is under development</p>
+      <h1>Edit user profile</h1>
       <v-container>
         <form @submit.prevent="registerUser">
           <v-row>
@@ -40,12 +39,15 @@
                 required
               ></v-text-field>
               <v-text-field
-                class="current-password-input"
+                class="password-input"
                 label="Password"
                 type="password"
-                v-model="currentPassword"
+                v-model="password"
                 required
               ></v-text-field>
+              Account enabled
+              <input type="checkbox" id="checkbox" v-model="accountStatus">
+              <p></p>
               <v-btn @click="updateUser">
                 Update profile
               </v-btn>
@@ -71,9 +73,10 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
-      currentPassword: "",
+      password: "",
       newPassword: null,
       retypePassword: null,
+      accountStatus: true,
       error: null,
       errorMsg: null,
       successMsg: null
@@ -81,57 +84,78 @@ export default {
   },
   methods: {
     updateUser() {
+        this.successMsg = null;
+        this.error = null;
+        this.errorMsg = null;
         if(this.newPassword!=null){
             if(this.newPassword!=this.retypePassword){
                 //passwords dont match, so prevent change
                 this.errorMsg = "passwords dont match";
-                this.successMsg = null;
                 this.firstName = this.$store.state.user.firstName;
                 this.lastName = this.$store.state.user.lastName;
+                this.password = "";
+                this.newPassword = null;
+                this.retypePassword = null;
+                this.accountStatus = this.$store.state.user.accountStatus;
             }
             else{
-                this.errorMsg = null;
                 this.$store.dispatch("updateUser", {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        currentPassword: this.currentPassword,
-        newPassword: this.newPassword
-      }).then(() =>{
-        this.successMsg = "update success";
-        this.$store.state.user.firstName = this.firstName;
-        this.$store.state.user.lastName = this.lastName;
-      })
-      .catch(err =>{
-        this.error = err;
-        this.successMsg = null;
-        this.firstName = this.$store.state.user.firstName;
-        this.lastName = this.$store.state.user.lastName;
-      });
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                password: this.password,
+                newPassword: this.newPassword,
+                accountStatus: this.accountStatus
+            }).then(() =>{
+                this.$store.dispatch("login", {
+                    email: this.email,
+                    password: this.newPassword
+                });
+                this.successMsg = "update success";
+                this.password = "";
+                this.newPassword = null;
+                this.retypePassword = null;
+            })
+            .catch(err =>{
+                this.error = err;
+                this.firstName = this.$store.state.user.firstName;
+                this.lastName = this.$store.state.user.lastName;
+                this.password = "";
+                this.newPassword = null;
+                this.retypePassword = null;
+                this.accountStatus = this.$store.state.user.accountStatus;
+            });
             }
+
         }
         else{
             this.$store.dispatch("updateUser", {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        currentPassword: this.currentPassword,
-        newPassword: null
-      }).then(() =>{
-        this.successMsg = "update success";
-        this.$store.state.user.firstName = this.firstName;
-        this.$store.state.user.lastName = this.lastName;
-      })
-      .catch(err =>{
-        this.error = err;
-        this.successMsg = null;
-        this.firstName = this.$store.state.user.firstName;
-        this.lastName = this.$store.state.user.lastName;
-      });
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                password: this.password,
+                newPassword: null,
+                accountStatus: this.accountStatus
+            }).then(() =>{
+                this.$store.dispatch("login", {
+                    email: this.email,
+                    password: this.password
+                });
+                this.successMsg = "update success";
+                this.password = "";
+                this.newPassword = null;
+                this.retypePassword = null;
+            })
+            .catch(err =>{
+                this.error = err;
+                this.firstName = this.$store.state.user.firstName;
+                this.lastName = this.$store.state.user.lastName;
+                this.password = "";
+                this.newPassword = null;
+                this.retypePassword = null;
+                this.accountStatus = this.$store.state.user.accountStatus;
+            });
         }
-        this.currentPassword = "";
-        this.newPassword = null;
-        this.retypePassword = null;
     }
   },
   computed: {
