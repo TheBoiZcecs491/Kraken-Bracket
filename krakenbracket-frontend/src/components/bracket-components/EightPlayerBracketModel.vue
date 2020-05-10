@@ -96,31 +96,63 @@ export default {
     }
 
     // Semi finals
-    j = 0;
-    for (let i = 0; i < this.competitors.length; i++) {
-        if((((j + 1) % 2) == 1) && this.competitors[i].score == 1){
-            this.rounds[1].games[j].player1.name = this.competitors[i].gamerTag;
+    for (let i = 0; i < 4; i++) {
+        if(this.competitors[i].score == 1){
+            if(i % 2 == 0){
+                this.rounds[1].games[0].player1.name = this.competitors[i].gamerTag;
+            }
+            else {
+                this.rounds[1].games[0].player2.name = this.competitors[i].gamerTag;
+            }
         }
-        else if ((((j + 1) % 2) == 0) && this.competitors[i].score == 1){
-            this.rounds[1].games[j].player2.name = this.competitors[i].gamerTag;
-        }
-        else {
-            continue;
-        }
-        j++;
-        // if(i !== 0) i++;
-        // this.rounds[1].games[j].player1.name = competitorList[i];
-        // this.rounds[1].games[j].player2.name = competitorList[i + 1];
-        // if (this.competitors[i].score == 1) {
-        //     if ((j+1) % 2 == 0) {
-        //         this.rounds[1].games[j].player1.name = competitorList[i];
-        //     }
-        //     else if (){
-        //         this.rounds[1].games[j].player2.name = competitorList[i];
-        //     }
-        // }
-        
     }
+    for (let i = 4; i < 9; i++) {
+        if(this.competitors[i].score == 1){
+            if(i % 2 == 0){
+                this.rounds[1].games[1].player1.name = this.competitors[i].gamerTag;
+            }
+            else {
+                this.rounds[1].games[1].player2.name = this.competitors[i].gamerTag;
+            }
+        }
+    }
+
+    // Finals
+    for (let i = 0; i < 8; i++) {
+        if(this.competitors[i].score == 2){
+            // if(i % 2 == 0){
+                this.rounds[2].games[0].player1.name = this.competitors[i].gamerTag;
+            // }
+            // else {
+                this.rounds[2].games[0].player2.name = this.competitors[i].gamerTag;
+            // }
+        }
+    }
+    // j = 0;
+    // for (let i = 0; i < this.competitors.length; i++) {
+    //     if((((j + 1) % 2) == 1) && this.competitors[i].score == 1){
+    //         this.rounds[1].games[j].player1.name = this.competitors[i].gamerTag;
+    //         j++;
+    //     }
+    //     else if ((((j + 1) % 2) == 0) && this.competitors[i].score == 1){
+    //         this.rounds[1].games[j].player2.name = this.competitors[i].gamerTag;
+    //         j++;
+    //     }
+        
+    //     console.log(j);
+    //     // if(i !== 0) i++;
+    //     // this.rounds[1].games[j].player1.name = competitorList[i];
+    //     // this.rounds[1].games[j].player2.name = competitorList[i + 1];
+    //     // if (this.competitors[i].score == 1) {
+    //     //     if ((j+1) % 2 == 0) {
+    //     //         this.rounds[1].games[j].player1.name = competitorList[i];
+    //     //     }
+    //     //     else if (){
+    //     //         this.rounds[1].games[j].player2.name = competitorList[i];
+    //     //     }
+    //     // }
+        
+    // }
 
     // this.rounds[0].games[0].player1.name = competitorList[0];
     // this.rounds[0].games[0].player2.name = competitorList[1];
@@ -144,6 +176,7 @@ export default {
           if(playerPlacement == 1){
               this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
               for (let i = 0; i < this.competitors.length; i++) {
+                  console.log("TEST1")
                   if(this.competitors[i].gamerTag == gamerTag){
                   BracketService.updateBracketStandings(this.competitors[0].bracketID, this.competitors[i])
               }
@@ -153,7 +186,8 @@ export default {
           else if (playerPlacement == 2){
               this.rounds[bracketLayer].games[matchNumber].player2.name = gamerTag;
               for (let i = 0; i < this.competitors.length; i++) {
-                  if (this.competitors[i] == gamerTag){
+                  if (this.competitors[i].gamerTag == gamerTag){
+                      console.log("TEST2" + this.competitors[i] == gamerTag)
                       BracketService.updateBracketStandings(this.competitors[0].bracketID, this.competitors[i])
                   }
               }
