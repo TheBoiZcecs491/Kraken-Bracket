@@ -27,7 +27,15 @@ export default {
   getBracketCompetitorInfo(bracketID){
     return apiClient.get(`api/brackets/${bracketID}/competitorInfo`);
   },
-  updateBracketStandings(bracketID, competitorInfo){
-    return apiClient.post(`api/brackets/${bracketID}/competitorInfo/update`, {competitorInfo})
+  updateBracketStandings(bracketID, bracketCompetitor){
+    console.log("Competitor info: --- " + bracketCompetitor);
+    return apiClient.post(`api/brackets/${bracketID}/competitorInfo/update/`,
+    {
+      bracketID: bracketCompetitor.bracketID,
+      score: bracketCompetitor.score,
+      placement: bracketCompetitor.placment,
+      hashedUserID: bracketCompetitor.hashedUserID,
+      gamerTag: bracketCompetitor.gamerTag
+    })
   }
 };

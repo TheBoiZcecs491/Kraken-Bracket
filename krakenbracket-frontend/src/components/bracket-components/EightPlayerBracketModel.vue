@@ -82,6 +82,13 @@ export default {
             index < competitorList.length; index++) {
         competitorList[index] = "?";
     }
+    var j = 0;
+    for (let i = 0; i < 6; i++) {
+        if(i !== 0) i++;
+        this.rounds[0].games[j].player1.name = competitorList[i];
+        this.rounds[0].games[j].player2.name = competitorList[i + 1];
+        j++;
+    }
     // this.rounds[0].games[0].player1.name = competitorList[0];
     // this.rounds[0].games[0].player2.name = competitorList[1];
     // this.rounds[0].games[1].player1.name = competitorList[2];
@@ -91,13 +98,7 @@ export default {
     // this.rounds[0].games[3].player1.name = competitorList[6];
     // this.rounds[0].games[3].player2.name = competitorList[7];
     // Algorithm used to populate the bracket display
-    var j = 0;
-    for (let i = 0; i < 6; i++) {
-        if(i !== 0) i++;
-        this.rounds[0].games[j].player1.name = competitorList[i];
-        this.rounds[0].games[j].player2.name = competitorList[i + 1];
-        j++;
-    }
+    
 
       }, 100);
   },
@@ -111,7 +112,13 @@ export default {
           console.log(this.rounds[bracketLayer].games[matchNumber].player1.name);
           if(playerPlacement == 1){
               this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
-              BracketService.updateBracketStandings(this.competitors[0].bracketID, this.competitors[0])
+              for (let i = 0; i < this.competitors.length; i++) {
+                  if(this.competitors[i].gamerTag == gamerTag){
+                  BracketService.updateBracketStandings(this.competitors[0].bracketID, this.competitors[i])
+              }
+                  
+              }
+              
             //   var bracketID = this.competitors[0].bracketID;
             //   var bracketIDParse = parseInt(bracketID);
             // axios.post(`https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.competitors[0]}`)
