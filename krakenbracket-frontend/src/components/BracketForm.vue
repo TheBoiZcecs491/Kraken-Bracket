@@ -296,6 +296,7 @@ export default {
             axios.post(`https://localhost:44352/api/brackets/createBracket/`,{
                 BracketName: this.BracketName,
                 Host: this.$store.state.gamerInfo.gamerTag,
+                PlayerCount: "0",
                 MaxCapacity: this.MaxCapacity,
                 GamePlayed: this.GamePlayed,
                 GamingPlatform: this.GamingPlatform,

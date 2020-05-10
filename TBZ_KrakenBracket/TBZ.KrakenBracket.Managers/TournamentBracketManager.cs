@@ -43,8 +43,8 @@ namespace TBZ.KrakenBracket.Managers
             {
                 throw new ArgumentException("Bracket name must be between 5-75 characters");
             }
-            else if ((bracketFields.PlayerCount < 2) ||
-                    (bracketFields.PlayerCount > 128))
+            else if ((bracketFields.MaxCapacity < 2) ||
+                    (bracketFields.MaxCapacity > 128))
             {
                 throw new ArgumentException("Only 2-128 competitors allowed");
             }
