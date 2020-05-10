@@ -14,6 +14,7 @@
 <script>
 import Bracket from "@/components/bracket-components/Bracket.vue";
 import BracketService from "@/services/BracketService.js";
+// import axios from "axios";
 
 export default {
   props:{
@@ -110,11 +111,11 @@ export default {
           console.log(this.rounds[bracketLayer].games[matchNumber].player1.name);
           if(playerPlacement == 1){
               this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
-              for (let i = 0; i < this.competitors.length; i++) {
-                  if (this.competitors[i] == gamerTag){
-                      BracketService.updateBracketStandings(this.competitors[0].bracketID, this.competitors[i])
-                  }
-              }
+              BracketService.updateBracketStandings(this.competitors[0].bracketID, this.competitors[0])
+            //   var bracketID = this.competitors[0].bracketID;
+            //   var bracketIDParse = parseInt(bracketID);
+            // axios.post(`https://localhost:44352/api/brackets/${this.bracket.bracketID}/register/${this.competitors[0]}`)
+              
           }
           else if (playerPlacement == 2){
               this.rounds[bracketLayer].games[matchNumber].player2.name = gamerTag;

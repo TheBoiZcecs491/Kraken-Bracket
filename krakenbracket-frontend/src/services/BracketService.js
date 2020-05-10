@@ -27,7 +27,7 @@ export default {
   getBracketCompetitorInfo(bracketID){
     return apiClient.get(`api/brackets/${bracketID}/competitorInfo`);
   },
-  updateBracketStandings(bracketID){
-    return apiClient.put(`api/brackets/${bracketID}/competitorInfo/update/`)
+  updateBracketStandings(bracketID, competitorInfo){
+    return apiClient.post(`api/brackets/${bracketID}/competitorInfo/update`, {competitorInfo})
   }
 };
