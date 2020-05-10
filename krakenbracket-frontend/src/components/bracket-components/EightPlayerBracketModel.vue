@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="updatePlayerBracketPlacements">Update players</button>
+        <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
         <bracket :rounds="rounds">
             <template #player="{ player }">
                 {{ player.name }}
