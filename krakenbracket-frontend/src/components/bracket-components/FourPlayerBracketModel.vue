@@ -1,17 +1,29 @@
 <template>
   <div>
-     <div v-show="(bracket.host === this.$store.state.gamerInfo.gamerTag) && (bracket.statusCode === 2)">
+     <div v-if="loggedIn">
+            <div v-show="(bracket.host === this.$store.state.gamerInfo.gamerTag) && (bracket.statusCode === 2)">
             <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
         </div>
+     </div>
     <bracket :rounds="rounds">
       <template #player="{ player }">
         {{ player.name }}
       </template>
     </bracket>
     <h3>Placements:</h3>
-    <ul v-for="competitor in competitors" :key="competitor.score">
-        <li>{{competitor.gamerTag}}  {{competitor.score}}</li>
-    </ul>
+    <table class="standings">
+            <tr>
+                <th>GamerTag</th>
+                <th>Score</th>
+            </tr>
+            <tbody v-for="competitor in competitors" :key="competitor.score">
+                <!-- <tr>{{competitor.gamerTag}} {competitor.score}}</tr> -->
+                <tr>
+                    <td>{{competitor.gamerTag}}</td>
+                    <td>{{competitor.score}}</td>
+                </tr>
+            </tbody>
+        </table>
   </div>
 </template>
 
@@ -103,3 +115,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.standings {
+    width: 50%;
+    border: 3px solid black;
+}
+</style>

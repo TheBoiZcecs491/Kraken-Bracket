@@ -1,8 +1,11 @@
 <template>
     <div>
-        <div v-show="(bracket.host === this.$store.state.gamerInfo.gamerTag) && (bracket.statusCode === 2)">
+        <div v-if="loggedIn">
+            <div v-show="(bracket.host === this.$store.state.gamerInfo.gamerTag) && (bracket.statusCode === 2)">
             <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
         </div>
+        </div>
+        
         <bracket :rounds="rounds">
             <template #player="{ player }">
                 {{ player.name }}
@@ -10,9 +13,22 @@
         </bracket>
         <!-- <p>{{competitors}}</p> -->
         <h3>Placements:</h3>
-        <ul v-for="competitor in competitors" :key="competitor.score">
-            <li>{{competitor.gamerTag}}  {{competitor.score}}</li>
-        </ul>
+        <table class="standings">
+            <tr>
+                <th>GamerTag</th>
+                <th>Score</th>
+            </tr>
+            <tbody v-for="competitor in competitors" :key="competitor.score">
+                <!-- <tr>{{competitor.gamerTag}} {competitor.score}}</tr> -->
+                <tr class="">
+                    <td>{{competitor.gamerTag}}</td>
+                    <td>{{competitor.score}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <ul v-for="competitor in competitors" :key="competitor.score">
+            <li><strong>GamerTag</strong> - {{competitor.gamerTag}} | <strong>Score</strong> - {{competitor.score}}</li>
+        </ul> -->
     </div>
 </template>
 
@@ -131,7 +147,6 @@ export default {
         }
     }
 
-    
     // Finals
     var player1;
     var player2;
@@ -150,6 +165,8 @@ export default {
     this.rounds[2].games[0].player1.name = player1.gamerTag;
     this.rounds[2].games[0].player2.name = player2.gamerTag;
       }, 100);
+
+    this.competitors.sort((a,b) => (a.score < b.score) ? 1 : (b.score < a.score) ? -1 :0);
   },
   methods:{
       updatePlayerBracketPlacements(){
@@ -179,12 +196,14 @@ export default {
           else {
               console.log("ERROR");
           }
-      }
+      },
   },
-  computed:{
-      competitorStandings(){
-          return this.competitors.orderBy(this.competitors, "value", "desc");
-      }
-  }
 }
 </script>
+
+<style>
+.standings {
+    width: 50%;
+    border: 3px solid black;
+}
+</style>
