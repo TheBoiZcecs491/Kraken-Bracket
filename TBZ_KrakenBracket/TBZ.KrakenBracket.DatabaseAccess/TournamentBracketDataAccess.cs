@@ -53,6 +53,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 return false;
             }
         }
+
+        
+
         /// <summary>
         /// Gets a specific bracket by its ID
         /// </summary>
@@ -251,9 +254,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     using (MySqlCommand insertCmd = conn.CreateCommand())
                     {
                         insertCmd.CommandText = "INSERT INTO bracket_info(bracketID, bracket_name, host, bracketTypeID, " +
-                            "number_player, max_capacity, game_played, gaming_platform, rules, start_date, end_date, status_code )" +
+                            "number_player, max_capacity, game_played, gaming_platform, rules, start_date, end_date, status_code, reason )" +
                             "VALUES(@bracketID, @bracket_name, @host, @bracketTypeID, @number_player, @max_capacity, @game_played, " +
-                            "@gaming_platform, @rules, @start_date, @end_date, @status_code)";
+                            "@gaming_platform, @rules, @start_date, @end_date, @status_code, @reason)";
                         insertCmd.Parameters.AddWithValue("@bracketID", bracketFields.BracketID);
                         insertCmd.Parameters.AddWithValue("@bracket_name", bracketFields.BracketName);
                         insertCmd.Parameters.AddWithValue("@host", bracketFields.Host);
@@ -266,6 +269,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         insertCmd.Parameters.AddWithValue("@start_date", bracketFields.StartDate);
                         insertCmd.Parameters.AddWithValue("@end_date", bracketFields.EndDate);
                         insertCmd.Parameters.AddWithValue("@status_code", bracketFields.StatusCode);
+                        insertCmd.Parameters.AddWithValue("@reason", bracketFields.Reason);
                         conn.Open();
                         insertCmd.ExecuteNonQuery();
                         conn.Close();
@@ -305,6 +309,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                             "rules = @rules, " +
                             "start_date = @start_date, " +
                             "end_date = @end_date " +
+                            "reason = @reason" +
                             "WHERE bracketID = @bracketID";
                         updateCmd.Parameters.AddWithValue("@bracketID", bracketFields.BracketID);
                         updateCmd.Parameters.AddWithValue("@bracket_name", bracketFields.BracketName);
@@ -315,6 +320,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         updateCmd.Parameters.AddWithValue("@rules", bracketFields.Rules);
                         updateCmd.Parameters.AddWithValue("@start_date", bracketFields.StartDate);
                         updateCmd.Parameters.AddWithValue("@end_date", bracketFields.EndDate);
+                        updateCmd.Parameters.AddWithValue("@reason", bracketFields.Reason);
                         conn.Open();
                         updateCmd.ExecuteNonQuery();
                         conn.Close();
@@ -337,15 +343,24 @@ namespace TBZ.KrakenBracket.DatabaseAccess
         {
             try
             {
-                using (conn = new MySqlConnection(CONNECTION_STRING))
+                if(bracketFields.StatusCode == 2)
                 {
-                    string deleteQuery = string.Format("DELETE FROM bracket_info WHERE bracketID = {0}", bracketFields.BracketID);
-                    MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
-                    conn.Open();
-                    deleteCmd.ExecuteNonQuery();
-                    conn.Close();
+                    UpdateBracket(bracketFields);
+                    return true;
                 }
-                return true;
+                else
+                {
+                    using (conn = new MySqlConnection(CONNECTION_STRING))
+                    {
+                        string deleteQuery = string.Format("DELETE FROM bracket_info WHERE bracketID = {0}", bracketFields.BracketID);
+                        MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                        conn.Open();
+                        deleteCmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    return true;
+                }
+                
             }
             catch (Exception)
             {

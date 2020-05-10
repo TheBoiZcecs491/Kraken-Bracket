@@ -157,5 +157,23 @@ namespace ClientApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpDelete("deleteBracket/")]
+        [Produces("application/json")]
+        public IActionResult DeleteBracket(BracketInfo bracketInfo)
+        {
+            try
+            {
+                return Ok(TournamentBracketManager.DeleteBracket(bracketInfo));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

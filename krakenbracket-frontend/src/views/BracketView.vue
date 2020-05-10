@@ -95,6 +95,18 @@ export default {
           return true;
         } 
       }
+    },
+    deleteBracket(bracket){
+      if(this.bracket.statusCode == 2)
+      {
+        var reason = prompt("Please enter reason for deleting in-progress bracket");
+        bracket.reason = reason;
+        bracket.name = "[Cancelled]" + bracket.name;
+        BracketService.deleteBracket(bracket);
+      }
+      else{
+        BracketService.deleteBracket(bracket);
+      }
     }
   }
 };

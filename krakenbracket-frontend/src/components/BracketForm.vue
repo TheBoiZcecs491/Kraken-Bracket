@@ -302,7 +302,8 @@ export default {
                 GamingPlatform: this.GamingPlatform,
                 Rules: this.ruleSet,
                 StartDate: this.startDate + " " + this.startTime, // Datetime concatenate
-                EndDate: this.endDate + " " + this.endTime // Datetime concatenate
+                EndDate: this.endDate + " " + this.endTime, // Datetime concatenate
+                Reason: ""
             });
             //console.log(bracketInfo)
             //setTimeout((this.$store.dispatch('createBracket', this.BracketInfo), 500))

@@ -23,5 +23,20 @@ export default {
   },
   getGamerInfo(email){
     return apiClient.get(`api/brackets/${email}/gamerInfo`);
+  },
+  deleteBracket(bracket){
+    return apiClient.delete(`api/brackets/deleteBracket`, {
+      BracketID: bracket.bracketID,
+      BracketName: bracket.bracketName,
+      BracketTypeID: bracket.BracketTypeID,
+      PlayerCount: bracket.PlayerCount,
+      GamePlayed: bracket.GamePlayed,
+      GamingPlatform: bracket.GamingPlatform,
+      StartDate: bracket.StartDate,
+      EndDate: bracket.EndDate,
+      StatusCode: bracket.StatusCode,
+      MaxCapacity: bracket.MaxCapacity,
+      Reason: bracket.Reason
+    });
   }
 }

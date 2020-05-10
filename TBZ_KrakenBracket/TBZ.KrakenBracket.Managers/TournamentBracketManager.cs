@@ -81,6 +81,11 @@ namespace TBZ.KrakenBracket.Managers
                 return false;
         }
 
+        public bool DeleteBracket(BracketInfo bracketInfo)
+        {
+            return _tournamentBracketService.DeleteTournamentBracket(bracketInfo);
+        }
+
         /// <summary>
         /// Gets user's bracket player info
         /// </summary>
