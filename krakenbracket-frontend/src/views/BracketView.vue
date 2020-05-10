@@ -51,6 +51,11 @@
         <div v-else>
           <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
         </div>
+        <div v-if="loggedIn">
+          <div v-if="bracket.host === this.$store.state.gamerInfo.gamerTag">
+        <v-btn>Update Bracket</v-btn>
+      </div>
+        </div>
       </div>
       </div>
     </v-container>
