@@ -140,6 +140,11 @@ namespace TBZ.KrakenBracket.Managers
             return _tournamentBracketService.GetCompetitorListByBracketID(bracketID);
         }
 
+        public bool UpdateBracketStanding(int bracketID, BracketCompetitor bracketCompetitor)
+        {
+            return _tournamentBracketService.UpdateBracketStanding(bracketID, bracketCompetitor);
+        }
+
         /// <summary>
         /// Gets gamer info by user's email
         /// </summary>

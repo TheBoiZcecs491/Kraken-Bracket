@@ -178,6 +178,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         }
 
+        public bool UpdateBracketStanding(int bracketID, BracketCompetitor bracketCompetitor)
+        {
+            TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
+            bool result = tournamentBracketDatabaseQuery.UpdateBracketStandings(bracketID, bracketCompetitor);
+            return result;
+        }
+
         public List<BracketCompetitor> GetCompetitorListByBracketID(int bracketID)
         {
             TournamentBracketDatabaseQuery tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
