@@ -262,7 +262,7 @@ namespace TBZ.TournamentBracketTest
             var gamerInfo = new GamerInfo();
             var bracketID = 1;
             gamerInfo.GamerTag = "GamerTag1";
-            var expected = new BracketPlayer(1, "LkKpHSN1+aOvzoj3ZrCXSIxasfWSZ5j1mJI5S3er3Vw=", 0, 0, 0, 1);
+            var expected = new BracketPlayer(1, "LkKpHSN1+aOvzoj3ZrCXSIxasfWSZ5j1mJI5S3er3Vw=", 0, 0, 0, null, 1, null);
             
             // Act
             var actual = _tournamentBracketManager.RegisterGamerIntoBracket(gamerInfo, bracketID);

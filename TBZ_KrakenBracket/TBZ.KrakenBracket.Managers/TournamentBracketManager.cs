@@ -140,6 +140,18 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
+        public bool UpdateBracketInformation(BracketInfo bracketInfo)
+        {
+            if(bracketInfo == null)
+            {
+                throw new ArgumentException();
+            }
+            else
+            {
+                return _tournamentBracketService.UpdateTournamentBracket(bracketInfo);
+            }
+        }
+
         /// <summary>
         /// Gets gamer info by user's email
         /// </summary>

@@ -158,6 +158,24 @@ namespace ClientApp.Controllers
             }
         }
 
+        [HttpPut("updateBracket/")]
+        [Produces("application/json")]
+        public IActionResult UpdateBracketInformation(BracketInfo bracketInfo)
+        {
+            try
+            {
+                return Ok(TournamentBracketManager.UpdateBracketInformation(bracketInfo));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpDelete("deleteBracket/")]
         [Produces("application/json")]
         public IActionResult DeleteBracket(BracketInfo bracketInfo)
