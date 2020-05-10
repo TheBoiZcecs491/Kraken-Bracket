@@ -47,7 +47,7 @@
                 :bracket="bracket"
               />
             </div>
-             <div v-else-if="bracket.maxCapacity === 32">
+            <div v-else-if="bracket.maxCapacity === 32">
               <ThirtyTwoPlayerBracketModel
                 :competitors="competitors"
                 :bracket="bracket"
