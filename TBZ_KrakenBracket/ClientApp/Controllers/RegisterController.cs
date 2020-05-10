@@ -7,15 +7,16 @@ using TBZ.UM_Manager;
 
 namespace ClientApp.Controllers
 {
-    [Route("api/register")]
+    
     [ApiController]
     public class RegisterController : Controller
     {
         private readonly UserManagementManager _userManagementManager = new UserManagementManager();
         private readonly GamerDataAccess _gamerDataAccess = new GamerDataAccess();
         // PUT api/<controller>
-        [HttpPut]
-        public IActionResult registerNewUser(RegistrationInput userInput)
+        [Route("api/register")]
+        [HttpPost]
+        public IActionResult RegisterNewUser(RegistrationInput userInput)
         {
             try
             {
@@ -31,6 +32,7 @@ namespace ClientApp.Controllers
                 if (verifyGamer == null)
                 {
                     _userManagementManager.SingleCreateUsers(doAsUser.systemAdmin(), user);
+                    _userManagementManager.updateGamerTag(user, userInput.GamerTag);
                 } else user.ErrorMessage="Gamer tag is already in use";
                 ContentResult serverReply = Content(user.ErrorMessage);
 
@@ -39,21 +41,15 @@ namespace ClientApp.Controllers
                     case "Invalid permissions":
                         serverReply.StatusCode = StatusCodes.Status401Unauthorized; break;
                     case "Password is not secured":
-                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "ID already exists":
-                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "Email already registered":
-                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "Email malformed":
-                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "Invalid names":
-                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
                     case "Gamer tag is already in use":
-                        serverReply.StatusCode = StatusCodes.Status406NotAcceptable; break;
+                        serverReply.StatusCode = StatusCodes.Status400BadRequest; break;
                     case "Email failed to register":
                         serverReply.StatusCode = StatusCodes.Status500InternalServerError; break;
                     default:
-                        _userManagementManager.updateGamerTag(user, userInput.GamerTag);
                         serverReply.StatusCode = StatusCodes.Status200OK;
                         break;
                 }
@@ -61,7 +57,7 @@ namespace ClientApp.Controllers
             }
             catch (ArgumentException)
             {
-                return StatusCode(StatusCodes.Status406NotAcceptable);
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
         }
     }

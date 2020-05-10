@@ -43,7 +43,14 @@ export default new Vuex.Store({
     },
     registerUser({ commit }, formFill) {
       return axios
-        .put("https://localhost:44352/api/register", formFill)
+        .post("https://localhost:44352/api/register", formFill)
+        .then(({ data }) => {
+          commit("SET_USER_DATA", data);
+        });
+    },
+    updateUser({ commit }, formFill) {
+      return axios
+        .post("https://localhost:44352/api/updateProfile", formFill)
         .then(({ data }) => {
           commit("SET_USER_DATA", data);
         });
