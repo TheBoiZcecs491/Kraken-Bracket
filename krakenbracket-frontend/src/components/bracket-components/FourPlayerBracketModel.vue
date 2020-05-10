@@ -19,7 +19,8 @@
 import Bracket from "@/components/bracket-components/Bracket.vue";
 export default {
   props: {
-    competitors: Array
+    competitors: Array,
+    bracket: Object
   },
   components: {
     Bracket
