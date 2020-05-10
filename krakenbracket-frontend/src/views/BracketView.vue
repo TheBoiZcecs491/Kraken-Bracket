@@ -59,6 +59,12 @@
                 :bracket="bracket"
               />
             </div>
+            <div v-else-if="bracket.maxCapacity === 128">
+              <OneTwentyEightPlayerBracketModel
+                :competitors="competitors"
+                :bracket="bracket"
+              />
+            </div>
           </div>
           <!-- State if the user is not logged in -->
           <div v-if="!loggedIn">
@@ -100,6 +106,7 @@ import EightPlayerBracketModel from "@/components/bracket-components/EightPlayer
 import SixteenPlayerBracketModel from "@/components/bracket-components/SixteenPlayerBracketModel.vue";
 import ThirtyTwoPlayerBracketModel from "@/components/bracket-components/ThirtyTwoPlayerBracketModel.vue";
 import SixtyFourPlayerBracketModel from "@/components/bracket-components/SixtyFourPlayerBracketModel.vue";
+import OneTwentyEightPlayerBracketModel from "@/components/bracket-components/SixtyFourPlayerBracketModel.vue";
 export default {
   props: ["id"],
   components: {
@@ -109,7 +116,8 @@ export default {
     EightPlayerBracketModel,
     SixteenPlayerBracketModel,
     ThirtyTwoPlayerBracketModel,
-    SixtyFourPlayerBracketModel
+    SixtyFourPlayerBracketModel,
+    OneTwentyEightPlayerBracketModel
   },
   data() {
     return {
