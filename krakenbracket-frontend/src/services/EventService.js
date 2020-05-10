@@ -23,6 +23,9 @@ export default {
   getEventInfo(eventID){
     return apiClient.get("api/events/GetEventInfo/" + eventID);
   },
+  getBracketEvent(eventID){
+    return apiClient.get("api/events/GetBracketEvent/" + eventID);
+  },
   // checkHost(eventID, hashedUserID){
   //   return apiClient.get("api/events/checkHost");
   // },

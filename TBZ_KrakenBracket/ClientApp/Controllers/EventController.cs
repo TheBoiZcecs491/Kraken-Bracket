@@ -41,7 +41,7 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.GetEventByID(eventID));
         }
 
-        [HttpPost("addEventBracket")]
+        [HttpPost("AddEventBracket")]
         [Produces("application/json")]
         public IActionResult addEventBracket(EventBracketList eventBracket)
         {

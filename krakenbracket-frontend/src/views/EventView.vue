@@ -50,6 +50,14 @@
         </v-col>
         <v-col cols="12" lg="6"></v-col>
       </v-row>
+      <div>
+        <h1>List of Bracket in Event</h1>
+        <BracketModel
+          v-for="bracket in brackets"
+          :key="bracket.id"
+          :bracket="bracket"
+        />
+      </div>
     </v-container>
   </v-app>
 </template>
@@ -59,11 +67,13 @@ import EventService from "@/services/EventService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterEventModel from "@/components/UnregisterEventModel.vue";
 import RegisterEventModel from "@/components/RegisterEventModel.vue";
+import BracketModel from "@/components/BracketModel.vue";
 export default {
   props: ["id"],
   components: {
     UnregisterEventModel,
-    RegisterEventModel
+    RegisterEventModel,
+    BracketModel
   },
   computed: {
     ...authComputed
@@ -71,6 +81,7 @@ export default {
   data() {
     return {
       event: {},
+      brackets: {},
       HostGamerTag: event.host,
     };
   },
@@ -85,8 +96,14 @@ export default {
       EventService.getEventHost(this.id).then(response => {
         this.HostGamerTag = response;
       });
+
     this.$store
       .dispatch("eventPlayerInfo", this.id);
+
+    EventService.getBracketEvent(this.id)
+      .then(response => {
+        this.brackets = response.data;
+      })
   },
   beforeDestroy() {
     this.$store.dispatch("removeEventPlayerInfo");
