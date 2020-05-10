@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-btn @click="updatePlayer1BracketPlacements">Update Bracket</v-btn>
+    <div v-show="bracket.host === this.$store.state.gamerInfo.gamerTag">
+            <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
+        </div>
     <bracket :rounds="rounds">
       <template #player="{ player }">
         {{ player.name }}
@@ -17,7 +19,8 @@
 import Bracket from "@/components/bracket-components/Bracket.vue";
 export default {
   props: {
-    competitors: Array
+    competitors: Array,
+    bracket: Object
   },
   components: {
     Bracket
@@ -28,7 +31,7 @@ export default {
         {
           games: [
                 {
-                    player1: { id: "1", name: "?", winner: false },
+                    player1: { name: "?", winner: false },
                     player2: {  name: "?", winner: false }
                 },
                 {
@@ -44,7 +47,7 @@ export default {
                     player2: {  name: "?", winner: false }
                 },
                 {
-                    player1: { id: "1", name: "?", winner: false },
+                    player1: { name: "?", winner: false },
                     player2: {  name: "?", winner: false }
                 },
                 {
@@ -65,7 +68,7 @@ export default {
         {
           games: [
             {
-                    player1: { id: "1", name: "?", winner: false },
+                    player1: {  name: "?", winner: false },
                     player2: {  name: "?", winner: false }
                 },
                 {
@@ -85,7 +88,7 @@ export default {
         {
            games: [
             {
-                    player1: { id: "1", name: "?", winner: false },
+                    player1: {  name: "?", winner: false },
                     player2: {  name: "?", winner: false }
                 },
                 {
@@ -97,7 +100,7 @@ export default {
         {
            games: [
             {
-                    player1: { id: "1", name: "?", winner: false },
+                    player1: {  name: "?", winner: false },
                     player2: {  name: "?", winner: false }
                 },
           ]

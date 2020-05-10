@@ -1,6 +1,8 @@
 <template>
     <div>
-        <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
+        <div v-show="bracket.host === this.$store.state.gamerInfo.gamerTag">
+            <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
+        </div>
         <bracket :rounds="rounds">
             <template #player="{ player }">
                 {{ player.name }}
@@ -11,6 +13,7 @@
         <ul v-for="competitor in competitors" :key="competitor.score">
             <li>{{competitor.gamerTag}}  {{competitor.score}}</li>
         </ul>
+        
     </div>
   
 </template>
@@ -22,7 +25,8 @@ import BracketService from "@/services/BracketService.js";
 
 export default {
   props:{
-    competitors: Array
+    competitors: Array,
+    bracket: Object
   },
   components: {
     Bracket
