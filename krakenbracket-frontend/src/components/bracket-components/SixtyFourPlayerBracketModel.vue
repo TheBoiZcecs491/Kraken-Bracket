@@ -310,7 +310,7 @@ export default {
   },
   created() {
     setTimeout(() => {
-      var competitorList = new Array(32);
+      var competitorList = new Array(64);
       //   console.log(competitorList);
       for (let index = 0; index < this.competitors.length; index++) {
         competitorList[index] = this.competitors[index].gamerTag;
@@ -324,7 +324,7 @@ export default {
       }
       // Algorithm used to populate the bracket display
       var j = 0;
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 60; i++) {
         if (i !== 0) i++;
         this.rounds[0].games[j].player1.name = competitorList[i];
         this.rounds[0].games[j].player2.name = competitorList[i + 1];
@@ -332,7 +332,7 @@ export default {
       }
 
       // Quarter finals
-      for (let i = 0; i < 16; i++) {
+      for (let i = 0; i < 32; i++) {
               if(this.competitors[i].score == undefined) continue;
               else{
                   if(this.competitors[i].score == 1){
@@ -349,7 +349,7 @@ export default {
     }, 50);
   },
   methods: {
-    updatePlayer1BracketPlacements() {
+    updatePlayerBracketPlacements() {
       var bracketLayer = prompt("Enter the bracket layer number");
       var matchNumber = prompt("Enter the match number");
       var gamerTag = prompt("Enter the gamerTag");
