@@ -3,7 +3,9 @@
     <div style="text-align: left">
       <!-- <RegisterBracketModel :key="bracket.id" :bracket="bracket" /> -->
       <router-link
-        v-show="bracket.statusCode === 0 && bracket.playerCount < 128"
+        v-show="
+          bracket.statusCode === 0 && bracket.playerCount < bracket.maxCapacity
+        "
         :to="{
           name: 'bracket-registration',
           params: { id: bracket.bracketID }
@@ -25,7 +27,10 @@
         </p>
       </div>
       <v-btn
-        v-show="bracket.statusCode !== 0 || bracket.playerCount === 128"
+        v-show="
+          bracket.statusCode !== 0 ||
+            bracket.playerCount === bracket.maxCapacity
+        "
         disabled
         >Register!</v-btn
       >
