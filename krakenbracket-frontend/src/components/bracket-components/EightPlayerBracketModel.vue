@@ -6,7 +6,11 @@
                 {{ player.name }}
             </template>
         </bracket>
-        <p>{{competitors}}</p>
+        <!-- <p>{{competitors}}</p> -->
+        <h3>Placements:</h3>
+        <ul v-for="competitor in competitors" :key="competitor.score">
+            <li>{{competitor.gamerTag}}  {{competitor.score}}</li>
+        </ul>
     </div>
   
 </template>
@@ -97,7 +101,9 @@ export default {
 
     // Semi finals
     for (let i = 0; i < 4; i++) {
-        if(this.competitors[i].score == 1){
+        if(this.competitors[i].score == undefined) continue;
+        else{
+            if(this.competitors[i].score == 1){
             if(i % 2 == 0){
                 this.rounds[1].games[0].player1.name = this.competitors[i].gamerTag;
             }
@@ -106,8 +112,13 @@ export default {
             }
         }
     }
-    for (let i = 4; i < 9; i++) {
-        if(this.competitors[i].score == 1){
+        
+    }
+    for (let i = 4; i < 8; i++) {
+        console.log(this.competitors[i].score)
+        if(this.competitors[i].score == undefined) continue;
+        else{
+            if(this.competitors[i].score == 1){
             if(i % 2 == 0){
                 this.rounds[1].games[1].player1.name = this.competitors[i].gamerTag;
             }
@@ -115,56 +126,27 @@ export default {
                 this.rounds[1].games[1].player2.name = this.competitors[i].gamerTag;
             }
         }
-    }
-
-    // Finals
-    for (let i = 0; i < 8; i++) {
-        if(this.competitors[i].score == 2){
-            // if(i % 2 == 0){
-                this.rounds[2].games[0].player1.name = this.competitors[i].gamerTag;
-            // }
-            // else {
-                this.rounds[2].games[0].player2.name = this.competitors[i].gamerTag;
-            // }
         }
     }
-    // j = 0;
-    // for (let i = 0; i < this.competitors.length; i++) {
-    //     if((((j + 1) % 2) == 1) && this.competitors[i].score == 1){
-    //         this.rounds[1].games[j].player1.name = this.competitors[i].gamerTag;
-    //         j++;
-    //     }
-    //     else if ((((j + 1) % 2) == 0) && this.competitors[i].score == 1){
-    //         this.rounds[1].games[j].player2.name = this.competitors[i].gamerTag;
-    //         j++;
-    //     }
-        
-    //     console.log(j);
-    //     // if(i !== 0) i++;
-    //     // this.rounds[1].games[j].player1.name = competitorList[i];
-    //     // this.rounds[1].games[j].player2.name = competitorList[i + 1];
-    //     // if (this.competitors[i].score == 1) {
-    //     //     if ((j+1) % 2 == 0) {
-    //     //         this.rounds[1].games[j].player1.name = competitorList[i];
-    //     //     }
-    //     //     else if (){
-    //     //         this.rounds[1].games[j].player2.name = competitorList[i];
-    //     //     }
-    //     // }
-        
-    // }
 
-    // this.rounds[0].games[0].player1.name = competitorList[0];
-    // this.rounds[0].games[0].player2.name = competitorList[1];
-    // this.rounds[0].games[1].player1.name = competitorList[2];
-    // this.rounds[0].games[1].player2.name = competitorList[3];
-    // this.rounds[0].games[2].player1.name = competitorList[4];
-    // this.rounds[0].games[2].player2.name = competitorList[5];
-    // this.rounds[0].games[3].player1.name = competitorList[6];
-    // this.rounds[0].games[3].player2.name = competitorList[7];
     
-    
-
+    // Finals
+    var player1;
+    var player2;
+    for (let i = 0; i < 8; i++) {
+        if(this.competitors[i].score == 2){
+            player1 =this.competitors[i];
+            break;
+        }
+    }
+    for (let i = 0; i < 8; i++) {
+        if(this.competitors[i].score == 2 && (this.competitors[i] !== player1)){
+            player2 =this.competitors[i];
+            break;
+        }
+    }
+    this.rounds[2].games[0].player1.name = player1.gamerTag;
+    this.rounds[2].games[0].player2.name = player2.gamerTag;
       }, 100);
   },
   methods:{
@@ -193,42 +175,13 @@ export default {
               }
           }
           else {
-              console.log("BAD. THAT'S A NO NO");
+              console.log("ERROR");
           }
-          
-        //   if(matchNumber % 2 == 0 ){
-        //       if(bracketLayer == (this.rounds.length - 1)){
-        //         if(this.rounds[bracketLayer].games[matchNumber].player1.name == gamerTag){
-        //         this.rounds[bracketLayer].games[matchNumber];
-        //     }
-        //   } 
-        //   else{
-        //       if(this.rounds[bracketLayer].games[matchNumber].player1.name == gamerTag){
-        //       this.rounds[bracketLayer].games[matchNumber+1];
-        //     }
-        //   }
-       
-        
-        // if(bracketLayer === (this.rounds.length - 1)){ // for grand finals
-        	
-        // }
-        
-        // else if(matchNumber % 2 === 0 ){ // if odd match, progress into next round's player1
-        //     if(this.rounds[bracketLayer].games[matchNumber].player1.name === gamerTag){
-        //       this.rounds[bracketLayer].games[matchNumber + 1].player1.name = gamerTag;
-        //     }
-        //     else{
-        //       this.rounds[bracketLayer].games[matchNumber + 1].player2.name = gamerTag;
-        //     }
-        //   } 
-        // else{ // if even match, progress into next round as player2
-        //     if(this.rounds[bracketLayer].games[matchNumber].player1.name === gamerTag){
-        //       this.rounds[bracketLayer].games[matchNumber + 1].player1.name = gamerTag;
-        //     }
-        //     else{
-        //       this.rounds[bracketLayer].games[matchNumber + 1].player2.name = gamerTag;
-        //     }
-        // }
+      }
+  },
+  computed:{
+      competitorStandings(){
+          return this.competitors.orderBy(this.competitors, "value", "desc");
       }
   }
 }
