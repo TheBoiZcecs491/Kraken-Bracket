@@ -32,9 +32,24 @@
           </div>
 
           <div v-else-if="loggedIn">
-            <!-- register -->
-            <p>register</p>
-            <RegisterEventModel :key="event.id" :event="event" />
+            <div v-if = "true">
+      <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
+      <router-link
+        :to="{
+          name: 'event-registration',
+          params: { id: event.eventID }
+        }"
+        class="register-btn"
+      >
+        <v-btn color="primary" type="submit">Register!</v-btn>
+      </router-link>
+    </div>
+    <div v-else>
+      <p>
+        <strong>NOTE:</strong> Registration is disabled; Event has ended
+      </p>
+      <v-btn disabled>Register!</v-btn>
+    </div>
           </div>
 
           <div v-else>
@@ -66,13 +81,13 @@
 import EventService from "@/services/EventService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterEventModel from "@/components/UnregisterEventModel.vue";
-import RegisterEventModel from "@/components/RegisterEventModel.vue";
+// import RegisterEventModel from "@/components/RegisterEventModel.vue";
 import BracketModel from "@/components/BracketModel.vue";
 export default {
   props: ["id"],
   components: {
     UnregisterEventModel,
-    RegisterEventModel,
+    // RegisterEventModel,
     BracketModel
   },
   computed: {
