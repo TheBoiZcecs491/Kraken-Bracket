@@ -11,13 +11,6 @@
         or <router-link to="/register">register</router-link> a new account.
       </p>
     </div>
-    <div v-else>
-      <p>
-        <router-link to="/new-bracket">
-          <v-btn x-large>Create a new bracket</v-btn></router-link
-        >
-      </p>
-    </div>
   </div>
 </template>
 

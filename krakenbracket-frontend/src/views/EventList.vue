@@ -1,13 +1,15 @@
 <template>
   <v-app>
     <div v-if="loggedIn">
-      <router-link to="/event-create">
-        <v-btn x-large>Create a new Event</v-btn>
+      <router-link to="/event-create"
+      class = "create-btn">
+        <v-btn class = "primary" x-large>Create a new Event</v-btn>
       </router-link>
     </div>
     <div v-else>
-      <router-link to="/login">
-        <v-btn x-large>Create a new Event</v-btn>
+      <router-link to="/login"
+      class = "create-btn">
+        <v-btn class = "primary" x-large>Create a new Event</v-btn>
       </router-link>
     </div>
     <div>
@@ -61,3 +63,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.create-btn {
+  text-decoration: none;
+}
+</style>
