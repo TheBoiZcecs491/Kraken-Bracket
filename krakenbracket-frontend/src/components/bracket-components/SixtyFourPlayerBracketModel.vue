@@ -29,6 +29,12 @@
         </tr>
       </tbody>
     </table>
+     <div v-show="
+          bracket.host == this.$store.state.gamerInfo.gamerTag &&
+            bracket.statusCode == 2
+        ">
+        <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
+      </div>
   </div>
 </template>
 
@@ -48,276 +54,276 @@ export default {
         {
           games: [
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         },
         {
           games: [
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         },
         {
           games: [
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         },
         {
           games: [
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         },
         {
           games: [
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         },
         {
           games: [
             {
-              player1: { name: "?", winner: false },
-              player2: { name: "?", winner: false }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         }
