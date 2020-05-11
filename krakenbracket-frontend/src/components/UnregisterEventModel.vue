@@ -65,7 +65,7 @@ export default {
   methods: {
     unregisterSubmit() {
       //var systemID = this.$store.state.user.systemID;
-      var email = this.$store.state.user.email;
+      // var email = this.$store.state.user.email;
       axios.delete(
         `https://localhost:44352/api/events/${this.event.eventID}/unregister/${this.$store.state.user.systemID}`,
         {

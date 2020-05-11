@@ -7,26 +7,28 @@
     </bracket>
     <h3>Placements:</h3>
     <table class="standings">
-      <tr>
-        <th>GamerTag</th>
-        <th>Score</th>
-      </tr>
-      <tbody v-for="competitor in competitors" :key="competitor.score">
-        <!-- <tr>{{competitor.gamerTag}} {competitor.score}}</tr> -->
-        <tr>
-          <td>{{ competitor.gamerTag }}</td>
-          <td>{{ competitor.score }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div
-      v-show="
-        bracket.host === this.$store.state.gamerInfo.gamerTag &&
-          bracket.statusCode === 2
-      "
-    >
-      <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
-    </div>
+            <tr>
+                <th>GamerTag</th>
+                <th>Score</th>
+            </tr>
+            <tbody v-for="competitor in competitors" :key="competitor.score">
+                <!-- <tr>{{competitor.gamerTag}} {competitor.score}}</tr> -->
+                <tr>
+                    <td>{{competitor.gamerTag}}</td>
+                    <td>{{competitor.score}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <div
+        v-show="
+          (bracket.host === this.$store.state.gamerInfo.gamerTag) &&
+            (bracket.statusCode === 2)
+        "
+      >
+        <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
+      </div>
+      <br>
   </div>
 </template>
 
@@ -45,539 +47,540 @@ export default {
       rounds: [
         {
           games: [
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            }
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                  {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: { name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                }
+            
           ]
         },
         {
           games: [
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            }
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                }
           ]
         },
         {
-          games: [
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            }
+           games: [
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                }
           ]
         },
         {
-          games: [
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            }
+           games: [
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                }
           ]
         },
         {
-          games: [
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            }
-          ]
+             games: [
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                 {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                }
+             ]
         },
         {
-          games: [
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            },
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            }
-          ]
+             games: [
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                },
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                }
+             ]
         },
         {
-          games: [
-            {
-              player1: { name: "?" },
-              player2: { name: "?" }
-            }
-          ]
+              games: [
+                {
+                    player1: {  name: "?" },
+                    player2: {  name: "?" }
+                }
+             ]
         }
       ]
     };
@@ -607,21 +610,19 @@ export default {
 
       // Quarter finals
       for (let i = 0; i < 32; i++) {
-        if (this.competitors[i].score == undefined) continue;
-        else {
-          if (this.competitors[i].score == 1) {
-            if (i % 2 == 0) {
-              this.rounds[1].games[0].player1.name = this.competitors[
-                i
-              ].gamerTag;
-            } else {
-              this.rounds[1].games[0].player2.name = this.competitors[
-                i
-              ].gamerTag;
-            }
+              if(this.competitors[i].score == undefined) continue;
+              else{
+                  if(this.competitors[i].score == 1){
+                  if(i % 2 == 0){
+                      this.rounds[1].games[0].player1.name = this.competitors[i].gamerTag;
+                  }
+                  else {
+                      this.rounds[1].games[0].player2.name = this.competitors[i].gamerTag;
+                  }
+              }
           }
         }
-      }
+      
     }, 50);
   },
   methods: {
@@ -639,7 +640,7 @@ export default {
 
 <style>
 .standings {
-  width: 50%;
-  border: 3px solid black;
+    width: 50%;
+    border: 3px solid black;
 }
 </style>
