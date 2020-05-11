@@ -10,12 +10,11 @@
       <v-row>
         <v-col cols="12" lg="12"></v-col>
         <v-col cols="12" lg="12">
-
           <div v-if="statusHost()">
             <router-link
               :to="{
                 name: 'event-update', //'update-view'
-                params: { id: event.eventID}
+                params: { id: event.eventID }
               }"
             >
               <v-btn color="primary">Update</v-btn>
@@ -32,24 +31,24 @@
           </div>
 
           <div v-else-if="loggedIn">
-            <div v-if = "true">
-      <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
-      <router-link
-        :to="{
-          name: 'event-registration',
-          params: { id: event.eventID }
-        }"
-        class="register-btn"
-      >
-        <v-btn color="primary" type="submit">Register!</v-btn>
-      </router-link>
-    </div>
-    <div v-else>
-      <p>
-        <strong>NOTE:</strong> Registration is disabled; Event has ended
-      </p>
-      <v-btn disabled>Register!</v-btn>
-    </div>
+            <div v-if="true">
+              <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
+              <router-link
+                :to="{
+                  name: 'event-registration',
+                  params: { id: event.eventID }
+                }"
+                class="register-btn"
+              >
+                <v-btn color="primary" type="submit">Register!</v-btn>
+              </router-link>
+            </div>
+            <div v-else>
+              <p>
+                <strong>NOTE:</strong> Registration is disabled; Event has ended
+              </p>
+              <v-btn disabled>Register!</v-btn>
+            </div>
           </div>
 
           <div v-else>
@@ -97,7 +96,7 @@ export default {
     return {
       event: {},
       brackets: {},
-      HostGamerTag: event.host,
+      HostGamerTag: event.host
     };
   },
   created() {
@@ -112,13 +111,11 @@ export default {
         this.HostGamerTag = response;
       });
 
-    this.$store
-      .dispatch("eventPlayerInfo", this.id);
+    this.$store.dispatch("eventPlayerInfo", this.id);
 
-    EventService.getBracketEvent(this.id)
-      .then(response => {
-        this.brackets = response.data;
-      })
+    EventService.getBracketEvent(this.id).then(response => {
+      this.brackets = response.data;
+    });
   },
   beforeDestroy() {
     this.$store.dispatch("removeEventPlayerInfo");
@@ -127,10 +124,16 @@ export default {
     statusRegistration() {
       if (!this.loggedIn) {
         return false;
-      } 
-      else {
-        for (let index = 0; index < this.$store.state.eventPlayerInfo.length; index++) {
-          if (this.$store.state.eventPlayerInfo[index].hashedUserID === this.$store.state.gamerInfo.hashedUserID) {
+      } else {
+        for (
+          let index = 0;
+          index < this.$store.state.eventPlayerInfo.length;
+          index++
+        ) {
+          if (
+            this.$store.state.eventPlayerInfo[index].hashedUserID ===
+            this.$store.state.gamerInfo.hashedUserID
+          ) {
             return true;
           }
         }

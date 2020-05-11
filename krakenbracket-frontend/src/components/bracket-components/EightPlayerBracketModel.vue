@@ -174,24 +174,26 @@ export default {
           break;
         }
       }
-      
-      if((player1 === null) || (player1 === undefined) && ((player1 === null) || (player1 === undefined))){
-        console.log("No finalists yet")
-      }
-      else {
+
+      if (
+        player1 === null ||
+        (player1 === undefined && (player1 === null || player1 === undefined))
+      ) {
+        console.log("No finalists yet");
+      } else {
         this.rounds[2].games[0].player1.name = player1.gamerTag;
         this.rounds[2].games[0].player2.name = player2.gamerTag;
       }
       // if(player2.gamerTag != null){
-      //   
+      //
       // }
     }, 100);
 
-   setTimeout(() => {
+    setTimeout(() => {
       this.competitors.sort((a, b) =>
-      a.score < b.score ? 1 : b.score < a.score ? -1 : 0
-    );
-   }, 1000);
+        a.score < b.score ? 1 : b.score < a.score ? -1 : 0
+      );
+    }, 1000);
   },
   methods: {
     updatePlayerBracketPlacements() {

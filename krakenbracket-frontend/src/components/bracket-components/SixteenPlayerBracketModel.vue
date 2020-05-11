@@ -167,8 +167,8 @@ export default {
     }, 50);
   },
   methods: {
-     updatePlayerBracketPlacements() {
-       var bracketLayer = prompt("Enter the bracket layer number");
+    updatePlayerBracketPlacements() {
+      var bracketLayer = prompt("Enter the bracket layer number");
       var matchNumber = prompt("Enter the match number");
       var gamerTag = prompt("Enter the gamerTag");
       var playerPlacement = prompt("Player 1 or 2?");

@@ -20,7 +20,7 @@
         </tr>
       </tbody>
     </table>
-    <br>
+    <br />
     <div
       v-show="
         bracket.host === this.$store.state.gamerInfo.gamerTag &&
@@ -30,7 +30,7 @@
       <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
       <v-btn @click="chooseWinner">Choose winner</v-btn>
     </div>
-    <br>
+    <br />
   </div>
 </template>
 
@@ -64,7 +64,7 @@ export default {
           games: [
             {
               player1: { name: "?" },
-              player2: { name: "?"}
+              player2: { name: "?" }
             }
           ]
         }
@@ -89,7 +89,7 @@ export default {
       var j = 0;
       for (let i = 0; i < 4; i++) {
         if (i !== 0) i++;
-        if(competitorList[i] == undefined) continue;
+        if (competitorList[i] == undefined) continue;
         this.rounds[0].games[j].player1.name = competitorList[i];
         this.rounds[0].games[j].player2.name = competitorList[i + 1];
         j++;
@@ -109,22 +109,25 @@ export default {
           break;
         }
       }
-      if((player1 === null) || (player1 === undefined) && ((player1 === null) || (player1 === undefined))){
-        console.log("No finalists yet")
-      }
-      else {
+      if (
+        player1 === null ||
+        (player1 === undefined && (player1 === null || player1 === undefined))
+      ) {
+        console.log("No finalists yet");
+      } else {
         this.rounds[1].games[0].player1.name = player1.gamerTag;
         this.rounds[1].games[0].player2.name = player2.gamerTag;
       }
       setTimeout(() => {
-         this.competitors.sort((a, b) =>
-      a.score < b.score ? 1 : b.score < a.score ? -1 : 0);
+        this.competitors.sort((a, b) =>
+          a.score < b.score ? 1 : b.score < a.score ? -1 : 0
+        );
       }, 1000);
     }, 50);
   },
   methods: {
     updatePlayerBracketPlacements() {
-       var bracketLayer = prompt("Enter the bracket layer number");
+      var bracketLayer = prompt("Enter the bracket layer number");
       var matchNumber = prompt("Enter the match number");
       var gamerTag = prompt("Enter the gamerTag");
       var playerPlacement = prompt("Player 1 or 2?");
@@ -152,7 +155,7 @@ export default {
       } else {
         console.log("ERROR");
       }
-    },
+    }
   }
 };
 </script>

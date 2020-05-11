@@ -10,7 +10,7 @@ export default new Vuex.Store({
     user: null,
     bracketPlayerInfo: [],
     gamerInfo: null,
-    eventPlayerInfo: [],
+    eventPlayerInfo: []
   },
   mutations: {
     SET_USER_DATA(state, userData) {
@@ -34,12 +34,12 @@ export default new Vuex.Store({
       localStorage.setItem("gamerInfo", JSON.stringify(data));
       axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
     },
-    SET_EVENT_PLAYER_INFO(state, data){
+    SET_EVENT_PLAYER_INFO(state, data) {
       state.eventPlayerInfo = data;
       localStorage.setItem("eventPlayerInfo", JSON.stringify(data));
       axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
     },
-    CLEAR_EVENT_PLAYER_INFO(){
+    CLEAR_EVENT_PLAYER_INFO() {
       localStorage.removeItem("eventPlayerInfo");
     }
   },
@@ -71,12 +71,12 @@ export default new Vuex.Store({
         commit("SET_USER_GAMER_INFO", data);
       });
     },
-    eventPlayerInfo({ commit}, eventID){
-      EventService.getEventInfo(eventID).then(({data }) => {
-      commit("SET_EVENT_PLAYER_INFO", data);
+    eventPlayerInfo({ commit }, eventID) {
+      EventService.getEventInfo(eventID).then(({ data }) => {
+        commit("SET_EVENT_PLAYER_INFO", data);
       });
     },
-    removeEventPlayerInfo({commit}){
+    removeEventPlayerInfo({ commit }) {
       commit("CLEAR_EVENT_PLAYER_INFO");
     }
   },
@@ -93,7 +93,7 @@ export default new Vuex.Store({
     gamerInfo(state) {
       return state.gamerInfo;
     },
-    eventPlayerInfo(state){
+    eventPlayerInfo(state) {
       return state.eventPlayerInfo;
     }
   },

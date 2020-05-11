@@ -51,8 +51,7 @@
                     <p class="red--text">{{ error }}</p>
                   </div>
                 </v-col>
-                <v-col cols="12" lg="4">
-                </v-col>
+                <v-col cols="12" lg="4"> </v-col>
               </v-row>
             </v-col>
           </v-row>
@@ -81,8 +80,7 @@ export default {
       },
       error: null,
       email: this.$store.state.user.email,
-      emailRules: [
-      ],
+      emailRules: [],
       gamerTagRules: [
         gamerTag => !!gamerTag || "GamerTag is required",
         gamerTag =>
@@ -122,7 +120,6 @@ export default {
               setTimeout(() => {
                 this.$store.dispatch("eventPlayerInfo", this.id);
               }, 500);
-              
             })
             .then(() => {
               this.$router.go(-1);
