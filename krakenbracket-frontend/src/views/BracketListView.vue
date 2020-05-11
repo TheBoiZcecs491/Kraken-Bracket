@@ -1,19 +1,18 @@
 <template>
-<v-app>
-  <div>
-    <h1>Bracket Listings</h1>
-      <router-link to="/new-bracket"
-      class = "create-btn">
+  <v-app>
+    <div>
+      <h1>Bracket Listings</h1>
+      <router-link to="/new-bracket" class="create-btn">
         <v-btn class="primary" x-large>Create a new bracket</v-btn>
       </router-link>
-    <!-- the :event sends each prop to the Bracket component -->
-    <BracketModel
-      v-for="bracket in brackets"
-      :key="bracket.id"
-      :bracket="bracket"
-    />
-  </div>
-</v-app>
+      <!-- the :event sends each prop to the Bracket component -->
+      <BracketModel
+        v-for="bracket in brackets"
+        :key="bracket.id"
+        :bracket="bracket"
+      />
+    </div>
+  </v-app>
 </template>
 
 <script>

@@ -20,7 +20,7 @@
       </tbody>
     </table>
     <br />
-   <div v-if="loggedIn">
+    <div v-if="loggedIn">
       <div
         v-show="
           bracket.host === this.$store.state.gamerInfo.gamerTag &&

@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <div v-if="loggedIn">
-      <p>you are already logged in, please sign out to log into another account.</p>
+      <p>
+        you are already logged in, please sign out to log into another account.
+      </p>
     </div>
     <div v-else>
       <h1>User login</h1>
