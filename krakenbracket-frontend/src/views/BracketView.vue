@@ -27,14 +27,6 @@
             <h4>Rules:</h4>
             <p>{{ bracket.rules }}</p>
           </div>
-          <div v-if="(bracket.host === this.$store.state.gamerInfo.gamerTag) && (bracket.statusCode === 0)">
-               <router-link
-              :to="{
-                name: 'bracket-update', params: {bracket: this.bracket}
-              }"
-            >
-              <v-btn color="primary">Update Bracket</v-btn>
-            </router-link>
           <!-- State if the user is not logged in -->
           <div v-if="!loggedIn">
             <p>
@@ -61,7 +53,16 @@
           </div>
           <div v-if="loggedIn">
             <br>
-            
+            <div v-if="((bracket.host === this.$store.state.gamerInfo.gamerTag) &&
+             (bracket.statusCode == 0 || bracket.statusCode == 2))">
+               <router-link
+              :to="{
+                name: 'bracket-update', params: {bracket: this.bracket}
+              }"
+            >
+              <v-btn color="primary">Update Bracket</v-btn>
+            </router-link>
+            <v-btn color="error" @click="deleteBracket">Delete Bracket</v-btn> 
             </div>
           </div>
         </div>
@@ -75,6 +76,7 @@ import BracketService from "@/services/BracketService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue";
 import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
+import axios from "axios";
 
 export default {
   props: ["id"],
@@ -111,20 +113,53 @@ export default {
         }
       }
     },
-    deleteBracket(bracket) {
-      if (this.bracket.statusCode == 2) {
+    deleteBracket() {
+      if (this.bracket.statusCode == 2) { // If bracket is in progress
         var reason = prompt(
           "Please enter reason for deleting in-progress bracket"
         );
-        bracket.reason = reason;
-        bracket.name = "[Cancelled]" + bracket.name;
-        BracketService.deleteBracket(bracket);
-      } else {
-        BracketService.deleteBracket(bracket);
+        this.bracket.reason = reason;
+        var cancelledTitle = "[Cancelled] " + this.bracket.bracketName;
+        axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
+          BracketID: this.bracket.bracketID,
+          BracketName: cancelledTitle,
+          Host: this.bracket.host,
+          BracketTypeID: this.bracket.bracketTypeID,
+          PlayerCount: this.bracket.playerCount,
+          GamePlayed: this.bracket.gamePlayed,
+          GamingPlatform: this.bracket.gamingPlatform,
+          Rules: this.bracket.rules,
+          StartDate: this.bracket.startDate,
+          EndDate: this.bracket.endDate,
+          StatusCode: this.bracket.statusCode,
+          MaxCapacity: this.bracket.maxCapacity,
+          Reason: this.bracket.reason
+        })
+      } 
+      else if(this.bracket.statusCode == 1) // If bracket has already ended
+      {
+        alert("This bracket has already ended, further changes are not permitted.");
+      }
+      else { // If bracket has not started yet
+        axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
+          BracketID: this.bracket.bracketID,
+          BracketName: cancelledTitle,
+          Host: this.bracket.host,
+          BracketTypeID: this.bracket.bracketTypeID,
+          PlayerCount: this.bracket.playerCount,
+          GamePlayed: this.bracket.gamePlayed,
+          GamingPlatform: this.bracket.gamingPlatform,
+          Rules: this.bracket.rules,
+          StartDate: this.bracket.startDate,
+          EndDate: this.bracket.endDate,
+          StatusCode: this.bracket.statusCode,
+          MaxCapacity: this.bracket.maxCapacity,
+          Reason: this.bracket.reason
+        });
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>

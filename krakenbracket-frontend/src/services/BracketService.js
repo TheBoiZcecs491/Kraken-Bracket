@@ -26,6 +26,7 @@ export default {
   },
   deleteBracket(bracket) {
     return apiClient.delete(`api/brackets/deleteBracket`, {
+      //bracket
       BracketID: bracket.bracketID,
       BracketName: bracket.bracketName,
       BracketTypeID: bracket.BracketTypeID,

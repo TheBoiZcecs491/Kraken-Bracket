@@ -176,7 +176,7 @@ namespace ClientApp.Controllers
             }
         }
 
-        [HttpDelete("deleteBracket/")]
+        [HttpPut("deleteBracket/")]
         [Produces("application/json")]
         public IActionResult DeleteBracket(BracketInfo bracketInfo)
         {

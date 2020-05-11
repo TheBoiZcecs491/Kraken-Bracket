@@ -309,8 +309,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                             "rules = @rules, " +
                             "start_date = @start_date, " +
                             "end_date = @end_date ," +
-                            "reason = @reason" +
-                            " WHERE bracketID = @bracketID";
+                            "reason = @reason, " +
+                            "status_code = @statusCode " +
+                            "WHERE bracketID = @bracketID";
                         updateCmd.Parameters.AddWithValue("@bracketID", bracketFields.BracketID);
                         updateCmd.Parameters.AddWithValue("@bracket_name", bracketFields.BracketName);
                         updateCmd.Parameters.AddWithValue("@bracketTypeID", bracketFields.BracketTypeID);
@@ -321,6 +322,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         updateCmd.Parameters.AddWithValue("@start_date", bracketFields.StartDate);
                         updateCmd.Parameters.AddWithValue("@end_date", bracketFields.EndDate);
                         updateCmd.Parameters.AddWithValue("@reason", bracketFields.Reason);
+                        updateCmd.Parameters.AddWithValue("@statusCode", bracketFields.StatusCode);
                         conn.Open();
                         updateCmd.ExecuteNonQuery();
                         conn.Close();
@@ -345,6 +347,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             {
                 if(bracketFields.StatusCode == 2)
                 {
+                    bracketFields.StatusCode = 1;
                     UpdateBracket(bracketFields);
                     return true;
                 }
