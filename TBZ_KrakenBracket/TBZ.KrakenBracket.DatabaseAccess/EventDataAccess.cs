@@ -83,24 +83,32 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         public String GetEventHost(int eventID)
         {
-            int roleID = 0; //change this when host roleID changes in the database
-            using (conn = new MySqlConnection(DB.GetConnString()))
+            try
             {
-                string selectQuery = string.Format("SELECT gamerTag FROM event_info " +
-                    "inner join event_player_info on event_info.eventID=event_player_info.eventID " +
-                    "inner join gamer_info on event_player_info.hashedUserID=gamer_Info.hashedUserID " +
-                    "WHERE event_info.eventID={0} and roleID={1}", eventID, roleID);
-                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                conn.Open();
-                string gamerTag;
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                int roleID = 0; //change this when host roleID changes in the database
+                using (conn = new MySqlConnection(DB.GetConnString()))
                 {
-                    reader.Read();
-                    gamerTag = reader.GetString("gamerTag");
-                    reader.Close();
+                    string selectQuery = string.Format("SELECT gamerTag FROM event_info " +
+                        "inner join event_player_info on event_info.eventID=event_player_info.eventID " +
+                        "inner join gamer_info on event_player_info.hashedUserID=gamer_Info.hashedUserID " +
+                        "WHERE event_info.eventID={0} and roleID={1}", eventID, roleID);
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                    conn.Open();
+                    string gamerTag;
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        reader.Read();
+                        gamerTag = reader.GetString("gamerTag");
+                        reader.Close();
+                    }
+                    return gamerTag;
                 }
-                return gamerTag;
             }
+            catch(Exception e)
+            {
+                return null;
+            }
+           
         }
 
         public List<EventPlayerInfo> GetAllEventInfoByID(int eventID)
