@@ -4,5 +4,6 @@ export const authComputed = {
   ...mapGetters(["loggedIn"]),
   ...mapGetters(["bracketPlayerInfo"]),
   ...mapGetters(["userInformation"]),
-  ...mapGetters(["gamerInfo"])
+  ...mapGetters(["gamerInfo"]),
+  ...mapGetters(["eventPlayerInfo"])
 };

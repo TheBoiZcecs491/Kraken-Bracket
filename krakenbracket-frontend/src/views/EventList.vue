@@ -13,6 +13,15 @@
     <div>
       <h1>Event List</h1>
       <EventCard v-for="event in events" :key="event.id" :event="event" />
+      <!-- <v-card>
+        <v-data-table
+          :headers="headers"
+          :items="search_result"
+          :search="filter"
+          :items-per-page="10"
+        >
+        </v-data-table>
+      </v-card> -->
     </div>
   </v-app>
 </template>
@@ -23,6 +32,10 @@ import EventService from "@/services/EventService.js";
 import { authComputed } from "../store/helpers.js";
 // import NotLoggedIn from "../components/NotLoggedIn.vue";
 export default {
+  props: {
+    hearders: [],
+    search_results: []
+  },
   components: {
     EventCard
     // NotLoggedIn
@@ -32,7 +45,9 @@ export default {
   },
   data() {
     return {
-      events: []
+      events: [],
+      details: "",
+      filter: ""
     };
   },
   created() {

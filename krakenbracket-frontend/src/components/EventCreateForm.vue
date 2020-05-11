@@ -105,6 +105,7 @@
                     v-if="menuStartTime"
                     v-model="StartTime"
                     full-width
+                    ampm-in-title
                   >
                   </v-time-picker>
                 </v-menu>
@@ -171,6 +172,7 @@
                   <v-time-picker
                     v-if="menuEndTime"
                     v-model="EndTime"
+                    ampm-in-title
                     full-width
                   ></v-time-picker>
                 </v-menu>
@@ -251,6 +253,9 @@ export default {
 
     hasError: false
   }),
+  created() {
+    this.EventAddress = this.$store.state.gamerInfo.gamerTag;
+  },
   methods: {
     checkIfHost() {},
     SubmitUpdate() {
