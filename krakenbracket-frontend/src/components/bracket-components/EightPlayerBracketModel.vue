@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div v-if="loggedIn">
-     
-    </div>
-
     <bracket :rounds="rounds">
       <template #player="{ player }">
         {{ player.name }}
@@ -27,14 +23,16 @@
     <!-- <ul v-for="competitor in competitors" :key="competitor.score">
             <li><strong>GamerTag</strong> - {{competitor.gamerTag}} | <strong>Score</strong> - {{competitor.score}}</li>
         </ul> -->
-         <div
-        v-show="
-          bracket.host == this.$store.state.gamerInfo.gamerTag &&
-            bracket.statusCode == 2
-        "
-      >
-        <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
-      </div>
+    <br />
+    <div
+      v-show="
+        bracket.host == this.$store.state.gamerInfo.gamerTag &&
+          bracket.statusCode == 2
+      "
+    >
+      <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
+    </div>
+    <br />
   </div>
 </template>
 
@@ -58,20 +56,20 @@ export default {
           // Quarter finals
           games: [
             {
-              player1: {  name: "?"},
-              player2: { name: "?"}
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
               player1: { name: "?" },
               player2: { name: "?" }
             },
             {
-              player1: { name: "?"},
+              player1: { name: "?" },
               player2: { name: "?" }
             },
             {
               player1: { name: "?" },
-              player2: { name: "?"}
+              player2: { name: "?" }
             }
           ]
         },
@@ -79,7 +77,7 @@ export default {
         {
           games: [
             {
-              player1: {  name: "?" },
+              player1: { name: "?" },
               player2: { name: "?" }
             },
             {

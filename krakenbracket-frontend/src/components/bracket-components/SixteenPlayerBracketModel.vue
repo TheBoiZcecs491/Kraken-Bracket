@@ -1,15 +1,5 @@
 <template>
   <div>
-    <div v-if="loggedIn">
-      <div
-        v-show="
-          bracket.host === this.$store.state.gamerInfo.gamerTag &&
-            bracket.statusCode === 2
-        "
-      >
-        <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
-      </div>
-    </div>
     <bracket :rounds="rounds">
       <template #player="{ player }">
         {{ player.name }}
@@ -29,6 +19,16 @@
         </tr>
       </tbody>
     </table>
+    <br />
+    <div
+      v-show="
+        bracket.host === this.$store.state.gamerInfo.gamerTag &&
+          bracket.statusCode === 2
+      "
+    >
+      <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
+    </div>
+    <br />
   </div>
 </template>
 
@@ -64,60 +64,60 @@ export default {
               player2: { name: "?" }
             },
             {
-              player1: { name: "?"  },
-              player2: { name: "?"  }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         },
         {
           games: [
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         },
         {
           games: [
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             },
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         },
         {
           games: [
             {
-              player1: { name: "?", },
-              player2: { name: "?", }
+              player1: { name: "?" },
+              player2: { name: "?" }
             }
           ]
         }

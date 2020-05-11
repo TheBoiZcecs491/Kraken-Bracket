@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div v-if="loggedIn">
-      
-    </div>
+    <div v-if="loggedIn"></div>
     <bracket :rounds="rounds">
       <template #player="{ player }">
         {{ player.name }}
@@ -23,13 +21,13 @@
       </tbody>
     </table>
     <div
-        v-show="
-          (bracket.host === this.$store.state.gamerInfo.gamerTag) &&
-            (bracket.statusCode === 2)
-        "
-      >
-        <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
-      </div>
+      v-show="
+        bracket.host === this.$store.state.gamerInfo.gamerTag &&
+          bracket.statusCode === 2
+      "
+    >
+      <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
+    </div>
   </div>
 </template>
 
