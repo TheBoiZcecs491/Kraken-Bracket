@@ -11,15 +11,21 @@ const apiClient = axios.create({
 });
 
 export default {
-  getEvents(){
+  getEvents() {
     return apiClient.get("api/events");
   },
   getEventByID(eventID) {
     return apiClient.get("api/events/" + eventID);
   },
-  getEventHost(eventID){
-    return apiClient.get("api/events/GetEventHost/" + eventID)
+  getEventHost(eventID) {
+    return apiClient.get("api/events/GetEventHost/" + eventID);
   },
+  getEventInfo(eventID) {
+    return apiClient.get("api/events/GetEventInfo/" + eventID);
+  },
+  getBracketEvent(eventID) {
+    return apiClient.get("api/events/GetBracketEvent/" + eventID);
+  }
   // checkHost(eventID, hashedUserID){
   //   return apiClient.get("api/events/checkHost");
   // },

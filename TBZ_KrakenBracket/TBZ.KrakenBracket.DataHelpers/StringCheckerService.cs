@@ -155,8 +155,8 @@ namespace TBZ.StringChecker
         {
             string copied = this.theString;
 
-            if (!string.IsNullOrWhiteSpace(copied) &
-                (copied.Length >= Constants.nameMinLength & copied.Length <= Constants.nameMaxLength))
+            if (!string.IsNullOrWhiteSpace(copied) &&
+                (copied.Length >= Constants.nameMinLength && copied.Length <= Constants.nameMaxLength))
             {
                 if (allowNumbers) return true;
                 //check for only the letters.

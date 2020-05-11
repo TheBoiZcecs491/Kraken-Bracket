@@ -1,6 +1,10 @@
+  
 <template>
   <v-app>
-    <div v-if="!loggedIn">
+    <div v-if="loggedIn">
+      <p>you are already logged in, please sign out to register another account.</p>
+    </div>
+    <div v-else>
       <h1>Register new user</h1>
       <v-container>
         <form @submit.prevent="registerUser">
@@ -58,23 +62,12 @@
           </v-row>
         </form>
       </v-container>
-      <!-- <v-btn
-        v-if="$store.state.user.isLoggedIn === false"
-        @click="logInUser"
-        color="success"
-        >Log In</v-btn
-      >
-      <v-btn v-else @click="logInUser" color="red text--lighten">Log out</v-btn> -->
-    </div>
-    <div v-if="loggedIn">
-      <p>
-      You are already logged in. please logout to register a new account.
-      </p>
     </div>
   </v-app>
 </template>
 
 <script>
+import { authComputed } from "../store/helpers.js";
 export default {
   data() {
     return {
@@ -102,6 +95,10 @@ export default {
         email: this.email,
         password: this.password
       }).then(() =>{
+        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
+        this.$store.dispatch("gamerInfo", this.email)
+      })
+      }).then(() =>{
         this.$router.push("/registrationSuccess");
       });
       })
@@ -121,6 +118,9 @@ export default {
       //   this.$router.push({name: "Home"})
       // });
     }
+  },
+  computed: {
+    ...authComputed
   },
   created() {}
 };

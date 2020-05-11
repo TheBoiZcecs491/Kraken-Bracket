@@ -15,6 +15,18 @@ namespace TBZ.KrakenBracket.DatabaseAccess
         Database DB = new Database();
         private MySqlConnection conn;
 
+        public void OpenConnection()
+        {
+            conn = new MySqlConnection(DB.GetConnString());
+            conn.Open();
+        }
+
+        public void CloseConnection()
+        {
+            conn = new MySqlConnection(DB.GetConnString());
+            conn.Close();
+        }
+
         public EventInfo InsertEvent(EventInfo eventObj)
         {
             databaseQuery.InsertEvent(eventObj);
@@ -41,20 +53,17 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     if (reader.Read())
                     {
                         reader.Close();
-                        conn.Close();
                         return true;
                     }
                     else
                     {
-                        reader.Close();
-                        conn.Close();
                         return false;
                     }
                 }
             }
         }
 
-        public int getLatestID()
+        public int GetLatestID()
         {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -66,31 +75,67 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     reader.Read();
                     eventID = reader.GetInt32("eventID");
+                    reader.Close();
                 }
-                conn.Close();
                 return eventID;
             }
         }
 
         public String GetEventHost(int eventID)
         {
-            int roleID = 0; //change this when host roleID changes in the database
+            try
+            {
+                int roleID = 0; //change this when host roleID changes in the database
+                using (conn = new MySqlConnection(DB.GetConnString()))
+                {
+                    string selectQuery = string.Format("SELECT gamerTag FROM event_info " +
+                        "inner join event_player_info on event_info.eventID=event_player_info.eventID " +
+                        "inner join gamer_info on event_player_info.hashedUserID=gamer_Info.hashedUserID " +
+                        "WHERE event_info.eventID={0} and roleID={1}", eventID, roleID);
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                    conn.Open();
+                    string gamerTag;
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        reader.Read();
+                        gamerTag = reader.GetString("gamerTag");
+                        reader.Close();
+                    }
+                    return gamerTag;
+                }
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+           
+        }
+
+        public List<EventPlayerInfo> GetAllEventInfoByID(int eventID)
+        {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
-                string selectQuery = string.Format("SELECT gamerTag FROM event_info " +
-                    "inner join event_player_info on event_info.eventID=event_player_info.eventID " +
-                    "inner join gamer_info on event_player_info.hashedUserID=gamer_Info.hashedUserID " +
-                    "WHERE event_info.eventID={0} and roleID={1}", eventID, roleID);
+                string selectQuery = string.Format("SELECT * FROM event_player_info WHERE eventID={0}", eventID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                 conn.Open();
-                string gamerTag;
+
+                List<EventPlayerInfo> eventPlayerInfos = new List<EventPlayerInfo>();
                 using (MySqlDataReader reader = selectCmd.ExecuteReader())
                 {
-                    reader.Read();
-                    gamerTag = reader.GetString("gamerTag");
+                    while (reader.Read())
+                    {
+                        EventPlayerInfo eventPlayer = new EventPlayerInfo();
+                        eventPlayer.EventID = reader.GetInt32("eventID");
+                        eventPlayer.HashedUserID = reader.GetString("hashedUserID");
+                        eventPlayer.RoleID = reader.GetInt32("roleID");
+                        eventPlayer.StatusCode = reader.GetInt32("status_code");
+                        eventPlayer.Claim = reader.GetString("claim");
+                        eventPlayerInfos.Add(eventPlayer);
+                    }
+                    reader.Close();
+
                 }
-                conn.Close();
-                return gamerTag;
+                return eventPlayerInfos;
             }
         }
 
@@ -117,8 +162,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.EndDate = reader.GetDateTime("end_date");
                         eventObj.StatusCode = reader.GetInt32("status_code");
                         eventObj.Reason = reader.GetString("reason");
+                        reader.Close();
                     }
-                    conn.Close();
                     eventObj.Host = GetEventHost(eventID);
                     return eventObj;
                 }
@@ -142,8 +187,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     eventObj.Claim = reader.GetString("claim");
                     eventObj.StatusCode = reader.GetInt32("status_code");
                     eventObj.reason = reader.GetString("reason");
+                    reader.Close();
                 }
-                conn.Close();
                 return eventObj;
             }
         }
@@ -168,11 +213,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
                         eventObj.Reason = reader.GetString("reason");
-                        eventObj.Host = GetEventHost(eventObj.EventID);
                         listOfEvents.Add(eventObj);
                     }
+                    reader.Close();
                 }
-                conn.Close();
                 return listOfEvents;
             }
         }
@@ -198,8 +242,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         int bracketID = reader.GetInt32("bracketID");
                         listOfBracketsInEvent.Add(bracketID);
                     }
+                    reader.Close();
                 }
-                conn.Close();
                 return listOfBracketsInEvent;
             }
         }
@@ -232,8 +276,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
                         listOfEvents.Add(eventObj);
                     }
+                    reader.Close();
                 }
-                conn.Close();
             }
             return listOfEvents;
         }

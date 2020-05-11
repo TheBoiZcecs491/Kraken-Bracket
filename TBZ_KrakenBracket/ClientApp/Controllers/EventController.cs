@@ -41,7 +41,7 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.GetEventByID(eventID));
         }
 
-        [HttpPost("addEventBracket")]
+        [HttpPost("AddEventBracket")]
         [Produces("application/json")]
         public IActionResult addEventBracket(EventBracketList eventBracket)
         {
@@ -62,5 +62,11 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.GetEventHost(eventID));
         }
 
+        [HttpGet("GetEventInfo/{eventID}")]
+        [Produces("application/json")]
+        public IActionResult GetEventInfo(int eventID)
+        {
+            return Ok(_eventManager.GetEventInfo(eventID));
+        }
     }
 }

@@ -21,7 +21,20 @@ export default {
   getBracketPlayerInfo(email) {
     return apiClient.get(`api/brackets/${email}/bracketPlayerInfo`);
   },
-  getGamerInfo(email){
+  getGamerInfo(email) {
     return apiClient.get(`api/brackets/${email}/gamerInfo`);
+  },
+  getBracketCompetitorInfo(bracketID) {
+    return apiClient.get(`api/brackets/${bracketID}/competitorInfo`);
+  },
+  updateBracketStandings(bracketID, bracketCompetitor) {
+    console.log("Competitor info: --- " + bracketCompetitor);
+    return apiClient.post(`api/brackets/${bracketID}/competitorInfo/update/`, {
+      bracketID: bracketCompetitor.bracketID,
+      score: bracketCompetitor.score,
+      placement: bracketCompetitor.placment,
+      hashedUserID: bracketCompetitor.hashedUserID,
+      gamerTag: bracketCompetitor.gamerTag
+    });
   }
-}
+};

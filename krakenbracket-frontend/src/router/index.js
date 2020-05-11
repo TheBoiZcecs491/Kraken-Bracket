@@ -7,11 +7,15 @@ import NewBracketView from "../views/NewBracketView.vue";
 import EventList from "../views/EventList.vue";
 import EventView from "../views/EventView.vue";
 import EventCreate from "../views/EventCreate.vue";
+import EventRegistrationForm from "@/components/EventRegistrationForm.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import SearchView from "../views/SearchView.vue";
 import RegistrationSuccess from "../views/RegistrationSuccess.vue";
+import UpdateBracketView from "@/views/UpdateBracketView.vue";
+
+import UserProfileView from "../views/UserProfileView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -78,6 +82,17 @@ const routes = [
     component: EventCreate
   },
   {
+    path: "/event-update",
+    name: "event-update",
+    component: EventCreate
+  },
+  {
+    path: "/event-view/:id/signup",
+    name: "event-registration",
+    component: EventRegistrationForm,
+    props: true
+  },
+  {
     path: "/search",
     name: "search-view",
     component: SearchView,
@@ -88,6 +103,17 @@ const routes = [
     name: "registrationSuccess-view",
     component: RegistrationSuccess,
     props: true
+  },
+  {
+    path: "/:id/bracket-update",
+    name: "bracket-update",
+    component: UpdateBracketView,
+    props: true
+  },
+  {
+    path: "/user-profile",
+    name: "user-profile-view",
+    component: UserProfileView
   }
 ];
 

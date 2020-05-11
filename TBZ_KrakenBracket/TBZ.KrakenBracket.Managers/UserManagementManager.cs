@@ -39,7 +39,7 @@ namespace TBZ.UM_Manager
                 StringCheckerService emailChecker = new StringCheckerService(operatedUser.Email);
                 StringCheckerService firstNameChecker = new StringCheckerService(operatedUser.FirstName);
                 StringCheckerService lastNameChecker = new StringCheckerService(operatedUser.LastName);
-                if (!firstNameChecker.isValidName() & !lastNameChecker.isValidName())
+                if (!firstNameChecker.isValidName() || !lastNameChecker.isValidName())
                     operatedUser.ErrorMessage = "Invalid names";
                 else if (emailChecker.isValidEmail())
                 {
@@ -309,6 +309,16 @@ namespace TBZ.UM_Manager
         public void updateGamerTag(User user, string newTag)
         {
             _DataAccessService.AssignGamerTag(user.SystemID, newTag);
+        }
+
+        public int getIDByEmail(string email)
+        {
+            User idExtract = _DataAccessService.GetUserByEmail(email);
+            if(idExtract == null)
+            {
+                throw new ArgumentException("Failed to find user with associated ID");
+            }
+            return idExtract.SystemID;
         }
     }
 }

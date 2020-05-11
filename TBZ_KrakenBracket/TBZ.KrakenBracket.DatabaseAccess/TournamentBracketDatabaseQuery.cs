@@ -173,8 +173,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         reader.Read();
                         bracket.BracketID = reader.GetInt32("bracketID");
                         bracket.BracketName = reader.GetString("bracket_name");
+                        bracket.Host = reader.GetString("host");
                         bracket.BracketTypeID = reader.GetInt32("bracketTypeID");
                         bracket.PlayerCount = reader.GetInt32("number_player");
+                        bracket.MaxCapacity = reader.GetInt32("max_capacity");
                         bracket.GamePlayed = reader.GetString("game_played");
                         bracket.GamingPlatform = reader.GetString("gaming_platform");
                         bracket.Rules = reader.GetString("rules");
@@ -186,6 +188,73 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     }
                 }
             }
+        }
+
+        public bool UpdateBracketStandings(int bracketID, BracketCompetitor bracketCompetitor)
+        {
+            try
+            {
+                var DB = new Database();
+
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+                {
+                    using (MySqlCommand comm = conn.CreateCommand())
+                    {   
+                        comm.CommandText = "UPDATE bracket_player_info SET score=score+1 WHERE bracketID=@BracketID AND hashedUserID=@HashedUserID";
+                        comm.Parameters.AddWithValue("@BracketID", bracketID);
+                        comm.Parameters.AddWithValue("@HashedUserID", bracketCompetitor.HashedUserID);
+                        conn.Open();
+                        comm.ExecuteNonQuery();
+                        conn.Close();
+                        return true;
+                    }
+                }
+
+            }
+            catch(Exception e) 
+            {
+                return false;
+            }
+        }
+
+        public List<BracketCompetitor> GetCompetitorListByBracketID(int bracketID)
+        {
+            try
+            {
+                var DB = new Database();
+                using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+                {
+                    string selectQuery2 = string.Format("SELECT " +
+                        "bracket_player_info.bracketID, " +
+                        "bracket_player_info.score, " +
+                        "bracket_player_info.placement, " +
+                        "bracket_player_info.hashedUserID," +
+                        "gamer_info.gamerTag " +
+                        "FROM " +
+                        "((bracket_player_info INNER JOIN gamer_info ON bracket_player_info.hashedUserID = gamer_info.hashedUserID)) " +
+                        "WHERE bracket_player_info.bracketID='{0}'", bracketID);
+
+                    MySqlCommand selectCmd = new MySqlCommand(selectQuery2, conn);
+                    conn.Open();
+                    using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                    {
+                        List<BracketCompetitor> listBracketCompetitors = new List<BracketCompetitor>();
+                        while (reader.Read())
+                        {
+                            BracketCompetitor bracketPlayer = new BracketCompetitor(bracketID,
+                                reader.GetInt32("score"), reader.GetInt32("placement"), reader.GetString("gamerTag"), reader.GetString("hashedUserID"));
+                            listBracketCompetitors.Add(bracketPlayer);
+                        }
+                        conn.Close();
+                        return listBracketCompetitors;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+           
         }
 
         /// <summary>
@@ -291,7 +360,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         BracketInfo bracket = new BracketInfo();
                         bracket.BracketID = reader.GetInt32("bracketID");
                         bracket.BracketName = reader.GetString("bracket_name");
+                        bracket.Host = reader.GetString("host");
                         bracket.PlayerCount = reader.GetInt32("number_player");
+                        bracket.MaxCapacity = reader.GetInt32("max_capacity");
                         bracket.GamePlayed = reader.GetString("game_played");
                         bracket.GamingPlatform = reader.GetString("gaming_platform");
                         bracket.StartDate = reader.GetDateTime("start_date");
