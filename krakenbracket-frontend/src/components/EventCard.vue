@@ -24,7 +24,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .event-card {
   padding: 20px;
   padding-top: 30px;
@@ -41,3 +41,4 @@ export default {
   font-style: italic;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+</style>

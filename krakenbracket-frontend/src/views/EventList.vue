@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <h1>Event List</h1>
     <div v-if="loggedIn">
       <router-link to="/event-create"
       class = "create-btn">
@@ -13,7 +14,6 @@
       </router-link>
     </div>
     <div>
-      <h1>Event List</h1>
       <EventCard v-for="event in events" :key="event.id" :event="event" />
       <!-- <v-card>
         <v-data-table
