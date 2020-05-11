@@ -158,7 +158,7 @@ namespace ClientApp.Controllers
             }
         }
 
-        [HttpGet("{bracketID}/competitorInfo")]
+         [HttpGet("{bracketID}/competitorInfo")]
         [Produces("application/json")]
         public IActionResult GetCompetitorListByBracketID(int bracketID)
         {
@@ -175,13 +175,48 @@ namespace ClientApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpPost("{bracketID}/competitorInfo/update")]
+        [HttpPut("updateBracket/")]
+        [Produces("application/json")]
+        public IActionResult UpdateBracketInformation(BracketInfo bracketInfo)
+        {
+            try
+            {
+                return Ok(TournamentBracketManager.UpdateBracketInformation(bracketInfo));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+         [HttpPost("{bracketID}/competitorInfo/update")]
         [Produces("application/json")]
         public IActionResult UpdateBracketStanding(int bracketID, BracketCompetitor bracketCompetitor)
         {
             try
             {
                 return Ok(TournamentBracketManager.UpdateBracketStanding(bracketID, bracketCompetitor));
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPut("deleteBracket/")]
+        [Produces("application/json")]
+        public IActionResult DeleteBracket(BracketInfo bracketInfo)
+        {
+            try
+            {
+                return Ok(TournamentBracketManager.DeleteBracket(bracketInfo));
             }
             catch (ArgumentException)
             {

@@ -41,6 +41,15 @@
                     color="primary"
                     >Confirm</v-btn
                   >
+                    <v-btn @click="submitForm" color="primary">Register!</v-btn>
+                  </router-link> -->
+
+                  <v-btn
+                    v-show="formValidity"
+                    @click="submitForm"
+                    color="primary"
+                    >Register!</v-btn
+                  >
                   <v-btn
                     class="mr-4"
                     v-if="!formValidity"
@@ -77,6 +86,7 @@ export default {
       gamerTag: this.$store.state.gamerInfo.gamerTag,
       gamer: {
         gamerTag: this.gamerTag
+        // gamerTagID: this.gamerTagID
       },
       error: null,
       email: this.$store.state.user.email,

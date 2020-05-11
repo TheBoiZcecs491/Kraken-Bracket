@@ -7,6 +7,7 @@
       </div>
       <div v-else>
         <h1 id="title">{{ bracket.bracketName }}</h1>
+        <h2>Host: {{ bracket.host }}</h2>
         <div style="text-align: left">
           <v-row>
             <v-col cols="12" lg="6">
@@ -20,6 +21,8 @@
             Number of players:
             {{ bracket.playerCount ? bracket.playerCount : 0 }}
             <span v-show="bracket.playerCount === 128">(MAX)</span>
+            Player Capacity: {{ bracket.maxCapacity ? bracket.maxCapacity : 0 }}
+            <span v-show="bracket.maxCapacity === 128">(MAX)</span>
           </h4>
           <h4>Game: {{ bracket.gamePlayed }}</h4>
           <h4>Gaming platform: {{ bracket.gamingPlatform }}</h4>
@@ -142,6 +145,9 @@ import SixteenPlayerBracketModel from "@/components/bracket-components/SixteenPl
 import ThirtyTwoPlayerBracketModel from "@/components/bracket-components/ThirtyTwoPlayerBracketModel.vue";
 import SixtyFourPlayerBracketModel from "@/components/bracket-components/SixtyFourPlayerBracketModel.vue";
 import OneTwentyEightPlayerBracketModel from "@/components/bracket-components/SixtyFourPlayerBracketModel.vue";
+import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
+import axios from "axios";
+
 export default {
   props: ["id"],
   components: {
@@ -193,9 +199,54 @@ export default {
           return true;
         }
       }
+    },
+    deleteBracket() {
+      if (this.bracket.statusCode == 2) { // If bracket is in progress
+        var reason = prompt(
+          "Please enter reason for deleting in-progress bracket"
+        );
+        this.bracket.reason = reason;
+        var cancelledTitle = "[Cancelled] " + this.bracket.bracketName;
+        axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
+          BracketID: this.bracket.bracketID,
+          BracketName: cancelledTitle,
+          Host: this.bracket.host,
+          BracketTypeID: this.bracket.bracketTypeID,
+          PlayerCount: this.bracket.playerCount,
+          GamePlayed: this.bracket.gamePlayed,
+          GamingPlatform: this.bracket.gamingPlatform,
+          Rules: this.bracket.rules,
+          StartDate: this.bracket.startDate,
+          EndDate: this.bracket.endDate,
+          StatusCode: this.bracket.statusCode,
+          MaxCapacity: this.bracket.maxCapacity,
+          Reason: this.bracket.reason
+        })
+      } 
+      else if(this.bracket.statusCode == 1) // If bracket has already ended
+      {
+        alert("This bracket has already ended, further changes are not permitted.");
+      }
+      else { // If bracket has not started yet
+        axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
+          BracketID: this.bracket.bracketID,
+          BracketName: cancelledTitle,
+          Host: this.bracket.host,
+          BracketTypeID: this.bracket.bracketTypeID,
+          PlayerCount: this.bracket.playerCount,
+          GamePlayed: this.bracket.gamePlayed,
+          GamingPlatform: this.bracket.gamingPlatform,
+          Rules: this.bracket.rules,
+          StartDate: this.bracket.startDate,
+          EndDate: this.bracket.endDate,
+          StatusCode: this.bracket.statusCode,
+          MaxCapacity: this.bracket.maxCapacity,
+          Reason: this.bracket.reason
+        });
+      }
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -13,7 +13,8 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import SearchView from "../views/SearchView.vue";
 import RegistrationSuccess from "../views/RegistrationSuccess.vue";
-// import FourPlayerBracketModel from "../components/bracket-components/FourPlayerBracketModel.vue"
+import UpdateBracketView from "@/views/UpdateBracketView.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -100,6 +101,12 @@ const routes = [
     path: "/registrationSuccess",
     name: "registrationSuccess-view",
     component: RegistrationSuccess,
+    props: true
+  },
+  {
+    path: "/:id/bracket-update",
+    name: "bracket-update",
+    component: UpdateBracketView,
     props: true
   }
 ];

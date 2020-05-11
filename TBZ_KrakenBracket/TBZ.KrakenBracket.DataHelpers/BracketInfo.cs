@@ -18,6 +18,8 @@ namespace TBZ.KrakenBracket.DataHelpers
         public DateTime EndDate { get; set; }
         public int StatusCode { get; set; }
         public string Host { get; set; }
+        public int MaxCapacity { get; set; }
+        public string Reason { get; set; }
 
         public BracketInfo() { }
         public BracketInfo(string bracketName)

@@ -319,7 +319,7 @@ namespace TBZ.DatabaseQueryService
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
                 // Retrieve the system ID
-                string selectQuery0 = string.Format("SELECT * FROM userid WHERE userID={0}", systemID);
+                string selectQuery0 = string.Format("SELECT * FROM userid WHERE userid={0}", systemID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery0, conn);
                 conn.Open();
                 using (MySqlDataReader reader0 = selectCmd.ExecuteReader())

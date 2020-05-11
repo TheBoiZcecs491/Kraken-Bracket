@@ -220,7 +220,7 @@
             </v-row>
           </v-container>
           <v-btn :disabled="!valid" x-large @click="Submit">
-            Create Bracket
+            Update Bracket
           </v-btn>
         </v-col>
       </v-row>
@@ -231,7 +231,7 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["id"],
+  props: ["bracket"],
   components: {},
   data: () => ({
     dropdown_gamePlayed: [
@@ -286,7 +286,8 @@ export default {
   methods: {
     Submit() {
       this.$refs.form.validate();
-      axios.post(`https://localhost:44352/api/brackets/createBracket/`, {
+      axios.put(`https://localhost:44352/api/brackets/updateBracket/`, {
+          BracketID: this.bracket.bracketID,
         BracketName: this.BracketName,
         Host: this.$store.state.gamerInfo.gamerTag,
         PlayerCount: "0",

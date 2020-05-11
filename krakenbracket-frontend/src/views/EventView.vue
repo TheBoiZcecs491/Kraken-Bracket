@@ -137,6 +137,13 @@ export default {
             return true;
           }
         }
+        axios.get(
+          `https://localhost:44352/api/events/${this.event.eventID}/statusRegistration/${this.$store.state.gamerInfo.gamerTag}`,
+          {
+            eventID: this.event.eventID,
+            gamerTag: this.$store.state.gamerInfo.gamerTag
+          }
+        );
       }
     },
     statusHost() {
