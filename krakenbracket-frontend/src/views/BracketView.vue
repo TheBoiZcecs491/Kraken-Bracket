@@ -27,6 +27,14 @@
             <h4>Rules:</h4>
             <p>{{ bracket.rules }}</p>
           </div>
+          <div v-if="(bracket.host === this.$store.state.gamerInfo.gamerTag) && (bracket.statusCode === 0)">
+               <router-link
+              :to="{
+                name: 'bracket-update', params: {bracket: this.bracket}
+              }"
+            >
+              <v-btn color="primary">Update Bracket</v-btn>
+            </router-link>
           <!-- State if the user is not logged in -->
           <div v-if="!loggedIn">
             <p>
@@ -53,14 +61,7 @@
           </div>
           <div v-if="loggedIn">
             <br>
-            <div v-if="(bracket.host === this.$store.state.gamerInfo.gamerTag) && (bracket.statusCode === 0)">
-               <router-link
-              :to="{
-                name: 'bracket-update', params: {bracket: this.bracket}
-              }"
-            >
-              <v-btn color="primary">Update Bracket</v-btn>
-            </router-link>
+            
             </div>
           </div>
         </div>
