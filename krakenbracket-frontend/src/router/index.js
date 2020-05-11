@@ -15,6 +15,7 @@ import SearchView from "../views/SearchView.vue";
 import RegistrationSuccess from "../views/RegistrationSuccess.vue";
 import UpdateBracketView from "@/views/UpdateBracketView.vue";
 
+import UserProfileView from "../views/UserProfileView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -108,6 +109,11 @@ const routes = [
     name: "bracket-update",
     component: UpdateBracketView,
     props: true
+  },
+  {
+    path: "/user-profile",
+    name: "user-profile-view",
+    component: UserProfileView
   }
 ];
 

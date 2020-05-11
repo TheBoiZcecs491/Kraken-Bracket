@@ -1,6 +1,9 @@
 <template>
   <v-app>
-    <div v-if="!loggedIn">
+    <div v-if="loggedIn">
+      <p>you are already logged in, please sign out to log into another account.</p>
+    </div>
+    <div v-else>
       <h1>User login</h1>
       <v-container>
         <form @submit.prevent="login">
@@ -55,6 +58,7 @@
 </template>
 
 <script>
+import { authComputed } from "../store/helpers.js";
 export default {
   data() {
     return {
@@ -87,6 +91,9 @@ export default {
       //   this.$router.push({name: "Home"})
       // });
     }
+  },
+  computed: {
+    ...authComputed
   },
   created() {}
 };

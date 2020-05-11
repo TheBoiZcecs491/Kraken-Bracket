@@ -7,6 +7,7 @@
       <router-link to="/search">Search</router-link> |
       <router-link to="/bracket-list">Bracket List</router-link> |
       <router-link to="/event-list">Event List</router-link> |
+      <router-link v-if="loggedIn" to="/user-profile">Profile |</router-link>
       <router-link v-if="!loggedIn" to="/login">Login</router-link>
       <button v-else @click="logout" class="logoutButton">Logout</button>
       <!-- <router-link v-else class="logoutButton" @click="logout" > Logout </router-link> -->
