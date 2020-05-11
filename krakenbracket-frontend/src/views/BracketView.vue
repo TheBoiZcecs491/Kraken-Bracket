@@ -52,7 +52,8 @@
             <RegisterBracketModel :key="bracket.id" :bracket="bracket" />
           </div>
           <div v-if="loggedIn">
-            <div v-if="bracket.host === this.$store.state.gamerInfo.gamerTag">
+            <br>
+            <div v-if="(bracket.host === this.$store.state.gamerInfo.gamerTag) && (bracket.statusCode === 0)">
                <router-link
               :to="{
                 name: 'bracket-update', params: {bracket: this.bracket}
