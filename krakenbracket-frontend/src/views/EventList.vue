@@ -12,16 +12,16 @@
     </div>
     <div>
       <h1>Event List</h1>
-      <EventCard v-for="event in events" :key="event.id" :event="event" />
-      <!-- <v-card>
+      <v-card>
         <v-data-table
-          :headers="headers"
-          :items="search_result"
+          :headers="events"
+          :items="events"
           :search="filter"
           :items-per-page="10"
         >
         </v-data-table>
-      </v-card> -->
+      </v-card>
+      <EventCard v-for="event in events" :key="event.id" :event="event" />
     </div>
   </v-app>
 </template>
