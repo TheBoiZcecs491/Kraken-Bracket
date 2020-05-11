@@ -219,7 +219,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-btn :disabled="!valid" x-large @click="Submit">
+          <v-btn :disabled="!valid" class = "primary" x-large @click="Submit">
             Create Bracket
           </v-btn>
         </v-col>
@@ -305,3 +305,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.create-btn {
+  text-decoration: none;
+}
+</style>
