@@ -28,7 +28,6 @@
       "
     >
       <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
-      <v-btn @click="chooseWinner">Choose winner</v-btn>
     </div>
     <br />
   </div>
