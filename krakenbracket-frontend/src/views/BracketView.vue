@@ -21,6 +21,8 @@
             Number of players:
             {{ bracket.playerCount ? bracket.playerCount : 0 }}
             <span v-show="bracket.playerCount === 128">(MAX)</span>
+            </h4>
+            <h4>
             Player Capacity: {{ bracket.maxCapacity ? bracket.maxCapacity : 0 }}
             <span v-show="bracket.maxCapacity === 128">(MAX)</span>
           </h4>
@@ -138,21 +140,18 @@
 import BracketService from "@/services/BracketService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue";
-// import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
 import FourPlayerBracketModel from "@/components/bracket-components/FourPlayerBracketModel.vue";
 import EightPlayerBracketModel from "@/components/bracket-components/EightPlayerBracketModel.vue";
 import SixteenPlayerBracketModel from "@/components/bracket-components/SixteenPlayerBracketModel.vue";
 import ThirtyTwoPlayerBracketModel from "@/components/bracket-components/ThirtyTwoPlayerBracketModel.vue";
 import SixtyFourPlayerBracketModel from "@/components/bracket-components/SixtyFourPlayerBracketModel.vue";
 import OneTwentyEightPlayerBracketModel from "@/components/bracket-components/SixtyFourPlayerBracketModel.vue";
-import RegisterBracketModel from "@/components/RegisterBracketModel.vue";
 import axios from "axios";
 
 export default {
   props: ["id"],
   components: {
     UnregisterBracketModel,
-    // RegisterBracketModel,
     FourPlayerBracketModel,
     EightPlayerBracketModel,
     SixteenPlayerBracketModel,

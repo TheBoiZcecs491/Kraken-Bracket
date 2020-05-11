@@ -82,6 +82,8 @@ import { authComputed } from "../store/helpers.js";
 import UnregisterEventModel from "@/components/UnregisterEventModel.vue";
 // import RegisterEventModel from "@/components/RegisterEventModel.vue";
 import BracketModel from "@/components/BracketModel.vue";
+import axios from "axios";
+
 export default {
   props: ["id"],
   components: {

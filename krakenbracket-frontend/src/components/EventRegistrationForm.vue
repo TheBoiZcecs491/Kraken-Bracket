@@ -42,7 +42,7 @@
                     >Confirm</v-btn
                   >
                     <v-btn @click="submitForm" color="primary">Register!</v-btn>
-                  </router-link> -->
+                  
 
                   <v-btn
                     v-show="formValidity"

@@ -253,9 +253,6 @@ export default {
 
     hasError: false
   }),
-  created() {
-    this.EventAddress = this.$store.state.gamerInfo.gamerTag;
-  },
   methods: {
     checkIfHost() {},
     SubmitUpdate() {
