@@ -14,6 +14,7 @@ import RegisterView from "../views/RegisterView.vue";
 import SearchView from "../views/SearchView.vue";
 import RegistrationSuccess from "../views/RegistrationSuccess.vue";
 import UpdateBracketView from "@/views/UpdateBracketView.vue";
+import UserManagementView from "@/views/UserManagementView.vue";
 
 import UserProfileView from "../views/UserProfileView.vue";
 Vue.use(VueRouter);
@@ -114,6 +115,11 @@ const routes = [
     path: "/user-profile",
     name: "user-profile-view",
     component: UserProfileView
+  },
+  {
+    path: "/user-management",
+    name: "user-management",
+    component: UserManagementView
   }
 ];
 
