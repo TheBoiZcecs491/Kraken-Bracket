@@ -59,6 +59,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
         public List<GamerInfo> ReadGamers(string gamerRequest)
         {
             var DB = new Database();
+            var DQ = new DatabaseQuery();
             var listOfGamers = new List<GamerInfo>();
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
@@ -66,15 +67,13 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 Console.WriteLine(selectQuery);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                 conn.Open();
-                using (MySqlDataReader reader = selectCmd.ExecuteReader())
-                {
-                    while (reader.Read())
                     {
                         GamerInfo gamerObj = new GamerInfo();
                         gamerObj.GamerTag = reader.GetString("gamerTag");
+                        gamerObj.BracketCount = DQ.GetBracketCount(gamerObj.GamerTag);
+                        gamerObj.Region = reader.GetString("region");
                         listOfGamers.Add(gamerObj);
                     }
-                }
             }
             return listOfGamers;
         }
