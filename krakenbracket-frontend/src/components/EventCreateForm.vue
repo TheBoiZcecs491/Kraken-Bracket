@@ -4,6 +4,7 @@
     <v-form ref="form" v-model="valid" @submit.prevent="createEvent">
       <v-row justify="space-around">
         <v-col class="px-4" cols="12" sm="3">
+          <div v-if="true"> setData() </div>
           <v-text-field
             v-model="EventName"
             label="Event Name"
@@ -181,12 +182,12 @@
           </v-container>
           <div v-if="statusHost()">
             <v-btn :disable="!valid" x-large @click="SubmitUpdate">
-              Update Event
+            Update Event
             </v-btn>
           </div>
           <div v-else>
             <v-btn :disable="!valid" x-large @click="SubmitCreate">
-              Create Event
+            Create Event
             </v-btn>
           </div>
 
@@ -209,7 +210,7 @@ import axios from "axios";
 import { authComputed } from "../store/helpers.js";
 
 export default {
-  props: {event:{ type:Object}},
+  props: ["id"],
   components: {},
   computed: {
     ...authComputed
@@ -258,28 +259,38 @@ export default {
     maxDescriptionCount: 700,
     remainingDescriptionCount: 700,
 
-    hasError: false,
-
+    hasError: false
   }),
   methods: {
-    created() {
-      this.EventName = this.$route.params.event.address,
-      this.Address = this.$route.params.event.EventAddress,
-      this.Description = this.$route.params.event.description,
-      this.StartDate = this.$route.params.event.startDate + " " + this.$route.params.event.event.startTime,
-      this.EndDate = this.$route.params.event.endDate + " " + this.$route.params.event.event.endTime,
-      this.Host = this.$store.state.gamerInfo.hashedUserID
+    created(){
+      setData();
+    },
+    setData(){
+    this.EventName = this.$route.params.event.eventName
+    },
+    mounted(){
+      try{
+        this.EventName = this.$route.params.event.eventName
+      }
+      catch(err){
+        throw false;
+      }
+    },
+    statusHost() {
+      try{
+        if (this.$store.state.gamerInfo.gamerTag == this.$route.params.event.host) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      catch(err){
+        return false;
+      }
+     
     },
     SubmitUpdate() {
-      axios.post(`https://localhost:44352/api/events/updateEvent`, {
-          EventID: this.id,
-          EventName: this.EventName,
-          Address: this.EventAddress,
-          Description: this.EventDescription,
-          StartDate: this.StartDate + " " + this.StartTime,
-          EndDate: this.EndDate + " " + this.EndTime,
-          Host: this.$store.state.gamerInfo.hashedUserID
-        })
+      axios.post(`https://localhost:44352/api/events/`);
     },
     SubmitCreate() {
       // this.$refs.form.validate()
@@ -296,7 +307,10 @@ export default {
           console.log(response);
         });
       console.log(`Data: ${res.data}`);
-      // this.$refs.form.reset()
+      this.$refs.form.reset()
+      .then(
+      this.$router.go(-1)
+      )
       // setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
     },
 
@@ -310,20 +324,7 @@ export default {
       this.remainingAddressCount =
         this.maxAddressCount - this.EventAddress.length;
       this.hasError = this.remainingAddressCount < 0;
-    },
-
-    statusHost() {
-      if (!this.loggedIn) {
-        return false;
-      } else {
-        if (this.$store.state.gamerInfo.gamerTag == this.event.host) {
-          return true;
-        } else {
-          return false;
-        }
-      }
     }
-
   }
 };
 </script>
