@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TBZ.ArchiverService;
+using TBZ.KrakenBracket.Services;
 using System.IO;
 
 namespace TBZ.ArchiverTest
@@ -49,7 +49,7 @@ namespace TBZ.ArchiverTest
             //Act
             try
             {
-                var a = new Archiver(_srcDir, _time, _endDir);
+                var a = new ArchiveService(_srcDir, _time, _endDir);
             }
             catch (Exception)
             {
@@ -68,7 +68,7 @@ namespace TBZ.ArchiverTest
             //Act
             try
             {
-                var a = new Archiver(srcDir, _time, _endDir);
+                var a = new ArchiveService(_srcDir, _time, _endDir);
             }
             catch (Exception)
             {
@@ -87,7 +87,7 @@ namespace TBZ.ArchiverTest
             //Act
             try
             {
-                var a = new Archiver(_srcDir, time, _endDir);
+                var a = new ArchiveService(_srcDir, _time, _endDir);
             }
             catch (Exception)
             {
@@ -106,7 +106,7 @@ namespace TBZ.ArchiverTest
             //Act
             try
             {
-                var a = new Archiver(_srcDir, _time, endDir);
+                var a = new ArchiveService(_srcDir, _time, _endDir);
             }
             catch (Exception)
             {
@@ -125,7 +125,7 @@ namespace TBZ.ArchiverTest
             //Act
             try
             {
-                var a = new Archiver(_srcDir, _time, _endDir);
+                var a = new ArchiveService(_srcDir, _time, _endDir);
                 result = a.Archive();
             }
             catch (Exception)

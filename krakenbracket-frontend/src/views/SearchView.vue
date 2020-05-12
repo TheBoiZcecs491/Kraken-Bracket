@@ -18,8 +18,7 @@
                         class="search-input"
                         v-model="search"
                         type="search"
-                        placeholder="Search..."
-                        append-icon="mdi-magnify"
+                        v-bind:placeholder="'Search ' + keyword +' names...'"
                         required
                         clearable
                         @keyup.enter="updateModel"
@@ -38,7 +37,6 @@
             />
         </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -67,6 +65,7 @@ export default {
             header: [],
             bracketHeaders: [
                 { text: 'Bracket Name', value: 'bracketName' },
+                { text: 'Bracket Host', value: 'host' },
                 { text: 'Gaming Platform', value: 'gamingPlatform'},
                 { text: 'Game', value: 'gamePlayed'},
                 { text: 'Start Date', value: 'startDate' },
@@ -75,6 +74,7 @@ export default {
             ],
             eventHeaders: [
                 { text: 'Event Name', value: 'eventName' },
+                { text: 'Event Host', value: 'host' },
                 { text: 'Start Date', value: 'startDate' },
                 { text: 'End Date', value: 'endDate'},
                 { text: 'Location', value: 'address'}

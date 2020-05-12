@@ -2,9 +2,9 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace TBZ.ArchiverService
+namespace TBZ.KrakenBracket.Services
 {
-    public class Archiver
+    public class ArchiveService
     {
         //read-only field
         readonly DirectoryInfo _srcDir;
@@ -19,7 +19,7 @@ namespace TBZ.ArchiverService
         /// <param name="srcDir"> String of the directory of logs </param>
         /// <param name="days"> Int of days old to save </param>
         /// <param name="endDir"> String of target directory </param>
-        public Archiver(string srcDir, int days, string endDir)
+        public ArchiveService(string srcDir, int days, string endDir)
         {
             DirectoryInfo sDI;
             DirectoryInfo eDI;
