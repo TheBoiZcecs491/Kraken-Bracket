@@ -102,10 +102,11 @@ namespace TBZ.DatabaseQueryService
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
                     //comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag, gamerTagID, teamID) VALUES(@hashedUserID, @gamerTag, @gamerTagID, @teamID)";
-                    comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag) VALUES(@hashedUserID, @gamerTag)";
+                    comm.CommandText = "INSERT INTO gamer_info(hashedUserID, gamerTag, region) VALUES(@hashedUserID, @gamerTag, @region)";
 
                     comm.Parameters.AddWithValue("@hashedUserID", tempGamer.HashedUserID);
                     comm.Parameters.AddWithValue("@gamerTag", tempGamer.GamerTag);
+                    comm.Parameters.AddWithValue("@region", "California");
                     //comm.Parameters.AddWithValue("@gamerTagID", tempGamer.GamerTagID);
                     //comm.Parameters.AddWithValue("@teamID", tempGamer.TeamID);
 

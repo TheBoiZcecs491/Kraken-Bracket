@@ -67,6 +67,9 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 Console.WriteLine(selectQuery);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                 conn.Open();
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    while (reader.Read())
                     {
                         GamerInfo gamerObj = new GamerInfo();
                         gamerObj.GamerTag = reader.GetString("gamerTag");
@@ -74,6 +77,8 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         gamerObj.Region = reader.GetString("region");
                         listOfGamers.Add(gamerObj);
                     }
+                }
+                  
             }
             return listOfGamers;
         }
