@@ -7,6 +7,9 @@
         <h5>Location: {{ event.address }}</h5>
         <h2>Description: {{ event.description }}</h2>
       </div>
+      <h4>Competitors:</h4>
+      <li v-for="competitor in competitors" :key="competitor.gamerTag">{{ competitor.gamerTag }}</li>
+     
       <v-row>
         <v-col cols="12" lg="12"></v-col>
         <v-col cols="12" lg="12">
@@ -98,7 +101,8 @@ export default {
     return {
       event: {},
       brackets: {},
-      HostGamerTag: event.host
+      HostGamerTag: event.host,
+      competitors: []
     };
   },
   created() {
@@ -117,6 +121,10 @@ export default {
 
     EventService.getBracketEvent(this.id).then(response => {
       this.brackets = response.data;
+    });
+
+    EventService.getEventBracketCompetitor(this.id).then(response => {
+      this.competitors = response.data;
     });
   },
   beforeDestroy() {
@@ -162,3 +170,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.standings {
+  width: 50%;
+  border: 3px solid black;
+  text-align: center;
+}
+</style>
