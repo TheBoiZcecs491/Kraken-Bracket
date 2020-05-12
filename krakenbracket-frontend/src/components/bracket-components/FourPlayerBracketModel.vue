@@ -20,6 +20,7 @@
       </tbody>
     </table>
     <br />
+    <div v-if="loggedIn">
     <div
       v-show="
         bracket.host === this.$store.state.gamerInfo.gamerTag &&
@@ -28,7 +29,7 @@
     >
       <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
     </div>
-
+    </div>
     <br />
   </div>
 </template>

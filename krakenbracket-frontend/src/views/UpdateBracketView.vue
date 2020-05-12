@@ -2,6 +2,7 @@
   <v-app id="inspire">
     <!-- Checking for completed fields to enable "Create Bracket" button -->
     <v-form ref="form" v-model="valid" @submit.prevent="createBracket">
+      <h1>Update Bracket</h1>
       <v-row justify="space-around">
         <!-- Bracket name field -->
         <v-col class="px-4" cols="12" sm="3">
@@ -220,7 +221,7 @@
             </v-row>
           </v-container>
           <v-btn :disabled="!valid" class="primary" x-large @click="Submit">
-            Update Bracke
+            Update Bracket
           </v-btn>
         </v-col>
       </v-row>
