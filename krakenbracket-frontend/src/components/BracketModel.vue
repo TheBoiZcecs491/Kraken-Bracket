@@ -8,6 +8,8 @@
       Player Capacity: {{ bracket.maxCapacity }}
       <span v-show="bracket.maxCapacity === 128">(MAX)</span>
     </h4>
+    <h4>Video Game: {{ bracket.gamePlayed }}</h4>
+    <h5>Rules: {{ bracket.rules }}</h5>
     <br />
     <router-link
       class="bracket-link"
@@ -32,6 +34,8 @@ export default {
   padding-top: 30px;
   margin-bottom: 24px;
   transition: all 0.2s linear;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 .bracket-link {
   color: black;

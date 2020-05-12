@@ -2,15 +2,13 @@
   <v-app>
     <h1>Event List</h1>
     <div v-if="loggedIn">
-      <router-link to="/event-create"
-      class = "create-btn">
-        <v-btn class = "primary" x-large>Create a new Event</v-btn>
+      <router-link to="/event-create" class="create-btn">
+        <v-btn class="primary" x-large>Create a new Event</v-btn>
       </router-link>
     </div>
     <div v-else>
-      <router-link to="/login"
-      class = "create-btn">
-        <v-btn class = "primary" x-large>Create a new Event</v-btn>
+      <router-link to="/login" class="create-btn">
+        <v-btn class="primary" x-large>Create a new Event</v-btn>
       </router-link>
     </div>
     <div>

@@ -287,7 +287,7 @@ export default {
     Submit() {
       this.$refs.form.validate();
       axios.put(`https://localhost:44352/api/brackets/updateBracket/`, {
-          BracketID: this.bracket.bracketID,
+        BracketID: this.bracket.bracketID,
         BracketName: this.BracketName,
         Host: this.$store.state.gamerInfo.gamerTag,
         PlayerCount: "0",

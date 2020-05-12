@@ -21,8 +21,8 @@
             Number of players:
             {{ bracket.playerCount ? bracket.playerCount : 0 }}
             <span v-show="bracket.playerCount === 128">(MAX)</span>
-            </h4>
-            <h4>
+          </h4>
+          <h4>
             Player Capacity: {{ bracket.maxCapacity ? bracket.maxCapacity : 0 }}
             <span v-show="bracket.maxCapacity === 128">(MAX)</span>
           </h4>
@@ -200,7 +200,8 @@ export default {
       }
     },
     deleteBracket() {
-      if (this.bracket.statusCode == 2) { // If bracket is in progress
+      if (this.bracket.statusCode == 2) {
+        // If bracket is in progress
         var reason = prompt(
           "Please enter reason for deleting in-progress bracket"
         );
@@ -220,13 +221,14 @@ export default {
           StatusCode: this.bracket.statusCode,
           MaxCapacity: this.bracket.maxCapacity,
           Reason: this.bracket.reason
-        })
-      } 
-      else if(this.bracket.statusCode == 1) // If bracket has already ended
-      {
-        alert("This bracket has already ended, further changes are not permitted.");
-      }
-      else { // If bracket has not started yet
+        });
+      } else if (this.bracket.statusCode == 1) {
+        // If bracket has already ended
+        alert(
+          "This bracket has already ended, further changes are not permitted."
+        );
+      } else {
+        // If bracket has not started yet
         axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
           BracketID: this.bracket.bracketID,
           BracketName: cancelledTitle,
@@ -245,7 +247,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

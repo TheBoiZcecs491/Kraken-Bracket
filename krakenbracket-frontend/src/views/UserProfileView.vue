@@ -27,14 +27,14 @@
               <v-text-field
                 class="new-password-input"
                 label="New password"
-                type="password" 
+                type="password"
                 v-model="newPassword"
                 required
               ></v-text-field>
               <v-text-field
                 class="retype-password-input"
                 label="Retype password"
-                type="password" 
+                type="password"
                 v-model="retypePassword"
                 required
               ></v-text-field>
@@ -46,7 +46,7 @@
                 required
               ></v-text-field>
               Account enabled
-              <input type="checkbox" id="checkbox" v-model="accountStatus">
+              <input type="checkbox" id="checkbox" v-model="accountStatus" />
               <p></p>
               <v-btn @click="updateUser">
                 Update profile
@@ -54,8 +54,12 @@
               <p v-if="error" class="red--text">
                 Failed to update user profile. Please try again
               </p>
-              <p v-if="errorMsg" class="red--text"><span>{{ this.errorMsg }}</span></p>
-              <p v-if="successMsg"><span>{{ this.successMsg }}</span></p>
+              <p v-if="errorMsg" class="red--text">
+                <span>{{ this.errorMsg }}</span>
+              </p>
+              <p v-if="successMsg">
+                <span>{{ this.successMsg }}</span>
+              </p>
             </v-col>
             <v-col cols="4"></v-col>
           </v-row>
@@ -84,98 +88,105 @@ export default {
   },
   methods: {
     updateUser() {
-        this.successMsg = null;
-        this.error = null;
-        this.errorMsg = null;
-        if(this.newPassword!=null){
-            if(this.newPassword!=this.retypePassword){
-                //passwords dont match, so prevent change
-                this.errorMsg = "passwords dont match";
-                this.firstName = this.$store.state.user.firstName;
-                this.lastName = this.$store.state.user.lastName;
-                this.password = "";
-                this.newPassword = null;
-                this.retypePassword = null;
-                this.accountStatus = this.$store.state.user.accountStatus;
-            }
-            else{
-                this.$store.dispatch("updateUser", {
-                firstName: this.firstName,
-                lastName: this.lastName,
-                email: this.email,
-                password: this.password,
-                newPassword: this.newPassword,
-                accountStatus: this.accountStatus
-            }).then(() =>{
-                this.$store.dispatch("login", {
-                    email: this.email,
-                    password: this.newPassword
-                })
-      .then(() =>{
-        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
-        this.$store.dispatch("gamerInfo", this.email)
-      })
-      });
-                this.successMsg = "update success";
-                this.password = "";
-                this.newPassword = null;
-                this.retypePassword = null;
+      this.successMsg = null;
+      this.error = null;
+      this.errorMsg = null;
+      if (this.newPassword != null) {
+        if (this.newPassword != this.retypePassword) {
+          //passwords dont match, so prevent change
+          this.errorMsg = "passwords dont match";
+          this.firstName = this.$store.state.user.firstName;
+          this.lastName = this.$store.state.user.lastName;
+          this.password = "";
+          this.newPassword = null;
+          this.retypePassword = null;
+          this.accountStatus = this.$store.state.user.accountStatus;
+        } else {
+          this.$store
+            .dispatch("updateUser", {
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.email,
+              password: this.password,
+              newPassword: this.newPassword,
+              accountStatus: this.accountStatus
             })
-            .catch(err =>{
-                this.error = err;
-                this.firstName = this.$store.state.user.firstName;
-                this.lastName = this.$store.state.user.lastName;
-                this.password = "";
-                this.newPassword = null;
-                this.retypePassword = null;
-                this.accountStatus = this.$store.state.user.accountStatus;
-            });
-            }
-
-        }
-        else{
-            this.$store.dispatch("updateUser", {
-                firstName: this.firstName,
-                lastName: this.lastName,
-                email: this.email,
-                password: this.password,
-                newPassword: null,
-                accountStatus: this.accountStatus
-            }).then(() =>{
-                this.$store.dispatch("login", {
-                    email: this.email,
-                    password: this.password
+            .then(() => {
+              this.$store
+                .dispatch("login", {
+                  email: this.email,
+                  password: this.newPassword
                 })
-      .then(() =>{
-        this.$store.dispatch("bracketPlayerInfo", this.email).then(() => {
-        this.$store.dispatch("gamerInfo", this.email)
-      })
-      });
-                this.successMsg = "update success";
-                this.password = "";
-                this.newPassword = null;
-                this.retypePassword = null;
+                .then(() => {
+                  this.$store
+                    .dispatch("bracketPlayerInfo", this.email)
+                    .then(() => {
+                      this.$store.dispatch("gamerInfo", this.email);
+                    });
+                });
+              this.successMsg = "update success";
+              this.password = "";
+              this.newPassword = null;
+              this.retypePassword = null;
             })
-            .catch(err =>{
-                this.error = err;
-                this.firstName = this.$store.state.user.firstName;
-                this.lastName = this.$store.state.user.lastName;
-                this.password = "";
-                this.newPassword = null;
-                this.retypePassword = null;
-                this.accountStatus = this.$store.state.user.accountStatus;
+            .catch(err => {
+              this.error = err;
+              this.firstName = this.$store.state.user.firstName;
+              this.lastName = this.$store.state.user.lastName;
+              this.password = "";
+              this.newPassword = null;
+              this.retypePassword = null;
+              this.accountStatus = this.$store.state.user.accountStatus;
             });
         }
+      } else {
+        this.$store
+          .dispatch("updateUser", {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+            password: this.password,
+            newPassword: null,
+            accountStatus: this.accountStatus
+          })
+          .then(() => {
+            this.$store
+              .dispatch("login", {
+                email: this.email,
+                password: this.password
+              })
+              .then(() => {
+                this.$store
+                  .dispatch("bracketPlayerInfo", this.email)
+                  .then(() => {
+                    this.$store.dispatch("gamerInfo", this.email);
+                  });
+              });
+            this.successMsg = "update success";
+            this.password = "";
+            this.newPassword = null;
+            this.retypePassword = null;
+          })
+          .catch(err => {
+            this.error = err;
+            this.firstName = this.$store.state.user.firstName;
+            this.lastName = this.$store.state.user.lastName;
+            this.password = "";
+            this.newPassword = null;
+            this.retypePassword = null;
+            this.accountStatus = this.$store.state.user.accountStatus;
+          });
+      }
     }
   },
   computed: {
     ...authComputed
   },
   created() {
-      //grab profile infos.
-      this.firstName = this.$store.state.user.firstName;
-      this.lastName = this.$store.state.user.lastName;
-      this.email = this.$store.state.user.email;
+    //grab profile infos.
+    this.firstName = this.$store.state.user.firstName;
+    this.lastName = this.$store.state.user.lastName;
+    this.email = this.$store.state.user.email;
   }
 };
 </script>

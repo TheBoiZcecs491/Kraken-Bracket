@@ -1,18 +1,18 @@
 <template>
   <div>
     <div v-if="!loggedIn">
-      <NotLoggedIn/>
+      <NotLoggedIn />
     </div>
     <div v-else>
-       <h1>Create a new Event</h1>
-        <eventForm />
+      <h1>Create a new Event</h1>
+      <eventForm />
     </div>
   </div>
 </template>
 
 <script>
 import eventForm from "@/components/EventCreateForm.vue";
-import NotLoggedIn from "@/components/NotLoggedIn.vue"
+import NotLoggedIn from "@/components/NotLoggedIn.vue";
 import { authComputed } from "../store/helpers.js";
 // import NotLoggedIn from "../components/NotLoggedIn.vue";
 export default {

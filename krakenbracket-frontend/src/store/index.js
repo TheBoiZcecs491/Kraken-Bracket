@@ -48,7 +48,7 @@ export default new Vuex.Store({
   },
   actions: {
     login({ commit }, credentials) {
-      console.log(credentials)
+      console.log(credentials);
       return axios
         .post("https://localhost:44352/api/login", credentials)
         .then(({ data }) => {
@@ -62,7 +62,7 @@ export default new Vuex.Store({
           commit("SET_USER_DATA", data);
         });
     },
-    updateUser({ commit }, formFill ) {
+    updateUser({ commit }, formFill) {
       return axios
         .post("https://localhost:44352/usermanagement/updateprofile", formFill)
         .then(({ data }) => {

@@ -41,8 +41,7 @@
                     color="primary"
                     >Confirm</v-btn
                   >
-                    <v-btn @click="submitForm" color="primary">Register!</v-btn>
-                  
+                  <v-btn @click="submitForm" color="primary">Register!</v-btn>
 
                   <v-btn
                     v-show="formValidity"
