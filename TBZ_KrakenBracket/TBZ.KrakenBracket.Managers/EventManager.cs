@@ -39,6 +39,11 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
+        public EventInfo UpdateEvent(EventInfo eventObj)
+        {
+            return _eventDataAccess.UpdateEvent(eventObj);
+        }
+
         public List<EventInfo> GetAllEvents()
         {
             List<EventInfo> events = new List<EventInfo>();

@@ -11,54 +11,56 @@
           </div>
           <h4>Competitors:</h4>
           <li v-for="competitor in competitors" :key="competitor.gamerTag">{{ competitor.gamerTag }}</li>
-            <div v-if="statusHost()">
+          <div v-if="statusHost()">
+            <router-link
+              :to="{
+                name: 'event-update', //'update-view'
+                params: { event }
+              }"
+            >
+              <v-btn color="primary">Update</v-btn>
+            </router-link>
+            <!-- manage event -->
+          </div>
+
+          <div v-else-if="statusRegistration()">
+            <!-- unregister -->
+            <UnregisterEventModel :key="event.id" :event="event" />
+          </div>
+
+          <div v-else-if="loggedIn">
+            <div v-if="true">
+              <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
               <router-link
                 :to="{
-                  name: 'event-update', //'update-view'
-                  params: { id: event.eventID }
+                  name: 'event-registration',
+                  params: { id }
                 }"
+                class="register-btn"
               >
-                <v-btn color="primary">Update</v-btn>
+                <v-btn color="primary" type="submit">Register!</v-btn>
               </router-link>
-              <!-- manage event -->
             </div>
-
-            <div v-else-if="statusRegistration()">
-              <!-- unregister -->
-              <UnregisterEventModel :key="event.id" :event="event" />
-            </div>
-
-            <div v-else-if="loggedIn">
-              <div v-if="true">
-                <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
-                <router-link
-                  :to="{
-                    name: 'event-registration',
-                    params: { id }
-                  }"
-                  class="register-btn"
-                >
-                  <v-btn color="primary" type="submit">Register!</v-btn>
-                </router-link>
-              </div>
-              <div v-else>
-                <p>
-                  <strong>NOTE:</strong> Registration is disabled; Event has ended
-                </p>
-                <v-btn disabled>Register!</v-btn>
-              </div>
-            </div>
-
             <div v-else>
-              <!-- log in -->
-              <router-link
-                :to="{
-                  name: 'login-view'
-                }"
-              >
-                <v-btn color="primary">Login</v-btn>
-              </router-link>
+              <p>
+                <strong>NOTE:</strong> Registration is disabled; Event has ended
+              </p>
+              <v-btn disabled>Register!</v-btn>
             </div>
+          </div>
+
+          <div v-else>
+            <!-- log in -->
+            <br>
+            <p>*Need to login to register to Event*</p>
+            <router-link
+              :to="{
+                name: 'login-view'
+              }"
+            >
+              <v-btn color="primary">Login</v-btn>
+            </router-link>
+          </div>
           
           </v-col>
           <div>
@@ -68,10 +70,9 @@
               :key="bracket.id"
               :bracket="bracket"
             />
-          </div>
+        </div>
         <v-col cols="12" lg="6"></v-col>
       </v-row>
-
     </v-container>
   </v-app>
 </template>
