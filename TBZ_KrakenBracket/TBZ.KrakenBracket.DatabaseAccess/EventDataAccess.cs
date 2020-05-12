@@ -296,10 +296,10 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                         EventInfo eventObj = new EventInfo();
                         eventObj.EventID = reader.GetInt32("eventID");
                         eventObj.EventName = reader.GetString("event_name");
+                        eventObj.Host = GetEventHost(eventObj.EventID);
                         eventObj.Address = reader.GetString("address");
                         eventObj.StartDate = reader.GetDateTime("start_date");
                         eventObj.EndDate = reader.GetDateTime("end_date");
-
                         listOfEvents.Add(eventObj);
                     }
                     reader.Close();

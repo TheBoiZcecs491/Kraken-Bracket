@@ -9,25 +9,34 @@ namespace TBZ.KrakenBracket.Managers
 {
     public class EventManager
     {
+        private readonly LoggingManager _loggingManager = new LoggingManager();
         private readonly EventDataAccess _eventDataAccess = new EventDataAccess();
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
 
         public EventInfo CreateEvent(EventInfo eventObj)
         {
-            EventPlayerInfo eventPlayer = new EventPlayerInfo();
-            //TODO: change to systemID to hash id
-            //eventPlayer.hashedUserID = databaseQuery.GetHashedUserID(Int32.Parse(eventObj.Host));
-            _eventDataAccess.InsertEvent(eventObj);
-            eventObj.EventID = _eventDataAccess.GetLatestID();
+            try
+            {
+                EventPlayerInfo eventPlayer = new EventPlayerInfo();
+                //TODO: change to systemID to hash id
+                //eventPlayer.hashedUserID = databaseQuery.GetHashedUserID(Int32.Parse(eventObj.Host));
+                _eventDataAccess.InsertEvent(eventObj);
+                eventObj.EventID = _eventDataAccess.GetLatestID();
 
-            eventPlayer.EventID = eventObj.EventID;
-            eventPlayer.HashedUserID = eventObj.Host;
-            eventPlayer.RoleID = 0;
-            eventPlayer.Claim = "";
+                eventPlayer.EventID = eventObj.EventID;
+                eventPlayer.HashedUserID = eventObj.Host;
+                eventPlayer.RoleID = 0;
+                eventPlayer.Claim = "";
 
-            _eventDataAccess.InsertEventPlayer(eventPlayer);
-            
-            return eventObj;
+                _eventDataAccess.InsertEventPlayer(eventPlayer);
+                _loggingManager.Log("Event Creation", "");
+
+                return eventObj;
+            } catch (Exception e)
+            {
+                _loggingManager.Log("Event Creation", "Data Store Error");
+                throw e;
+            }
         }
 
         public List<EventInfo> GetAllEvents()

@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using System.Threading;
-using TBZ.LoggingService;
+using TBZ.KrakenBracket.Services;
 
 namespace TBZ.LoggingTest
 {
@@ -21,7 +21,7 @@ namespace TBZ.LoggingTest
             //Act
             try
             {
-                var l = new Logging(dir, tries);
+                var l = new DataStoreLoggingService(dir, tries);
             }
             catch (Exception)
             {
@@ -44,7 +44,7 @@ namespace TBZ.LoggingTest
             //Act
             try
             {
-                var l = new Logging(dir, tries);
+                var l = new DataStoreLoggingService(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception)
@@ -68,7 +68,7 @@ namespace TBZ.LoggingTest
             //Act
             try
             {
-                var l = new Logging(dir, tries);
+                var l = new DataStoreLoggingService(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception e)
@@ -90,7 +90,7 @@ namespace TBZ.LoggingTest
             //Act
             try
             {
-                var l = new Logging(dir, tries);
+                var l = new DataStoreLoggingService(dir, tries);
             }
             catch (Exception e)
             {
@@ -114,7 +114,7 @@ namespace TBZ.LoggingTest
             //Act
             try
             {
-                var l = new Logging(dir, tries);
+                var l = new DataStoreLoggingService(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception)
@@ -138,7 +138,7 @@ namespace TBZ.LoggingTest
             //Act
             try
             {
-                var l = new Logging(dir, tries);
+                var l = new DataStoreLoggingService(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception)
@@ -162,7 +162,7 @@ namespace TBZ.LoggingTest
             //Act
             try
             {
-                var l = new Logging(dir, tries);
+                var l = new DataStoreLoggingService(dir, tries);
                 result = l.Log(op, msg, id);
             }
             catch (Exception)
@@ -183,10 +183,10 @@ namespace TBZ.LoggingTest
             string msg = "Invalid Access Error";
             int tries = _tries;
             //Act
-            Logging l = null;
+            DataStoreLoggingService l = null;
             try
             {
-                l = new Logging(dir, tries);
+                l = new DataStoreLoggingService(dir, tries);
             }
             catch (Exception)
             {

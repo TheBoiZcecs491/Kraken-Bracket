@@ -1,19 +1,29 @@
 ﻿using System;
 using System.IO;
 
-namespace TBZ.LoggingService
+namespace TBZ.KrakenBracket.Services
 {
-    public class Logging
+    public class FlatFileLoggingService
     {
         readonly DirectoryInfo _endDir;
         readonly int _tries;
+
+        /// <summary>
+        /// A default logging object that logs to the desktop
+        /// in a folder called logs. Default tries is 3.
+        /// </summary>
+        public FlatFileLoggingService()
+        {
+             _endDir = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.DirectorySeparatorChar + "logs");
+            _tries = 3;
+        }
 
         /// <summary>
         /// A logging object requires a directory path to save logs.
         /// </summary>
         /// <param name="dir"> String of directory path </param>
         /// <param name="runs"> Integer of the number of attempts to try to log </param>
-        public Logging(string dir, int runs)
+        public FlatFileLoggingService(string dir, int runs)
         {
             DirectoryInfo eDI;          // check whitespace
             if (string.IsNullOrWhiteSpace(dir))
@@ -58,8 +68,8 @@ namespace TBZ.LoggingService
         protected string FormatLog(string operation, string msg, string id, string time)
         {
             string finallog;    // separated every value by comma (leave empty space for error message)
-            if (msg.Equals("")) { finallog = time + ", " + operation + ", , ID_" + id + ",\n"; }   // Format: Date, Time, Operation, , ID_
-            else { finallog = time + ", " + operation + ", \"" + msg + "\", ID_" + id + ",\n"; }  // Format: Date, Time, Operation, "Error", ID_
+            if (msg.Equals("")) { finallog = time + ", " + operation + ", , ID_" + id + "\n"; }   // Format: Date, Time, Operation, , ID_
+            else { finallog = time + ", " + operation + ", \"" + msg + "\", ID_" + id + "\n"; }  // Format: Date, Time, Operation, "Error", ID_
             return finallog;
         }
 
