@@ -1,80 +1,77 @@
 <template>
   <v-app>
     <v-container>
-      <div>
-        <h1>Event name: {{ event.eventName }}</h1>
-        <h5>Hosted by {{ event.host }}</h5>
-        <h5>Location: {{ event.address }}</h5>
-        <h2>Description: {{ event.description }}</h2>
-      </div>
-      <h4>Competitors:</h4>
-      <li v-for="competitor in competitors" :key="competitor.gamerTag">{{ competitor.gamerTag }}</li>
-     
       <v-row>
-        <v-col cols="12" lg="12"></v-col>
-        <v-col cols="12" lg="12">
-          <div v-if="statusHost()">
-            <router-link
-              :to="{
-                name: 'event-update', //'update-view'
-                params: { id: event.eventID }
-              }"
-            >
-              <v-btn color="primary">Update</v-btn>
-            </router-link>
-            <!-- manage event -->
-            <p>host update</p>
-            <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
+        <v-col cols="12" lg="6">
+          <div>
+            <h1>Event name: {{ event.eventName }}</h1>
+            <h5>Hosted by {{ event.host }}</h5>
+            <h5>Location: {{ event.address }}</h5>
+            <h2>Description: {{ event.description }}</h2>
           </div>
-
-          <div v-else-if="statusRegistration()">
-            <!-- unregister -->
-            <p>unregister</p>
-            <UnregisterEventModel :key="event.id" :event="event" />
-          </div>
-
-          <div v-else-if="loggedIn">
-            <div v-if="true">
-              <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
+          <h4>Competitors:</h4>
+          <li v-for="competitor in competitors" :key="competitor.gamerTag">{{ competitor.gamerTag }}</li>
+            <div v-if="statusHost()">
               <router-link
                 :to="{
-                  name: 'event-registration',
+                  name: 'event-update', //'update-view'
                   params: { id: event.eventID }
                 }"
-                class="register-btn"
               >
-                <v-btn color="primary" type="submit">Register!</v-btn>
+                <v-btn color="primary">Update</v-btn>
+              </router-link>
+              <!-- manage event -->
+            </div>
+
+            <div v-else-if="statusRegistration()">
+              <!-- unregister -->
+              <UnregisterEventModel :key="event.id" :event="event" />
+            </div>
+
+            <div v-else-if="loggedIn">
+              <div v-if="true">
+                <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
+                <router-link
+                  :to="{
+                    name: 'event-registration',
+                    params: { id }
+                  }"
+                  class="register-btn"
+                >
+                  <v-btn color="primary" type="submit">Register!</v-btn>
+                </router-link>
+              </div>
+              <div v-else>
+                <p>
+                  <strong>NOTE:</strong> Registration is disabled; Event has ended
+                </p>
+                <v-btn disabled>Register!</v-btn>
+              </div>
+            </div>
+
+            <div v-else>
+              <!-- log in -->
+              <router-link
+                :to="{
+                  name: 'login-view'
+                }"
+              >
+                <v-btn color="primary">Login</v-btn>
               </router-link>
             </div>
-            <div v-else>
-              <p>
-                <strong>NOTE:</strong> Registration is disabled; Event has ended
-              </p>
-              <v-btn disabled>Register!</v-btn>
-            </div>
+          
+          </v-col>
+          <div>
+            <h1>List of Bracket in Event</h1>
+            <BracketModel
+              v-for="bracket in brackets"
+              :key="bracket.id"
+              :bracket="bracket"
+            />
           </div>
-
-          <div v-else>
-            <!-- log in -->
-            <router-link
-              :to="{
-                name: 'login-view'
-              }"
-            >
-              <v-btn color="primary">Login</v-btn>
-            </router-link>
-          </div>
-        </v-col>
         <v-col cols="12" lg="6"></v-col>
       </v-row>
-      <div>
-        <h1>List of Bracket in Event</h1>
-        <BracketModel
-          v-for="bracket in brackets"
-          :key="bracket.id"
-          :bracket="bracket"
-        />
-      </div>
+
     </v-container>
   </v-app>
 </template>
@@ -85,7 +82,7 @@ import { authComputed } from "../store/helpers.js";
 import UnregisterEventModel from "@/components/UnregisterEventModel.vue";
 // import RegisterEventModel from "@/components/RegisterEventModel.vue";
 import BracketModel from "@/components/BracketModel.vue";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   props: ["id"],
@@ -147,13 +144,6 @@ export default {
             return true;
           }
         }
-        axios.get(
-          `https://localhost:44352/api/events/${this.event.eventID}/statusRegistration/${this.$store.state.gamerInfo.gamerTag}`,
-          {
-            eventID: this.event.eventID,
-            gamerTag: this.$store.state.gamerInfo.gamerTag
-          }
-        );
       }
     },
     statusHost() {

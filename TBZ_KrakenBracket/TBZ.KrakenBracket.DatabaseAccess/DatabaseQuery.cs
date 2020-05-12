@@ -159,7 +159,7 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
-        public void InsertEventPalyer(EventPlayerInfo eventPlayer)
+        public void InsertEventPlayer(EventPlayerInfo eventPlayer)
         {
             var DB = new Database();
 

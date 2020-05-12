@@ -7,6 +7,7 @@ import NewBracketView from "../views/NewBracketView.vue";
 import EventList from "../views/EventList.vue";
 import EventView from "../views/EventView.vue";
 import EventCreate from "../views/EventCreate.vue";
+import EventUpdate from "../views/EventUpdate.vue";
 import EventRegistrationForm from "@/components/EventRegistrationForm.vue";
 import BracketRegistrationForm from "@/components/BracketRegistrationForm.vue";
 import LoginView from "../views/LoginView.vue";
@@ -84,7 +85,7 @@ const routes = [
   {
     path: "/event-update",
     name: "event-update",
-    component: EventCreate
+    component: EventUpdate
   },
   {
     path: "/event-view/:id/signup",

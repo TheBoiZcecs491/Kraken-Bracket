@@ -12,15 +12,6 @@
     </div>
     <div>
       <h1>Event List</h1>
-      <v-card>
-        <v-data-table
-          :headers="eventHeader"
-          :items="events"
-          :search="filter"
-          :items-per-page="10"
-        >
-        </v-data-table>
-      </v-card>
       <EventCard v-for="event in events" :key="event.id" :event="event" />
     </div>
   </v-app>
