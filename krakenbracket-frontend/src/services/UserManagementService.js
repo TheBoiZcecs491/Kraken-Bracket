@@ -12,9 +12,15 @@ const apiClient = axios.create({
 });
 
 export default {
-    singleCreateUser(user){
-        console.log(user);
-        return apiClient.post(`/SingleCreate`, {
+    singleCreateUser(user, accountType){
+        return apiClient.post(`/SingleCreate/${accountType}`, {
+            systemID: user.systemID,
+            password: user.password,
+            accountType: user.accountType
+        });
+    },
+    singleDeleteUser(user, accountType){
+        return apiClient.delete(`/SingleDelete/${accountType}`, {
             systemID: user.systemID,
             password: user.password,
             accountType: user.accountType

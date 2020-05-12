@@ -23,11 +23,11 @@ namespace ClientApp.Controllers
         {
             _userManagementManager = userManagementManager;
         }
-        [HttpPost("SingleCreate")]
+        [HttpPost("SingleCreate/{accountType}")]
         [Produces("application/json")]
-        public IActionResult SingleCreateUser(User operatedUser)
+        public IActionResult SingleCreateUser(User operatedUser, string accountType)
         {
-            User invokingUser = new User(6, null, null, null, "84092ujIO@>>>", null, "System Admin", false, null);
+            User invokingUser = new User(6, null, null, null, null, null, accountType, true, null);
             try
             {
                 return Ok(_userManagementManager.SingleCreateUsers(invokingUser, operatedUser));
@@ -38,6 +38,23 @@ namespace ClientApp.Controllers
             }
             
         }
+
+        [HttpPost("SingleDelete/{accountType}")]
+        [Produces("application/json")]
+        public IActionResult SingleDeleteUser(User operatedUser, string accountType)
+        {
+            User invokingUser = new User(0, null, null, null, null, null, accountType, true, null);
+            try
+            {
+                return Ok(_userManagementManager.SingleDeleteUser(invokingUser, operatedUser));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
         [HttpPost]
         [Route("updateprofile")]
         public IActionResult UpdateUserProfile(ProfileUpdateInput userInput)
