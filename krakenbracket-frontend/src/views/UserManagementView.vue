@@ -15,6 +15,8 @@
         <v-row>
           <v-col cols="2"></v-col>
           <v-col cols="4">
+              
+              <!-- SINGLE CREATE USERS -->
             <h4>Single Create</h4>
             <!-- System ID -->
             <v-text-field
@@ -35,7 +37,67 @@
             <v-btn @click="singleCreateFormSubmit">Send</v-btn>
           </v-col>
           <v-col cols="4">
+              <!-- SINGLE DELETE USERS -->
             <h4>Single Delete</h4>
+            <v-text-field
+              placeholder="System ID"
+              v-model="systemID"
+              type="number"
+            ></v-text-field>
+            <v-text-field
+              placeholder="Account Type"
+              v-model="accountType"
+            ></v-text-field>
+            <v-btn @click="singleDeleteFormSubmit">Send</v-btn>
+          </v-col>
+          <v-col cols="2"></v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="2"></v-col>
+          <v-col cols="4">
+              
+              <!-- SINGLE CREATE USERS -->
+            <h4>Bulk Create</h4>
+            <input type="file">
+            <h4>Bulk Delete</h4>
+            <input type="file">
+            <h4>Bulk Update</h4>
+            <input type="file">
+           
+          </v-col>
+          <v-col cols="4">
+           <h4>Single Update</h4>
+            <v-text-field
+              placeholder="System ID"
+              v-model="systemID"
+              type="number"
+            ></v-text-field>
+            <v-text-field
+              placeholder="First Name"
+              v-model="firstName"
+            ></v-text-field>
+             <v-text-field
+              placeholder="Last Name"
+              v-model="lastName"
+            ></v-text-field>
+            <v-text-field
+              placeholder="Email"
+              v-model="email"
+              type="email"
+            ></v-text-field>
+            <v-text-field
+              placeholder="Account Type"
+              v-model="accountType"
+            ></v-text-field>
+            <v-text-field
+              placeholder="Account Status"
+              v-model="accountStatus"
+            ></v-text-field>
+            <v-text-field
+              placeholder="Account Type"
+              v-model="accountType"
+            ></v-text-field>
+            <v-btn @click="singleDeleteFormSubmit">Send</v-btn>
           </v-col>
           <v-col cols="2"></v-col>
         </v-row>
@@ -72,6 +134,32 @@ export default {
               accountType: this.accountType
             }
           UserManagementService.singleCreateUser(user)
+          .then(() =>{
+              console.log("SUCCESS")
+          })
+          .catch(err =>{
+              console.log(err)
+          });
+      },
+      singleDeleteFormSubmit(){
+          var user = {
+              systemID: this.systemID,
+              accountType: this.accountType
+            }
+          UserManagementService.singleDeleteUser(user)
+          .then(() =>{
+              console.log("SUCCESS")
+          })
+          .catch(err =>{
+              console.log(err)
+          });
+      },
+      singleUpdateFormSubmit(){
+          var user = {
+              systemID: this.systemID,
+              accountType: this.accountType
+            }
+          UserManagementService.singleDeleteUser(user)
           .then(() =>{
               console.log("SUCCESS")
           })
