@@ -18,7 +18,7 @@
                 params: { event }
               }"
             >
-              <v-btn color="primary">Update</v-btn>
+              <v-btn color="primary">Update Event</v-btn>
             </router-link>
             <div v-if="event.statusCode != 0">
               <v-btn color="error" @click="deleteEvent">Delete Event</v-btn> 
@@ -164,53 +164,33 @@ export default {
     },
 
     deleteEvent() {
-      if (this.bracket.statusCode == 2) {
-        // Future
+      if (this.event.statusCode == 1) {
+        // Current
         var reason = prompt(
           "Please enter reason for deleting in-progress bracket"
         );
-        this.bracket.reason = reason;
-        var cancelledTitle = "[Cancelled] " + this.bracket.bracketName;
-        axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
-          BracketID: this.bracket.bracketID,
-          BracketName: cancelledTitle,
-          Host: this.bracket.host,
-          BracketTypeID: this.bracket.bracketTypeID,
-          PlayerCount: this.bracket.playerCount,
-          GamePlayed: this.bracket.gamePlayed,
-          GamingPlatform: this.bracket.gamingPlatform,
-          Rules: this.bracket.rules,
-          StartDate: this.bracket.startDate,
-          EndDate: this.bracket.endDate,
-          StatusCode: this.bracket.statusCode,
-          MaxCapacity: this.bracket.maxCapacity,
-          Reason: this.bracket.reason
+        this.event.reason = reason;
+        var cancelledTitle = "[Cancelled] " + this.event.eventName;
+        axios.put(`https://localhost:44352/api/brackets/updateEvent/`, {
+          eventID: this.event.eventID,
+          address: this.event.address,
+          description: this.event.description,
+          StartDate: this.event.startDate,
+          EndDate: this.event.endDate,
+          eventName: cancelledTitle,
+          statusCode: 0,
+          Reason: this.event.reason
         });
-      } else if (this.bracket.statusCode == 1) {
-        // Progress
-        alert(
-          "This bracket has already ended, further changes are not permitted."
-        );
+      } else if (this.UnregisterEventModel.statusCode == 2) {
+        // future
+        axios.put(`https://localhost:44352/api/events/deleteEvent/`, {
+          EventID: this.event.EventID,
+        });
       } else {
         // ended
         alert(
           "This Ended has already ended, further changes are not permitted."
         );
-        axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
-          BracketID: this.bracket.bracketID,
-          BracketName: cancelledTitle,
-          Host: this.bracket.host,
-          BracketTypeID: this.bracket.bracketTypeID,
-          PlayerCount: this.bracket.playerCount,
-          GamePlayed: this.bracket.gamePlayed,
-          GamingPlatform: this.bracket.gamingPlatform,
-          Rules: this.bracket.rules,
-          StartDate: this.bracket.startDate,
-          EndDate: this.bracket.endDate,
-          StatusCode: this.bracket.statusCode,
-          MaxCapacity: this.bracket.maxCapacity,
-          Reason: this.bracket.reason
-        });
       }
     }
 

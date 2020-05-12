@@ -298,16 +298,17 @@ export default {
           Description: this.EventDescription,
           StartDate: this.StartDate + " " + this.StartTime,
           EndDate: this.EndDate + " " + this.EndTime,
+          StatusCode: 1,
           Host: this.$store.state.gamerInfo.hashedUserID
         })
         .then(function(response) {
           console.log(response);
         });
       console.log(`Data: ${res.data}`);
-      this.$refs.form.reset()
-      .then(
-      this.$router.go(-1)
-      )
+      // this.$refs.form.reset()
+      // .then(
+      // this.$router.go(-1)
+      // )
       // setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
     },
 

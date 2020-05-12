@@ -145,7 +145,7 @@ namespace TBZ.DatabaseQueryService
             {
                 using (MySqlCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "INSERT INTO event_info(eventID, event_name, address, event_description, start_date, end_date) VALUES(@eventID, @event_name, @address, @event_description, @start_date, @end_date)";
+                    comm.CommandText = "INSERT INTO event_info(eventID, event_name, address, event_description, start_date, end_date, status_code) VALUES(@eventID, @event_name, @address, @event_description, @start_date, @end_date, @status_code)";
 
                     comm.Parameters.AddWithValue("@eventID", Event.EventID);
                     comm.Parameters.AddWithValue("@event_Name", Event.EventName);
@@ -153,6 +153,7 @@ namespace TBZ.DatabaseQueryService
                     comm.Parameters.AddWithValue("@event_description", Event.Description);
                     comm.Parameters.AddWithValue("@start_date", Event.StartDate);
                     comm.Parameters.AddWithValue("@end_date", Event.EndDate);
+                    comm.Parameters.AddWithValue("@status_code", Event.StatusCode);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     conn.Close();
