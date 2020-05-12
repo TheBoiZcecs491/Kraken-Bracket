@@ -13,7 +13,7 @@ using TBZ.UM_Manager;
 
 namespace ClientApp.Controllers
 {
-    [Route("UserManagement/")]
+    [Route("api/UserManagement")]
     [ApiController]
     public class UserManagementController : ControllerBase
     {
@@ -23,14 +23,54 @@ namespace ClientApp.Controllers
         {
             _userManagementManager = userManagementManager;
         }
-        [HttpPost]
-        [Route("SingleCreate")]
-        public ActionResult<User> SingleCreateUser(User operatedUser)
+        [HttpPost("SingleCreate/{accountType}")]
+        [Produces("application/json")]
+        public IActionResult SingleCreateUser(User operatedUser, string accountType)
         {
-            User invokingUser = new User(6, null, null, null, "84092ujIO@>>>", null, "System Admin", false, null);
-            var result = _userManagementManager.SingleCreateUsers(invokingUser, operatedUser);
-            return result;
+            User invokingUser = new User(6, null, null, null, null, null, accountType, true, null);
+            try
+            {
+                return Ok(_userManagementManager.SingleCreateUsers(invokingUser, operatedUser));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            
         }
+
+        [HttpPost("SingleDelete/{accountType}")]
+        [Produces("application/json")]
+        public IActionResult SingleDeleteUser(User operatedUser, string accountType)
+        {
+            User invokingUser = new User(0, null, null, null, null, null, accountType, true, null);
+            try
+            {
+                return Ok(_userManagementManager.SingleDeleteUser(invokingUser, operatedUser));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
+        [HttpPut("SingleDelete/{accountType}")]
+        [Produces("application/json")]
+        public IActionResult SingleUpdateUser(User operatedUser, string accountType)
+        {
+            User invokingUser = new User(0, null, null, null, null, null, accountType, true, null);
+            try
+            {
+                return Ok(_userManagementManager.SingleUpdateUser(invokingUser, operatedUser, "Password"));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
         [HttpPost]
         [Route("updateprofile")]
         public IActionResult UpdateUserProfile(ProfileUpdateInput userInput)
