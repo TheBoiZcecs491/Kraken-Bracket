@@ -6,11 +6,13 @@ using TBZ.StringChecker;
 using TBZ.UM_Service;
 using TBZ.DatabaseQueryService;
 using System.Linq.Expressions;
+using TBZ.KrakenBracket.Managers;
 
 namespace TBZ.UM_Manager
 {
     public class UserManagementManager
     {
+        private readonly LoggingManager _loggingManager = new LoggingManager();
         private readonly DataAccess _DataAccessService = new DataAccess();
         private readonly UserManagementService _userManagementService = new UserManagementService();
 
@@ -32,7 +34,6 @@ namespace TBZ.UM_Manager
         public User SingleCreateUsers(User invokingUser, User operatedUser)
         {
             // Check permissions for user performing operation
-
             bool permissionResult = _userManagementService.CheckPermission(invokingUser, operatedUser, "Create");
             if (permissionResult)
             {
@@ -58,6 +59,14 @@ namespace TBZ.UM_Manager
             else
             {
                 operatedUser.ErrorMessage = "Invalid permissions";
+            }
+            if (!operatedUser.ErrorMessage.Equals(""))
+            {
+                _loggingManager.Log("User Creation", operatedUser.ErrorMessage);
+            }
+            else
+            {
+                _loggingManager.Log("User Creation", "");
             }
             return operatedUser;
         }
@@ -105,6 +114,7 @@ namespace TBZ.UM_Manager
                     }
                     else failedIDs.Add(operatedUser);
                 }
+                _loggingManager.Log("User Bulk Creation", "");
                 return new List<List<User>> { passedIDs, failedIDs };
             }
 
@@ -130,11 +140,16 @@ namespace TBZ.UM_Manager
             {
                 // Attempt to delete user
                 bool temp = _DataAccessService.DeleteUser(checkedUser);
-                if (temp == true) return true;
+                if (temp == true)
+                {
+                    _loggingManager.Log("Delete User", "");
+                    return true;
+                }
                 else throw new ArgumentException("Failed to delete user with associated ID");
             }
             else
             {
+                _loggingManager.Log("User Deletion", "Invalid Permission Error");
                 throw new ArgumentException("Invalid permissions");
             }
         }
@@ -186,10 +201,12 @@ namespace TBZ.UM_Manager
                         failedIDs.Add(u);
                     }
                 }
+                _loggingManager.Log("User Bulk Deletion", "");
                 return new List<List<User>> { passedIDs, failedIDs };
             }
             else
             {
+                _loggingManager.Log("User Bulk Deletion", "User Deletion Error");
                 throw new ArgumentException("List length is insufficient");
             }
         }

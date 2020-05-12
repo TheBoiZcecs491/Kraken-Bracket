@@ -81,6 +81,8 @@ export default {
             ],
             gamerHeaders: [
                 { text: 'Gamer Tag', value: 'gamerTag' },
+                { text: 'Number of Brackets Participating', value: 'bracketCount' },
+                { text: 'Region', value: 'region' }
             ],
         };
     },

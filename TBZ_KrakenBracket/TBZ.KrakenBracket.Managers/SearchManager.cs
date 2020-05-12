@@ -15,7 +15,7 @@ namespace TBZ.KrakenBracket.Managers
     }
     public class SearchManager : ISearchManager
     {
-        readonly LoggingService _loggingService = new LoggingService();
+        readonly LoggingManager _loggingManager = new LoggingManager();
         readonly TournamentBracketDatabaseQuery _tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
         readonly EventDataAccess _eventDataAccess = new EventDataAccess();
         readonly GamerDataAccess _gamerDataAccess = new GamerDataAccess();
@@ -37,18 +37,17 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns> A List of Brackets </returns>
         public List<BracketInfo> GetBrackets(string bracketRequest)
         {
-            List<BracketInfo> results = null;
             try
             {
-                results = _searchService.GetBrackets(bracketRequest);
-                _ = _loggingService.Log("Search", "", "user");
+                List<BracketInfo> results = _searchService.GetBrackets(bracketRequest);
+                _ = _loggingManager.Log("Search", "");
+                return results;
             }
-            catch
+            catch (Exception e)
             {
-                _ = _loggingService.Log("Search", "Data Store Error.", "user");
+                _ = _loggingManager.Log("Search", "Data Store Error");
+                throw e;
             }
-            return results;
-
         }
 
         /// <summary>
@@ -58,17 +57,17 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns> A List of Events </returns>
         public List<EventInfo> GetEvents(string eventRequest)
         {
-            List<EventInfo> results = null;
             try
             {
-                results = _searchService.GetEvents(eventRequest);
-                _ = _loggingService.Log("Search", "", "user");
+                List<EventInfo> results = _searchService.GetEvents(eventRequest);
+                _ = _loggingManager.Log("Search", "");
+                return results;
             }
-            catch
+            catch (Exception e)
             {
-                _ = _loggingService.Log("Search", "Data Store Error.", "user");
+                _ = _loggingManager.Log("Search", "Data Store Error");
+                throw e;
             }
-            return results;
         }
 
         /// <summary>
@@ -78,17 +77,17 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns> A List of Gamers </returns>
         public List<GamerInfo> GetGamers(string gamerRequest)
         {
-            List<GamerInfo> results = null;
             try
             {
-                results = _searchService.GetGamers(gamerRequest);
-                _ = _loggingService.Log("Search", "", "user");
+                List<GamerInfo> results = _searchService.GetGamers(gamerRequest);
+                _ = _loggingManager.Log("Search", "");
+                return results;
             }
-            catch
+            catch (Exception e)
             {
-                _ = _loggingService.Log("Search", "Data Store Error.", "user");
+                _ = _loggingManager.Log("Search", "Data Store Error");
+                throw e;
             }
-            return results;
         }
     }
 

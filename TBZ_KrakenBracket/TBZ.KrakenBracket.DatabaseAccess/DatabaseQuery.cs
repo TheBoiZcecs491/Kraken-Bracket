@@ -341,5 +341,24 @@ namespace TBZ.DatabaseQueryService
                 }
             }
         }
+
+        public int GetBracketCount(string gamer)
+        {
+            var DB = new Database();
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string selectQuery = string.Format("SELECT COUNT(*) FROM gamer_info inner join bracket_player_info " +
+                    "on gamer_info.hashedUserID = bracket_player_info.hashedUserID where gamerTag = '{0}'", gamer);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+                conn.Open();
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    reader.Read();
+                    int bracketCount = reader.GetInt32("COUNT(*)");
+                    conn.Close();
+                    return bracketCount;
+                }
+            }
+        }
     }
 }

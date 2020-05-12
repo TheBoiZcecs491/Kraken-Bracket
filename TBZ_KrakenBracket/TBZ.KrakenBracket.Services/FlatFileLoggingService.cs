@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TBZ.KrakenBracket.Services
 {
-    public class LoggingService
+    public class FlatFileLoggingService
     {
         readonly DirectoryInfo _endDir;
         readonly int _tries;
@@ -12,7 +12,7 @@ namespace TBZ.KrakenBracket.Services
         /// A default logging object that logs to the desktop
         /// in a folder called logs. Default tries is 3.
         /// </summary>
-        public LoggingService()
+        public FlatFileLoggingService()
         {
              _endDir = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.DirectorySeparatorChar + "logs");
             _tries = 3;
@@ -23,7 +23,7 @@ namespace TBZ.KrakenBracket.Services
         /// </summary>
         /// <param name="dir"> String of directory path </param>
         /// <param name="runs"> Integer of the number of attempts to try to log </param>
-        public LoggingService(string dir, int runs)
+        public FlatFileLoggingService(string dir, int runs)
         {
             DirectoryInfo eDI;          // check whitespace
             if (string.IsNullOrWhiteSpace(dir))
