@@ -15,9 +15,9 @@ namespace TBZ.KrakenBracket.Tests
         readonly EventInfo testEvent2 = new EventInfo("Year 2020");
         readonly EventInfo testEvent3 = new EventInfo("Year 2019");
         readonly List<EventInfo> _events = new List<EventInfo>();
-        readonly GamerInfo testGamer1 = new GamerInfo("The Gamer");
-        readonly GamerInfo testGamer2 = new GamerInfo("Gamer1");
-        readonly GamerInfo testGamer3 = new GamerInfo("Gamer2");
+        readonly GamerInfo testGamer1 = new GamerInfo("The Gamer", 1, "US");
+        readonly GamerInfo testGamer2 = new GamerInfo("Gamer1", 1, "US");
+        readonly GamerInfo testGamer3 = new GamerInfo("Gamer2", 1, "US");
         readonly List<GamerInfo> _gamers = new List<GamerInfo>();
         public SearchManagerNoDB _searchManager;
 
