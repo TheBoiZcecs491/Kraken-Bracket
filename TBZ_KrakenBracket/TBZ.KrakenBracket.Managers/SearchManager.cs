@@ -15,6 +15,7 @@ namespace TBZ.KrakenBracket.Managers
     }
     public class SearchManager : ISearchManager
     {
+        readonly LoggingManager _loggingManager = new LoggingManager();
         readonly TournamentBracketDatabaseQuery _tournamentBracketDatabaseQuery = new TournamentBracketDatabaseQuery();
         readonly EventDataAccess _eventDataAccess = new EventDataAccess();
         readonly GamerDataAccess _gamerDataAccess = new GamerDataAccess();
@@ -36,7 +37,17 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns> A List of Brackets </returns>
         public List<BracketInfo> GetBrackets(string bracketRequest)
         {
-            return _searchService.GetBrackets(bracketRequest);
+            try
+            {
+                List<BracketInfo> results = _searchService.GetBrackets(bracketRequest);
+                _ = _loggingManager.Log("Search", "");
+                return results;
+            }
+            catch (Exception e)
+            {
+                _ = _loggingManager.Log("Search", "Data Store Error");
+                throw e;
+            }
         }
 
         /// <summary>
@@ -46,7 +57,17 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns> A List of Events </returns>
         public List<EventInfo> GetEvents(string eventRequest)
         {
-            return _searchService.GetEvents(eventRequest);
+            try
+            {
+                List<EventInfo> results = _searchService.GetEvents(eventRequest);
+                _ = _loggingManager.Log("Search", "");
+                return results;
+            }
+            catch (Exception e)
+            {
+                _ = _loggingManager.Log("Search", "Data Store Error");
+                throw e;
+            }
         }
 
         /// <summary>
@@ -56,7 +77,17 @@ namespace TBZ.KrakenBracket.Managers
         /// <returns> A List of Gamers </returns>
         public List<GamerInfo> GetGamers(string gamerRequest)
         {
-            return _searchService.GetGamers(gamerRequest);
+            try
+            {
+                List<GamerInfo> results = _searchService.GetGamers(gamerRequest);
+                _ = _loggingManager.Log("Search", "");
+                return results;
+            }
+            catch (Exception e)
+            {
+                _ = _loggingManager.Log("Search", "Data Store Error");
+                throw e;
+            }
         }
     }
 

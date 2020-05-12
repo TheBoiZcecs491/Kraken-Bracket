@@ -12,6 +12,7 @@ namespace TBZ.KrakenBracket.Managers
     {
         private readonly TournamentBracketService _tournamentBracketService = new TournamentBracketService();
         private readonly TournamentBracketDataAccess _tournamentBracketDataAccess = new TournamentBracketDataAccess();
+        readonly LoggingManager _loggingManager = new LoggingManager();
 
         /// <summary>
         /// Checks to see if user is authorized to create a tournament bracket.
@@ -24,7 +25,16 @@ namespace TBZ.KrakenBracket.Managers
         public bool CreatePermission(string email, string action, bool isLoggedIn)
         {
             Authorization AuthZ = new Authorization();
-            return AuthZ.UserPermission(email, action, isLoggedIn);
+            try {
+                bool result = AuthZ.UserPermission(email, action, isLoggedIn);
+                _ = _loggingManager.Log("Authorization", "");
+                return result;
+            } catch (Exception e)
+            {
+                _ = _loggingManager.Log("Authorization", "User Claim Error");
+                throw e;
+            }
+             
         }
 
         /// <summary>
@@ -123,32 +133,48 @@ namespace TBZ.KrakenBracket.Managers
         /// </returns>
         public BracketPlayer RegisterGamerIntoBracket(GamerInfo gamer, int bracketID)
         {
-            bool checkGamerExistence = _tournamentBracketService.CheckGamerExistence(gamer);
-            bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
-            if (!(checkGamerExistence && checkBracketExistence))
+            try
             {
-                throw new ArgumentException();
-            }
-            else
-            {
-                var bracket = _tournamentBracketService.GetBracketByID(bracketID);
-                if (!(bracket.StatusCode == 0 && bracket.PlayerCount < 128))
+                bool checkGamerExistence = _tournamentBracketService.CheckGamerExistence(gamer);
+                bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
+                if (!(checkGamerExistence && checkBracketExistence))
                 {
                     throw new ArgumentException();
                 }
-                return _tournamentBracketService.InsertGamerToBracket(gamer, bracket);
+                else
+                {
+                    var bracket = _tournamentBracketService.GetBracketByID(bracketID);
+                    if (!(bracket.StatusCode == 0 && bracket.PlayerCount < 128))
+                    {
+                        throw new ArgumentException();
+                    }
+                    _loggingManager.Log("Bracket Registration", "");
+                    return _tournamentBracketService.InsertGamerToBracket(gamer, bracket);
+                }
+            } catch (Exception e)
+            {
+                _loggingManager.Log("Bracket Registration", "Registration Error");
+                throw e;
             }
         }
 
         public bool UpdateBracketInformation(BracketInfo bracketInfo)
         {
-            if (bracketInfo == null)
+            try
             {
-                throw new ArgumentException();
-            }
-            else
+                if (bracketInfo == null)
+                {
+                    throw new ArgumentException();
+                }
+                else
+                {
+                    _loggingManager.Log("Bracket Update", "");
+                    return _tournamentBracketService.UpdateTournamentBracket(bracketInfo);
+                }
+            } catch (Exception e)
             {
-                return _tournamentBracketService.UpdateTournamentBracket(bracketInfo);
+                _loggingManager.Log("Bracket Update", "Update Error");
+                throw e;
             }
         }
 
@@ -160,7 +186,16 @@ namespace TBZ.KrakenBracket.Managers
 
         public bool UpdateBracketStanding(int bracketID, BracketCompetitor bracketCompetitor)
         {
-            return _tournamentBracketService.UpdateBracketStanding(bracketID, bracketCompetitor);
+            try
+            {
+                bool result = _tournamentBracketService.UpdateBracketStanding(bracketID, bracketCompetitor);
+                _loggingManager.Log("Bracket Update", "");
+                return result;
+            } catch (Exception e)
+            {
+                _loggingManager.Log("Bracket Update", "");
+                throw e;
+            }
         }
 
         /// <summary>
@@ -199,17 +234,24 @@ namespace TBZ.KrakenBracket.Managers
         /// </returns>
         public bool UnregisterGamerFromBracket(int systemID, int bracketID)
         {
-            
-            bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
-            if (!checkBracketExistence)
+            try
             {
-                throw new ArgumentException();
-            }
-            else
+                bool checkBracketExistence = _tournamentBracketService.CheckBracketExistenceByID(bracketID);
+                if (!checkBracketExistence)
+                {
+                    throw new ArgumentException();
+                }
+                else
+                {
+                    var result = _tournamentBracketService.UnregisterGamerFromBracket(systemID, bracketID);
+                    if (!result) throw new ArgumentException();
+                    _loggingManager.Log("Bracket Unregistration", "");
+                    return result;
+                }
+            } catch (Exception e)
             {
-                var result = _tournamentBracketService.UnregisterGamerFromBracket(systemID, bracketID);
-                if (!result) throw new ArgumentException();
-                return result;
+                _loggingManager.Log("Bracket Unregistration", "Unregistration Error");
+                throw e;
             }
         }
 
