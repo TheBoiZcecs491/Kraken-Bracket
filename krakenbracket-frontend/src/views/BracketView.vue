@@ -86,11 +86,20 @@
               <v-btn color="primary">Login</v-btn>
             </router-link>
           </div>
-          <div
-            v-else-if="loggedIn && registeredStatus(bracketPlayerInfo, bracket)"
-          >
+          <div v-else>
+            <div
+            v-if="registeredStatus(bracketPlayerInfo, bracket)"
+            >
             <p>You are already registered for this event</p>
+            <div v-if="bracket.statusCode === 1">
+                <p>
+                  <strong>NOTE:</strong> Registration is disabled; bracket has
+                  already completed
+                </p>
+              </div>
+            <div v-else>
             <UnregisterBracketModel :key="bracket.id" :bracket="bracket" />
+            </div>
           </div>
           <!-- State if the user is logged in -->
           <div v-else>
@@ -131,6 +140,8 @@
               >
             </div>
           </div>
+          </div>
+         
           <!-- THIS IS WHERE IT WORKS -->
           <div v-if="loggedIn">
             <div v-if="((bracket.host === this.$store.state.gamerInfo.gamerTag) &&
