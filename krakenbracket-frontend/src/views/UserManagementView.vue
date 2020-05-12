@@ -21,18 +21,18 @@
             <!-- System ID -->
             <v-text-field
               placeholder="System ID"
-              v-model="systemID"
+              v-model="createSystemID"
               type="number"
             ></v-text-field>
             <!-- Email -->
             <v-text-field
               placeholder="Password"
-              v-model="password"
+              v-model="createPassword"
             ></v-text-field>
             <!-- Account Type -->
             <v-text-field
               placeholder="Account Type"
-              v-model="accountType"
+              v-model="createAccountType"
             ></v-text-field>
             <v-btn @click="singleCreateFormSubmit">Send</v-btn>
           </v-col>
@@ -58,7 +58,7 @@
               
               <!-- SINGLE CREATE USERS -->
             <h4>Bulk Create</h4>
-            <input type="file">
+            <input type="file" @change="loadTextFromFile" id="file-input">
             <h4>Bulk Delete</h4>
             <input type="file">
             <h4>Bulk Update</h4>
@@ -114,10 +114,11 @@ import UserManagementService from "@/services/UserManagementService.js";
 export default {
   data(){
       return{
-          systemID: null,
-          password: null,
-          accountType: null,
-          user: {}
+          createSystemID: null,
+          createPassword: null,
+          createAccountType: null,
+          user: {},
+          csvFile: null
       }
   },
   components: {
@@ -133,7 +134,7 @@ export default {
               password: this.password,
               accountType: this.accountType
             }
-          UserManagementService.singleCreateUser(user)
+          UserManagementService.singleCreateUser(user, this.$store.state.user.accountType)
           .then(() =>{
               console.log("SUCCESS")
           })
@@ -146,7 +147,7 @@ export default {
               systemID: this.systemID,
               accountType: this.accountType
             }
-          UserManagementService.singleDeleteUser(user)
+          UserManagementService.singleDeleteUser(user, this.$store.state.user.accountType)
           .then(() =>{
               console.log("SUCCESS")
           })
@@ -166,7 +167,22 @@ export default {
           .catch(err =>{
               console.log(err)
           });
-      }
+      },
+      loadTextFromFile() {
+          console.log(document.getElementById("file-input").files); // list of File objects
+
+        var file = document.getElementById("file-input").files[0];
+        var reader = new FileReader();
+        var content = reader.readAsText(file);
+        console.log(content);
+
+        // const file = ev.target.files[0];
+        // const reader = new FileReader();
+
+        // reader.onload = e => this.$emit("load", e.target.result);
+        // reader.readAsText(file);
+        // console.log(file)
+    },
   }
 };
 </script>
