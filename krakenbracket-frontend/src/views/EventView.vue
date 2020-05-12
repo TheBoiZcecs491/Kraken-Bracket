@@ -98,7 +98,8 @@ export default {
     return {
       event: {},
       brackets: {},
-      HostGamerTag: event.host
+      HostGamerTag: event.host,
+      competitors: []
     };
   },
   created() {

@@ -75,11 +75,10 @@ namespace TBZ.KrakenBracket.Managers
             return listOfBrackts;
         }
 
-        public List<EventPlayerInfo> GetEventInfo(int eventID)
+        public List<string> GetEventCompetitors(int eventID)
         {
-            var listOfEventPlayerInfo = _eventDataAccess.GetAllEventInfoByID(eventID);
+            return _eventDataAccess.GetAllEventCompetitorsBy(eventID);
 
-            return listOfEventPlayerInfo;
         }
     }
 }
