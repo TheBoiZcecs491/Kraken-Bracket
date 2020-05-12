@@ -231,7 +231,9 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["bracket"],
+  props: {
+    bracket: Object
+  },
   components: {},
   data: () => ({
     dropdown_gamePlayed: [
@@ -262,7 +264,7 @@ export default {
     menu2: false,
     menu3: false,
     menu4: false,
-    BracketName: "",
+    BracketName: this.bracket.bracketName,
     Host: "",
     MaxCapacity: "",
     GamePlayed: "",

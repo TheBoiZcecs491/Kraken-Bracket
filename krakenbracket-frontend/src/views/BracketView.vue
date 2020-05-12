@@ -6,6 +6,7 @@
         <p>404: The bracket you have been looking for is not found</p>
       </div>
       <div v-else>
+        
         <h1 id="title">{{ bracket.bracketName }}</h1>
         <h2>Host: {{ bracket.host }}</h2>
         <div style="text-align: left">
@@ -129,6 +130,22 @@
                 >Register!</v-btn
               >
             </div>
+          </div>
+          <!-- THIS IS WHERE IT WORKS -->
+          <div v-if="loggedIn">
+            <div v-if="((bracket.host === this.$store.state.gamerInfo.gamerTag) &&
+             (bracket.statusCode == 0 || bracket.statusCode == 2))">
+               <router-link
+              :to="{
+                name: 'bracket-update', params: {bracket: this.bracket}
+              }"
+            >
+              <v-btn color="primary">Update Bracket</v-btn>
+              
+            </router-link>
+            <v-btn color="error" @click="deleteBracket">Delete Bracket</v-btn> 
+          </div>
+          
           </div>
         </div>
       </div>
