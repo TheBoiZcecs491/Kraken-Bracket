@@ -25,5 +25,15 @@ export default {
             password: user.password,
             accountType: user.accountType
         });
+    },
+    singleUpdateUser(user, accountType){
+        return apiClient.put(`/SingleUpdate/${accountType}`, {
+            systemID: user.systemID,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            accountType: user.updateAccountType,
+            accountStatus: user.updateAccountStatus,
+        });
     }
 };

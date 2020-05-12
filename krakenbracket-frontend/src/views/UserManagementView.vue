@@ -69,16 +69,16 @@
            <h4>Single Update</h4>
             <v-text-field
               placeholder="System ID"
-              v-model="systemID"
+              v-model="updateSystemID"
               type="number"
             ></v-text-field>
             <v-text-field
               placeholder="First Name"
-              v-model="firstName"
+              v-model="updateFirstName"
             ></v-text-field>
              <v-text-field
               placeholder="Last Name"
-              v-model="lastName"
+              v-model="updateLastName"
             ></v-text-field>
             <v-text-field
               placeholder="Email"
@@ -87,16 +87,13 @@
             ></v-text-field>
             <v-text-field
               placeholder="Account Type"
-              v-model="accountType"
+              v-model="updateAccountType"
             ></v-text-field>
             <v-text-field
               placeholder="Account Status"
-              v-model="accountStatus"
+              v-model="updateAccountStatus"
             ></v-text-field>
-            <v-text-field
-              placeholder="Account Type"
-              v-model="accountType"
-            ></v-text-field>
+            
             <v-btn @click="singleDeleteFormSubmit">Send</v-btn>
           </v-col>
           <v-col cols="2"></v-col>
@@ -117,6 +114,14 @@ export default {
           createSystemID: null,
           createPassword: null,
           createAccountType: null,
+          deleteSystemID: null,
+          deleteAccountType: null,
+          updateSystemID: null,
+          firstName: null,
+          lastName: null,
+          email: null,
+          updateAccountType: null,
+          updateAccountStatus: null,
           user: {},
           csvFile: null
       }
@@ -157,10 +162,13 @@ export default {
       },
       singleUpdateFormSubmit(){
           var user = {
-              systemID: this.systemID,
-              accountType: this.accountType
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.email,
+              updateAccountType: this.updateAccountType,
+              updateAccountStatus: this.updateAccountStatus,
             }
-          UserManagementService.singleDeleteUser(user)
+          UserManagementService.singleUpdateUser(user, this.$store.state.user.accountType)
           .then(() =>{
               console.log("SUCCESS")
           })

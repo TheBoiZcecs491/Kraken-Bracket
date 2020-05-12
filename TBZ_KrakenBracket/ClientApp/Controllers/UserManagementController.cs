@@ -55,6 +55,22 @@ namespace ClientApp.Controllers
 
         }
 
+        [HttpPut("SingleDelete/{accountType}")]
+        [Produces("application/json")]
+        public IActionResult SingleUpdateUser(User operatedUser, string accountType)
+        {
+            User invokingUser = new User(0, null, null, null, null, null, accountType, true, null);
+            try
+            {
+                return Ok(_userManagementManager.SingleUpdateUser(invokingUser, operatedUser, "Password"));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
         [HttpPost]
         [Route("updateprofile")]
         public IActionResult UpdateUserProfile(ProfileUpdateInput userInput)
