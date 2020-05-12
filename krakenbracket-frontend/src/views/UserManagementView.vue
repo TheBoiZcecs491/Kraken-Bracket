@@ -32,7 +32,7 @@
               placeholder="Account Type"
               v-model="accountType"
             ></v-text-field>
-            <v-btn>Send</v-btn>
+            <v-btn @click="singleCreateFormSubmit">Send</v-btn>
           </v-col>
           <v-col cols="4">
             <h4>Single Delete</h4>
@@ -47,13 +47,38 @@
 <script>
 import { authComputed } from "../store/helpers.js";
 import NotLoggedIn from "../components/NotLoggedIn.vue";
+import UserManagementService from "@/services/UserManagementService.js";
 
 export default {
+  data(){
+      return{
+          systemID: null,
+          password: null,
+          accountType: null,
+          user: {}
+      }
+  },
   components: {
     NotLoggedIn
   },
   computed: {
     ...authComputed
+  },
+  methods:{
+      singleCreateFormSubmit(){
+          var user = {
+              systemID: this.systemID,
+              password: this.password,
+              accountType: this.accountType
+            }
+          UserManagementService.singleCreateUser(user)
+          .then(() =>{
+              console.log("SUCCESS")
+          })
+          .catch(err =>{
+              console.log(err)
+          });
+      }
   }
 };
 </script>
