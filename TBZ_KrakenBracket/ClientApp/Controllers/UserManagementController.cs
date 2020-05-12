@@ -13,7 +13,7 @@ using TBZ.UM_Manager;
 
 namespace ClientApp.Controllers
 {
-    [Route("UserManagement/")]
+    [Route("api/UserManagement")]
     [ApiController]
     public class UserManagementController : ControllerBase
     {
@@ -23,13 +23,20 @@ namespace ClientApp.Controllers
         {
             _userManagementManager = userManagementManager;
         }
-        [HttpPost]
-        [Route("SingleCreate")]
-        public ActionResult<User> SingleCreateUser(User operatedUser)
+        [HttpPost("SingleCreate")]
+        [Produces("application/json")]
+        public IActionResult SingleCreateUser(User operatedUser)
         {
             User invokingUser = new User(6, null, null, null, "84092ujIO@>>>", null, "System Admin", false, null);
-            var result = _userManagementManager.SingleCreateUsers(invokingUser, operatedUser);
-            return result;
+            try
+            {
+                return Ok(_userManagementManager.SingleCreateUsers(invokingUser, operatedUser));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            
         }
         [HttpPost]
         [Route("updateprofile")]
