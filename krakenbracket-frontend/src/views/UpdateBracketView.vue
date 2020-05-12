@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <!-- Checking for completed fields to enable "Create Bracket" button -->
     <v-form ref="form" v-model="valid" @submit.prevent="createBracket">
-      <h1>Update Bracket</h1>
+      <h1>Update {{bracket.bracketName}}</h1>
       <v-row justify="space-around">
         <!-- Bracket name field -->
         <v-col class="px-4" cols="12" sm="3">
@@ -232,7 +232,9 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["id"],
+  props: {
+    bracket: Object
+  },
   components: {},
   data: () => ({
     dropdown_gamePlayed: [
@@ -288,7 +290,7 @@ export default {
     Submit() {
       this.$refs.form.validate();
       axios.put(`https://localhost:44352/api/brackets/updateBracket/`, {
-        bracketID: this.id,
+        bracketID: this.bracket.bracketID,
         BracketName: this.BracketName,
         Host: this.$store.state.gamerInfo.gamerTag,
         PlayerCount: "0",
