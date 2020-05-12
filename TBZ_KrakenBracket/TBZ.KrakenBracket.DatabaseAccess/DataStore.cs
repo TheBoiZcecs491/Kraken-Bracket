@@ -15,7 +15,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                 {
                     using (MySqlCommand comm = conn.CreateCommand())
                     {
-                        comm.CommandText = "INSERT INTO table_logs VALUES(@time, @operation, @errorMessage, @hashedUserID)";
+                        comm.CommandText = "INSERT INTO table_log VALUES(@time, @operation, @errorMessage, @hashedUserID)";
                         comm.Parameters.AddWithValue("@time", time);
                         comm.Parameters.AddWithValue("@operation", operation);
                         comm.Parameters.AddWithValue("@errorMessage", msg);
