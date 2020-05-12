@@ -20,12 +20,15 @@ export default {
   getEventHost(eventID) {
     return apiClient.get("api/events/GetEventHost/" + eventID);
   },
-  getEventInfo(eventID){
+  getEventInfo(eventID) {
     return apiClient.get("api/events/GetEventInfo/" + eventID);
   },
-  getBracketEvent(eventID){
+  getBracketEvent(eventID) {
     return apiClient.get("api/events/GetBracketEvent/" + eventID);
   },
+  getEventBracketCompetitor(eventID) {
+    return apiClient.get(`api/events/GetEventInfo/${eventID}/competitors`);
+  }
   // checkHost(eventID, hashedUserID){
   //   return apiClient.get("api/events/checkHost");
   // },

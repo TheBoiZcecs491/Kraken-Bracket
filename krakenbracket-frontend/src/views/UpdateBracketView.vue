@@ -219,8 +219,8 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-btn :disabled="!valid" class="primary" x-large @click="Submit">
-            Create Bracket
+          <v-btn :disabled="!valid" x-large @click="Submit">
+            Update Bracket
           </v-btn>
         </v-col>
       </v-row>
@@ -231,7 +231,9 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["id"],
+  props: {
+    bracket: Object
+  },
   components: {},
   data: () => ({
     dropdown_gamePlayed: [
@@ -262,7 +264,7 @@ export default {
     menu2: false,
     menu3: false,
     menu4: false,
-    BracketName: "",
+    BracketName: this.bracket.bracketName,
     Host: "",
     MaxCapacity: "",
     GamePlayed: "",
@@ -286,7 +288,8 @@ export default {
   methods: {
     Submit() {
       this.$refs.form.validate();
-      axios.post(`https://localhost:44352/api/brackets/createBracket/`, {
+      axios.put(`https://localhost:44352/api/brackets/updateBracket/`, {
+        BracketID: this.bracket.bracketID,
         BracketName: this.BracketName,
         Host: this.$store.state.gamerInfo.gamerTag,
         PlayerCount: "0",
@@ -305,9 +308,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.create-btn {
-  text-decoration: none;
-}
-</style>

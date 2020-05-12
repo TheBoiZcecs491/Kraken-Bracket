@@ -41,6 +41,14 @@
                     color="primary"
                     >Confirm</v-btn
                   >
+                  <v-btn @click="submitForm" color="primary">Register!</v-btn>
+
+                  <v-btn
+                    v-show="formValidity"
+                    @click="submitForm"
+                    color="primary"
+                    >Register!</v-btn
+                  >
                   <v-btn
                     class="mr-4"
                     v-if="!formValidity"
@@ -51,8 +59,7 @@
                     <p class="red--text">{{ error }}</p>
                   </div>
                 </v-col>
-                <v-col cols="12" lg="4">
-                </v-col>
+                <v-col cols="12" lg="4"> </v-col>
               </v-row>
             </v-col>
           </v-row>
@@ -78,11 +85,11 @@ export default {
       gamerTag: this.$store.state.gamerInfo.gamerTag,
       gamer: {
         gamerTag: this.gamerTag
+        // gamerTagID: this.gamerTagID
       },
       error: null,
       email: this.$store.state.user.email,
-      emailRules: [
-      ],
+      emailRules: [],
       gamerTagRules: [
         gamerTag => !!gamerTag || "GamerTag is required",
         gamerTag =>
@@ -122,7 +129,6 @@ export default {
               setTimeout(() => {
                 this.$store.dispatch("eventPlayerInfo", this.id);
               }, 500);
-              
             })
             .then(() => {
               this.$router.go(-1);

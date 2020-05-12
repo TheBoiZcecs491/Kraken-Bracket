@@ -66,7 +66,13 @@ namespace ClientApp.Controllers
         [Produces("application/json")]
         public IActionResult GetEventInfo(int eventID)
         {
-            return Ok(_eventManager.GetEventInfo(eventID));
+            return Ok(_eventManager.GetEventCompetitors(eventID));
+        }
+        [HttpGet("GetEventInfo/{eventID}/competitors")]
+        [Produces("application/json")]
+        public IActionResult GetEventCompetitors(int eventID)
+        {
+            return Ok(_eventManager.GetEventCompetitors(eventID));
         }
     }
 }

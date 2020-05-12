@@ -14,7 +14,7 @@
       <h1>Event List</h1>
       <v-card>
         <v-data-table
-          :headers="events"
+          :headers="eventHeader"
           :items="events"
           :search="filter"
           :items-per-page="10"
@@ -47,7 +47,14 @@ export default {
     return {
       events: [],
       details: "",
-      filter: ""
+      filter: "",
+      eventHeaders: [
+        { text: "Event Name", value: "eventName" },
+        { text: "Event Host", value: "Host"},
+        { text: "Start Date", value: "startDate" },
+        { text: "End Date", value: "endDate" },
+        { text: "Location", value: "address" },
+      ],
     };
   },
   created() {

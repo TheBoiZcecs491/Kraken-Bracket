@@ -10,7 +10,7 @@ export default new Vuex.Store({
     user: null,
     bracketPlayerInfo: [],
     gamerInfo: null,
-    eventPlayerInfo: [],
+    eventPlayerInfo: []
   },
   mutations: {
     SET_USER_DATA(state, userData) {
@@ -19,6 +19,9 @@ export default new Vuex.Store({
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${userData.token}`;
+      //protip: save this value to a file and read from it.
+      // that way you can refresh or open/close the browser and stay loggedin.
+      // I noticed refreshing or surfing to other pages on the front end resets this.
     },
     CLEAR_USER_DATA() {
       localStorage.removeItem("user");
@@ -34,17 +37,18 @@ export default new Vuex.Store({
       localStorage.setItem("gamerInfo", JSON.stringify(data));
       axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
     },
-    SET_EVENT_PLAYER_INFO(state, data){
+    SET_EVENT_PLAYER_INFO(state, data) {
       state.eventPlayerInfo = data;
       localStorage.setItem("eventPlayerInfo", JSON.stringify(data));
       axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
     },
-    CLEAR_EVENT_PLAYER_INFO(){
+    CLEAR_EVENT_PLAYER_INFO() {
       localStorage.removeItem("eventPlayerInfo");
     }
   },
   actions: {
     login({ commit }, credentials) {
+      console.log(credentials);
       return axios
         .post("https://localhost:44352/api/login", credentials)
         .then(({ data }) => {
@@ -53,7 +57,14 @@ export default new Vuex.Store({
     },
     registerUser({ commit }, formFill) {
       return axios
-        .put("https://localhost:44352/api/register", formFill)
+        .post("https://localhost:44352/api/register", formFill)
+        .then(({ data }) => {
+          commit("SET_USER_DATA", data);
+        });
+    },
+    updateUser({ commit }, formFill) {
+      return axios
+        .post("https://localhost:44352/usermanagement/updateprofile", formFill)
         .then(({ data }) => {
           commit("SET_USER_DATA", data);
         });
@@ -71,12 +82,12 @@ export default new Vuex.Store({
         commit("SET_USER_GAMER_INFO", data);
       });
     },
-    eventPlayerInfo({ commit}, eventID){
-      EventService.getEventInfo(eventID).then(({data }) => {
-      commit("SET_EVENT_PLAYER_INFO", data);
+    eventPlayerInfo({ commit }, eventID) {
+      EventService.getEventInfo(eventID).then(({ data }) => {
+        commit("SET_EVENT_PLAYER_INFO", data);
       });
     },
-    removeEventPlayerInfo({commit}){
+    removeEventPlayerInfo({ commit }) {
       commit("CLEAR_EVENT_PLAYER_INFO");
     }
   },
@@ -93,7 +104,7 @@ export default new Vuex.Store({
     gamerInfo(state) {
       return state.gamerInfo;
     },
-    eventPlayerInfo(state){
+    eventPlayerInfo(state) {
       return state.eventPlayerInfo;
     }
   },

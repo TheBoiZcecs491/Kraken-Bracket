@@ -88,14 +88,14 @@ export default {
   data() {
     return {
       bracket: {},
-      gamerTag: "",
+      gamerTag: this.$store.state.gamerInfo.gamerTag,
       // gamerTagID: "",
       gamer: {
         gamerTag: this.gamerTag
         // gamerTagID: this.gamerTagID
       },
       error: null,
-      email: "",
+      email: this.$store.state.user.email,
       emailRules: [
         email => !!email || "Email is required",
         email =>

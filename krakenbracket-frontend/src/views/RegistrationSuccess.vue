@@ -14,7 +14,7 @@ export default {
       this.$router.push("/");
     }
   },
-  beforeMount() {
+  Created() {
     //i'd like to add a delay here.
     this.registrationRedirect();
   }

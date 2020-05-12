@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div v-if = "true">
+    <div v-if="true">
       <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
       <router-link
         :to="{
@@ -13,9 +13,7 @@
       </router-link>
     </div>
     <div v-else>
-      <p>
-        <strong>NOTE:</strong> Registration is disabled; Event has ended
-      </p>
+      <p><strong>NOTE:</strong> Registration is disabled; Event has ended</p>
       <v-btn disabled>Register!</v-btn>
     </div>
   </v-app>

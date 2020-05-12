@@ -32,8 +32,8 @@
     <br />
     <div
       v-show="
-        bracket.host == this.$store.state.gamerInfo.gamerTag &&
-          bracket.statusCode == 2
+        bracket.host === this.$store.state.gamerInfo.gamerTag &&
+          bracket.statusCode === 2
       "
     >
       <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
@@ -44,6 +44,7 @@
 
 <script>
 import Bracket from "@/components/bracket-components/Bracket.vue";
+import BracketService from "@/services/BracketService.js";
 export default {
   props: {
     competitors: Array,
@@ -249,14 +250,35 @@ export default {
       var bracketLayer = prompt("Enter the bracket layer number");
       var matchNumber = prompt("Enter the match number");
       var gamerTag = prompt("Enter the gamerTag");
-      console.log(gamerTag + " <-----");
-      console.log(this.rounds[bracketLayer].games[matchNumber].player1.name);
-      this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
+      var playerPlacement = prompt("Player 1 or 2?");
+      if (playerPlacement == 1) {
+        this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
+        for (let i = 0; i < this.competitors.length; i++) {
+          if (this.competitors[i].gamerTag == gamerTag) {
+            BracketService.updateBracketStandings(
+              this.competitors[0].bracketID,
+              this.competitors[i]
+            );
+          }
+        }
+      } else if (playerPlacement == 2) {
+        this.rounds[bracketLayer].games[matchNumber].player2.name = gamerTag;
+        for (let i = 0; i < this.competitors.length; i++) {
+          if (this.competitors[i].gamerTag == gamerTag) {
+            BracketService.updateBracketStandings(
+              this.competitors[0].bracketID,
+              this.competitors[i]
+            );
+          }
+        }
+      } else {
+        console.log("ERROR");
+      }
     }
   }
 };
 </script>
-<style>
+<style scoped>
 .standings {
   width: 50%;
   border: 3px solid black;

@@ -26,8 +26,8 @@
     <br />
     <div
       v-show="
-        bracket.host == this.$store.state.gamerInfo.gamerTag &&
-          bracket.statusCode == 2
+        bracket.host === this.$store.state.gamerInfo.gamerTag &&
+          bracket.statusCode === 2
       "
     >
       <v-btn @click="updatePlayerBracketPlacements">Update players</v-btn>
@@ -174,13 +174,26 @@ export default {
           break;
         }
       }
-      this.rounds[2].games[0].player1.name = player1.gamerTag;
-      this.rounds[2].games[0].player2.name = player2.gamerTag;
+
+      if (
+        player1 === null ||
+        (player1 === undefined && (player1 === null || player1 === undefined))
+      ) {
+        console.log("No finalists yet");
+      } else {
+        this.rounds[2].games[0].player1.name = player1.gamerTag;
+        this.rounds[2].games[0].player2.name = player2.gamerTag;
+      }
+      // if(player2.gamerTag != null){
+      //
+      // }
     }, 100);
 
-    this.competitors.sort((a, b) =>
-      a.score < b.score ? 1 : b.score < a.score ? -1 : 0
-    );
+    setTimeout(() => {
+      this.competitors.sort((a, b) =>
+        a.score < b.score ? 1 : b.score < a.score ? -1 : 0
+      );
+    }, 1000);
   },
   methods: {
     updatePlayerBracketPlacements() {
@@ -191,7 +204,6 @@ export default {
       if (playerPlacement == 1) {
         this.rounds[bracketLayer].games[matchNumber].player1.name = gamerTag;
         for (let i = 0; i < this.competitors.length; i++) {
-          console.log("TEST1");
           if (this.competitors[i].gamerTag == gamerTag) {
             BracketService.updateBracketStandings(
               this.competitors[0].bracketID,
@@ -218,7 +230,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .standings {
   width: 50%;
   border: 3px solid black;

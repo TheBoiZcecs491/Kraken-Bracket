@@ -54,19 +54,29 @@ namespace TBZ.DatabaseQueryService
                     msalt.GenerateHash();
                     tempUser.Password = msalt.message;
                     tempUser.Salt = msalt.salt;
-                    comm.CommandText = "INSERT INTO user_information(userID, email, hashed_password, salt, fname, lname, account_type) " +
-                    "VALUES(@userID, @email, @hashed_password, @salt, @fname, @lname, @account_type)";
-                    comm.Parameters.AddWithValue("@userID", tempUser.SystemID);
+                    comm.CommandText = "INSERT INTO user_information(email, hashed_password, salt, fname, lname, account_type, account_status) " +
+                    "VALUES(@email, @hashed_password, @salt, @fname, @lname, @account_type, @account_status)";
+                    //comm.Parameters.AddWithValue("@userID", tempUser.SystemID);//TODO: this should have gone away by now...
                     comm.Parameters.AddWithValue("@email", tempUser.Email);
                     comm.Parameters.AddWithValue("@hashed_password", tempUser.Password);
                     comm.Parameters.AddWithValue("@salt", tempUser.Salt);
                     comm.Parameters.AddWithValue("@fname", tempUser.FirstName);
                     comm.Parameters.AddWithValue("@lname", tempUser.LastName);
                     comm.Parameters.AddWithValue("@account_type", tempUser.AccountType);
+                    if (tempUser.AccountStatus)
+                    {
+                        comm.Parameters.AddWithValue("@account_status", 1);
+                    }
+                    else
+                    {
+                        comm.Parameters.AddWithValue("@account_status", 0);
+                    }
 
                     conn.Open();
                     comm.ExecuteNonQuery();
                     comm.Parameters.Clear();
+
+                    tempUser.SystemID = GetUserInfo(tempUser.Email).SystemID;
 
                     msalt.message = tempUser.SystemID.ToString();
                     msalt.GenerateHash();
@@ -319,7 +329,7 @@ namespace TBZ.DatabaseQueryService
             using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
             {
                 // Retrieve the system ID
-                string selectQuery0 = string.Format("SELECT * FROM userid WHERE userID={0}", systemID);
+                string selectQuery0 = string.Format("SELECT * FROM userid WHERE userid={0}", systemID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery0, conn);
                 conn.Open();
                 using (MySqlDataReader reader0 = selectCmd.ExecuteReader())

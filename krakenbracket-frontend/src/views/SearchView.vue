@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-row>
         <v-col cols="12" sm="3">
-          <select class="search-type" v-model="keyword">
+          <select class="search-type" v-model="keyword" @change="updateModel">
             <option
               v-for="option in options"
               v-bind:key="option.text"
@@ -22,6 +22,7 @@
             append-icon="mdi-magnify"
             required
             clearable
+            @keyup.enter="updateModel"
           >
           </v-text-field>
         </v-col>
@@ -32,16 +33,8 @@
         </v-col>
       </v-row>
     </v-container>
-    <div v-if="!noSearch">
-      <div v-if="keyword === 'bracket'">
-        <SearchTable :headers="bracketHeaders" :search_result="brackets" />
-      </div>
-      <div v-if="keyword === 'event'">
-        <SearchTable :headers="eventHeaders" :search_result="events" />
-      </div>
-      <div v-if="keyword === 'gamer'">
-        <SearchTable :headers="gamerHeaders" :search_result="gamers" />
-      </div>
+    <div v-if="isSearch">
+      <SearchTable :headers="header" :search_result="model" />
     </div>
   </div>
 </template>
@@ -58,7 +51,7 @@ export default {
   data() {
     return {
       // Search data
-      noSearch: true,
+      isSearch: false,
       search: "",
       // Search selector data
       keyword: "bracket",
@@ -68,9 +61,8 @@ export default {
         { text: "Gamers", value: "gamer" }
       ],
       // Search result data
-      brackets: [],
-      gamers: [],
-      events: [],
+      model: [],
+      header: [],
       bracketHeaders: [
         { text: "Bracket Name", value: "bracketName" },
         { text: "Gaming Platform", value: "gamingPlatform" },
@@ -91,35 +83,28 @@ export default {
   methods: {
     // This method is used to fetch data and update the model
     updateModel() {
+      var response;
       if (this.keyword === "bracket") {
-        SearchService.searchBrackets(this.search)
-          .then(response => {
-            this.brackets = response.data;
-          })
-          .catch(error => {
-            console.log("There was an error: " + error);
-          });
+        response = SearchService.searchBrackets(this.search);
+        this.header = Array.from(this.bracketHeaders);
       } else if (this.keyword === "event") {
-        SearchService.searchEvents(this.search)
-          .then(response => {
-            this.events = response.data;
-          })
-          .catch(error => {
-            console.log("There was an error: " + error);
-          });
+        response = SearchService.searchEvents(this.search);
+        this.header = Array.from(this.eventHeaders);
       } else if (this.keyword === "gamer") {
-        SearchService.searchGamers(this.search)
-          .then(response => {
-            this.gamers = response.data;
-          })
-          .catch(error => {
-            console.log("There was an error: " + error);
-          });
+        response = SearchService.searchGamers(this.search);
+        this.header = Array.from(this.gamerHeaders);
       }
-      if (this.search === "") {
-        this.noSearch = true;
+      response
+        .then(r => {
+          this.model = r.data;
+        })
+        .catch(error => {
+          console.log("There was an error: " + error);
+        });
+      if (this.search) {
+        this.isSearch = true;
       } else {
-        this.noSearch = false;
+        this.isSearch = false;
       }
     }
   }
