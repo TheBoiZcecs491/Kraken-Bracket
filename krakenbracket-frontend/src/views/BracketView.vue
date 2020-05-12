@@ -154,7 +154,8 @@
               <v-btn color="primary">Update Bracket</v-btn>
               
             </router-link>
-            <v-btn color="error" @click="deleteBracket">Delete Bracket</v-btn> 
+            <!-- <v-btn color="error" @click="deleteBracket">Delete Bracket</v-btn>  -->
+            <DeleteBracketModel :bracket="bracket"  />
           </div>
           
           </div>
@@ -168,6 +169,7 @@
 import BracketService from "@/services/BracketService.js";
 import { authComputed } from "../store/helpers.js";
 import UnregisterBracketModel from "@/components/UnregisterBracketModel.vue";
+import DeleteBracketModel from "@/components/DeleteBracketModel.vue";
 import FourPlayerBracketModel from "@/components/bracket-components/FourPlayerBracketModel.vue";
 import EightPlayerBracketModel from "@/components/bracket-components/EightPlayerBracketModel.vue";
 import SixteenPlayerBracketModel from "@/components/bracket-components/SixteenPlayerBracketModel.vue";
@@ -185,7 +187,8 @@ export default {
     SixteenPlayerBracketModel,
     ThirtyTwoPlayerBracketModel,
     SixtyFourPlayerBracketModel,
-    OneTwentyEightPlayerBracketModel
+    OneTwentyEightPlayerBracketModel,
+    DeleteBracketModel
   },
   data() {
     return {
