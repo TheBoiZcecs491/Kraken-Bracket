@@ -11,7 +11,7 @@
           </div>
           <h4>Competitors:</h4>
           <li v-for="competitor in competitors" :key="competitor.gamerTag">{{ competitor.gamerTag }}</li>
-          <div v-if="statusHost()">
+          <div v-if="statusHost() && event.statusCode != 0">
             <router-link
               :to="{
                 name: 'event-update', //'update-view'
@@ -20,16 +20,19 @@
             >
               <v-btn color="primary">Update</v-btn>
             </router-link>
+            <div v-if="event.statusCode != 0">
+              <v-btn color="error" @click="deleteEvent">Delete Event</v-btn> 
+            </div>
             <!-- manage event -->
           </div>
 
-          <div v-else-if="statusRegistration()">
+          <div v-else-if="statusRegistration() && event.statusCode != 0">
             <!-- unregister -->
             <UnregisterEventModel :key="event.id" :event="event" />
           </div>
 
-          <div v-else-if="loggedIn">
-            <div v-if="true">
+          <div v-else-if="loggedIn ">
+            <div v-if="event.statusCode != 0">
               <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
               <router-link
                 :to="{
@@ -83,7 +86,7 @@ import { authComputed } from "../store/helpers.js";
 import UnregisterEventModel from "@/components/UnregisterEventModel.vue";
 // import RegisterEventModel from "@/components/RegisterEventModel.vue";
 import BracketModel from "@/components/BracketModel.vue";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   props: ["id"],
@@ -147,6 +150,7 @@ export default {
         }
       }
     },
+
     statusHost() {
       if (!this.loggedIn) {
         return false;
@@ -157,7 +161,59 @@ export default {
           return false;
         }
       }
+    },
+
+    deleteEvent() {
+      if (this.bracket.statusCode == 2) {
+        // Future
+        var reason = prompt(
+          "Please enter reason for deleting in-progress bracket"
+        );
+        this.bracket.reason = reason;
+        var cancelledTitle = "[Cancelled] " + this.bracket.bracketName;
+        axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
+          BracketID: this.bracket.bracketID,
+          BracketName: cancelledTitle,
+          Host: this.bracket.host,
+          BracketTypeID: this.bracket.bracketTypeID,
+          PlayerCount: this.bracket.playerCount,
+          GamePlayed: this.bracket.gamePlayed,
+          GamingPlatform: this.bracket.gamingPlatform,
+          Rules: this.bracket.rules,
+          StartDate: this.bracket.startDate,
+          EndDate: this.bracket.endDate,
+          StatusCode: this.bracket.statusCode,
+          MaxCapacity: this.bracket.maxCapacity,
+          Reason: this.bracket.reason
+        });
+      } else if (this.bracket.statusCode == 1) {
+        // Progress
+        alert(
+          "This bracket has already ended, further changes are not permitted."
+        );
+      } else {
+        // ended
+        alert(
+          "This Ended has already ended, further changes are not permitted."
+        );
+        axios.put(`https://localhost:44352/api/brackets/deleteBracket/`, {
+          BracketID: this.bracket.bracketID,
+          BracketName: cancelledTitle,
+          Host: this.bracket.host,
+          BracketTypeID: this.bracket.bracketTypeID,
+          PlayerCount: this.bracket.playerCount,
+          GamePlayed: this.bracket.gamePlayed,
+          GamingPlatform: this.bracket.gamingPlatform,
+          Rules: this.bracket.rules,
+          StartDate: this.bracket.startDate,
+          EndDate: this.bracket.endDate,
+          StatusCode: this.bracket.statusCode,
+          MaxCapacity: this.bracket.maxCapacity,
+          Reason: this.bracket.reason
+        });
+      }
     }
+
   }
 };
 </script>

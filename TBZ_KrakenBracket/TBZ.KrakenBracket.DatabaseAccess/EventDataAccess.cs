@@ -61,6 +61,31 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
+        public object DeleteEvent(EventInfo eventInfo)
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string deleteQuery = string.Format("DELETE FROM event_infoERE eventID = {0}", eventInfo.EventID);
+                MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                conn.Open();
+                deleteCmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            return eventInfo;
+        }
+
+        public void DeleteEventBracket(int eventID)
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string deleteQuery = string.Format("DELETE FROM event_bracket_list WHERE eventID = {0}", eventID);
+                MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                conn.Open();
+                deleteCmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
         public EventPlayerInfo InsertEventPlayer( EventPlayerInfo eventPlayer)
         {
             databaseQuery.InsertEventPlayer(eventPlayer);

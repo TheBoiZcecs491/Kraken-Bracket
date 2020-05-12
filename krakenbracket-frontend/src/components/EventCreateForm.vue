@@ -262,9 +262,6 @@ export default {
     hasError: false
   }),
   methods: {
-    created(){
-      setData();
-    },
     setData(){
     this.EventName = this.$route.params.event.eventName
     },

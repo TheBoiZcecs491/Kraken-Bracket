@@ -41,6 +41,13 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.UpdateEvent(eventInfo));
         }
 
+        [HttpPut("deleteEvent")]
+        [Produces("application/json")]
+        public IActionResult DeleteEvent(EventInfo eventInfo)
+        {
+            return Ok(_eventManager.DeleteEvent(eventInfo));
+        }
+
         [HttpGet("{eventID}")]
         [Produces("application/json")]
         public IActionResult GetEventByID(int eventID)

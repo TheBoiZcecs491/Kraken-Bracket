@@ -39,6 +39,14 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
+        public object DeleteEvent(EventInfo eventInfo)
+        {
+            _eventDataAccess.DeleteEventBracket(eventInfo.EventID);
+
+
+            return _eventDataAccess.DeleteEvent(eventInfo);
+        }
+
         public EventInfo UpdateEvent(EventInfo eventObj)
         {
             return _eventDataAccess.UpdateEvent(eventObj);
