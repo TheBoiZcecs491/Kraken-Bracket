@@ -111,23 +111,24 @@ namespace TBZ.KrakenBracket.DatabaseAccess
            
         }
 
-        public List<string> GetAllEventCompetitorsBy(int eventID)
+        public List<GamerInfo> GetAllEventCompetitorsBy(int eventID)
         {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {
                 string selectQuery = string.Format("SELECT DISTINCT gamerTag FROM event_bracket_list INNER JOIN bracket_player_info ON event_bracket_list.bracketID = bracket_player_info.bracketID" +
-                    " INNER JOIN gamer_info ON bracket_player_info.hashedUserID=gamer_info.hashedUserID WHERE event_bracket_list.eventID={0}", eventID);
+                    " INNER JOIN gamer_info ON bracket_player_info.hashedUserID=gamer_info.hashedUserID WHERE event_bracket_list.eventID={0} ORDER BY gamerTag asc", eventID);
                 MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
                 conn.Open();
 
-                List<string> eventPlayerInfos = new List<string>();
+                List<GamerInfo> eventPlayerInfos = new List<GamerInfo>();
                 using (MySqlDataReader reader = selectCmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        
-                        string gamerTag = reader.GetString("gamerTag");
-                        eventPlayerInfos.Add(gamerTag);
+
+                        GamerInfo gamer = new GamerInfo();
+                        gamer.GamerTag = reader.GetString("gamerTag");
+                        eventPlayerInfos.Add(gamer);
                     }
                     reader.Close();
 

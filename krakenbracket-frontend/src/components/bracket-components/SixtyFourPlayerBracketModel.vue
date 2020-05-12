@@ -410,7 +410,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .standings {
   width: 50%;
   border: 3px solid black;

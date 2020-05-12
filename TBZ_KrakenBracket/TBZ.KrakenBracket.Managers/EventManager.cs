@@ -75,7 +75,7 @@ namespace TBZ.KrakenBracket.Managers
             return listOfBrackts;
         }
 
-        public List<string> GetEventCompetitors(int eventID)
+        public List<GamerInfo> GetEventCompetitors(int eventID)
         {
             return _eventDataAccess.GetAllEventCompetitorsBy(eventID);
 
