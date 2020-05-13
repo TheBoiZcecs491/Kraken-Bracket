@@ -33,9 +33,62 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             return eventObj;
         }
 
+        public EventInfo UpdateEvent(EventInfo eventObj)
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand updateCmd = conn.CreateCommand())
+                {
+                    updateCmd.CommandText = "UPDATE bracket_info " +
+                        "SET " +
+                        "event_name = @bracket_name, " +
+                        "address = @address, " +
+                        "event_description = @event_description, " +
+                        "start_date = @start_date, " +
+                        "end_date = @end_date ," +
+                        "WHERE eventID = @eventID";
+                    updateCmd.Parameters.AddWithValue("@eventID", eventObj.EventID);
+                    updateCmd.Parameters.AddWithValue("@event_name", eventObj.EventName);
+                    updateCmd.Parameters.AddWithValue("@address", eventObj.Address);
+                    updateCmd.Parameters.AddWithValue("@event_description", eventObj.Description);
+                    updateCmd.Parameters.AddWithValue("@start_date", eventObj.StartDate);
+                    updateCmd.Parameters.AddWithValue("@end_date", eventObj.EndDate);
+                    conn.Open();
+                    updateCmd.ExecuteNonQuery();
+                    conn.Close();
+                    return eventObj;
+                }
+            }
+        }
+
+        public object DeleteEvent(EventInfo eventInfo)
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string deleteQuery = string.Format("DELETE FROM event_infoERE eventID = {0}", eventInfo.EventID);
+                MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                conn.Open();
+                deleteCmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            return eventInfo;
+        }
+
+        public void DeleteEventBracket(int eventID)
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string deleteQuery = string.Format("DELETE FROM event_bracket_list WHERE eventID = {0}", eventID);
+                MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
+                conn.Open();
+                deleteCmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
         public EventPlayerInfo InsertEventPlayer( EventPlayerInfo eventPlayer)
         {
-            databaseQuery.InsertEventPalyer(eventPlayer);
+            databaseQuery.InsertEventPlayer(eventPlayer);
             return eventPlayer;
         }
 
@@ -78,6 +131,53 @@ namespace TBZ.KrakenBracket.DatabaseAccess
                     reader.Close();
                 }
                 return eventID;
+            }
+        }
+
+        public object AddGamerToEvent(EventPlayerInfo eventPlayer)
+        {
+            databaseQuery.InsertEventPlayer(eventPlayer);
+            return eventPlayer;
+        }
+
+        public object CheckEventPlayer(int eventID, string hashUserID)
+        {
+            using (conn = new MySqlConnection(DB.GetConnString()))
+            {
+                string selectQuery = string.Format("SELECT * FROM event_player_info WHERE eventID={0} and hashedUserID='{1}'", eventID, hashUserID);
+                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
+
+                conn.Open();
+
+                using (MySqlDataReader reader = selectCmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public object RemoveEventPlayer(int eventID, string hashedUserID)
+        {
+            using (MySqlConnection conn = new MySqlConnection(DB.GetConnString()))
+            {
+                using (MySqlCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "DELETE FROM event_player_info WHERE hashedUserID=@HashedUserID AND eventID=@eventID";
+                    comm.Parameters.AddWithValue("@HashedUserID", hashedUserID);
+                    comm.Parameters.AddWithValue("@eventID", eventID);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                    return true;
+                }
             }
         }
 
@@ -137,7 +237,7 @@ namespace TBZ.KrakenBracket.DatabaseAccess
             }
         }
 
-        public List<EventPlayerInfo> GetAllEventInfoByID(int eventID)
+        public List<EventPlayerInfo> GetAllEventPlayerInfoByID(int eventID)
         {
             using (conn = new MySqlConnection(DB.GetConnString()))
             {

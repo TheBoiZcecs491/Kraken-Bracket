@@ -39,6 +39,19 @@ namespace TBZ.KrakenBracket.Managers
             }
         }
 
+        public object DeleteEvent(EventInfo eventInfo)
+        {
+            _eventDataAccess.DeleteEventBracket(eventInfo.EventID);
+
+
+            return _eventDataAccess.DeleteEvent(eventInfo);
+        }
+
+        public EventInfo UpdateEvent(EventInfo eventObj)
+        {
+            return _eventDataAccess.UpdateEvent(eventObj);
+        }
+
         public List<EventInfo> GetAllEvents()
         {
             List<EventInfo> events = new List<EventInfo>();
@@ -50,10 +63,62 @@ namespace TBZ.KrakenBracket.Managers
             return events;
         }
 
+        public List<EventInfo> GetAllCurrentEvents()
+        {
+            List<EventInfo> events = new List<EventInfo>();
+            DateTime currentTime = DateTime.Now;
+            currentTime.ToString("yyyyMMddTHH:mm:ss");
+            events = _eventDataAccess.GetAllEvents();
+            foreach (EventInfo eventObj in events)
+            {
+                if (eventObj.StatusCode == 0)
+                {
+                    events.Remove(eventObj);
+                }
+                if (eventObj.StatusCode == 2)
+                {
+                    if(eventObj.StartDate < currentTime)
+                    {
+                        eventObj.StatusCode = 1;
+                    }
+                    else
+                    {
+                        events.Remove(eventObj);
+                    }
+                }
+            }
+            foreach (EventInfo eventObj in events)
+            {
+                eventObj.Host = _eventDataAccess.GetEventHost(eventObj.EventID);
+            }
+            return events;
+        }
+
+        public object AddGamerToEvent(int eventID, string hashedUserID)
+        {
+            EventPlayerInfo eventPlayer = new EventPlayerInfo();
+            eventPlayer.EventID = eventID;
+            eventPlayer.HashedUserID = hashedUserID;
+            eventPlayer.RoleID = 1;
+            eventPlayer.Claim = "";
+
+            return _eventDataAccess.AddGamerToEvent(eventPlayer);
+        }
+
+        public object CheckEventPlayer(int eventID, string hashUserID)
+        {
+            return _eventDataAccess.CheckEventPlayer(eventID, hashUserID);
+        }
+
         public object GetEventByID(int eventID)
         {
             var EventByID = _eventDataAccess.GetEventByID(eventID);
             return EventByID;
+        }
+
+        public object GetEventPlayer(int eventID)
+        {
+            return _eventDataAccess.GetAllEventPlayerInfoByID(eventID);
         }
 
         public object GetEventHost(int eventID)
@@ -69,6 +134,11 @@ namespace TBZ.KrakenBracket.Managers
         public EventBracketList AddBracketToEvent(EventBracketList eventBracket)
         {
             return _eventDataAccess.AddBracketToEvent(eventBracket);
+        }
+
+        public object RemoveGamerFromEvent(int eventID, string hashedUserID)
+        {
+            return _eventDataAccess.RemoveEventPlayer(eventID, hashedUserID);
         }
 
         public List<BracketInfo> GetBracketsInEvent(int eventID)

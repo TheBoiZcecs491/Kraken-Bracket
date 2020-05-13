@@ -1,27 +1,18 @@
 <template>
   <v-app>
-    <h1>Event List</h1>
     <div v-if="loggedIn">
-      <router-link to="/event-create" class="create-btn">
-        <v-btn class="primary" x-large>Create a new Event</v-btn>
+      <router-link to="/event-create">
+        <v-btn x-large>Create a new Event</v-btn>
       </router-link>
     </div>
     <div v-else>
-      <router-link to="/login" class="create-btn">
-        <v-btn class="primary" x-large>Create a new Event</v-btn>
+      <router-link to="/login">
+        <v-btn x-large>Create a new Event</v-btn>
       </router-link>
     </div>
     <div>
+      <h1>Event List</h1>
       <EventCard v-for="event in events" :key="event.id" :event="event" />
-      <!-- <v-card>
-        <v-data-table
-          :headers="headers"
-          :items="search_result"
-          :search="filter"
-          :items-per-page="10"
-        >
-        </v-data-table>
-      </v-card> -->
     </div>
   </v-app>
 </template>
@@ -47,7 +38,14 @@ export default {
     return {
       events: [],
       details: "",
-      filter: ""
+      filter: "",
+      eventHeaders: [
+        { text: "Event Name", value: "eventName" },
+        { text: "Event Host", value: "Host"},
+        { text: "Start Date", value: "startDate" },
+        { text: "End Date", value: "endDate" },
+        { text: "Location", value: "address" },
+      ],
     };
   },
   created() {
@@ -61,9 +59,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.create-btn {
-  text-decoration: none;
-}
-</style>

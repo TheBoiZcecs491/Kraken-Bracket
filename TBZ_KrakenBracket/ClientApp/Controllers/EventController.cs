@@ -34,6 +34,20 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.CreateEvent(eventInfo));
         }
 
+        [HttpPost("updateEvent")]
+        [Produces("application/json")]
+        public IActionResult UpdateEvent(EventInfo eventInfo)
+        {
+            return Ok(_eventManager.UpdateEvent(eventInfo));
+        }
+
+        [HttpPut("deleteEvent")]
+        [Produces("application/json")]
+        public IActionResult DeleteEvent(EventInfo eventInfo)
+        {
+            return Ok(_eventManager.DeleteEvent(eventInfo));
+        }
+
         [HttpGet("{eventID}")]
         [Produces("application/json")]
         public IActionResult GetEventByID(int eventID)
@@ -43,10 +57,25 @@ namespace ClientApp.Controllers
 
         [HttpPost("AddEventBracket")]
         [Produces("application/json")]
-        public IActionResult addEventBracket(EventBracketList eventBracket)
+        public IActionResult AddEventBracket(EventBracketList eventBracket)
         {
             return Ok(_eventManager.AddBracketToEvent(eventBracket));
         }
+
+        [HttpPost("{eventID}/register/{hashedUserID}")]
+        [Produces("application/json")]
+        public IActionResult AddEventPlayer(int eventID, string hashedUserID)
+        {
+            return Ok(_eventManager.AddGamerToEvent(eventID, hashedUserID));
+        }
+
+        [HttpPost("{eventID}/statusRegistration/{hashedUserID}")]
+        [Produces("application/json")]
+        public IActionResult CheckEventPlayer(int eventID, string hashUserID)
+        {
+            return Ok(_eventManager.CheckEventPlayer(eventID, hashUserID));
+        }
+
 
         [HttpGet("GetBracketEvent/{eventID}")]
         [Produces("application/json")]
@@ -66,13 +95,22 @@ namespace ClientApp.Controllers
         [Produces("application/json")]
         public IActionResult GetEventInfo(int eventID)
         {
-            return Ok(_eventManager.GetEventCompetitors(eventID));
+            return Ok(_eventManager.GetEventPlayer(eventID));
         }
+
         [HttpGet("GetEventInfo/{eventID}/competitors")]
         [Produces("application/json")]
         public IActionResult GetEventCompetitors(int eventID)
         {
             return Ok(_eventManager.GetEventCompetitors(eventID));
         }
+
+        [HttpDelete("{eventID}/unregister/{hashedUserID}")]
+        [Produces("application/json")]
+        public IActionResult RemoveEventPlayer(int eventID, string hashedUserID)
+        {
+            return Ok(_eventManager.RemoveGamerFromEvent(eventID, hashedUserID));
+        }
+
     }
 }

@@ -1,45 +1,43 @@
 <template>
   <v-app>
     <v-container>
-      <div>
-        <h1>Event name: {{ event.eventName }}</h1>
-        <h5>Hosted by {{ event.host }}</h5>
-        <h5>Location: {{ event.address }}</h5>
-        <h2>Description: {{ event.description }}</h2>
-      </div>
-      <h4>Competitors:</h4>
-      <li v-for="competitor in competitors" :key="competitor.gamerTag">{{ competitor.gamerTag }}</li>
-     
       <v-row>
-        <v-col cols="12" lg="12"></v-col>
-        <v-col cols="12" lg="12">
-          <div v-if="statusHost()">
+        <v-col cols="12" lg="6">
+          <div>
+            <h1>Event name: {{ event.eventName }}</h1>
+            <h5>Hosted by {{ event.host }}</h5>
+            <h5>Location: {{ event.address }}</h5>
+            <h2>Description: {{ event.description }}</h2>
+          </div>
+          <h4>Competitors:</h4>
+          <li v-for="competitor in competitors" :key="competitor.gamerTag">{{ competitor.gamerTag }}</li>
+          <div v-if="statusHost() && event.statusCode != 0">
             <router-link
               :to="{
                 name: 'event-update', //'update-view'
-                params: { id: event.eventID }
+                params: { event }
               }"
             >
-              <v-btn color="primary">Update</v-btn>
+              <v-btn color="primary">Update Event</v-btn>
             </router-link>
+            <div v-if="event.statusCode != 0">
+              <v-btn color="error" @click="deleteEvent">Delete Event</v-btn> 
+            </div>
             <!-- manage event -->
-            <p>host update</p>
-            <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
           </div>
 
-          <div v-else-if="statusRegistration()">
+          <div v-else-if="statusRegistration() && event.statusCode != 0">
             <!-- unregister -->
-            <p>unregister</p>
             <UnregisterEventModel :key="event.id" :event="event" />
           </div>
 
-          <div v-else-if="loggedIn">
-            <div v-if="true">
+          <div v-else-if="loggedIn ">
+            <div v-if="event.statusCode != 0">
               <!-- <RegisterEventModel :key="event.id" :event="event" /> -->
               <router-link
                 :to="{
                   name: 'event-registration',
-                  params: { id: event.eventID }
+                  params: { id }
                 }"
                 class="register-btn"
               >
@@ -56,6 +54,8 @@
 
           <div v-else>
             <!-- log in -->
+            <br>
+            <p>*Need to login to register to Event*</p>
             <router-link
               :to="{
                 name: 'login-view'
@@ -64,17 +64,18 @@
               <v-btn color="primary">Login</v-btn>
             </router-link>
           </div>
-        </v-col>
+          
+          </v-col>
+          <div>
+            <h1>List of Bracket in Event</h1>
+            <BracketModel
+              v-for="bracket in brackets"
+              :key="bracket.id"
+              :bracket="bracket"
+            />
+        </div>
         <v-col cols="12" lg="6"></v-col>
       </v-row>
-      <div>
-        <h1>List of Bracket in Event</h1>
-        <BracketModel
-          v-for="bracket in brackets"
-          :key="bracket.id"
-          :bracket="bracket"
-        />
-      </div>
     </v-container>
   </v-app>
 </template>
@@ -147,15 +148,9 @@ export default {
             return true;
           }
         }
-        axios.get(
-          `https://localhost:44352/api/events/${this.event.eventID}/statusRegistration/${this.$store.state.gamerInfo.gamerTag}`,
-          {
-            eventID: this.event.eventID,
-            gamerTag: this.$store.state.gamerInfo.gamerTag
-          }
-        );
       }
     },
+
     statusHost() {
       if (!this.loggedIn) {
         return false;
@@ -166,7 +161,39 @@ export default {
           return false;
         }
       }
+    },
+
+    deleteEvent() {
+      if (this.event.statusCode == 1) {
+        // Current
+        var reason = prompt(
+          "Please enter reason for deleting in-progress bracket"
+        );
+        this.event.reason = reason;
+        var cancelledTitle = "[Cancelled] " + this.event.eventName;
+        axios.put(`https://localhost:44352/api/brackets/updateEvent/`, {
+          eventID: this.event.eventID,
+          address: this.event.address,
+          description: this.event.description,
+          StartDate: this.event.startDate,
+          EndDate: this.event.endDate,
+          eventName: cancelledTitle,
+          statusCode: 0,
+          Reason: this.event.reason
+        });
+      } else if (this.UnregisterEventModel.statusCode == 2) {
+        // future
+        axios.put(`https://localhost:44352/api/events/deleteEvent/`, {
+          EventID: this.event.EventID,
+        });
+      } else {
+        // ended
+        alert(
+          "This Ended has already ended, further changes are not permitted."
+        );
+      }
     }
+
   }
 };
 </script>

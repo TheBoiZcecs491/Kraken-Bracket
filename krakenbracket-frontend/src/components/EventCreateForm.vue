@@ -4,6 +4,7 @@
     <v-form ref="form" v-model="valid" @submit.prevent="createEvent">
       <v-row justify="space-around">
         <v-col class="px-4" cols="12" sm="3">
+          <div v-if="true"> setData() </div>
           <v-text-field
             v-model="EventName"
             label="Event Name"
@@ -179,9 +180,16 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-btn :disable="!valid" x-large @click="SubmitCreate">
+          <div v-if="statusHost()">
+            <v-btn :disable="!valid" x-large @click="SubmitUpdate">
+            Update Event
+            </v-btn>
+          </div>
+          <div v-else>
+            <v-btn :disable="!valid" x-large @click="SubmitCreate">
             Create Event
-          </v-btn>
+            </v-btn>
+          </div>
 
           <!-- <v-btn-if=this.$store.user.systemID
               :disable="!valid"
@@ -254,7 +262,30 @@ export default {
     hasError: false
   }),
   methods: {
-    checkIfHost() {},
+    setData(){
+    this.EventName = this.$route.params.event.eventName
+    },
+    mounted(){
+      try{
+        this.EventName = this.$route.params.event.eventName
+      }
+      catch(err){
+        throw false;
+      }
+    },
+    statusHost() {
+      try{
+        if (this.$store.state.gamerInfo.gamerTag == this.$route.params.event.host) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      catch(err){
+        return false;
+      }
+     
+    },
     SubmitUpdate() {
       axios.post(`https://localhost:44352/api/events/`);
     },
@@ -267,6 +298,7 @@ export default {
           Description: this.EventDescription,
           StartDate: this.StartDate + " " + this.StartTime,
           EndDate: this.EndDate + " " + this.EndTime,
+          StatusCode: 1,
           Host: this.$store.state.gamerInfo.hashedUserID
         })
         .then(function(response) {
@@ -274,6 +306,9 @@ export default {
         });
       console.log(`Data: ${res.data}`);
       // this.$refs.form.reset()
+      // .then(
+      // this.$router.go(-1)
+      // )
       // setTimeout((this.$store.dispatch('createEvent', this.EventInfo),500))
     },
 

@@ -14,27 +14,27 @@
         <div style="text-align: center;">
           <v-card-text v-if="true">
             <p>
-              The bracket has not begun yet. Are you sure you want to
+              The event has not begun yet. Are you sure you want to
               unregister?
             </p>
           </v-card-text>
           <v-card-text v-else-if="false">
             <p>
-              Unregistration disabled. The bracket has already been completed
+              Unregistration disabled. The event has ended
             </p>
           </v-card-text>
           <v-card-text v-else-if="false">
-            <p>Bracket is in progress. Are you sure you want to unregister?</p>
+            <p>Event is in progress. Are you sure you want to unregister?</p>
           </v-card-text>
         </div>
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click="unregisterSubmit">
+          <v-btn color="primary" text @click="unregisterSubmit">
             I Accept
           </v-btn>
-          <v-btn color="error" flat @click="dialog = false">Cancel</v-btn>
+          <v-btn color="error" text @click="dialog = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -46,7 +46,7 @@ import EventService from "@/services/EventService.js";
 import axios from "axios";
 export default {
   props: {
-    bracket: Object
+    event: Object
   },
   data() {
     return {
@@ -67,11 +67,7 @@ export default {
       //var systemID = this.$store.state.user.systemID;
       // var email = this.$store.state.user.email;
       axios.delete(
-        `https://localhost:44352/api/events/${this.event.eventID}/unregister/${this.$store.state.user.systemID}`,
-        {
-          eventID: this.event.eventID,
-          systemID: this.$store.state.user.systemID
-        }
+        `https://localhost:44352/api/events/${this.event.eventID}/unregister/${this.$store.state.gamerInfo.hashedUserID}`
       );
     }
   }

@@ -41,7 +41,7 @@
                     color="primary"
                     >Confirm</v-btn
                   >
-                  <v-btn @click="submitForm" color="primary">Register!</v-btn>
+                  <!-- <v-btn @click="submitForm" color="primary">Register!</v-btn>
 
                   <v-btn
                     v-show="formValidity"
@@ -54,7 +54,7 @@
                     v-if="!formValidity"
                     :disabled="!formValidity"
                     >Register!</v-btn
-                  >
+                  > -->
                   <div v-if="error">
                     <p class="red--text">{{ error }}</p>
                   </div>
@@ -119,11 +119,7 @@ export default {
         ) {
           axios
             .post(
-              `https://localhost:44352/api/events/${this.event.eventID}/register/${this.$store.state.gamerInfo.hashedUserId}`,
-              {
-                eventID: this.event.eventID,
-                hashedUserID: this.$store.state.gamerInfo.hashedUserID
-              }
+              `https://localhost:44352/api/events/${this.id}/register/${this.$store.state.gamerInfo.hashedUserID}`
             )
             .then(() => {
               setTimeout(() => {
