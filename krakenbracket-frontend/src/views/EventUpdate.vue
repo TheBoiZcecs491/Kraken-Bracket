@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <h1>Update Event</h1>
-      <eventForm />
+      <eventForm :event="event" />
     </div>
   </div>
 </template>
@@ -16,7 +16,9 @@ import NotLoggedIn from "@/components/NotLoggedIn.vue";
 import { authComputed } from "../store/helpers.js";
 // import NotLoggedIn from "../components/NotLoggedIn.vue";
 export default {
-  props: ["id"],
+  props: {
+    event: Object
+  },
   components: {
     eventForm,
     NotLoggedIn

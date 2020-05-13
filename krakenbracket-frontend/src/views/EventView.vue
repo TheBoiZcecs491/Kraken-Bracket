@@ -15,7 +15,7 @@
             <router-link
               :to="{
                 name: 'event-update', //'update-view'
-              
+                params: {event: this.event}
               }"
             >
               <v-btn color="primary">Update Event</v-btn>
@@ -162,7 +162,11 @@ export default {
         }
       }
     },
-
+    /*
+    0 - ENDED
+    1 - IN PROGRESS
+    2 - FUTURE EVENT
+    */
     deleteEvent() {
       if (this.event.statusCode == 1) {
         // Current
@@ -171,7 +175,7 @@ export default {
         );
         this.event.reason = reason;
         var cancelledTitle = "[Cancelled] " + this.event.eventName;
-        axios.put(`https://localhost:44352/api/brackets/updateEvent/`, {
+        axios.put(`https://localhost:44352/api/events/updateEvent/`, {
           eventID: this.event.eventID,
           address: this.event.address,
           description: this.event.description,

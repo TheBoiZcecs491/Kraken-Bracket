@@ -81,12 +81,14 @@ const routes = [
   {
     path: "/event-create",
     name: "event-create",
-    component: EventCreate
+    component: EventCreate,
+    props: true
   },
   {
     path: "/event-update",
     name: "event-update",
-    component: EventUpdate
+    component: EventUpdate,
+    props: true
   },
   {
     path: "/event-view/:id/signup",

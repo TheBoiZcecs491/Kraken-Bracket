@@ -189,7 +189,9 @@
             Create Event
             </v-btn>
           </div>
-
+          <v-btn @click="test">
+            CLICKL
+          </v-btn>
           <!-- <v-btn-if=this.$store.user.systemID
               :disable="!valid"
               x-large
@@ -209,7 +211,9 @@ import axios from "axios";
 import { authComputed } from "../store/helpers.js";
 
 export default {
-  props: ["id"],
+  props: {
+    event: Object
+  },
   components: {},
   computed: {
     ...authComputed
@@ -264,6 +268,9 @@ export default {
     setData(){
     this.EventName = this.$route.params.event.eventName
     },
+    test(){
+      console.log("EVNET ID: " + this.event)
+    },
     mounted(){
       try{
         this.EventName = this.$route.params.event.eventName
@@ -286,7 +293,18 @@ export default {
      
     },
     SubmitUpdate() {
-      axios.post(`https://localhost:44352/api/events/`);
+      console.log(this.event.eventID)
+      axios.put(`https://localhost:44352/api/events/updateEvent`, {
+        EventID: this.event.eventID,
+         EventName: this.EventName,
+          Address: this.EventAddress,
+          Description: this.EventDescription,
+          StartDate: this.StartDate + " " + this.StartTime,
+          EndDate: this.EndDate + " " + this.EndTime,
+          StatusCode: 1,
+          Host: this.$store.state.gamerInfo.hashedUserID
+      });
+      this.$refs.form.reset()
     },
     SubmitCreate() {
       // this.$refs.form.validate()
@@ -304,7 +322,7 @@ export default {
           console.log(response);
         });
       console.log(`Data: ${res.data}`);
-      // this.$refs.form.reset()
+      this.$refs.form.reset()
       // .then(
       // this.$router.go(-1)
       // )

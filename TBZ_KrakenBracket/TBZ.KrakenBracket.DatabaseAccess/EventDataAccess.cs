@@ -35,29 +35,38 @@ namespace TBZ.KrakenBracket.DatabaseAccess
 
         public EventInfo UpdateEvent(EventInfo eventObj)
         {
-            using (conn = new MySqlConnection(DB.GetConnString()))
+            try
             {
-                using (MySqlCommand updateCmd = conn.CreateCommand())
+                using (conn = new MySqlConnection(DB.GetConnString()))
                 {
-                    updateCmd.CommandText = "UPDATE bracket_info " +
-                        "SET " +
-                        "event_name = @bracket_name, " +
-                        "address = @address, " +
-                        "event_description = @event_description, " +
-                        "start_date = @start_date, " +
-                        "end_date = @end_date ," +
-                        "WHERE eventID = @eventID";
-                    updateCmd.Parameters.AddWithValue("@eventID", eventObj.EventID);
-                    updateCmd.Parameters.AddWithValue("@event_name", eventObj.EventName);
-                    updateCmd.Parameters.AddWithValue("@address", eventObj.Address);
-                    updateCmd.Parameters.AddWithValue("@event_description", eventObj.Description);
-                    updateCmd.Parameters.AddWithValue("@start_date", eventObj.StartDate);
-                    updateCmd.Parameters.AddWithValue("@end_date", eventObj.EndDate);
-                    conn.Open();
-                    updateCmd.ExecuteNonQuery();
-                    conn.Close();
-                    return eventObj;
+                    using (MySqlCommand updateCmd = conn.CreateCommand())
+                    {
+                        updateCmd.CommandText = "UPDATE event_info " +
+                            "SET " +
+                            "event_name = @event_name, " +
+                            "address = @address, " +
+                            "event_description = @event_description, " +
+                            "start_date = @start_date, " +
+                            "end_date = @end_date, " +
+                            "status_code=@status_code " +
+                            "WHERE eventID = @eventID";
+                        updateCmd.Parameters.AddWithValue("@eventID", eventObj.EventID);
+                        updateCmd.Parameters.AddWithValue("@event_name", eventObj.EventName);
+                        updateCmd.Parameters.AddWithValue("@address", eventObj.Address);
+                        updateCmd.Parameters.AddWithValue("@event_description", eventObj.Description);
+                        updateCmd.Parameters.AddWithValue("@start_date", eventObj.StartDate);
+                        updateCmd.Parameters.AddWithValue("@end_date", eventObj.EndDate);
+                        updateCmd.Parameters.AddWithValue("@status_code", eventObj.StatusCode);
+                        conn.Open();
+                        updateCmd.ExecuteNonQuery();
+                        conn.Close();
+                        return eventObj;
+                    }
                 }
+            }
+           catch (Exception e)
+            {
+                return null;
             }
         }
 

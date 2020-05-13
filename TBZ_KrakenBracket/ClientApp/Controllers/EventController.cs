@@ -34,7 +34,7 @@ namespace ClientApp.Controllers
             return Ok(_eventManager.CreateEvent(eventInfo));
         }
 
-        [HttpPost("updateEvent")]
+        [HttpPut("updateEvent")]
         [Produces("application/json")]
         public IActionResult UpdateEvent(EventInfo eventInfo)
         {
