@@ -4,7 +4,6 @@
     <v-form ref="form" v-model="valid" @submit.prevent="createEvent">
       <v-row justify="space-around">
         <v-col class="px-4" cols="12" sm="3">
-          <div v-if="true"> setData() </div>
           <v-text-field
             v-model="EventName"
             label="Event Name"

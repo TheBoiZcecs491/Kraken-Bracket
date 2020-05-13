@@ -15,7 +15,7 @@
             <router-link
               :to="{
                 name: 'event-update', //'update-view'
-                params: { event }
+              
               }"
             >
               <v-btn color="primary">Update Event</v-btn>
