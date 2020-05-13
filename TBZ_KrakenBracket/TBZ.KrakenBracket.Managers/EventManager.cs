@@ -43,7 +43,7 @@ namespace TBZ.KrakenBracket.Managers
         {
             _eventDataAccess.DeleteEventBracket(eventInfo.EventID);
 
-
+            _eventDataAccess.DeleteEventPlayer(eventInfo.EventID);
             return _eventDataAccess.DeleteEvent(eventInfo);
         }
 

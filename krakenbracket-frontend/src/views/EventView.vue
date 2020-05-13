@@ -185,10 +185,17 @@ export default {
           statusCode: 0,
           Reason: this.event.reason
         });
-      } else if (this.UnregisterEventModel.statusCode == 2) {
+      } else if (this.event.statusCode == 2) {
         // future
-        axios.put(`https://localhost:44352/api/events/deleteEvent/`, {
-          EventID: this.event.EventID,
+         axios.put(`https://localhost:44352/api/events/deleteEvent/`, {
+          eventID: this.event.eventID,
+          address: this.event.address,
+          description: this.event.description,
+          StartDate: this.event.startDate,
+          EndDate: this.event.endDate,
+          eventName: cancelledTitle,
+          statusCode: 0,
+          Reason: this.event.reason
         });
       } else {
         // ended
