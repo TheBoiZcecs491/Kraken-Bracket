@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <div v-if="loggedIn">
-      <router-link to="/event-create">
-        <v-btn x-large>Create a new Event</v-btn>
+    <h1>Event List</h1>
+    <div v-if="loggedIn" >
+      <router-link to="/event-create" class="register-btn">
+        <v-btn class="primary" x-large >Create a new Event</v-btn>
       </router-link>
     </div>
     <div v-else>
-      <router-link to="/login">
-        <v-btn x-large>Create a new Event</v-btn>
+      <router-link to="/login" class="register-btn">
+        <v-btn class="primary" x-large >Create a new Event</v-btn>
       </router-link>
     </div>
     <div>
-      <h1>Event List</h1>
       <EventCard v-for="event in events" :key="event.id" :event="event" />
     </div>
   </v-app>
@@ -59,3 +59,9 @@ export default {
   }
 };
 </script>
+
+<style >
+.register-btn{
+  text-decoration: none;
+}
+</style>
