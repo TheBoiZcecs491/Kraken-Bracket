@@ -9,9 +9,9 @@ All brackets support at minimum 4 players and at maximum 128 players
 
 Events encompass a collection of brackets, so users can follow and be updated for all brackets within a single event.
 
-## Resources Used
+## Technologies Used
 - ASP .NET Core 2.2
-- . NET Core 2.2
+- .NET Core 2.2
 - MySQL
 - HTML5, CSS3, JavaScript
 - Vue.js
@@ -21,7 +21,6 @@ Events encompass a collection of brackets, so users can follow and be updated fo
     - Vue Tournament Bracket
     - Vuelidate
     - Axios
-- Cypress E2E testing
 
 ## Team Members
 - Fa Fu - team lead
@@ -30,3 +29,7 @@ Events encompass a collection of brackets, so users can follow and be updated fo
 - Kevin Simon
 - Dylan Thorin
 - Kevin Phan
+
+## Images
+
+![img](https://github.com/TheBoiZcecs491/Kraken-Bracket/blob/master/readme-img/krakenbracket.jpg?raw=true)
